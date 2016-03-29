@@ -62,11 +62,6 @@ var Page = React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-lg-12">
-                        <h2 className="page-header"> {page.name} </h2>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-12">
                         <Editor key={Math.random()}>
                             {this.props.params}
                         </Editor>

@@ -65,11 +65,16 @@ var Editor = React.createClass({
   render: function() {
     var page = this.state.page;
     return (
-      <div className="col-lg-12">
-        <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
-        { this.state.editButton ? <input type="button" onClick={this.unlock} value="Edit" /> : null }
-        { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-        <NotificationSystem ref="notificationSystem" />
+      <div className="row">
+        <div className="col-lg-12">
+          <h2 className="page-header">{page.name}</h2>
+        </div>
+        <div className="col-lg-12">
+          <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
+          { this.state.editButton ? <input type="button" onClick={this.unlock} value="Edit" /> : null }
+          { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+          <NotificationSystem ref="notificationSystem" />
+        </div>
       </div>
     );
   }
