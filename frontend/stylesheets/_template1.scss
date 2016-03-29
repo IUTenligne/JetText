@@ -1,4 +1,16 @@
 @import "vars";
+@import "../../node_modules/breakpoint-sass/stylesheets/_breakpoint.scss";
+
+
+.middle{
+	.actions{
+		.btn{
+			background: $blue;
+			border-color: #517cae;
+			margin-top: 5px;
+		}
+	}
+}
 
 .col-lg-12{
 	margin: 0;
@@ -92,7 +104,14 @@
 	}
 }
 
-@media(min-width:765px) {
+
+@include breakpoint(765px){
+	.middle{
+		margin-top: 50px;
+		margin-right: 30%;
+		margin-left: 30%;
+		width: 40%;
+	}
 	.col-lg-12{
 		nav{
 			.sidebar {
@@ -124,6 +143,6 @@
 }
 
 
-@media(min-width:1020px) {
+@include breakpoint(1020px) {
 
 }
