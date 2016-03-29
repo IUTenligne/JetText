@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     @upload = Upload.new
     @uploads = Upload.all
     @container = Container.find(@page.container_id)
-    @pages = Page.select("id, name").where(:container_id => @container.id)
+    @pages = Page.select("id, name").where(:container_id => @container.id).order(weight: :asc)
     @new_page = Page.new
     unless @page.user_id == current_user.id
       redirect_to action: "index"
@@ -81,7 +81,7 @@ class PagesController < ApplicationController
 
   def sort
     params[:order].each do |key,value|
-      Page.find(value[:id]).update_attribute(:weight, value[:position])
+      Page.find(value[:id]).update_attribute(:weight, value[:weight])
     end
     render :nothing => true
   end

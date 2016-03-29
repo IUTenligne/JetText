@@ -21,8 +21,7 @@ var Menu = React.createClass({
       var index = [].indexOf.call(element.parentNode.children, element)
       var updated_order = [];
       $(source).children().each(function(i) {
-        console.log($(this).text(), $(this).data('id'), $(this).data('pos'), i);
-        updated_order.push({ id: $(this).data('id'), position: $(this).data('pos') });
+        updated_order.push({ id: $(this).data('id'), weight: i });
       });
       $.ajax({
         type: "PUT",
