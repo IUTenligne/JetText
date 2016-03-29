@@ -1,6 +1,7 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Editor = require('./Editor.jsx');
+var Menu = require('../containers/Menu.jsx');
 
 var Page = React.createClass({
   getInitialState: function() {
@@ -31,14 +32,19 @@ var Page = React.createClass({
     var page = this.state.page;
     return (
       <div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href='#'>
+                <img src="/templates/iutenligne/img/cartable.png" border="0" />
+                <h1>
+                    Le super truc
+                </h1>
+            </a>
+        </div> 
         <div>
-          {this.state.pages.map(function(page){
-            return (
-              <li key={page.id}>
-                <Link to={"/pages/"+page.id}>{page.name}</Link>
-              </li>
-            );
-          })}
+          <Menu items={this.state.pages}/>
         </div>
         <div className="col-lg-12">
           <Link to={"/containers/"+page.container_id}>Containers</Link>
