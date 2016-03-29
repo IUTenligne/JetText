@@ -31,32 +31,51 @@ var Page = React.createClass({
   render: function() {
     var page = this.state.page;
     return (
-      <div>
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href='#'>
-                <img src="/templates/iutenligne/img/cartable.png" border="0" />
-                <h1>
-                    Le super truc
-                </h1>
-            </a>
-        </div> 
-        <div>
-          <Menu items={this.state.pages}/>
-        </div>
         <div className="col-lg-12">
-          <Link to={"/containers/"+page.container_id}>Containers</Link>
-          <input type="button" onClick={this.generateContainer} value="Generate" />
-          <Editor key={Math.random()}>
-            {this.props.params}
-          </Editor>
+            <nav className="navbar navbar-default navbar-static-top" role="navigation">
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <i className="fa fa-bars">dfgdqgg</i>
+                    </button>
+                    <a className="navbar-brand" href='#'>
+                        <img src="/templates/iutenligne/img/cartable.png" border="0"/>
+                        <h1>
+                            Le super truc
+                        </h1>
+                    </a>
+                </div> 
+                <div className="navbar-default sidebar menu" role="navigation">
+                    <div className="sidebar-nav navbar-collapse">
+                        <a href="http://www.iutenligne.net/resources.html">
+                            <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
+                        </a>
+                        <ul className="nav pages-panel sortable" id="side-menu">
+                            <Menu items={this.state.pages}/>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div className="row">
+                    <Link to={"/containers/"+page.container_id}>Containers</Link>
+                    <input type="button" onClick={this.generateContainer} value="Generate" />
+                </div>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <h2 className="page-header"> {page.name} </h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <Editor key={Math.random()}>
+                            {this.props.params}
+                        </Editor>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     );
   }
-
 });
 
 module.exports = Page;

@@ -4,15 +4,15 @@
 	margin: 0;
 	padding: 0;
 	@include span(12 of 12);
-	margin-top: 40px;
 	nav {
+		margin-bottom: 0;
 		ul.navbar-top-links li{
 			display: inline-block;
 		}
-		/* pour le header */
 		div.navbar-header {
-			float: none;
+			float: none !important;
 			z-index: 200;
+			padding-bottom: 5px;
 			button {
 				i {
 					font-size: 25px;
@@ -21,6 +21,13 @@
 			}
 			a {
 				color: #777;
+				float: none;
+				line-height: 50px;
+				img, h1{
+					display: inline-block;
+					margin: 0;
+					vertical-align: middle;
+				}
 			}
 			a:focus, a:hover {
     			color: #333;
@@ -35,7 +42,6 @@
 				ul#side-menu {
 					border-bottom: 1px solid #e7e7e7;
 					margin-bottom: 10px;
-					
 					* {
 						text-align: left;
 					}

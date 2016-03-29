@@ -59,6 +59,7 @@ gulp.task("es6", function () {
 gulp.task('watch', function () {
   gulp.watch('./frontend/stylesheets/**/*.scss', ['sass']);
   gulp.watch('./frontend/javascripts/**/*.es6', ['js']);
+  gulp.watch('./frontend/react/**/*.jsx', ['react']);
 });
 
 gulp.task('js:watch', function () {

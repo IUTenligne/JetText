@@ -17,7 +17,7 @@ html, body {
 		flex: 1 0 auto;
 		margin-top: 50px;
 		margin: 0;
-		padding: 0;
+		padding: 0 !important;
 		@include span(12 of 12);
 
 		div#wrapper {
@@ -35,7 +35,7 @@ html, body {
 			.outlet {
 				@import 'template1';
 				@include span(12 of 12);
-				margin: 50px 50px;
+				margin: 50px 0;
 				padding: 0;
 			}
 		}
