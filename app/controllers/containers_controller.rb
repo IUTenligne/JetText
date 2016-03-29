@@ -33,10 +33,10 @@ class ContainersController < ApplicationController
   def create
     @container = Container.new(container_params)
     @container.user_id = current_user.id
+    @container.url = current_user.email
     if @container.save
-      if folder = create_folder
-        @container.update_attribute(:url, folder)
-        redirect_to container_path(@container.id)
+      respond_to do |format|
+        format.html { head :no_content }
       end
     end
   end

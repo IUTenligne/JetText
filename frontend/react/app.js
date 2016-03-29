@@ -16,5 +16,5 @@ $(document).ready(function () {
 	    <Route path="containers/:id" component={Container}/>
 	    <Route path="pages/:id" component={Page}/>
 	  </Router>
-	), document.getElementById('container'))
+	), document.getElementById('appcontainer'))
 });
