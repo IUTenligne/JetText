@@ -11,10 +11,11 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find(params[:id])
+    @page.content = @page.content.force_encoding('UTF-8')
     @upload = Upload.new
     @uploads = Upload.all
     @container = Container.find(@page.container_id)
-    @pages = Page.where(:container_id => @container.id)
+    @pages = Page.select("id, name").where(:container_id => @container.id)
     @new_page = Page.new
     unless @page.user_id == current_user.id
       redirect_to action: "index"

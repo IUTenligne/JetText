@@ -15,7 +15,7 @@
 # Custom
 /node_modules
 /bower_components
-/public
+/public/*
 !/public/templates
 !/public/404.html
 !/public/422.html

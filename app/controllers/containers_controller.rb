@@ -15,7 +15,7 @@ class ContainersController < ApplicationController
 
   def show
     @container = Container.find(params[:id])
-    @pages = Page.where(:container_id => @container.id)
+    @pages = Page.select("id, name").where(:container_id => @container.id)
     @new_page = Page.new
     unless @container.user_id == current_user.id
       redirect_to action: "index"
@@ -92,7 +92,6 @@ class ContainersController < ApplicationController
 
     def create_folder
       return nil unless current_user.present?
-      token = SecureRandom.hex(8)
       dest = "#{Rails.root}/public/#{current_user.email}"
       FileUtils.mkdir_p dest
       return dest

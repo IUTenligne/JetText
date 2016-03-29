@@ -33,15 +33,13 @@ var Page = React.createClass({
     return (
       <div>
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href='#'>
-                <img src="/templates/iutenligne/img/cartable.png" border="0" />
-                <h1>
-                    Le super truc
-                </h1>
-            </a>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand" href='#'>
+            <img src="/templates/iutenligne/img/cartable.png" border="0" />
+            <h1>Le super truc</h1>
+          </a>
         </div> 
         <div>
           <Menu items={this.state.pages}/>
