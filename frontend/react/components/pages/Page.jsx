@@ -37,7 +37,7 @@ var Page = React.createClass({
                     <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <i className="fa fa-bars">dfgdqgg</i>
                     </button>
-                    <a className="navbar-brand" href='#'>
+                    <a className="navbar-brand" href={"/containers/"+page.container_id}>
                         <img src="/templates/iutenligne/img/cartable.png" border="0"/>
                         <h1>
                             Le super truc
