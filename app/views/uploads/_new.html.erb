@@ -1,0 +1,9 @@
+<%= form_for @upload, :remote => true, :authenticity_token => true do |f| %>
+	<p>
+		<%= f.label :file %><br />
+		<%= f.file_field :file %>
+		<%= f.hidden_field :container_id, value: :container_id %>
+	</p>
+	
+	<p><%= f.submit "submit"%></p>
+<% end %>

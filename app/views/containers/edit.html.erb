@@ -1,0 +1,13 @@
+<div id='outlet' data-component='Containers' data-view='Edit'>
+	<h1>Create new container</h1>
+  <%= form_for @container do |f| %>
+    <div>
+      <p><%= f.text_field :name, :placeholder => :title %></p>
+    </div>
+    <div>
+      <p><%= f.label :content %></p>
+      <p><%= f.text_area raw(:content), :id => "editor1" %></p>
+    </div>
+    <%= f.submit :save, class: "btn btn-primary" %>
+  <% end %>
+</div>

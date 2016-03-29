@@ -1,0 +1,82 @@
+@font-face {
+  font-family: 'Lobster-Regular';
+  src:url('Lobster-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src:url('Pacifico.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.cke_textarea_inline {
+	border: solid 1px #e6f1fa;
+}
+
+.hidden {
+	display: none;
+}
+
+@mixin mce-fa($value) {
+  content: $value;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  color: #000;
+  font-size: 1em;
+  padding-right: 0.5em;
+  padding-left: 0.6em;
+  position: absolute;
+  top: 20%;
+  left: 0;
+}
+
+.mce-i-uploader:before {
+  @include mce-fa("\f093");
+}
+
+.mce-i-formula:before {
+  @include mce-fa("\f0c3");
+}
+
+.mce-i-glossary:before {
+  @include mce-fa("\f02c");
+}
+
+#uploadform {
+	height: 150px;
+
+	input[type=file].uploader {
+	  width: 100%;
+	  height: 150px;
+	  vertical-align: middle;
+	}
+}
+
+#editor1, .mce-tinymce.mce-container {
+	width: 100%;
+  border: none;
+}
+
+.mce-edit-area, .mce-statusbar {
+	border: none !important;
+}
+
+.mce-toolbar {
+	border: none;
+}
+
+.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.sortable {
+  display: list-item;
+}

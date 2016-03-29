@@ -1,0 +1,19 @@
+<%= form_for @upload, :remote => true, :authenticity_token => true, :html => { :style => 'display: none' }  do |f| %>
+	<p>
+		<%= f.file_field :file, :class => 'uploader' %>
+		<%= f.hidden_field :container_id, value: @page.container.id %>
+	</p>	
+<% end %>
+
+<!-- custom form to deal with escaped HTML characters -->
+<%= form_for @page do |f| %>
+
+	<div id="editor-container" class="row">
+		<%= f.text_field :name %>
+
+		<textarea name="page[content]" id="editor1" class="editable_elem">
+			<%= CGI.unescapeHTML(@page.content).html_safe if @page.content %>
+		</textarea>
+		<input name="commit" value="save" class="btn btn-primary" type="submit">
+	</div>
+<% end %>

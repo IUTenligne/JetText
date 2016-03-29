@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  content: "nkjhfdhfimdshfjdhfosdfjhgosgrohgoizrhgkrhgorhgomrjgmzlrjg"
+  container_id: container_one
+  user_id: user_one
+
+two:
+  name: MyString
+  container_id: container_two
+  user_id: user_two

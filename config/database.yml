@@ -1,0 +1,19 @@
+login: &login
+  adapter: mysql2
+  username: root
+  password: root
+  host: localhost
+  encoding: utf8
+  socket: /Applications/MAMP/tmp/mysql/mysql.sock  
+
+development:
+  <<: *login
+  database: jettext_dev
+
+test:
+  <<: *login
+  database: jettext_test
+
+production:
+  <<: *login
+  database: jettext_prod

@@ -1,0 +1,65 @@
+{
+  "name": "jettext",
+  "version": "1.0.0",
+  "description": "## Clone the repository :",
+  "main": "public",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hipjea/JetText.git"
+  },
+  "author": "Hipjea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hipjea/JetText/issues"
+  },
+  "homepage": "https://github.com/Hipjea/JetText#readme",
+  "devDependencies": {
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.2",
+    "browserify-incremental": "^3.0.1",
+    "browserify-jsx": "^1.0.0",
+    "browserify-shim": "^3.8.12",
+    "glob": "^7.0.3",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-coffee": "^2.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-react": "^3.1.0",
+    "gulp-requirejs": "^0.1.3",
+    "gulp-sass": "^2.1.1",
+    "gulp-shell": "^0.5.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-traceur": "^0.17.2",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.5",
+    "node-sass": "^3.4.2",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-kit": "^0.1.14",
+    "react-notification-system": "^0.2.6",
+    "react-router": "^2.0.1",
+    "reactify": "^1.1.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "requirejs": "^2.1.22"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}

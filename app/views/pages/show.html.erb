@@ -1,0 +1,98 @@
+<div id='outlet' class="row" data-component='Pages' data-view='Show'>
+    <script type="text/javascript">  
+        //used by the editor upload plugin
+        var c_path = "<%= raw("/#{@page.container.url}/files/") %>";  
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]},displayAlign: "center",displayIndent: "0.1em"});
+    </script>
+    <script type="text/javascript" src="/assets/MathJax/MathJax.js?config=TeX-AMS_HTML" defer></script>
+    <script type="text/javascript" src="/assets/MathJax/extensions/MathMenu.js" defer></script>
+    <script type="text/javascript" src="/assets/MathJax/extensions/MathZoom.js" defer></script>
+
+    <div class="col-lg-12">
+        <!-- Mise en place de toute la navigation  -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <!-- Mise en place du menu pour gerer les creation et autre des ressources  -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <%= link_to(raw('<i class="fa fa-edit"></i> Editer'), edit_container_path(@page.container.id)) %>
+                </li>
+                <li>
+                    <%= link_to(raw('<i class="fa fa-remove"></i> Supprimer'), container_path(), :method => 'delete') %>
+                </li>
+                <li>
+                    <a href="#" id="generate_container"><i class="fa fa-wrench"></i> Générer</a>
+                </li>
+            </ul>
+            <!-- Fin de la Mise en place du menu pour gerer les creation et autre des ressources  -->
+
+            <!-- Header de la page sans reaseaux sociaux pour le moment  -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href='<%= "/containers/#{@page.container.id}" %>'>
+                    <img src="/templates/iutenligne/img/cartable.png" border="0" style="display:inline-block;">
+                    <h1>
+                        <%= link_to(@page.container.name, container_path(@page.container.id)) %>
+                    </h1>
+                </a>
+            </div> 
+            <!-- / fin Header de la page sans reaseaux sociaux pour le moment  -->
+         
+        
+            <!-- menu d'indication d'imbrication des pages gauche -->
+            <div class="navbar-default sidebar menu" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <a href="http://www.iutenligne.net/resources.html">
+                        <img src="/templates/iutenligne/img/iutenligne.png" border="0">
+                    </a>
+                    <ul class="nav pages-panel sortable" id="side-menu">
+                        <% @pages.each do |page| %>
+                            <% @item = "" %>
+                            <% unless page.level.nil? %>
+                                <% page.level.times do |level| %>
+                                    <% @item = @item.to_s + "<ul class='nav menu' style='display: inline'><li>" %>
+                                <% end %>
+                                <% @item = @item.to_s + "<a href='/pages/" + page.id.to_s + "' data-id='" + page.id.to_s + "' data-no-turbolink>" + page.level.to_s + page.name + "</a>" %>
+                                <% page.level.times do |level| %>
+                                    <% @item = @item.to_s + "</li></ul>" %>
+                                <% end %>
+                                <%= @item.html_safe %>
+                            <% else %>
+                                <%= page.name %>
+                            <% end %>
+                        <% end %>
+                    </ul>
+                    <ul  class="nav pages-panel sortable" id="side-menu">
+                        <li>
+                            <%= render :partial => 'pages/new', :object => @new_page %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Fin menu d'indication d'imbrication des pages gauche -->
+
+        </nav>
+        <!-- / fin de la Mise en place de toute la navigation  -->
+
+        <!-- Mise en place des elements centraux -->
+        <div id="page-wrapper">
+            <div>
+                <%= render :partial => 'pages/edit', :object => @page %>
+            </div>
+        </div>
+        <!-- /Fin des elements centraux -->
+    </div>
+
+</div>
+
+<script>
+    $('#generate_container').click(function() {
+        $.ajax({
+          type: "GET",
+          url: "/generate_container/<%= @page.container.id %>"
+        });
+    });
+</script>

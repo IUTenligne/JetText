@@ -1,0 +1,12 @@
+<div id='outlet' data-component='Containers' data-view='Index'>
+	<h1>Home</h1>
+  	
+  <h2>Containers</h2>
+  <div>
+  	<ul>
+  		<% @containers.each do |container| %>
+  			<li><%= link_to(container.name, container_path(container.id)) %></li>
+  		<% end %>
+  	</ul>
+  </div>
+</div>

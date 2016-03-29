@@ -1,0 +1,10 @@
+<div id='outlet' data-component='Pages' data-view='Index'>
+	<h2>Pages</h2>
+  <div>
+  	<ul>
+  		<% @pages.each do |page| %>
+  			<li><%= link_to(page.name, page_path(page.id)) %></li>
+  		<% end %>
+  	</ul>
+  </div>
+</div>

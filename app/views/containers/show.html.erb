@@ -1,0 +1,40 @@
+<div id='outlet' class="row" data-component='Containers' data-view='Show'>
+	<div class="col-lg-12">
+    <header>
+      <h1><%= link_to(@container.name, container_path(@container.id)) %></h1>
+    </header>
+  	<div class="actions">
+  		<%= link_to(raw('<i class="fa fa-edit"></i> Editer'), edit_container_path(@container.id)) %>
+  		<%= link_to(raw('<i class="fa fa-remove"></i> Supprimer'), container_path(), :method => 'delete') %>
+  		<a href="#" id="generate_container">Générer</a>
+  	</div>
+
+    <div class="col-lg-3">
+      <nav id="main-nav">
+        <ul>
+          <% @pages.each do |page| %>
+            <a href='<%= "/pages/#{page.id}" %>'>
+              <li><%= "#{page.name}" %></li>
+            </a>
+          <% end %>
+        </ul>
+        <%= render :partial => 'pages/new', :object => @page %>
+      </nav>
+    </div>
+
+    <div class="col-lg-9">
+      <div>
+        <%= render :partial => 'containers/edit', :object => @container %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#generate_container').click(function() {
+    $.ajax({
+      type: "GET",
+      url: "/generate_container/<%= @container.id %>"
+    });
+  });
+</script>

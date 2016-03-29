@@ -1,0 +1,10 @@
+<div id='outlet' data-component='Variables' data-view='New'>
+	<h1>Create new variable</h1>
+  <%= form_for @variable do |f| %>
+    <div>
+      <p><%= f.text_field :name, :placeholder => :name %></p>
+      <p><%= f.text_field :value, :placeholder => :value %></p>
+    </div>
+    <%= f.submit :save, class: "btn btn-primary" %>
+  <% end %>
+</div>

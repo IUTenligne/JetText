@@ -1,0 +1,26 @@
+{
+  "name": "jettext",
+  "description": "## Clone the repository :",
+  "main": "public",
+  "authors": [
+    "Hipjea"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Hipjea/JetText",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "susy": "^2.2.12",
+    "font-awesome": "^4.5.0",
+    "bootstrap": "^3.3.6",
+    "tinymce": "^4.3.8",
+    "MathJax": "^2.6.1",
+    "ckeditor": "^4.5.7"
+  }
+}

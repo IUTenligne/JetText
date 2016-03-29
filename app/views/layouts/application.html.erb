@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JetText</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% unless Rails.env.test? %>
+	    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <% end %>
+    <%= csrf_meta_tags %>
+    <script type="text/javascript">var currentUser = <%= raw current_user.to_json %>;</script>
+  </head>
+  <body>
+    <header>
+      <%= render partial: "layouts/header" %>
+    </header> 
+
+    <section id="main-outlet">
+      <div id="wrapper">
+        <%= yield %>
+        <div id="container" class="outlet"></div>
+      </div>
+    </section>
+		
+    <footer>
+      <%= render partial: "layouts/footer" %>
+    </footer>
+  </body>
+</html>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]},displayAlign: "center",displayIndent: "0.1em"});
+</script>
+<script type="text/javascript" src="/assets/MathJax/MathJax.js?config=TeX-AMS_HTML" defer></script>
+<script type="text/javascript" src="/assets/MathJax/extensions/MathMenu.js" defer></script>
+<script type="text/javascript" src="/assets/MathJax/extensions/MathZoom.js" defer></script>
