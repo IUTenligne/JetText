@@ -74,7 +74,7 @@ class PagesController < ApplicationController
   def update_ajax
     @page = Page.find(params[:id])
     if current_user.id == @page.user_id
-      @page.update_attribute(:content, params[:content])
+      @page.update_attributes(:name => params[:name], :content => params[:content])
     end
     render :nothing => true
   end

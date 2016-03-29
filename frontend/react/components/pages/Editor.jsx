@@ -6,7 +6,8 @@ var Editor = React.createClass({
   getInitialState: function() {
     return {
       page: '',
-      contentValue: '',
+      pageName: '',
+      pageContent: '',
       editButton: true,
       saveButton: false
     };
@@ -16,7 +17,8 @@ var Editor = React.createClass({
     this.serverRequest = $.get("/pages/"+this.props.children.id+".json", function (result) {
       this.setState({
         page: result.page,
-        contentValue: result.page.content
+        pageName: result.page.name,
+        pageContent: result.page.content
       });
     }.bind(this));
 
@@ -34,7 +36,7 @@ var Editor = React.createClass({
     $.ajax({
       type: "PUT",
       url: '/pages/update_ajax',
-      data: { id: page.id, content: this.state.contentValue }
+      data: { id: page.id, name: this.state.pageName, content: this.state.pageContent }
     });
 
     // NotificationSystem popup
@@ -53,7 +55,7 @@ var Editor = React.createClass({
     });
     editor.on('change', function( evt ) {
       // setState to allow changes to be saved on submit
-      that.setState({ contentValue: evt.editor.getData() });
+      that.setState({ pageContent: evt.editor.getData() });
     });
     CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');
 
@@ -63,14 +65,13 @@ var Editor = React.createClass({
   _notificationSystem: null,
 
   render: function() {
-    var page = this.state.page;
     return (
       <div className="row">
         <div className="col-lg-12">
-          <h2 className="page-header">{page.name}</h2>
+          <h2 className="page-header">{this.state.page.name}</h2>
         </div>
         <div className="col-lg-12">
-          <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
+          <div id="editor1" dangerouslySetInnerHTML={createMarkup(this.state.page.content)} />
           { this.state.editButton ? <input type="button" onClick={this.unlock} value="Edit" /> : null }
           { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
           <NotificationSystem ref="notificationSystem" />

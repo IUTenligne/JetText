@@ -30,28 +30,29 @@ var Page = React.createClass({
 
   render: function() {
     var page = this.state.page;
+
     return (
         <div className="col-lg-12">
             <nav className="navbar navbar-default navbar-static-top" role="navigation">
                 <div className="navbar-header">
                     <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <i className="fa fa-bars">dfgdqgg</i>
+                      <i className="fa fa-bars">dfgdqgg</i>
                     </button>
                     <a className="navbar-brand" href={"/containers/"+page.container_id}>
                         <img src="/templates/iutenligne/img/cartable.png" border="0"/>
                         <h1>
-                            Le super truc
+                          Le super truc
                         </h1>
                     </a>
                 </div> 
                 <div className="navbar-default sidebar menu" role="navigation">
                     <div className="sidebar-nav navbar-collapse">
                         <a href="http://www.iutenligne.net/resources.html">
-                            <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
+                          <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
                         </a>
-                        <ul className="nav pages-panel sortable" id="side-menu">
-                            <Menu items={this.state.pages}/>
-                        </ul>
+                        <div id="side-menu">
+                          <Menu items={this.state.pages}/>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -63,7 +64,7 @@ var Page = React.createClass({
                 <div className="row">
                     <div className="col-lg-12">
                         <Editor key={Math.random()}>
-                            {this.props.params}
+                          {this.props.params}
                         </Editor>
                     </div>
                 </div>
