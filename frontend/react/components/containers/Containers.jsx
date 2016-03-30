@@ -34,7 +34,7 @@ var Containers = React.createClass({
                         <ul className="tags">
                             {results.map(function(result){
                                 return (
-                                    <li key={result.id}>
+                                    <li className="tag" key={result.id}>
                                         <div className="triangle">
                                             
                                         </div>

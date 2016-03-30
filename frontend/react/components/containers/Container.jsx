@@ -4,37 +4,60 @@ var Menu = require('./Menu.jsx');
 
 var Container = React.createClass({
 	getInitialState: function() {
-    return {
-      container: "",
-      pages: []
-    };
-  },
+        return {
+            container: "",
+            pages: []
+        };
+    },
   
-  componentDidMount: function() {
-    this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
-      this.setState({
-        container: result.container,
-        pages: result.pages
-      });
-    }.bind(this));
-  },
+    componentDidMount: function() {
+        this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
+            this.setState({
+                container: result.container,
+                pages: result.pages
+            });
+        }.bind(this));
+    },
 
-  componentWillUnmount: function() {
-    this.serverRequest.abort();
-  },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
 
-  render: function() {
-  	var container = this.state.container;
-  	var pages = this.state.pages;
-    return (
-    	<div>
-	      <div key={container.id}>
-	        {container.id} - {container.name} - {container.content}
-	      </div>
-        <Menu items={pages}/>
-	    </div>
-    );
-  }
+    render: function() {
+        var container = this.state.container;
+        var pages = this.state.pages;
+        return (
+        	<div className="containers">
+                <div className="row">
+                    <div className="col-lg-12">
+                  	     <div className="tags">
+                            <div className="tag" key={container.id}>
+                                <div className="triangle">
+                                </div>
+                                <div className="contenu">
+                                    <div className="img">
+                                        <img src="/templates/iutenligne/img/cartable.png" border="0"/>
+                                    </div>
+                                    <div className="elem">
+                                        <div className="name">
+                                            {container.id}
+                                        </div>
+                                        <div className="option">
+                                            {container.name} - {container.content}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                  	     </div>
+                        <Menu className="menu" items={pages}>
+                            <ul>
+                            </ul>
+                        </Menu>
+                    </div>
+                </div>
+    	    </div>
+        );
+    }
 });
 
 module.exports = Container;
