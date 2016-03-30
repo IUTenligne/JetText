@@ -3,12 +3,27 @@
 
 
 /* pour les pages login*/
-.middle{
-	.actions{
-		.btn{
+.middle {
+	.actions {
+		.btn {
 			background: $blue;
 			border-color: #517cae;
 			margin-top: 5px;
+		}
+	}
+}
+/* pour show */
+.containers {
+	li {
+		display: inline-block;
+		width: 100%;
+		i {
+			color:#383838;
+			font-size: 25px;
+			margin-right: 10px;
+		}
+		a,i{
+			vertical-align: middle;
 		}
 	}
 }
