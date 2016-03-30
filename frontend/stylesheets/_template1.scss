@@ -14,16 +14,92 @@
 }
 /* pour show */
 .containers {
-	li {
-		display: inline-block;
-		width: 100%;
-		i {
-			color:#383838;
-			font-size: 25px;
-			margin-right: 10px;
-		}
-		a,i{
-			vertical-align: middle;
+	margin: 10px;
+	padding: 0;
+	.row, .col-lg-12{
+		margin: 0;
+		padding: 0;
+		.tags{
+			margin:0;
+			padding:0;
+			position:absolute;
+			list-style: none;
+			li {
+				line-height:24px;
+				position:relative;
+				display: inline-block;
+				margin-top: 15px;
+				width: 70%;
+				.triangle{
+					content:"";
+					float:left;
+					position:absolute;
+					vertical-align: middle;
+					top:0;
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 30px 43px 30px 0;
+					border-color: transparent #F7F6F1 transparent transparent;
+				}
+				.contenu{
+					-moz-border-radius-bottomright:4px;
+					-webkit-border-bottom-right-radius:4px;	
+					border-bottom-right-radius:4px;
+					-moz-border-radius-topright:4px;
+					-webkit-border-top-right-radius:4px;	
+					border-top-right-radius:4px;
+					background:#F7F6F1;
+					vertical-align: middle;
+					margin-left: 43px;
+					padding-left: 15px;
+					height: 60px;
+					padding-top: 5px;
+					.img{
+						color:#383838;
+						font-size: 40px;
+						margin-left: 10px;
+						display: inline-block;
+						vertical-align: middle;
+					}
+					.img:after{
+						content:"";
+						position:absolute;
+						top:26px;
+						left:0;
+						margin-left: 48px;
+						float:left;
+						width:7px;
+						height:7px;
+						-moz-border-radius:10px;
+						-webkit-border-radius:10px;
+						border-radius:10px;
+						background:#fff;
+						-moz-box-shadow:-1px -1px 2px #808080;
+						-webkit-box-shadow:-1px -1px 2px #808080;
+						box-shadow:-1px -1px 2px #808080;
+					}
+					.elem{
+						display: inline-block;
+						vertical-align: middle;
+						text-align: center;
+						padding-left: 20px;
+						width: 80%;
+						.option{
+							border-top: 1px solid #D6D7D1;
+							a{
+								padding:0 10px 0 12px;
+								color:#383838;
+								text-decoration:none;
+								font-size: 17px;
+							}
+							a:hover{
+								color:#D6D7D1;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
