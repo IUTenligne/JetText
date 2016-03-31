@@ -22,7 +22,7 @@ class PagesController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.json { render json: {page: @page, pages: @pages} }
+      format.json { render json: {page: @page, container: @page.container.name, pages: @pages} }
     end 
   end
 

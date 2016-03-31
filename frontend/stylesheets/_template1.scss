@@ -33,8 +33,8 @@
 				position:relative;
 				display: block;
 				margin-top: 15px;
-				min-width: 280px;
-				max-width: 400px;
+				min-width: 420px;
+				max-width: 450px;
 				.triangle {
 					content:"";
 					float:left;
@@ -105,10 +105,6 @@
 					}
 				}
 			}
-			.tagWidth{
-				min-width: 420px;
-				max-width: 450px;
-			}
 		}
 	}	
 	ul.menu{
@@ -131,24 +127,30 @@
 				margin-left: 7px;
 				min-width: 394px;
 				max-width: 424px;
+				i{
+					color:#989897;
+					font-size: 22px;
+					padding-right: 15px;
+				}
 			}
 		}
 	}
 
 }
 /* pour show */
-.col-lg-12{
+.col-lg-12 {
 	margin: 0;
 	padding: 0;
+
 	@include span(12 of 12);
 	nav {
 		margin-bottom: 0;
-		ul.navbar-top-links li{
-			display: inline-block;
-		}
+		background:#F8F8F8;
+		background-size: cover;
+		margin:0;
+  		padding:0;
 		div.navbar-header {
 			float: none !important;
-			z-index: 200;
 			padding-bottom: 5px;
 			button {
 				i {
@@ -160,7 +162,7 @@
 				color: #777;
 				float: none;
 				line-height: 50px;
-				img, h1{
+				img, h1 {
 					display: inline-block;
 					margin: 0;
 					vertical-align: middle;
@@ -173,56 +175,27 @@
 		}
 		/* pour le menu a droite */
 		div.sidebar {
-			padding-right: 0;
-    		padding-left: 0;
 			.sidebar-nav {
-				ul#side-menu {
-					border-bottom: 1px solid #e7e7e7;
-					margin-bottom: 10px;
-					* {
-						text-align: left;
-					}
-					a {
-						display: block;
-						text-decoration: none;
-						li {
-							border-bottom: 1px solid #e7e7e7;
-							padding: 10px 10px;
-							i{
-								float: right;
-							}
-						}
-					}
-					a.active,a:hover {
-			    		background-color: #eee;
-			    		text-decoration: none;
-					}
-					ul.menu {
-						width: span( 12 of 12);
-						position: relative;
-						display: block;
-						border-bottom: 1px solid #e7e7e7;
-						li {
-							list-style: none;
-							border: none;
-							ul{
-								li{
-									padding-left: 15px;
-								}
-							}
-						}
-					}
-				}
 			}
 		}
 	}
-	div#page-wrapper{
-		div.row{
-			div.editable_elem{
-				.btn{
-					float: right;
-					margin-top: 10px;
-					background: $blue;
+	div#page-wrapper {
+		padding: 0 15px;
+    	min-height: 800px;
+		div.row, div.col-lg-12{
+			div.editor {
+				background: #66CCFF;
+				@include span(10 of 12);
+			}
+			div.menuEditor {
+				@include span(2 of 12);
+				background: pink;
+				margin: 0;
+				padding: 0;
+				ul {
+					list-style: none;
+					margin: 0;
+					padding: 0;
 				}
 			}
 		}
@@ -240,10 +213,10 @@
 	.col-lg-12{
 		nav{
 			.sidebar {
-				display: block;
-				position: absolute;
-				z-index: -100;		    	
-				width: span(3 of 12);
+				z-index: 1;
+        		position: absolute;
+        		width: 250px;
+        		min-height: 778px;
 				ul li {
 					#add_new_page, a {
 						text-align: center;
@@ -260,9 +233,9 @@
 		}
 		#page-wrapper {
 			position: inherit;
-			margin-left: span(3 of 12);
-			padding: 0 30px;
-			border-left: 1px solid #e7e7e7;
+        	margin: 0 0 0 250px;
+        	padding: 0 30px;
+        	border-left: 1px solid #e7e7e7;
 		}
 	}
 }

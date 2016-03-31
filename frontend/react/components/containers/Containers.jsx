@@ -40,7 +40,7 @@ var Containers = React.createClass({
                                         </div>
                                         <div className="contenu">
                                             <div className="img">
-                                                <i className="fa fa-file-o"></i>
+                                                <img src="/templates/iutenligne/img/cartable.png" border="0"/>
                                             </div>
                                             <div className="elem">
                                                 <div className="name">

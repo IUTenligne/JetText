@@ -9,7 +9,9 @@ var Menu = React.createClass({
                     {this.props.items.map(function(page){
                         return (
                         <li key={page.id}>
-                            <Link to={"/pages/"+page.id}>{page.name}</Link>
+                            <Link to={"/pages/"+page.id}>
+                                <i className="fa fa-file-o"></i> {page.name}
+                            </Link>
                         </li>
                     );
                 })}

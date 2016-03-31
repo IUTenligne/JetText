@@ -53,9 +53,9 @@ var Container = React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-lg-12">
-                <Menu className="menu" items={pages}>
-                    
-                </Menu>
+                        <Menu className="menu" items={pages}>
+                            
+                        </Menu>
                      </div>
                 </div>
     	    </div>
