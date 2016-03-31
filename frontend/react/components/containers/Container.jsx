@@ -31,7 +31,7 @@ var Container = React.createClass({
                 <div className="row">
                     <div className="col-lg-12">
                   	     <div className="tags">
-                            <div className="tag" key={container.id}>
+                            <div className="tag tagWidth" key={container.id}>
                                 <div className="triangle">
                                 </div>
                                 <div className="contenu">
@@ -49,11 +49,14 @@ var Container = React.createClass({
                                 </div>
                             </div> 
                   	     </div>
-                        <Menu className="menu" items={pages}>
-                            <ul>
-                            </ul>
-                        </Menu>
                     </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-12">
+                <Menu className="menu" items={pages}>
+                    
+                </Menu>
+                     </div>
                 </div>
     	    </div>
         );
