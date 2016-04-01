@@ -16,7 +16,7 @@ var Editor = React.createClass({
         this.serverRequest = $.get("/pages/"+this.props.children.id+".json", function (result) {
             this.setState({
                 page: result.page,
-            charontentValue: result.page.content
+                charontentValue: result.page.content
             });
         }.bind(this));
         this._notificationSystem = this.refs.notificationSystem;
@@ -73,42 +73,58 @@ var Editor = React.createClass({
                     <h2 className="page-header">{page.name}</h2>
                     <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
                 </div>
-                {results.map(function(result){
-                    return (
-                        <div className="menuEditor">
-                            <div className="hexagon">
-                                <Link to={"/containers/"+page.container_id}>
-                                    <i className="fa fa-home"></i>
-                                </Link>
-                            </div>
-                            <div className="line"></div>
-                            <div className="round"></div>
-                            <div className="line"></div>
 
-                            <div className="hexagon">
-                                <i className="fa fa-pencil"></i>
-                                    { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-                                <i className="fa fa-floppy-o"></i>
-                                { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-                            </div>
-                            <div className="line"></div>
-                            <div className="round"></div>
-                            <div className="line"></div>
+                <div className="menuEditor">
+                    <div className="hexagon" >
+                        <i className="fa fa-home"></i>
+                    </div>
 
-                            <div className="hexagon">
-                                <i className="fa fa-upload"></i>
-                            </div>
+                    <div className="line"></div>
+                    <div className="round"></div>
+                    <div className="line"></div>
 
-                            <div className="line"></div>
-                            <div className="round"></div>
-                            <div className="line"></div>
+                    <div className="hexagon">
+                        <i className="fa fa-pencil"></i>
+                            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                        <i className="fa fa-floppy-o"></i>
+                        { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                    </div>
+                    <div className="line"></div>
+                    <div className="round"></div>
+                    <div className="line"></div>
 
+                    <div className="hexagon">
+                        <i className="fa fa-upload"></i>
+                    </div>
+
+                    <div className="line"></div>
+                    <div className="round"></div>
+                    <div className="line"></div>
+
+                    <div className="hexagon">
+                        <i className="fa fa-share-alt"></i>
+                    </div>
+                    
+                </div>
+                <div className="menuShare">
+                <ul className="share">
+                        <li>
                             <div className="hexagon">
-                                <i className="fa fa-share-alt"></i>
+                                <i className="fa fa-facebook"></i>
                             </div>
-                        </div>
-                    );
-                })}
+                        </li>
+                        <li>
+                            <div className="hexagon">
+                                <i className="fa fa-twitter"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="hexagon">
+                                <i className="fa fa-envelope"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 <NotificationSystem ref="notificationSystem" />
             </div>
         );

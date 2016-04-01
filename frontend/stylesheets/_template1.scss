@@ -138,6 +138,55 @@
 
 }
 /* pour show */
+.hexagon {
+	display: inline-block;
+	position: relative;
+	background: #eeece1;
+	text-align: center;
+	text-decoration: none;
+	i{
+		position: relative;
+		z-index: 1;
+		font-size: 27px;
+		text-align: center;
+		line-height: 46px;
+		color: #4c4c4b;
+	}
+}
+.hexagon:after {
+ 	content: '';
+	position: absolute;
+	left: 0;
+	width: inherit;
+	height: inherit;
+	border-radius: inherit;
+	background: inherit;
+	transform: rotate(-60deg);
+}
+.hexagon:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	width: inherit;
+	height: inherit;
+	border-radius: inherit;
+	background: inherit;
+	transform: rotate(60deg);				
+}
+.hexagon:hover, .hexagon:hover::before, .hexagon:hover::after{
+	-webkit-box-shadow: 10px 0px 0px #888887,
+		-10px 0px 0px  #888887;
+	-moz-box-shadow:10px 0px 0px  #888887,
+		-10px 0px 0px  #888887;
+	-o-box-shadow:10px 0px 0px  #888887,
+		-10px 0px 0px  #888887;
+	box-shadow:2px 0px 0px  #888887,
+		-2px 0px 0px   #888887;	
+	border-radius: 3px / 6px;
+	i{
+		color: #888887;
+	}
+}
 .col-lg-12 {
 	margin: 0;
 	padding: 0;
@@ -194,6 +243,7 @@
 				float: right;
 				padding: 0;
 				width: 80px; 
+				background: green;
 				.round {
 					width: 9px;
 					height: 9px;
@@ -212,13 +262,8 @@
 					margin: 0 auto;
 				}
 				.hexagon {
-					display: inline-block;
-					position: relative;
 					width: 80px;
 					height: 46px;
-					background: #eeece1;
-					text-align: center;
-					text-decoration: none;
 					border-radius: 3px / 6px;
 					i{
 						position: relative;
@@ -228,33 +273,37 @@
     					line-height: 46px;
     					color: #4c4c4b;
 					}
+				}
+			}
+			.menuShare{
+				width: 40px;
+				float: right;
+				margin-top: 380px;
+				background: red;
+				ul.share{
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					li{
+						margin-right: span(12 of 12);
+						margin-top: 25px;
+						.hexagon{
+							width: 40px;
+							height: 23px;
+							border-radius: 2px / 3px;
+							i{
+		    					font-size: 17px;
+		    					text-align: center;
+		    					line-height: 23px;
+		    					color: #4c4c4b;
+							}
+						}
+					}
 					
 				}
-				.hexagon:after {
-				 	content: '';
-					position: absolute;
-					left: 0;
-					width: inherit;
-					height: inherit;
-					border-radius: inherit;
-					background: inherit;
-					transform: rotate(-60deg);
-				}
-				.hexagon:before {
-					content: '';
-					position: absolute;
-					left: 0;
-					width: inherit;
-					height: inherit;
-					border-radius: inherit;
-					background: inherit;
-					transform: rotate(60deg);				
-				}
-				.hexagon:hover {
-					i{
-						color: #888887;
-					}
-				}
+			}
+			.menuLine{
+				width: 40px;
 			}
 		}
 	}
