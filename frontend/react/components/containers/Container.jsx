@@ -36,7 +36,7 @@ var Container = React.createClass({
                                 </div>
                                 <div className="contenu">
                                     <div className="img">
-                                        <img src="/templates/iutenligne/img/cartable.png" border="0"/>
+                                        <i className="fa fa-folder-open-o"></i>
                                     </div>
                                     <div className="elem">
                                         <div className="name">

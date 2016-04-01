@@ -73,16 +73,43 @@ var Editor = React.createClass({
                     <h2 className="page-header">{page.name}</h2>
                     <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
                 </div>
-                <div className="menuEditor">
-                    <ul>
-                        <li>Containers</li>
-                        <li>{ this.state.editButton ? <input type="button" onClick={this.unlock} value="Edit" /> : null }</li>
-                        <li>{ this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }</li>
-                        <li>Generate</li>
-                        <li>Share</li>
-                    </ul>
-                    <NotificationSystem ref="notificationSystem" />
-                </div>
+                {results.map(function(result){
+                    return (
+                        <div className="menuEditor">
+                            <div className="hexagon">
+                                <Link to={"/containers/"+page.container_id}>
+                                    <i className="fa fa-home"></i>
+                                </Link>
+                            </div>
+                            <div className="line"></div>
+                            <div className="round"></div>
+                            <div className="line"></div>
+
+                            <div className="hexagon">
+                                <i className="fa fa-pencil"></i>
+                                    { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                                <i className="fa fa-floppy-o"></i>
+                                { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                            </div>
+                            <div className="line"></div>
+                            <div className="round"></div>
+                            <div className="line"></div>
+
+                            <div className="hexagon">
+                                <i className="fa fa-upload"></i>
+                            </div>
+
+                            <div className="line"></div>
+                            <div className="round"></div>
+                            <div className="line"></div>
+
+                            <div className="hexagon">
+                                <i className="fa fa-share-alt"></i>
+                            </div>
+                        </div>
+                    );
+                })}
+                <NotificationSystem ref="notificationSystem" />
             </div>
         );
     }
