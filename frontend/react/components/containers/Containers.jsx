@@ -62,10 +62,10 @@ var Containers = React.createClass({
                                                 {result.name}
                                             </div>
                                             <div className="option">
-                                                <Link to={"/containers/"+result.id}>
+                                                <Link to={"/container/"+result.id}>
                                                     <i className="fa fa-pencil"></i>
                                                 </Link>
-                                                <Link to={"/containers/"+result.id}>
+                                                <Link to={"/container/"+result.id}>
                                                     <i className="fa fa-trash-o"></i>
                                                 </Link>
                                             </div>

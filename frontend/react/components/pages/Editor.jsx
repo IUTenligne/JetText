@@ -30,12 +30,14 @@ var Sharebar = React.createClass({
 var Editor = React.createClass({
   getInitialState: function() {
     return {
+      pageContent: '',
       editButton: true,
       saveButton: false
     };
   },
 
   componentDidMount: function() {
+    this.setState({ pageContent: this.props.page.content });
     this._notificationSystem = this.refs.notificationSystem;
   },
 
@@ -49,7 +51,7 @@ var Editor = React.createClass({
     $.ajax({
       type: "PUT",
       url: '/pages/update_ajax',
-      data: { id: page.id, name: page.name, content: page.content }
+      data: { id: page.id, name: page.name, content: this.state.pageContent }
     });
 
     // NotificationSystem popup
@@ -84,6 +86,12 @@ var Editor = React.createClass({
         <div className="editor">
           <h2 className="page-header">{page.name}</h2>
           <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
+          <div className="hexagon">
+            <i className="fa fa-pencil"></i>
+            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+            <i className="fa fa-floppy-o"></i>
+            { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+          </div>
         </div>
 
         <div className="menuEditor">
