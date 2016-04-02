@@ -7,6 +7,7 @@ var Page = React.createClass({
   getInitialState: function() {
     return {
       page: '',
+      container: '',
       pages: []
     };
   },
@@ -15,6 +16,7 @@ var Page = React.createClass({
     this.serverRequest = $.get("/pages/"+this.props.params.id+".json", function (result) {
       this.setState({
         page: result.page,
+        container: result.container,
         pages: result.pages
       });
     }.bind(this));
@@ -41,7 +43,7 @@ var Page = React.createClass({
                     <a className="navbar-brand" href={"/containers/"+page.container_id}>
                         <img src="/templates/iutenligne/img/cartable.png" border="0"/>
                         <h1>
-                          Le super truc
+                          {this.state.container}
                         </h1>
                     </a>
                 </div> 

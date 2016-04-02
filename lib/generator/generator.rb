@@ -52,6 +52,10 @@ module Generator
       end
     end
 
+    #Dir.chdir("#{Rails.public_path}/#{container.url}/") do |directory|
+    #  `zip -R "target.zip" "files/application/dossier-presse-2016.pdf" "files/image/capturet-ext.png" "index.html" "Page 1.html"`
+    #end
+
     return true
   end
 
