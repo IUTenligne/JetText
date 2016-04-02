@@ -84,14 +84,12 @@ var Editor = React.createClass({
     return (
       <div className="col-lg-12">
         <div className="editor">
+          <i className="fa fa-pencil"></i>
+          { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+          <i className="fa fa-floppy-o"></i>
+          { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
           <h2 className="page-header">{page.name}</h2>
-          <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
-          <div className="hexagon">
-            <i className="fa fa-pencil"></i>
-            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-            <i className="fa fa-floppy-o"></i>
-            { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-          </div>
+          <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
         </div>
 
         <div className="menuEditor">
