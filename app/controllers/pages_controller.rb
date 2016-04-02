@@ -15,14 +15,14 @@ class PagesController < ApplicationController
     @upload = Upload.new
     @uploads = Upload.all
     @container = Container.find(@page.container_id)
-    @pages = Page.select("id, name").where(:container_id => @container.id)
+    @pages = Page.select("id, name").where(:container_id => @container.id).order(weight: :asc)
     @new_page = Page.new
     unless @page.user_id == current_user.id
       redirect_to action: "index"
     end
     respond_to do |format|
       format.html
-      format.json { render json: {page: @page, container: @page.container.name, pages: @pages} }
+      format.json { render json: {page: @page, pages: @pages} }
     end 
   end
 
@@ -74,14 +74,14 @@ class PagesController < ApplicationController
   def update_ajax
     @page = Page.find(params[:id])
     if current_user.id == @page.user_id
-      @page.update_attribute(:content, params[:content])
+      @page.update_attributes(:name => params[:name], :content => params[:content])
     end
     render :nothing => true
   end
 
   def sort
     params[:order].each do |key,value|
-      Page.find(value[:id]).update_attribute(:weight, value[:position])
+      Page.find(value[:id]).update_attribute(:weight, value[:weight])
     end
     render :nothing => true
   end
