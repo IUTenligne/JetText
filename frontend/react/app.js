@@ -14,7 +14,7 @@ $(document).ready(function () {
 	  	<Route path="/" component={App}/>	
 	    <Route path="containers" component={Containers}/>
 	    <Route path="containers/:id" component={Container}/>
-	    <Route path="pages/:id" component={Page}/>
+	    <Route path="pages/:id/:pageId" component={Container}/>
 	  </Router>
 	), document.getElementById('appcontainer'))
 });

@@ -6,6 +6,7 @@ var dragula = require('react-dragula');
 var Menu = React.createClass({
   getInitialState: function() {
     return {
+      currentPage: '',
       pagesOrder: []
     };
   },
@@ -18,7 +19,6 @@ var Menu = React.createClass({
   },
 
   moveItems: function(drake) {
-    console.log("moveitns");
     drake.on('drag', function(element, source) {
       var index = [].indexOf.call(element.parentNode.children, element);
     });
@@ -41,6 +41,14 @@ var Menu = React.createClass({
 
   _notificationSystem: null,
 
+  changePage: function(event) {
+    this.setState({ currentPage: event.target.id });
+  },
+
+  _checkActive: function(id) {
+    return (id == this.state.currentPage) ? "active" : ""
+  },
+
   render: function() {
     return (
       <div>
@@ -48,7 +56,7 @@ var Menu = React.createClass({
           {this.props.items.map((page, i) => {
             return (
               <li key={page.id} data-pos={i} data-id={page.id}>
-                <Link to={"/pages/"+page.id} data-pos={i} data-id={page.id}>{page.name}</Link>
+                <Link to={"/pages/"+this.props.container+"/"+page.id} key={page.id} id={page.id} data-pos={i} data-id={page.id} className={this._checkActive(page.id)} onClick={this.changePage}>{page.name}</Link>
               </li>
             );
           })}

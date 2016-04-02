@@ -1,42 +1,55 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
 
-var Editor = React.createClass({
+var Sharebar = React.createClass({
+  render: function() {
+    return(
+      <div className="menuShare">
+        <ul className="share">
+          <li>
+              <div className="hexagon">
+                  <i className="fa fa-facebook"></i>
+              </div>
+          </li>
+          <li>
+              <div className="hexagon">
+                  <i className="fa fa-twitter"></i>
+              </div>
+          </li>
+          <li>
+              <div className="hexagon">
+                  <i className="fa fa-envelope"></i>
+              </div>
+          </li>
+        </ul>
+      </div>
+    )
+  }
+});
 
+var Editor = React.createClass({
   getInitialState: function() {
     return {
-      page: '',
-      pageName: '',
-      pageContent: '',
       editButton: true,
       saveButton: false
     };
   },
-  
-  componentDidMount: function() {
-    this.serverRequest = $.get("/pages/"+this.props.children.id+".json", function (result) {
-      this.setState({
-        page: result.page,
-        pageName: result.page.name,
-        pageContent: result.page.content
-      });
-    }.bind(this));
 
+  componentDidMount: function() {
     this._notificationSystem = this.refs.notificationSystem;
   },
 
   componentWillUnmount: function() {
-    this.serverRequest.abort();
     var editor = CKEDITOR.instances['editor1'];
     if (editor) { editor.destroy(true); }
   },
 
   postData: function(event) {
-    var page = this.state.page;
+    var page = this.props.page;
     $.ajax({
       type: "PUT",
       url: '/pages/update_ajax',
-      data: { id: page.id, name: this.state.pageName, content: this.state.pageContent }
+      data: { id: page.id, name: page.name, content: page.content }
     });
 
     // NotificationSystem popup
@@ -64,70 +77,52 @@ var Editor = React.createClass({
 
   _notificationSystem: null,
 
-    render: function() {
-        var page = this.state.page;
-        return (
-            <div className="col-lg-12">
-                <div className="editor">
-                    <h2 className="page-header">{page.name}</h2>
-                    <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
-                </div>
+  render: function() {
+    var page = this.props.page;
+    return (
+      <div className="col-lg-12">
+        <div className="editor">
+          <h2 className="page-header">{page.name}</h2>
+          <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />
+        </div>
 
-                <div className="menuEditor">
-                    <div className="hexagon" >
-                        <i className="fa fa-home"></i>
-                    </div>
+        <div className="menuEditor">
+          <div className="hexagon" >
+            <i className="fa fa-home"></i>
+          </div>
 
-                    <div className="line"></div>
-                    <div className="round"></div>
-                    <div className="line"></div>
+          <div className="line"></div>
+          <div className="round"></div>
+          <div className="line"></div>
 
-                    <div className="hexagon">
-                        <i className="fa fa-pencil"></i>
-                            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-                        <i className="fa fa-floppy-o"></i>
-                        { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-                    </div>
-                    <div className="line"></div>
-                    <div className="round"></div>
-                    <div className="line"></div>
+          <div className="hexagon">
+            <i className="fa fa-pencil"></i>
+            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+            <i className="fa fa-floppy-o"></i>
+            { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+          </div>
+          <div className="line"></div>
+          <div className="round"></div>
+          <div className="line"></div>
 
-                    <div className="hexagon">
-                        <i className="fa fa-upload"></i>
-                    </div>
+          <div className="hexagon">
+            <i className="fa fa-upload"></i>
+          </div>
 
-                    <div className="line"></div>
-                    <div className="round"></div>
-                    <div className="line"></div>
+          <div className="line"></div>
+          <div className="round"></div>
+          <div className="line"></div>
 
-                    <div className="hexagon">
-                        <i className="fa fa-share-alt"></i>
-                    </div>
-                    
-                </div>
-                <div className="menuShare">
-                <ul className="share">
-                        <li>
-                            <div className="hexagon">
-                                <i className="fa fa-facebook"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="hexagon">
-                                <i className="fa fa-twitter"></i>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="hexagon">
-                                <i className="fa fa-envelope"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <NotificationSystem ref="notificationSystem" />
-            </div>
-        );
-    }
+          <div className="hexagon">
+            <i className="fa fa-share-alt"></i>
+          </div>
+        </div>
+        
+        <Sharebar />
+        <NotificationSystem ref="notificationSystem" />
+      </div>
+    );
+  }
 });
 
 function createMarkup(data) {
