@@ -10,18 +10,18 @@ var Container = React.createClass({
       newPageValue: ''
     };
   },
-  
+
   componentDidMount: function() {
-    this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
-      this.setState({
-        container: result.container,
-        pages: result.pages
-      });
-    }.bind(this));
+      this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
+          this.setState({
+              container: result.container,
+              pages: result.pages
+          });
+      }.bind(this));
   },
 
   componentWillUnmount: function() {
-    this.serverRequest.abort();
+      this.serverRequest.abort();
   },
 
   handleChange: function(event) {
@@ -37,46 +37,42 @@ var Container = React.createClass({
   },
 
   render: function() {
-        var container = this.state.container;
-        console.log(container);
-        return (
-            <div className="col-lg-12">
-                <nav className="navbar navbar-default navbar-static-top" role="navigation">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <i className="fa fa-bars"></i>
-                        </button>
-                        <a className="navbar-brand" href={"/containers/"+container.id}>
-                            <img src="/templates/iutenligne/img/cartable.png" border="0"/>
-                            <h1>
-                                {container.name} 
-                            </h1>
-                        </a>
-                    </div> 
-                    <div className="navbar-default sidebar menu" role="navigation">
-                        <div className="sidebar-nav navbar-collapse">
-                            <a href="http://www.iutenligne.net/resources.html">
-                                <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
-                            </a>
-                            <ul className="nav pages-panel sortable" id="side-menu">
-                                <Menu items={this.state.pages}/>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <div id="page-wrapper">
-                    <div className="row">
-                        <Link to={"/containers/"+container.id}>Containers</Link>
-                        <input type="button" onClick={this.generateContainer} value="Generate" />
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-12">
-                            Pas encore de contenu ici
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+      var container = this.state.container;
+      var pages = this.state.pages;
+      return (
+        <div className="containers">
+              <div className="row">
+                  <div className="col-lg-12">
+                       <div className="tags">
+                          <div className="tag tagWidth" key={container.id}>
+                              <div className="triangle">
+                              </div>
+                              <div className="contenu">
+                                  <div className="img">
+                                      <i className="fa fa-folder-open-o"></i>
+                                  </div>
+                                  <div className="elem">
+                                      <div className="name">
+                                          {container.id}
+                                      </div>
+                                      <div className="option">
+                                          {container.name} - {container.content}
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> 
+                       </div>
+                  </div>
+              </div>
+              <div className="row">
+                  <div className="col-lg-12">
+                      <Menu className="menu" items={pages}>
+                          
+                      </Menu>
+                   </div>
+              </div>
+        </div>
+      );
     }
 });
 

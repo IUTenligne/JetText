@@ -10,15 +10,15 @@ var Containers = React.createClass({
   },
   
   componentDidMount: function() {
-    this.serverRequest = $.get("/containers.json", function (result) {
-      this.setState({
-        containersList: result
-      });
-    }.bind(this));
+      this.serverRequest = $.get("/containers.json", function (result) {
+          this.setState({
+              containersList: result
+          });
+      }.bind(this));
   },
 
   componentWillUnmount: function() {
-    this.serverRequest.abort();
+      this.serverRequest.abort();
   },
 
   handleChange: function(event) {
@@ -38,26 +38,46 @@ var Containers = React.createClass({
   render: function() {
     var results = this.state.containersList;
     return (
-      <div>
-        <div key={Math.random()}>
-          {results.map(function(result){
-            return (
-              <li key={result.id}>
-                <Link to={"/containers/"+result.id}>{result.name}</Link>
-              </li>
-            );
-          })}
+        <div className="containers">
+            <div className="row">
+                <div className="col-lg-12">
+                    <h1 className="page-header">Vos Containers</h1>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-lg-12">
+                    <ul className="tags">
+                        {results.map(function(result){
+                            return (
+                                <li className="tag" key={result.id}>
+                                    <div className="triangle">
+                                        
+                                    </div>
+                                    <div className="contenu">
+                                        <div className="img">
+                                            <i className="fa fa-folder-o"></i>
+                                        </div>
+                                        <div className="elem">
+                                            <div className="name">
+                                                {result.name}
+                                            </div>
+                                            <div className="option">
+                                                <Link to={"/containers/"+result.id}>
+                                                    <i className="fa fa-pencil"></i>
+                                                </Link>
+                                                <Link to={"/containers/"+result.id}>
+                                                    <i className="fa fa-trash-o"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div>
-          <input
-            type="text"
-            id="new_container"
-            value={this.state.newContainerValue}
-            onChange={this.handleChange}
-          />
-          { this.state.newContainerValue ? <input type="button" onClick={this.postData} value="Save" /> : null }
-        </div>
-      </div>
     );
   }
 });
