@@ -1,7 +1,7 @@
 <% unless user_signed_in? %>
-	
-    <div class="col-md-4 col-md-offset-4">
+  <div>
 		<%= render :partial => 'devise/sessions/new' %>
 	</div>
-  		
+<% else %>
+	<div id="appcontainer" class="outlet"></div>
 <% end %>

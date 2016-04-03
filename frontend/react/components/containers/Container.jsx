@@ -42,7 +42,6 @@ var Container = React.createClass({
     render: function() {
       var container = this.state.container;
       var pages = this.state.pages;
-      console.log(this.props.routeParams);
       return (
         <div className="containers">
               <div className="row">
@@ -75,7 +74,7 @@ var Container = React.createClass({
                 </div>
                 <div className="col-lg-12">
                     <div id="page-wrapper">
-                        { this.props.routeParams.pageId ? <Page key={Math.random()} page={this.props.routeParams.pageId} /> : <Page key={Math.random()} page={this.state.activePage.id} /> }
+                        { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
                     </div>
                 </div>
         </div>

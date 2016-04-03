@@ -7,14 +7,19 @@ var Containers = require('./components/containers/Containers.jsx');
 var Container = require('./components/containers/Container.jsx');
 var Page = require('./components/pages/Page.jsx');
 var Menu = require('./components/containers/Menu.jsx');
+var Test = require('./components/containers/Test.jsx');
 
 $(document).ready(function () {
-  ReactDOM.render((
-	  <Router history={hashHistory}>
-	  	<Route path="/" component={App}/>	
-	    <Route path="containers" component={Containers}/>
-	    <Route path="container/:id" component={Container}/>
-	    <Route path="container/:id/:pageId" component={Container}/>
-	  </Router>
-	), document.getElementById('appcontainer'))
+	if (document.getElementById('appcontainer')) {
+	  ReactDOM.render((
+		  <Router history={hashHistory}>
+		  	<Route path="/" component={App}/>	
+		    <Route path="containers" component={Containers}/>
+		    <Route path="container/:id" component={Container}/>
+		    <Route path="container/:id/:pageId" component={Container}/>
+		  </Router>
+		), document.getElementById('appcontainer'));
+	} else if (document.getElementById('testcontainer')) {
+		ReactDOM.render(<Test />, document.getElementById('testcontainer'));
+	}
 });

@@ -37,6 +37,12 @@ html, body {
 				@include span(12 of 12);
 				margin-top: 50px;
 				padding: 0;
+
+				.row {
+					h1.page-header {
+						color: $lightBlue;
+					} 
+				}
 			}
 
 			.container{

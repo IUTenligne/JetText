@@ -50,16 +50,12 @@ var Containers = React.createClass({
                         {results.map(function(result){
                             return (
                                 <li className="tag" key={result.id}>
-                                    <div className="triangle">
-                                        
-                                    </div>
                                     <div className="contenu">
-                                        <div className="img">
-                                            <i className="fa fa-folder-o"></i>
-                                        </div>
                                         <div className="elem">
                                             <div className="name">
-                                                {result.name}
+                                                <Link to={"/container/"+result.id}>
+                                                    {result.name}
+                                                </Link>
                                             </div>
                                             <div className="option">
                                                 <Link to={"/container/"+result.id}>

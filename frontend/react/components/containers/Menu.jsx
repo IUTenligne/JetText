@@ -12,6 +12,13 @@ var Menu = React.createClass({
   },
 
   componentDidMount: function () {
+    //storing pages order
+    var order = [];
+    {this.props.items.map((page, i) => {
+      order.push(page.id);
+    })};
+    this.setState({pagesOrder: order});
+
     var container = ReactDOM.findDOMNode(this.refs.dragulable);
     var drake = dragula([container]);
 
