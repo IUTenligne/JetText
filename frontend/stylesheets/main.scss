@@ -6,6 +6,7 @@ html, body {
 	@include container(100%);
 	margin: 0;
 	padding: 0;
+	background: #f6f6f6 !important;
 
 	header {
 		@import "header";
@@ -13,11 +14,9 @@ html, body {
 
 	section#main-outlet {
 		display: flex;
-	  	min-height: 90vh;
+	  min-height: 90vh;
 		flex: 1 0 auto;
 		margin-top: 50px;
-		margin: 0;
-		padding: 0 !important;
 		@include span(12 of 12);
 
 		div#wrapper {
@@ -35,12 +34,12 @@ html, body {
 			.outlet {
 				@import 'template1';
 				@include span(12 of 12);
-				margin-top: 50px;
 				padding: 0;
 
 				.row {
 					h1.page-header {
-						color: $lightBlue;
+						color: $darkGrey;
+						border: none;
 					} 
 				}
 			}

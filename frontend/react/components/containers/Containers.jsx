@@ -45,33 +45,31 @@ var Containers = React.createClass({
                 </div>
             </div>
             <div className="row">
-                <div className="col-lg-12">
-                    <ul className="tags">
-                        {results.map(function(result){
-                            return (
-                                <li className="tag" key={result.id}>
-                                    <div className="contenu">
-                                        <div className="elem">
-                                            <div className="name">
-                                                <Link to={"/container/"+result.id}>
-                                                    {result.name}
-                                                </Link>
-                                            </div>
-                                            <div className="option">
-                                                <Link to={"/container/"+result.id}>
-                                                    <i className="fa fa-pencil"></i>
-                                                </Link>
-                                                <Link to={"/container/"+result.id}>
-                                                    <i className="fa fa-trash-o"></i>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
+              {results.map(function(result){
+                return (
+                  <div className="col-lg-4 tags" key={result.id}>  
+                    <li className="tag">
+                        <div className="contenu">
+                            <div className="elem">
+                                <div className="name">
+                                    <Link to={"/container/"+result.id}>
+                                        {result.name}
+                                    </Link>
+                                </div>
+                                <div className="option">
+                                    <Link to={"/container/"+result.id}>
+                                        <i className="fa fa-pencil"></i>
+                                    </Link>
+                                    <Link to={"/container/"+result.id}>
+                                        <i className="fa fa-trash-o"></i>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div> 
+                    </li>
+                  </div>
+                );
+              })}
             </div>
         </div>
     );

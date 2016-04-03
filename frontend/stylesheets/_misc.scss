@@ -1,3 +1,5 @@
+@import "vars";
+
 @font-face {
   font-family: 'Lobster-Regular';
   src:url('Lobster-Regular.ttf') format('truetype');
@@ -79,4 +81,11 @@
 
 .sortable {
   display: list-item;
+}
+
+.btn-success {
+  border-radius: 6px !important;
+  border: none !important;
+  background: $lightBlue !important;
+  box-shadow: inset 0 1px $blue,0px 5px $blue,0 3px 5px rgba(0,0,0,.3) !important;
 }
