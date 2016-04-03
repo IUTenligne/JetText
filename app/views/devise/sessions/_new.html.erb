@@ -4,7 +4,7 @@
             <div class="login-panel panel panel-default">
 
                 <div class="panel-heading">
-                    <h2 class="panel-title">Log in</h2>
+                    <h2 class="panel-title"><%= t("Log in") %></h2>
                 </div>
 
                 <div class="panel-body">
@@ -15,19 +15,19 @@
                         </div>
 
                         <div class="field form-group">
-                            <%= f.label :password %><br />
+                            <%= f.label t(:password) %><br />
                             <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
                         </div>
 
                         <% if devise_mapping.rememberable? -%>
                             <div class="field form-group">
                               <%= f.check_box :remember_me %>
-                              <%= f.label :remember_me %>
+                              <%= f.label t(:remember_me) %>
                             </div>
                         <% end -%>
 
                         <div class="actions">
-                            <%= f.submit "Log in", class: "btn btn-lg btn-success btn-block" %>
+                            <%= f.submit t(:login).capitalize, class: "btn btn-lg btn-success btn-block" %>
                         </div>
                     <% end %>
                 </div>

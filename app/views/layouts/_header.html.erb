@@ -8,13 +8,13 @@
   </button>
 	<div id="top-menu" class="header-collapse">
 		<ul>
-			<li><%= link_to :containers, containers_path, data: { no_turbolink: true } %></li>
-			<li><%= link_to :new_container, new_container_path %></li>
+			<li><%= link_to t(:containers), containers_path, data: { no_turbolink: true } %></li>
+			<li><%= link_to t(:new_container), new_container_path %></li>
 			<% if user_signed_in? %>
 				<% if current_user.firstname && current_user.lastname %>
 					<li>
 						<i class="fa fa-user"></i> <%= current_user.firstname + " " + current_user.lastname %>
-						<%= link_to :logout, destroy_user_session_path, :method => :delete  %>
+						<%= link_to t(:logout), destroy_user_session_path, :method => :delete  %>
 					</li>
 				<% end %>
 			<% end %>

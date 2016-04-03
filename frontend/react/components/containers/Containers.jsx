@@ -41,7 +41,7 @@ var Containers = React.createClass({
         <div className="containers">
             <div className="row">
                 <div className="col-lg-12">
-                    <h1 className="page-header">Vos Containers</h1>
+                    <h1 className="page-header">My containers</h1>
                 </div>
             </div>
             <div className="row">

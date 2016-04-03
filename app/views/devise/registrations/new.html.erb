@@ -4,7 +4,7 @@
             <div class="login-panel panel panel-default">
 
                 <div class="panel-heading">
-                    <h2 class="panel-title">Sign up</h2>
+                    <h2 class="panel-title"><%= t("Sign up") %></h2>
                 </div>
 
                 <div class="panel-body">
@@ -13,13 +13,13 @@
                       <%= devise_error_messages! %>
 
                         <div class="field form-group">
-                            <%= f.label :firstname %>
+                            <%= f.label t(:firstname) %>
                             <br />
                             <%= f.text_field :firstname, autofocus: true, :required => true, class: "form-control" %>
                         </div>
 
                         <div class="field form-group">
-                            <%= f.label :lastname %>
+                            <%= f.label t(:lastname) %>
                             <br />
                             <%= f.text_field :lastname, :required => true, class: "form-control" %>
                         </div>
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="field form-group">
-                            <%= f.label :password %>
+                            <%= f.label t(:password) %>
                             <% if @minimum_password_length %>
                             <em>(<%= @minimum_password_length %> characters minimum)</em>
                             <% end %><br />
@@ -38,12 +38,12 @@
                         </div>
 
                         <div class="field form-group">
-                            <%= f.label :password_confirmation %><br />
+                            <%= f.label t(:password_confirmation) %><br />
                             <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
                         </div>
 
                         <div class="actions">
-                            <%= f.submit "Sign up", class: "btn btn-lg btn-success btn-block"%>
+                            <%= f.submit t("Sign up"), class: "btn btn-lg btn-success btn-block"%>
                         </div>
                     <% end %>
                 </div>
