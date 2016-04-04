@@ -1,8 +1,8 @@
 @import "vars";
 
 @font-face {
-  font-family: 'Lobster-Regular';
-  src:url('Lobster-Regular.ttf') format('truetype');
+  font-family: 'Londrina';
+  src:url('LondrinaSolid-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -12,6 +12,12 @@
   src:url('Pacifico.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+@mixin specialFont($size) {
+  font: normal $size "Londrina",Helvetica,Arial,sans-serif !important;
+  letter-spacing: 1.3px;
+  text-rendering: optimizelegibility;
 }
 
 .cke_textarea_inline {
@@ -88,4 +94,18 @@
   border: none !important;
   background: $lightBlue !important;
   box-shadow: inset 0 1px $blue,0px 5px $blue,0 3px 5px rgba(0,0,0,.3) !important;
+  @include specialFont(1.7em);
+}
+
+.panel-heading {
+  background: $blue !important;
+}
+
+.panel-title {
+  color: $white !important;
+  @include specialFont(1.5em);
+}
+
+.page-header {
+  @include specialFont(2em);
 }

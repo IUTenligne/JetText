@@ -24,13 +24,13 @@
 			padding:0;
 			list-style: none;
 			.tag:hover {
-				background-color: $grey;
+				background-color: #eeeeee;
+				color: $white;
 			}
-			
 			.tag {
 				border: 1px solid #dcdcdc;
 				border-top: 5px solid $lightBlue;
-				margin: 10px;
+				margin: 20px;
 				background: $white;
 				box-shadow: 0 2px 2px 0px rgba(0,0,0,0.10);
 
@@ -40,7 +40,7 @@
 					height: 0;
 					text-align: left;
 					border-style: solid;
-					border-width: 10px 10px 0 10px;
+					border-width: 8px 10px 0 10px;
 					margin-left: 15px;
 					border-color: $lightBlue transparent transparent transparent;
 				}
