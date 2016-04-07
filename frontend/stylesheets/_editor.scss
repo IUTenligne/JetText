@@ -31,6 +31,14 @@
 				border: 1px solid #dcdcdc;
 				border-top: 5px solid $lightBlue;
 				margin: 20px;
+				background-color: $grey;
+			}
+			
+			.tag {
+				border: 1px solid #dcdcdc;
+				border-top: 5px solid $lightBlue;
+				margin: 10px;
+
 				background: $white;
 				box-shadow: 0 2px 2px 0px rgba(0,0,0,0.10);
 
@@ -323,8 +331,6 @@
             }
         }
     }
-}
-
 
 @include breakpoint(765px){
 	.middle{
@@ -335,7 +341,6 @@
 	}
 	.col-lg-12{
 		nav{
-			z-index: 1;
 			.sidebar {
 				z-index: 1;
         		position: absolute;
@@ -348,6 +353,18 @@
 	            		}
 	            	}
 	            }
+				ul li {
+					#add_new_page, a {
+						text-align: center;
+						div{
+							padding-top: 10px;
+						}
+						.btn {
+							float: right;
+							margin: 0 15px 3px 0;
+						}
+					}
+				}
 			}
 		}
 		#page-wrapper {
