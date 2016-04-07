@@ -9,7 +9,7 @@ var Container = React.createClass({
             container: '',
             pages: [],
             activePage: '',
-            newPageValue: ''
+            newPageValue: '',
         };
     },
 
@@ -43,40 +43,36 @@ var Container = React.createClass({
       var container = this.state.container;
       var pages = this.state.pages;
       return (
-        <div className="containers">
-              <div className="row">
-                    <div className="col-lg-12">
-                       <div className="tags">
-                          <div className="tag tagWidth" key={container.id}>
-                              <div className="triangle">
-                              </div>
-                              <div className="contenu">
-                                  <div className="img">
-                                      <i className="fa fa-folder-open-o"></i>
-                                  </div>
-                                  <div className="elem">
-                                      <div className="name">
-                                          {container.id}
-                                      </div>
-                                      <div className="option">
-                                          {container.name} - {container.content}
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> 
-                       </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-12">
+        <div className="col-lg-12">
+            <nav className="navbar navbar-default navbar-static-top" role="navigation">
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <i className="fa fa-bars"></i>
+                    </button>
+                    <a className="navbar-brand" href='#' key={container.id}>
+                        <img src="/templates/iutenligne/img/cartable.png" border="0"/>
+                        <h1>
+                            {container.name}
+                        </h1>
+                    </a>
+                </div> 
+                <div className="navbar-default sidebar menu" role="navigation">
+                    <div className="sidebar-nav navbar-collapse">
+                        <a href="http://www.iutenligne.net/resources.html">
+                            <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
+                        </a>
                         <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
-                    </div>
+                        <ul id="add_new_page">
+                            <p>Create new page</p>
+                        </ul>
+                   </div>
                 </div>
-                <div className="col-lg-12">
-                    <div id="page-wrapper">
-                        { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
-                    </div>
+            </nav>
+            <div id="page-wrapper">
+                <div className="row">
+                     { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
                 </div>
+            </div>
         </div>
       );
     }

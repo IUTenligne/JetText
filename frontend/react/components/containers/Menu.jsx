@@ -59,7 +59,7 @@ var Menu = React.createClass({
   render: function() {
     return (
       <div>
-        <ul className="menu-container" ref="dragulable">
+        <ul className="menu-container nav" id="side-menu" ref="dragulable">
           {this.props.items.map((page, i) => {
             return (
               <li key={page.id} data-pos={i} data-id={page.id}>
