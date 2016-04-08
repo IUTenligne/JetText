@@ -12,6 +12,7 @@
 		}
 	}
 }
+
 /* pour la liste des containers*/
 .containers {
 	margin: 10px;
@@ -264,9 +265,6 @@
         padding: 0 20px;
         min-height: 800px;
         background-color: #fff;
-
-        
-        
         div.row, div.col-lg-12{
             div.editor {
                 @include span(12 of 12);
@@ -282,6 +280,7 @@
                 bottom: 0;
                 display: inline-block;
                 text-align: center;
+                z-index: 12;
                 ul{
                     display: inline-block;
                     li{
@@ -330,7 +329,8 @@
 	                        }
 			            }
                     }
-                }       
+                }
+
             }
         }
     }
@@ -344,6 +344,7 @@
 	}
 	.col-lg-12{
 		nav{
+			z-index: 1;
 			.sidebar {
 				z-index: 1;
         		position: absolute;

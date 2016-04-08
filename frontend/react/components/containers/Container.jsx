@@ -53,7 +53,6 @@ var Container = React.createClass({
                 });
             }
         });
-        
         event.target.value='';
     },
 

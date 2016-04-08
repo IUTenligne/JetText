@@ -34,139 +34,173 @@ var Sharebar = React.createClass({
   }
 });
 
+var style = {
+    NotificationItem: { 
+        DefaultStyle: { 
+            margin: '50px 5px 2px 1px',
+            background: " #eeeeee",
+            color:"red"
+        },
+        success: { // Applied only to the success notification item
+            color: 'red'
+        },
+    }
+}
+
 var Editor = React.createClass({
-  getInitialState: function() {
-    return {
-      pageContent: '',
-      editButton: true,
-      saveButton: false
-    };
-  },
-
-  componentDidMount: function() {
-    this.setState({ pageContent: this.props.page.content });
-    this._notificationSystem = this.refs.notificationSystem;
-  },
-
-  componentWillUnmount: function() {
-    var editor = CKEDITOR.instances['editor1'];
-    if (editor) { editor.destroy(true); }
-  },
-
-  postData: function(event) {
-    var page = this.props.page;
-    $.ajax({
-      type: "PUT",
-      url: '/pages/update_ajax',
-      data: { id: page.id, name: page.name, content: this.state.pageContent }
-    });
-
-    // NotificationSystem popup
-    event.preventDefault();
-    this._notificationSystem.addNotification({
-      title: 'Container saved !',
-      level: 'success'
-    });
-  },
-
-  unlock: function() {
-    var that = this;
     
-    var editor = CKEDITOR.replace('editor1', {
-      customConfig: '/assets/cke/custom_config.js'
-    });
-    editor.on('change', function( evt ) {
-      // setState to allow changes to be saved on submit
-      that.setState({ pageContent: evt.editor.getData() });
-    });
-    CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');
+    getInitialState: function() {
+        return {
+          pageContent: '',
+          editButton: true,
+          saveButton: false
+        };
+    },
 
-    this.setState({ saveButton: true, editButton: false });
-  },
+    componentDidMount: function() {
+        this.setState({ pageContent: this.props.page.content });
+        this._notificationSystem = this.refs.notificationSystem;
+    },
 
-  _notificationSystem: null,
+    componentWillUnmount: function() {
+        var editor = CKEDITOR.instances['editor1'];
+        if (editor) { editor.destroy(true); }
+    },
 
-  render: function() {
+    postData: function(event) {
+        var page = this.props.page;
+        $.ajax({
+          type: "PUT",
+          url: '/pages/update_ajax',
+          data: { id: page.id, name: page.name, content: this.state.pageContent }
+        });
+
+        // NotificationSystem popup
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Container saved !',
+            level: 'success'
+        });
+    },
+
+    unlock: function() {
+        var that = this;
+    
+        var editor = CKEDITOR.replace('editor1', {
+            customConfig: '/assets/cke/custom_config.js'
+        });
+        editor.on('change', function( evt ) {
+            // setState to allow changes to be saved on submit
+            that.setState({ pageContent: evt.editor.getData() });
+        });
+        CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');
+        this.setState({ saveButton: true, editButton: false });
+    },
+
+    deletePage: function(){
+        $.ajax({
+            type: "DELETE",
+            url: "/pages/"+this.props.page.id,
+            context: this,
+            success: function(){
+                window.location.href= "/#/container/"+this.props.page.container_id
+            }
+        });
+        // NotificationSystem popup
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Container delete !',
+            level: 'success'
+        });
+    },
+
+    _notificationSystem: null,
+
+    render: function() {
+        console.log(this.props);
     var page = this.props.page;
     return (
-      <div className="col-lg-12">
-        <div className="editor">
-          <i className="fa fa-pencil"></i>
-          { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-          <i className="fa fa-floppy-o"></i>
-          { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-          <h2 className="page-header">{page.name}</h2>
-          <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
-        </div>
+        <div className="col-lg-12">
+            <div className="editor">
+                <i className="fa fa-pencil"></i>
+                { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                <i className="fa fa-floppy-o"></i>
+                { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                
+                <input type="button" onClick={this.deletePage} value="casse toi pauvre con"/>
 
-        <div className="menuEditor">
-            <ul>
-                <li>
-                    <div className="hexagon" >
-                        <a href='#' key={page.name}>
-                            <i className="fa fa-home">
-                            </i>
-                         </a>
-                    </div>
-                </li>
+                <h2 className="page-header">{page.name}</h2>
+                <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
+            </div>
 
-                <li>
-                    <div className="line"></div>
-                </li>
-                <li>
-                    <div className="round"></div>
-                </li>
-                <li>
-                    <div className="line"></div>
-                </li>
-
-                <li>
-                    <div className="hexagon">
-                        <i className="fa fa-pencil"></i>
-                        { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-                        <i className="fa fa-floppy-o"></i>
-                        { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-                    </div>
-                </li>
-                <li>
-                    <div className="line"></div>
-                </li>
-                <li>
-                    <div className="round"></div>
-                </li>
-                <li>
-                    <div className="line"></div>
-                </li>
-
-                <li>
-                    <div className="hexagon">
-                        <i className="fa fa-upload"></i>
-                    </div>
-                </li>
-
-                 <li>
-                    <div className="line"></div>
-                </li>
-                <li>
-                    <div className="round"></div>
-                </li>
-                <li>
-                    <div className="line"></div>
-                </li>
-
-                <li>
-                    <div className="hexagon">
-                        <i className="fa fa-share-alt"></i>
-                    </div>
-                </li>
+            <div className="menuEditor">
                 <ul>
-                  <Sharebar />
+                    <li>
+                        <div className="hexagon" >
+                            <a href='#' key={page.name}>
+                                <i className="fa fa-home">
+                                </i>
+                             </a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div className="line"></div>
+                    </li>
+                    <li>
+                        <div className="round"></div>
+                    </li>
+                    <li>
+                        <div className="line"></div>
+                    </li>
+
+                    <li>
+                        <div className="hexagon">
+                            <i className="fa fa-pencil"></i>
+                            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                            <i className="fa fa-floppy-o"></i>
+                            { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                        </div>
+                    </li>
+                    <li>
+                        <div className="line"></div>
+                    </li>
+                    <li>
+                        <div className="round"></div>
+                    </li>
+                    <li>
+                        <div className="line"></div>
+                    </li>
+
+                    <li>
+                        <div className="hexagon">
+                            <i className="fa fa-upload"></i>
+                        </div>
+                    </li>
+
+                     <li>
+                        <div className="line"></div>
+                    </li>
+                    <li>
+                        <div className="round"></div>
+                    </li>
+                    <li>
+                        <div className="line"></div>
+                    </li>
+
+                    <li>
+                        <div className="hexagon">
+                            <i className="fa fa-share-alt"></i>
+                        </div>
+                    </li>
+                    <ul>
+                      <Sharebar />
+                    </ul>
                 </ul>
-            </ul>
-        </div>
-        
-        
-        <NotificationSystem ref="notificationSystem" />
+            </div>
+
+        <NotificationSystem ref="notificationSystem" style={style} />
+
       </div>
     );
   }

@@ -69,6 +69,15 @@ class PagesController < ApplicationController
   end
 
   def destroy
+    @page = Page.find(params[:id])
+    if @page.user_id == current_user.id
+      if @page.destroy
+        respond_to do |format|
+          format.json { render json: {status: "ok"} }
+        end
+      end
+    else
+    end
   end
 
   def update_ajax
