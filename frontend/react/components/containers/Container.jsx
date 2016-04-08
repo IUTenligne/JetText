@@ -3,14 +3,27 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 var Menu = require('./Menu.jsx');
 var Page = require('../pages/Page.jsx');
 
+
 var Container = React.createClass({
 	getInitialState: function() {
         return {
             container: '',
             pages: [],
             activePage: '',
-            newPageValue: '',
+            newPageValue: ''
         };
+    },
+
+    handleChange: function(event) {
+        this.setState({newPageValue: event.target.value});
+    },
+
+    postData: function(event) {
+        $.ajax({
+            type: "POST",
+            url: '/pages',
+            data: { page: { name: this.state.newPageValue, content: '', container_id: this.state.container.id } }
+        });
     },
 
     componentDidMount: function() {
@@ -27,17 +40,7 @@ var Container = React.createClass({
         this.serverRequest.abort();
     },
 
-    handleChange: function(event) {
-        this.setState({newPageValue: event.target.value});
-    },
-
-    postData: function(event) {
-        $.ajax({
-            type: "POST",
-            url: '/pages',
-            data: { page: { name: this.state.newPageValue, content: '', container_id: this.state.container.id } }
-        });
-    },
+    
 
     render: function() {
       var container = this.state.container;
@@ -62,6 +65,15 @@ var Container = React.createClass({
                             <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
                         </a>
                         <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
+                        <div>
+                            <form>
+                                <p>Create new page</p>
+                                <p>
+                                    <input type="text" id="text" value={this.state.newPageValue} onChange={this.handleChange}/>
+                                    <input type="submit" value='Save' className="btn-success" onClick={this.postData}/>
+                                </p>
+                            </form>
+                        </div>
                    </div>
                 </div>
             </nav>

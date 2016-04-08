@@ -9,7 +9,9 @@ var NewContainers = React.createClass({
     },
 
     handleChange: function(event){
-        this.setState({newContainerValue: event.target.value});
+        this.setState({
+            newContainerValue: event.target.value,
+        });
     },
     postData: function(event) {
         $.ajax({
@@ -17,8 +19,14 @@ var NewContainers = React.createClass({
             url: '/containers',
             data: { container: { name: this.state.newContainerValue, content: '' } }
         });
-        this.setState({ containersList: this.state.containersList });
+        this.setState( function() {
+              if (newContainer.length === 1) {
+                containersList: this.state.containersList;
+                this.refs.item0.componentWillUnmount();
+              }
+            }.bind(this));
     },
+
 
     render: function(){
         return(
