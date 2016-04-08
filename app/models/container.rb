@@ -5,7 +5,7 @@ class Container < ActiveRecord::Base
 
   validates :name,		:presence => true, length: { maximum: 250 }
   validates :content, 	:presence => false
-  validates :user_id, 		:presence => true
+  validates :user_id, 	:presence => true
 end
 
 # == Schema Information
