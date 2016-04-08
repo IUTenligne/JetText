@@ -48,7 +48,6 @@ var Menu = React.createClass({
 
     var that = this;
 
-
     drake.on('drop', function(element, target, source, sibling) {
       var index = [].indexOf.call(element.parentNode.children, element)
       var updated_order = [];
@@ -64,6 +63,7 @@ var Menu = React.createClass({
         data: { order: updated_order },
         success: function(data) {
           that.setState({ pagesOrder: updated_order });
+          location.reload();
         }
       });
     });
