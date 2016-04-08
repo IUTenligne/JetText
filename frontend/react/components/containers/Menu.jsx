@@ -85,9 +85,6 @@ var Menu = React.createClass({
               </li>
             );
           })}
-          <li id="add_new_page">
-            <NewPage />
-          </li>
         </ul>
       </div>
     );

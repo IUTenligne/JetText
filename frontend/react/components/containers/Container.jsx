@@ -35,7 +35,11 @@ var Container = React.createClass({
         $.ajax({
             type: "POST",
             url: '/pages',
-            data: { page: { name: this.state.newPageValue, content: '', container_id: this.state.container.id } }
+            context: this,
+            data: { page: { name: this.state.newPageValue, content: '', container_id: this.state.container.id } },
+            success: function(data) {
+                this.setState({ pages: this.state.pages.concat([data]) });
+            }
         });
     },
 
@@ -65,7 +69,12 @@ var Container = React.createClass({
                         <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
                         
                         <ul id="add_new_page">
-                            <p>Create new page</p>
+                            <form >
+                                <p>
+                                    <input type="text" id="text" className="form-control" value={this.state.newPageValue} onChange={this.handleChange}/>
+                                    <input type="submit" value='Save' className="btn-success" onClick={this.postData}/>
+                                </p>
+                            </form>
                         </ul>
                    </div>
                 </div>

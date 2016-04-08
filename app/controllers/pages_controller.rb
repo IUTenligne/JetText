@@ -31,15 +31,15 @@ class PagesController < ApplicationController
   end
 
   def create
-    @new_page = Page.new(page_params)
-    @new_page.user_id = current_user.id
-    @container = Container.find(@new_page.container_id) if Container.exists?(@new_page.container_id)
+    @page = Page.new(page_params)
+    @page.user_id = current_user.id
+    @container = Container.find(@page.container_id) if Container.exists?(@page.container_id)
     if @container.present? && current_user.id == @container.user_id
-      if @new_page.save
-        redirect_to action: "show", id: @new_page.id
-      end
-    else
-      redirect_to containers_path()
+      if @page.save
+        respond_to do |format|
+          format.json { render json: {id: @page.id, name: @page.name} }
+        end
+      end 
     end
   end
 

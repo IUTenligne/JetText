@@ -1,13 +1,11 @@
-<div id='outlet' data-component='Containers' data-view='New'>
-	<h1>Create new container</h1>
-  <%= form_for @container do |f| %>
-    <div>
-      <p><%= f.text_field :name, :placeholder => :title %></p>
+<div className="row outlet">
+    <div className="col-lg-4 tags">
+        <h1 className="page-header">Create new container</h1>
+        <%= form_for @container do |f| %>
+          <div>
+            <p><%= f.text_field :name, :placeholder => :title, class: "form-control" %></p>
+          </div>
+          <%= f.submit :save, class: "btn btn-success" %>
+        <% end %>
     </div>
-    <div>
-      <p><%= f.label :content %></p>
-      <p><%= f.text_area :content, :id => "editor1" %></p>
-    </div>
-    <%= f.submit :save, class: "btn btn-primary" %>
-  <% end %>
 </div>
