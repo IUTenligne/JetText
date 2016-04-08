@@ -62,9 +62,6 @@ var Container = React.createClass({
                             <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
                         </a>
                         <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
-                        <ul id="add_new_page">
-                            <p>Create new page</p>
-                        </ul>
                    </div>
                 </div>
             </nav>
