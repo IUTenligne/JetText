@@ -4,24 +4,31 @@ var NotificationSystem = require('react-notification-system');
 var Sharebar = React.createClass({
   render: function() {
     return(
-      <div className="menuShare">
-        <ul className="share">
-          <li>
+      <div>
+          <li className="menuShare">
+              <div className="line"></div>
+          </li>
+          <li className="menuShare">
+              <div className="round"></div>
+          </li>
+          <li className="menuShare">
+              <div className="line"></div>
+          </li>
+          <li className="menuShare">
               <div className="hexagon">
                   <i className="fa fa-facebook"></i>
               </div>
           </li>
-          <li>
+          <li className="menuShare">
               <div className="hexagon">
                   <i className="fa fa-twitter"></i>
               </div>
           </li>
-          <li>
+          <li className="menuShare">
               <div className="hexagon">
                   <i className="fa fa-envelope"></i>
               </div>
           </li>
-        </ul>
       </div>
     )
   }
@@ -93,38 +100,72 @@ var Editor = React.createClass({
         </div>
 
         <div className="menuEditor">
-          <div className="hexagon" >
-            <i className="fa fa-home"></i>
-          </div>
+            <ul>
+                <li>
+                    <div className="hexagon" >
+                        <a href='#' key={page.name}>
+                            <i className="fa fa-home">
+                            </i>
+                         </a>
+                    </div>
+                </li>
 
-          <div className="line"></div>
-          <div className="round"></div>
-          <div className="line"></div>
+                <li>
+                    <div className="line"></div>
+                </li>
+                <li>
+                    <div className="round"></div>
+                </li>
+                <li>
+                    <div className="line"></div>
+                </li>
 
-          <div className="hexagon">
-            <i className="fa fa-pencil"></i>
-            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-            <i className="fa fa-floppy-o"></i>
-            { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-          </div>
-          <div className="line"></div>
-          <div className="round"></div>
-          <div className="line"></div>
+                <li>
+                    <div className="hexagon">
+                        <i className="fa fa-pencil"></i>
+                        { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                        <i className="fa fa-floppy-o"></i>
+                        { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                    </div>
+                </li>
+                <li>
+                    <div className="line"></div>
+                </li>
+                <li>
+                    <div className="round"></div>
+                </li>
+                <li>
+                    <div className="line"></div>
+                </li>
 
-          <div className="hexagon">
-            <i className="fa fa-upload"></i>
-          </div>
+                <li>
+                    <div className="hexagon">
+                        <i className="fa fa-upload"></i>
+                    </div>
+                </li>
 
-          <div className="line"></div>
-          <div className="round"></div>
-          <div className="line"></div>
+                 <li>
+                    <div className="line"></div>
+                </li>
+                <li>
+                    <div className="round"></div>
+                </li>
+                <li>
+                    <div className="line"></div>
+                </li>
 
-          <div className="hexagon">
-            <i className="fa fa-share-alt"></i>
-          </div>
+                <li>
+                    <div className="hexagon">
+                        <i className="fa fa-share-alt"></i>
+                    </div>
+                </li>
+                <ul>
+                  <Sharebar />
+                </ul>
+            </ul>
         </div>
         
-        <Sharebar />
+        
         <NotificationSystem ref="notificationSystem" />
       </div>
     );

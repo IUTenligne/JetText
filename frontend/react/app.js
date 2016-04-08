@@ -7,7 +7,6 @@ var Containers = require('./components/containers/Containers.jsx');
 var Container = require('./components/containers/Container.jsx');
 var Page = require('./components/pages/Page.jsx');
 var Menu = require('./components/containers/Menu.jsx');
-var Test = require('./components/containers/Test.jsx');
 
 $(document).ready(function () {
 	if (document.getElementById('appcontainer')) {
@@ -20,6 +19,5 @@ $(document).ready(function () {
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {
-		ReactDOM.render(<Test />, document.getElementById('testcontainer'));
 	}
 });

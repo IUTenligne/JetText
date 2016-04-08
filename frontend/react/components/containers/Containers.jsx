@@ -31,7 +31,6 @@ var Containers = React.createClass({
       url: '/containers',
       data: { container: { name: this.state.newContainerValue, content: '' } }
     });
-
     this.setState({ containersList: this.state.containersList });
   },
 

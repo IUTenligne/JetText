@@ -15,7 +15,7 @@ var Menu = React.createClass({
     //storing pages order
     var order = [];
     {this.props.items.map((page, i) => {
-      order.push(page.id);
+        order.push(page.id);
     })};
     this.setState({pagesOrder: order});
 
@@ -44,6 +44,8 @@ var Menu = React.createClass({
         data: { order: updated_order }
       });
     });
+
+    this.setState({ pagesOrder: Math.random() });
   },
 
   _notificationSystem: null,
@@ -59,7 +61,7 @@ var Menu = React.createClass({
   render: function() {
     return (
       <div>
-        <ul className="menu-container" ref="dragulable">
+        <ul className="menu-container nav" id="side-menu" ref="dragulable">
           {this.props.items.map((page, i) => {
             return (
               <li key={page.id} data-pos={i} data-id={page.id}>
