@@ -3,6 +3,22 @@ var ReactDOM = require('react-dom');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var dragula = require('react-dragula');
 
+var NewPage = React.createClass({
+  render: function(){
+    return(
+      <div>
+        <form>
+          <p>Create new page</p>
+          <p>
+            <input type="text" id="text"/>
+            <input type="submit" value='Save' className="btn"/>
+          </p>
+        </form>
+      </div>
+    )
+  }
+})
+
 var Menu = React.createClass({
   getInitialState: function() {
     return {
@@ -69,6 +85,9 @@ var Menu = React.createClass({
               </li>
             );
           })}
+          <li id="add_new_page">
+            <NewPage />
+          </li>
         </ul>
       </div>
     );

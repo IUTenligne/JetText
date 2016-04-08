@@ -1,38 +1,61 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 
+var NewContainers = React.createClass({
+    getInitialState: function() {
+        return {
+            newContainerValue: ''
+        };
+    },
+
+    handleChange: function(event){
+        this.setState({newContainerValue: event.target.value});
+    },
+    
+    postData: function(event) {
+        $.ajax({
+            type: "POST",
+            url: '/containers',
+            data: { container: { name: this.state.newContainerValue, content: '' } }
+        });
+        this.setState({ containersList: this.state.containersList });
+    },
+
+    render: function(){
+        return(
+            <div>
+                <h1 className="page-header">Create new containers</h1>
+                <form >
+                    <p>
+                        <input type="text" id="text" className="form-control" value={this.state.newContainerValue} onChange={this.handleChange}/>
+                        <input type="submit" value='Save' className="btn-success" onClick={this.postData}/>
+                    </p>
+                </form>
+            </div>
+        )
+    }
+})
+
 var Containers = React.createClass({
-  getInitialState: function() {
-    return {
-      containersList: [],
-      newContainerValue: ''
-    };
-  },
+    getInitialState: function() {
+        return {
+            containersList: []
+        };
+    },
   
-  componentDidMount: function() {
-      this.serverRequest = $.get("/containers.json", function (result) {
-          this.setState({
-              containersList: result
-          });
-      }.bind(this));
-  },
+    componentDidMount: function() {
+        this.serverRequest = $.get("/containers.json", function (result) {
+            this.setState({
+                containersList: result
+            });
+        }.bind(this));
+    },
 
-  componentWillUnmount: function() {
-      this.serverRequest.abort();
-  },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
 
-  handleChange: function(event) {
-    this.setState({newContainerValue: event.target.value});
-  },
 
-  postData: function(event) {
-    $.ajax({
-      type: "POST",
-      url: '/containers',
-      data: { container: { name: this.state.newContainerValue, content: '' } }
-    });
-    this.setState({ containersList: this.state.containersList });
-  },
 
   render: function() {
     var results = this.state.containersList;
@@ -70,6 +93,12 @@ var Containers = React.createClass({
                 );
               })}
             </div>
+            <div className="row">
+                <div className="col-lg-4 tags">
+                    <NewContainers/>
+                </div>
+            </div>
+            
         </div>
     );
   }
