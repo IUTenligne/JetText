@@ -70,11 +70,13 @@
   border: none;
 }
 
+/* dragula */
 .gu-mirror {
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 0.8;
+  list-style-type: none;
 }
 
 .gu-hide {
@@ -88,6 +90,7 @@
 .gu-transit {
   opacity: 0.2
 }
+/* */
 
 .mce-edit-area, .mce-statusbar {
 	border: none !important;

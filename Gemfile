@@ -37,4 +37,3 @@ end
 gem 'devise'
 gem 'nokogiri'
 gem 'paperclip'
-gem 'execjs'

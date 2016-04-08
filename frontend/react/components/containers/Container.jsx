@@ -15,11 +15,19 @@ var Container = React.createClass({
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
-            this.setState({
-                container: result.container,
-                pages: result.pages,
-                activePage: result.pages[0]
-            });
+            if (result.pages[0]) {
+                this.setState({
+                    container: result.container,
+                    pages: result.pages,
+                    activePage: result.pages[0]
+                });
+            } else {
+                this.setState({
+                    container: result.container,
+                    pages: [],
+                    activePage: ''
+                });
+            }
         }.bind(this));
     },
 

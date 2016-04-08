@@ -1,5 +1,7 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
+import { Router, Route, Link, hashHistory } from 'react-router';
+
 
 var Sharebar = React.createClass({
   render: function() {
@@ -91,10 +93,6 @@ var Editor = React.createClass({
     return (
       <div className="col-lg-12">
         <div className="editor">
-          <i className="fa fa-pencil"></i>
-          { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-          <i className="fa fa-floppy-o"></i>
-          { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
           <h2 className="page-header">{page.name}</h2>
           <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
         </div>
@@ -103,13 +101,12 @@ var Editor = React.createClass({
             <ul>
                 <li>
                     <div className="hexagon" >
-                        <a href='#' key={page.name}>
+                        <Link to={"/"} key={page.name}>
                             <i className="fa fa-home">
                             </i>
-                         </a>
+                        </Link>
                     </div>
                 </li>
-
                 <li>
                     <div className="line"></div>
                 </li>
@@ -119,13 +116,9 @@ var Editor = React.createClass({
                 <li>
                     <div className="line"></div>
                 </li>
-
                 <li>
                     <div className="hexagon">
-                        <i className="fa fa-pencil"></i>
-                        { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-                        <i className="fa fa-floppy-o"></i>
-                        { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                        <a href="javascript:void()" onClick={this.unlock} ><i className="fa fa-pencil"></i></a>
                     </div>
                 </li>
                 <li>
@@ -137,14 +130,12 @@ var Editor = React.createClass({
                 <li>
                     <div className="line"></div>
                 </li>
-
                 <li>
                     <div className="hexagon">
                         <i className="fa fa-upload"></i>
                     </div>
                 </li>
-
-                 <li>
+                <li>
                     <div className="line"></div>
                 </li>
                 <li>
@@ -153,7 +144,6 @@ var Editor = React.createClass({
                 <li>
                     <div className="line"></div>
                 </li>
-
                 <li>
                     <div className="hexagon">
                         <i className="fa fa-share-alt"></i>

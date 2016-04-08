@@ -19,7 +19,6 @@
     "susy": "^2.2.12",
     "font-awesome": "^4.5.0",
     "bootstrap": "^3.3.6",
-    "tinymce": "^4.3.8",
     "MathJax": "^2.6.1",
     "ckeditor": "^4.5.7"
   }

@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     shell = require('gulp-shell'),
     concat = require('gulp-concat'),
-    coffee = require('gulp-coffee'),
     babel = require('gulp-babel'),
     plumber = require('gulp-plumber'),
 		sourcemaps = require('gulp-sourcemaps'),
@@ -35,13 +34,6 @@ gulp.task('sass', function () {
  
 gulp.task('sass:watch', function () {
   gulp.watch('./frontend/stylesheets/**/*.scss', ['sass']);
-});
-
-gulp.task('coffee', function() {
-  gulp.src('./frontend/javascripts/**/*.coffee')
-    .pipe(coffee({bare: true}).on('error', gutil.log))
-		.pipe(concat('app.js'))
-    .pipe(gulp.dest('./app/assets/javascripts/'));
 });
 
 gulp.task("es6", function () {
