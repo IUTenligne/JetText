@@ -14,6 +14,28 @@ var Container = React.createClass({
         };
     },
 
+    componentDidMount: function() {
+        this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
+            if (result.pages[0]){
+                this.setState({
+                    container: result.container,
+                    pages: result.pages,
+                    activePage: result.pages[0]
+                })
+            }else{
+                 this.setState({
+                    container: result.container,
+                    pages: [],
+                    activePage: ''
+                });
+            }
+        }.bind(this));
+    },
+
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+
     handleChange: function(event) {
         this.setState({newPageValue: event.target.value});
     },
@@ -22,25 +44,18 @@ var Container = React.createClass({
         $.ajax({
             type: "POST",
             url: '/pages',
-            data: { page: { name: this.state.newPageValue, content: '', container_id: this.state.container.id } }
+            context: this,
+            data: { page: { name: this.state.newPageValue, content: '', container_id: this.state.container.id } },
+            success: function(data) {
+                this.setState({ 
+                    pages: this.state.pages.concat([data]),
+                    newPageValue: ''
+                });
+            }
         });
+        
+        event.target.value='';
     },
-
-    componentDidMount: function() {
-        this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
-            this.setState({
-                container: result.container,
-                pages: result.pages,
-                activePage: result.pages[0]
-            });
-        }.bind(this));
-    },
-
-    componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
-
-    
 
     render: function() {
       var container = this.state.container;
@@ -64,16 +79,19 @@ var Container = React.createClass({
                         <a href="http://www.iutenligne.net/resources.html">
                             <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
                         </a>
+
                         <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
-                        <div>
-                            <form>
-                                <p>Create new page</p>
+
+                        
+                        <ul id="add_new_page">
+                            <form >
+                            <p>Create new page</p>
                                 <p>
-                                    <input type="text" id="text" value={this.state.newPageValue} onChange={this.handleChange}/>
+                                    <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange}/>
                                     <input type="submit" value='Save' className="btn-success" onClick={this.postData}/>
                                 </p>
                             </form>
-                        </div>
+                        </ul>
                    </div>
                 </div>
             </nav>

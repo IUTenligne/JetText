@@ -14,6 +14,5 @@ Rails.application.routes.draw do
     resources :uploads
     resources :glossaries
     get "/generate_container/:id" => "containers#generate", as: 'generate_container'
-    get "/test" => "containers#index"
   end
 end

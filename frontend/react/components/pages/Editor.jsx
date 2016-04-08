@@ -159,9 +159,9 @@ var Editor = React.createClass({
                         <i className="fa fa-share-alt"></i>
                     </div>
                 </li>
-                <li>
+                <ul>
                   <Sharebar />
-                </li>
+                </ul>
             </ul>
         </div>
         

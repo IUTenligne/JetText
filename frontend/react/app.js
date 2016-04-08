@@ -1,4 +1,3 @@
-
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { Router, Route, Link, hashHistory } from 'react-router';
@@ -19,5 +18,6 @@ $(document).ready(function () {
 		    <Route path="container/:id/:pageId" component={Container}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
-	} 
+	} else if (document.getElementById('testcontainer')) {
+	}
 });

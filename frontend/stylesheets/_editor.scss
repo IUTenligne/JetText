@@ -264,6 +264,9 @@
         padding: 0 20px;
         min-height: 800px;
         background-color: #fff;
+
+        
+        
         div.row, div.col-lg-12{
             div.editor {
                 @include span(12 of 12);
@@ -378,9 +381,4 @@
         	}
 		}
 	}
-}
-
-
-@include breakpoint(1020px) {
-
 }

@@ -17,7 +17,7 @@ var Menu = React.createClass({
     //storing pages order
     var order = [];
     {this.props.items.map((page, i) => {
-      order.push(page.id);
+        order.push(page.id);
     })};
     this.setState({pagesOrder: order});
 
@@ -46,6 +46,8 @@ var Menu = React.createClass({
         data: { order: updated_order }
       });
     });
+
+    this.setState({ pagesOrder: Math.random() });
   },
 
   _notificationSystem: null,
