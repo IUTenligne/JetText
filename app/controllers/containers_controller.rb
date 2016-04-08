@@ -35,9 +35,8 @@ class ContainersController < ApplicationController
     @container.user_id = current_user.id
     @container.url = current_user.email
     if @container.save
-      respond_to do |format|
-        format.html { head :no_content }
-      end
+      # redirects to React's container url after save
+      redirect_to "#/container/#{@container.id}"
     end
   end
  
