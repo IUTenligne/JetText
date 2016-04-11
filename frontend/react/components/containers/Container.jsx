@@ -63,7 +63,6 @@ var Container = React.createClass({
     deletePage: function(event){
         var loc = this.props;
         var that = this;
-        console.log(loc);
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
@@ -71,11 +70,10 @@ var Container = React.createClass({
             message: 'Are you sure you want to delete the page?',
             level: 'success',
             position: 'tr',
-            timeout: '10000',
+            timeout: '20000',
             action: {
                 label: 'yes',
                 callback: function() {
-                    console.log(loc);
                     if (loc.routeParams.pageId) {
                         var pageId = loc.routeParams.pageId;
                     } else {
@@ -131,7 +129,7 @@ var Container = React.createClass({
                             <form >
                             <p>Create new page</p>
                                 <p>
-                                    <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange}/>
+                                    <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off"/>
                                     <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
                                 </p>
                             </form>
