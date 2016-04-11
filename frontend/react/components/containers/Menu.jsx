@@ -3,7 +3,6 @@ var ReactDOM = require('react-dom');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var dragula = require('react-dragula');
 
-
 var Menu = React.createClass({
   getInitialState: function() {
     return {
