@@ -2,6 +2,7 @@ var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Menu = require('./Menu.jsx');
 var Page = require('../pages/Page.jsx');
+var NotificationSystem = require('react-notification-system');
 
 
 var Container = React.createClass({
@@ -30,6 +31,8 @@ var Container = React.createClass({
                 });
             }
         }.bind(this));
+
+        this._notificationSystem = this.refs.notificationSystem;
     },
 
     componentWillUnmount: function() {
@@ -40,7 +43,7 @@ var Container = React.createClass({
         this.setState({newPageValue: event.target.value});
     },
 
-    postData: function(event) {
+    createPage: function(event) {
         $.ajax({
             type: "POST",
             url: '/pages',
@@ -56,11 +59,37 @@ var Container = React.createClass({
         event.target.value='';
     },
 
+    deletePage: function(event){
+        if (this.props.routeParams.pageId) {
+            var pageId = this.props.routeParams.pageId;
+        } else {
+            var pageId = this.state.activePage.id;
+        }
+        $.ajax({
+            type: "DELETE",
+            url: "/pages/"+pageId,
+            context: this,
+            success: function(){
+            }
+        });
+        // NotificationSystem popup
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Container successfully deleted !',
+            level: 'success'
+        });
+    },
+
+    _notificationSystem: null,
+
     render: function() {
       var container = this.state.container;
       var pages = this.state.pages;
       return (
         <div className="col-lg-12">
+
+            <NotificationSystem ref="notificationSystem" />
+
             <nav className="navbar navbar-default navbar-static-top" role="navigation">
                 <div className="navbar-header">
                     <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -73,6 +102,7 @@ var Container = React.createClass({
                         </h1>
                     </a>
                 </div> 
+
                 <div className="navbar-default sidebar menu" role="navigation">
                     <div className="sidebar-nav navbar-collapse">
                         <a href="http://www.iutenligne.net/resources.html">
@@ -87,16 +117,18 @@ var Container = React.createClass({
                             <p>Create new page</p>
                                 <p>
                                     <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange}/>
-                                    <input type="submit" value='Save' className="btn-success" onClick={this.postData}/>
+                                    <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
                                 </p>
                             </form>
                         </ul>
                    </div>
                 </div>
             </nav>
+
             <div id="page-wrapper">
                 <div className="row">
-                     { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
+                    <input type="button" onClick={this.deletePage} value="Delete"/>
+                    { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
                 </div>
             </div>
         </div>
