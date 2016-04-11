@@ -1,9 +1,0 @@
-<div id='outlet' data-component='Pages' data-view='New'>
-	<h1>Create new page</h1>
-  <%= form_for @new_page do |f| %>
-    <div>
-      <p><%= f.text_field :name, :placeholder => :name %></p>
-    </div>
-    <%= f.submit :save, class: "btn btn-primary" %>
-  <% end %>
-</div>

@@ -3,8 +3,6 @@ var ReactDOM = require('react-dom');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var dragula = require('react-dragula');
 
-
-
 var Menu = React.createClass({
   getInitialState: function() {
     return {
@@ -32,6 +30,8 @@ var Menu = React.createClass({
       var index = [].indexOf.call(element.parentNode.children, element);
     });
 
+    var that = this;
+
     drake.on('drop', function(element, target, source, sibling) {
       var index = [].indexOf.call(element.parentNode.children, element)
       var updated_order = [];
@@ -43,11 +43,14 @@ var Menu = React.createClass({
       $.ajax({
         type: "PUT",
         url: '/pages/sort',
-        data: { order: updated_order }
+        context: that,
+        data: { order: updated_order },
+        success: function(data) {
+          that.setState({ pagesOrder: updated_order });
+          location.reload();
+        }
       });
     });
-
-    this.setState({ pagesOrder: Math.random() });
   },
 
   _notificationSystem: null,

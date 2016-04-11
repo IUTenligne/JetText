@@ -73,7 +73,7 @@ class PagesController < ApplicationController
     if @page.user_id == current_user.id
       if @page.destroy
         respond_to do |format|
-          format.json { render json: {status: "ok"} }
+          format.json { render json: {status: "ok", page: @page.id} }
         end
       end
     else

@@ -1,5 +1,7 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
+import { Router, Route, Link, hashHistory } from 'react-router';
+
 
 var Sharebar = React.createClass({
   render: function() {
@@ -34,18 +36,6 @@ var Sharebar = React.createClass({
   }
 });
 
-var style = {
-    NotificationItem: { 
-        DefaultStyle: { 
-            margin: '50px 5px 2px 1px',
-            background: " #eeeeee",
-            color:"red"
-        },
-        success: { // Applied only to the success notification item
-            color: 'red'
-        },
-    }
-}
 
 var Editor = React.createClass({
     
@@ -97,124 +87,92 @@ var Editor = React.createClass({
         this.setState({ saveButton: true, editButton: false });
     },
 
-    deletePage: function(event){
-        // NotificationSystem popup
-        var loc = this.props;
-        event.preventDefault();
-        console.log(loc);
-        
-        this._notificationSystem.addNotification({
-            title: 'Hey, it\'s good to see you!',
-            message: 'Now you can see how easy it is to use notifications in React!',
-            level: 'success',
-            position: 'tr',
-            timeout: '9000',
-            action: {
-                label: 'Awesome!',
-                callback: function() {
-                    console.log(loc);
-                    $.ajax({
-                        type: "DELETE",
-                        url: "/pages/"+loc.page.id,
-                        context: this,
-                        success: function(){
-                            window.location.href= "/#/container/"+this.props.page.container_id
-                        }
-                    });
-                }
-            }
-        });
-    },
-
     _notificationSystem: null,
     render: function() {
-    var page = this.props.page;
-    return (
-        <div className="col-lg-12">
-            <div className="editor">
-                <i className="fa fa-pencil"></i>
-                { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-                <i className="fa fa-floppy-o"></i>
-                { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-                
-                <input type="button" onClick={this.deletePage} value="puf"/>
+        var page = this.props.page;
+        return (
+            <div className="col-lg-12">
+                <div className="editor">
+                    <i className="fa fa-pencil"></i>
+                    { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                    <i className="fa fa-floppy-o"></i>
+                    { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                    
+                    <h2 className="page-header">{page.name}</h2>
+                    <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
+                </div>
 
-
-                <h2 className="page-header">{page.name}</h2>
-                <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
-            </div>
-
-            <div className="menuEditor">
-                <ul>
-                    <li>
-                        <div className="hexagon" >
-                            <a href='#' key={page.name}>
-                                <i className="fa fa-home">
-                                </i>
-                             </a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div className="line"></div>
-                    </li>
-                    <li>
-                        <div className="round"></div>
-                    </li>
-                    <li>
-                        <div className="line"></div>
-                    </li>
-
-                    <li>
-                        <div className="hexagon">
-                            <i className="fa fa-pencil"></i>
-                            { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
-                            <i className="fa fa-floppy-o"></i>
-                            { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
-                        </div>
-                    </li>
-                    <li>
-                        <div className="line"></div>
-                    </li>
-                    <li>
-                        <div className="round"></div>
-                    </li>
-                    <li>
-                        <div className="line"></div>
-                    </li>
-
-                    <li>
-                        <div className="hexagon">
-                            <i className="fa fa-upload"></i>
-                        </div>
-                    </li>
-
-                     <li>
-                        <div className="line"></div>
-                    </li>
-                    <li>
-                        <div className="round"></div>
-                    </li>
-                    <li>
-                        <div className="line"></div>
-                    </li>
-
-                    <li>
-                        <div className="hexagon">
-                            <i className="fa fa-share-alt"></i>
-                        </div>
-                    </li>
+                <div className="menuEditor">
                     <ul>
-                      <Sharebar />
+                        <li>
+                            <div className="hexagon" >
+                                <a href='#' key={page.name}>
+                                    <i className="fa fa-home">
+                                    </i>
+                                 </a>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div className="line"></div>
+                        </li>
+                        <li>
+                            <div className="round"></div>
+                        </li>
+                        <li>
+                            <div className="line"></div>
+                        </li>
+
+                        <li>
+                            <div className="hexagon">
+                                <i className="fa fa-pencil"></i>
+                                { this.state.editButton ? <input type="button" onClick={this.unlock} value="" /> : null }
+                                <i className="fa fa-floppy-o"></i>
+                                { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
+                            </div>
+                        </li>
+                        <li>
+                            <div className="line"></div>
+                        </li>
+                        <li>
+                            <div className="round"></div>
+                        </li>
+                        <li>
+                            <div className="line"></div>
+                        </li>
+
+                        <li>
+                            <div className="hexagon">
+                                <i className="fa fa-upload"></i>
+                            </div>
+                        </li>
+
+                         <li>
+                            <div className="line"></div>
+                        </li>
+                        <li>
+                            <div className="round"></div>
+                        </li>
+                        <li>
+                            <div className="line"></div>
+                        </li>
+
+                        <li>
+                            <div className="hexagon">
+                                <i className="fa fa-share-alt"></i>
+                            </div>
+                        </li>
+                        <ul>
+                          <Sharebar />
+                        </ul>
                     </ul>
-                </ul>
-            </div>
+                </div>
 
-        <NotificationSystem ref="notificationSystem" style={style} />
+            <NotificationSystem ref="notificationSystem" />
 
-      </div>
-    );
-  }
+          </div>
+        );
+    }
 });
 
 function createMarkup(data) {
