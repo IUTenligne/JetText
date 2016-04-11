@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       put :sort, on: :collection
       put :levelize, on: :collection
       put :update_ajax, on: :collection
+      post "/delete/:id" => "pages#destroy", on: :collection
     end
     resources :variables
     resources :uploads

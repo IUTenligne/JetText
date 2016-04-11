@@ -15,14 +15,13 @@ class ContainersController < ApplicationController
 
   def show
     @container = Container.find(params[:id])
-    @pages = Page.select("id, name").where(:container_id => @container.id)
     @new_page = Page.new
     unless @container.user_id == current_user.id
       redirect_to action: "index"
     end
     respond_to do |format|
       format.html
-      format.json { render json: {container: @container, pages: @pages} }
+      format.json { render json: {container: @container, pages: @container.pages} }
     end
   end
 
@@ -36,7 +35,7 @@ class ContainersController < ApplicationController
     @container.url = current_user.email
     if @container.save
       # redirects to React's container url after save
-      redirect_to "#/container/#{@container.id}"
+      redirect_to "/#/containers/#{@container.id}"
     end
   end
  

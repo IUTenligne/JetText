@@ -14,8 +14,8 @@ $(document).ready(function () {
 		  <Router history={hashHistory}>
 		  	<Route path="/" component={App}/>	
 		    <Route path="containers" component={Containers}/>
-		    <Route path="container/:id" component={Container}/>
-		    <Route path="container/:id/:pageId" component={Container}/>
+		    <Route path="containers/:id" component={Container}/>
+		    <Route path="containers/:id/:pageId" component={Container}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {

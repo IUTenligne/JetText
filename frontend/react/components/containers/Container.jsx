@@ -68,13 +68,16 @@ var Container = React.createClass({
         }
 
         $.ajax({
-            type: "DELETE",
-            url: "/pages/"+pageId,
+            type: "POST",
+            url: "/pages/delete/"+pageId,
             context: this,
             success: function(data){
+                // filter the pages state array to remove deleted page
                 this.setState({
                     pages: this.state.pages.filter((i, _) => i["id"] !== data.page)
-                })
+                });
+
+                window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0].id);
             }
         });
 
@@ -89,55 +92,55 @@ var Container = React.createClass({
     _notificationSystem: null,
 
     render: function() {
-      var container = this.state.container;
-      var pages = this.state.pages;
-      return (
-        <div className="col-lg-12">
+        var container = this.state.container;  
+        var pages = this.state.pages;
+        return (
+            <div className="col-lg-12">
 
-            <NotificationSystem ref="notificationSystem" />
+                <NotificationSystem ref="notificationSystem" />
 
-            <nav className="navbar navbar-default navbar-static-top" role="navigation">
-                <div className="navbar-header">
-                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <i className="fa fa-bars"></i>
-                    </button>
-                    <a className="navbar-brand" href='#' key={container.id}>
-                        <img src="/templates/iutenligne/img/cartable.png" border="0"/>
-                        <h1>
-                            {container.name}
-                        </h1>
-                    </a>
-                </div> 
-
-                <div className="navbar-default sidebar menu" role="navigation">
-                    <div className="sidebar-nav navbar-collapse">
-                        <a href="http://www.iutenligne.net/resources.html">
-                            <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
+                <nav className="navbar navbar-default navbar-static-top" role="navigation">
+                    <div className="navbar-header">
+                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <i className="fa fa-bars"></i>
+                        </button>
+                        <a className="navbar-brand" href='#' key={container.id}>
+                            <img src="/templates/iutenligne/img/cartable.png" border="0"/>
+                            <h1>
+                                {container.name}
+                            </h1>
                         </a>
+                    </div> 
 
-                        <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
+                    <div className="navbar-default sidebar menu" role="navigation">
+                        <div className="sidebar-nav navbar-collapse">
+                            <a href="http://www.iutenligne.net/resources.html">
+                                <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
+                            </a>
 
-                        <ul id="add_new_page">
-                            <form >
-                            <p>Create new page</p>
-                                <p>
-                                    <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange}/>
-                                    <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
-                                </p>
-                            </form>
-                        </ul>
-                   </div>
-                </div>
-            </nav>
+                            <Menu key={Math.random()} className="menu" items={pages} container={container.id} ref="menuElm" />
 
-            <div id="page-wrapper">
-                <div className="row">
-                    <input type="button" onClick={this.deletePage} value="Delete"/>
-                    { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
+                            <ul id="add_new_page">
+                                <form>
+                                <p>Create new page</p>
+                                    <p>
+                                        <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplete="off"/>
+                                        <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
+                                    </p>
+                                </form>
+                            </ul>
+                       </div>
+                    </div>
+                </nav>
+
+                <div id="page-wrapper">
+                    <div className="row">
+                        <input type="button" onClick={this.deletePage} value="Delete"/>
+                        { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
+                    </div>
                 </div>
             </div>
-        </div>
-      );
+        );
     }
 });
 

@@ -11,18 +11,16 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find(params[:id])
-    @page.content = @page.content.force_encoding('UTF-8')
+    #@page.content = @page.content.force_encoding('UTF-8')
+    @pages = Page.select("id, name").where(:container_id => @page.container_id).order(weight: :asc)
     @upload = Upload.new
-    @uploads = Upload.all
-    @container = Container.find(@page.container_id)
-    @pages = Page.select("id, name").where(:container_id => @container.id).order(weight: :asc)
     @new_page = Page.new
     unless @page.user_id == current_user.id
       redirect_to action: "index"
     end
     respond_to do |format|
       format.html
-      format.json { render json: {page: @page, container: @page.container.name, pages: @pages} }
+      format.json { render json: { page: @page, container: @page.container.name, pages: @pages } }
     end 
   end
 
@@ -77,6 +75,7 @@ class PagesController < ApplicationController
         end
       end
     else
+      redirect_to "#/containers/#{@page.container_id}"
     end
   end
 

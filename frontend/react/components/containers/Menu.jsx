@@ -70,7 +70,7 @@ var Menu = React.createClass({
           {this.props.items.map((page, i) => {
             return (
               <li key={page.id} data-pos={i} data-id={page.id}>
-                <Link to={"/container/"+this.props.container+"/"+page.id} key={page.id} id={page.id} data-pos={i} data-id={page.id} className={this._checkActive(page.id)} onClick={this.changePage}>{page.name}</Link>
+                <Link to={"/containers/"+this.props.container+"/"+page.id} key={page.id} id={page.id} data-pos={i} data-id={page.id} className={this._checkActive(page.id)} onClick={this.changePage}>{page.name}</Link>
               </li>
             );
           })}
