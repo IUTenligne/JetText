@@ -56,6 +56,7 @@ var Container = React.createClass({
                 });
             }
         });
+
         event.target.value='';
     },
 
@@ -65,13 +66,18 @@ var Container = React.createClass({
         } else {
             var pageId = this.state.activePage.id;
         }
+
         $.ajax({
             type: "DELETE",
             url: "/pages/"+pageId,
             context: this,
-            success: function(){
+            success: function(data){
+                this.setState({
+                    pages: this.state.pages.filter((i, _) => i["id"] !== data.page)
+                })
             }
         });
+
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
@@ -111,7 +117,6 @@ var Container = React.createClass({
 
                         <Menu key={Math.random()} className="menu" items={pages} container={container.id} />
 
-                        
                         <ul id="add_new_page">
                             <form >
                             <p>Create new page</p>
