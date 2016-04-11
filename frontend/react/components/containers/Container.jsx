@@ -67,25 +67,39 @@ var Container = React.createClass({
             var pageId = this.state.activePage.id;
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/pages/delete/"+pageId,
-            context: this,
-            success: function(data){
-                // filter the pages state array to remove deleted page
-                this.setState({
-                    pages: this.state.pages.filter((i, _) => i["id"] !== data.page)
-                });
-
-                window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0].id);
-            }
-        });
+        var loc = this.props;
+        var that = this;
 
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Container successfully deleted !',
-            level: 'success'
+            title: 'Confirm delete',
+            message: 'Are you sure you want to delete the page?',
+            level: 'success',
+            position: 'tr',
+            timeout: '10000',
+            action: {
+                label: 'yes',
+                callback: function() {
+                    if (loc.routeParams.pageId) {
+                        var pageId = loc.routeParams.pageId;
+                    } else {
+                        var pageId = that.state.activePage.id;
+                    }
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/pages/"+pageId,
+                        context: that,
+                        success: function(data){
+                            that.setState({
+                                pages: that.state.pages.filter((i, _) => i["id"] !== data.page)
+                            });
+
+                            window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0].id);
+                        }
+                    });
+                }
+            }
         });
     },
 

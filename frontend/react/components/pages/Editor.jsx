@@ -88,7 +88,6 @@ var Editor = React.createClass({
     },
 
     _notificationSystem: null,
-
     render: function() {
         var page = this.props.page;
         return (
