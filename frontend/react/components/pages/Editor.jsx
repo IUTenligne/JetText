@@ -97,27 +97,37 @@ var Editor = React.createClass({
         this.setState({ saveButton: true, editButton: false });
     },
 
-    deletePage: function(){
-        $.ajax({
-            type: "DELETE",
-            url: "/pages/"+this.props.page.id,
-            context: this,
-            success: function(){
-                window.location.href= "/#/container/"+this.props.page.container_id
-            }
-        });
+    deletePage: function(event){
         // NotificationSystem popup
+        var loc = this.props;
         event.preventDefault();
+        console.log(loc);
+        
         this._notificationSystem.addNotification({
-            title: 'Container delete !',
-            level: 'success'
+            title: 'Hey, it\'s good to see you!',
+            message: 'Now you can see how easy it is to use notifications in React!',
+            level: 'success',
+            position: 'tr',
+            timeout: '9000',
+            action: {
+                label: 'Awesome!',
+                callback: function() {
+                    console.log(loc);
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/pages/"+loc.page.id,
+                        context: this,
+                        success: function(){
+                            window.location.href= "/#/container/"+this.props.page.container_id
+                        }
+                    });
+                }
+            }
         });
     },
 
     _notificationSystem: null,
-
     render: function() {
-        console.log(this.props);
     var page = this.props.page;
     return (
         <div className="col-lg-12">
@@ -127,7 +137,8 @@ var Editor = React.createClass({
                 <i className="fa fa-floppy-o"></i>
                 { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
                 
-                <input type="button" onClick={this.deletePage} value="casse toi pauvre con"/>
+                <input type="button" onClick={this.deletePage} value="puf"/>
+
 
                 <h2 className="page-header">{page.name}</h2>
                 <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
