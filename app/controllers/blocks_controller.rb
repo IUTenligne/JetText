@@ -21,6 +21,14 @@ class BlocksController < ApplicationController
     end 
   end
 
+  def update
+    @block = Block.find(params[:id])
+    if current_user.id == @block.user_id
+      @block.update_attributes(:content => params[:content])
+    end
+    render :nothing => true
+  end
+
   private
     def block_params
       params.require(:block).permit(:name, :content, :page_id, :user_id)

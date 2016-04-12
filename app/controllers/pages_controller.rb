@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     @pages = Page.select("id, name").where(:container_id => @page.container_id).order(weight: :asc)
     @upload = Upload.new
     @new_page = Page.new
-    @blocks = Block.select("id, name").where(page_id: @page.id)
+    @blocks = Block.select("id, name, content").where(page_id: @page.id)
     unless @page.user_id == current_user.id
       redirect_to action: "index"
     end

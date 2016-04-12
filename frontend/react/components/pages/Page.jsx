@@ -2,17 +2,7 @@ var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Editor = require('./Editor.jsx');
 var Menu = require('../containers/Menu.jsx');
-
-var Block = React.createClass({
-    render: function() {
-        var block = this.props.item;
-        return (
-            <div className="row" key={block.id}>
-                <p>{block.name}</p>
-            </div>
-        );
-    }
-});
+var Block = require('./Block.jsx');
 
 var Page = React.createClass({
     getInitialState: function() {
