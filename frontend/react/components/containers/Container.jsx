@@ -76,7 +76,7 @@ var Container = React.createClass({
             title: 'Confirm delete',
             message: 'Are you sure you want to delete the page?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '10000',
             action: {
                 label: 'yes',
@@ -134,15 +134,10 @@ var Container = React.createClass({
 
                             <Menu key={Math.random()} className="menu" items={pages} container={container.id} ref="menuElm" />
 
-                            <ul id="add_new_page">
-                                <form>
-                                <p>Create new page</p>
-                                    <p>
-                                        <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplete="off"/>
-                                        <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
-                                    </p>
-                                </form>
-                            </ul>
+                            <form id="add_new_page">
+                                <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplete="off"/>
+                                <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
+                            </form>
                        </div>
                     </div>
                 </nav>

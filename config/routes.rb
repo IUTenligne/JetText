@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       put :update_ajax, on: :collection
       post "/delete/:id" => "pages#destroy", on: :collection
     end
+    resources :blocks
+    resources :types
     resources :variables
     resources :uploads
     resources :glossaries
