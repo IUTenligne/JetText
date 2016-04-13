@@ -36,6 +36,15 @@ var Sharebar = React.createClass({
   }
 });
 
+var style = {
+    NotificationItem: { 
+        DefaultStyle: { 
+            margin: '50px 5px 2px 1px',
+            background: " #eeeeee",
+            color:"red"
+        },
+    }
+}
 
 var Editor = React.createClass({
     
@@ -43,12 +52,16 @@ var Editor = React.createClass({
         return {
           pageContent: '',
           editButton: true,
-          saveButton: false
+          saveButton: false,
+          loading: true
         };
     },
 
     componentDidMount: function() {
-        this.setState({ pageContent: this.props.page.content });
+        this.setState({ 
+            pageContent: this.props.page.content,
+            loading: false
+        });
         this._notificationSystem = this.refs.notificationSystem;
     },
 
@@ -60,9 +73,9 @@ var Editor = React.createClass({
     postData: function(event) {
         var page = this.props.page;
         $.ajax({
-          type: "PUT",
-          url: '/pages/update_ajax',
-          data: { id: page.id, name: page.name, content: this.state.pageContent }
+            type: "PUT",
+            url: '/pages/update_ajax',
+            data: { id: page.id, name: page.name, content: this.state.pageContent }
         });
 
         // NotificationSystem popup
@@ -87,6 +100,19 @@ var Editor = React.createClass({
         this.setState({ saveButton: true, editButton: false });
     },
 
+    generateContainer: function(event){
+       var page = this.props.page;
+       $.ajax({
+            type: "GET",
+            url: '/generate_container/'+page.container_id,
+        });
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Container generate !',
+            level: 'success'
+        });   
+    },
+
     _notificationSystem: null,
     render: function() {
         var page = this.props.page;
@@ -99,7 +125,7 @@ var Editor = React.createClass({
                     { this.state.saveButton ? <input type="button" onClick={this.postData} value="Save" /> : null }
                     
                     <h2 className="page-header">{page.name}</h2>
-                    <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} />   
+                    {this.state.loading ? <div><i className="fa fa-spinner fa-pulse teste"></i></div> : <div id="editor1" dangerouslySetInnerHTML={createMarkup(page.content)} /> }
                 </div>
 
                 <div className="menuEditor">
@@ -143,7 +169,9 @@ var Editor = React.createClass({
 
                         <li>
                             <div className="hexagon">
-                                <i className="fa fa-upload"></i>
+                                <a onClick={this.generateContainer}>
+                                    <i className="fa fa-upload"></i>
+                                </a>
                             </div>
                         </li>
 
@@ -168,7 +196,7 @@ var Editor = React.createClass({
                     </ul>
                 </div>
 
-            <NotificationSystem ref="notificationSystem" />
+            <NotificationSystem ref="notificationSystem" style={style}/>
 
           </div>
         );

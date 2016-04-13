@@ -2,6 +2,16 @@ var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 
+
+var style = {
+    NotificationItem: { 
+        DefaultStyle: { 
+            margin: '50px 5px 2px 1px',
+            background: " #eeeeee",
+        },
+    }
+}
+
 var Result = React.createClass({
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
@@ -33,6 +43,20 @@ var Result = React.createClass({
         });
     },
 
+    generateContainer: function(event){
+       var that = this.props;
+       console.log(that.item.id);
+       $.ajax({
+            type: "GET",
+            url: '/generate_container/'+that.item.id,
+        });
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Container generate !',
+            level: 'success'
+        });   
+    },
+
     _notificationSystem: null, 
 
     render: function() {
@@ -52,9 +76,9 @@ var Result = React.createClass({
                                 <Link to={"/container/"+result.id}>
                                      <i className="fa fa-pencil"></i>
                                 </Link>
-                                <Link to={"/container/"+result.id}>
-                                     <i className="fa fa-upload"></i>
-                                </Link>
+                                <a onClick={this.generateContainer}>
+                                    <i className="fa fa-upload"></i>
+                                </a>
                                 <a onClick={this.deleteContainer}>
                                     <i className="fa fa-trash-o"></i>
                                 </a>
@@ -62,7 +86,7 @@ var Result = React.createClass({
                         </div>
                     </div> 
                 </li>
-                <NotificationSystem ref="notificationSystem" />
+                <NotificationSystem ref="notificationSystem" style={style}/>
             </div>
         )
     }

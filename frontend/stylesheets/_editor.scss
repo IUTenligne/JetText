@@ -3,6 +3,9 @@
 
 
 /* pour les pages login*/
+img{
+	max-width: 100%;
+}
 .middle {
 	.actions {
 		.btn {
@@ -11,6 +14,10 @@
 			margin-top: 5px;
 		}
 	}
+}
+.teste{
+	font-size: 100px;
+	color: red;
 }
 
 /* pour la liste des containers*/
@@ -172,15 +179,15 @@
     transform: rotate(60deg);               
 }
 .hexagon:hover, .hexagon:hover::before, .hexagon:hover::after{
-    -webkit-box-shadow: 10px 0px 0px #888887,
-        -10px 0px 0px  #888887;
+    -webkit-box-shadow: 1px 0px 0px #888887,
+        -1px 0px 0px  #888887;
     -moz-box-shadow:10px 0px 0px  #888887,
-        -10px 0px 0px  #888887;
-    -o-box-shadow:10px 0px 0px  #888887,
-        -10px 0px 0px  #888887;
-    box-shadow:2px 0px 0px  #888887,
-        -2px 0px 0px   #888887; 
-    border-radius: 3px / 6px;
+        -1px 0px 0px  #888887;
+    -o-box-shadow:1px 0px 0px  #888887,
+        -1px 0px 0px  #888887;
+    box-shadow:1px 0px 0px  #888887,
+        -1px 0px 0px   #888887; 
+    border-radius: 2px / 3px;
     i{
         color: #888887;
     }
