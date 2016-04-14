@@ -68,12 +68,12 @@ var Result = React.createClass({
                     <div className="contenu">
                         <div className="elem">
                             <div className="name">
-                                <Link to={"/container/"+result.id}>
+                                <Link to={"/containers/"+result.id}>
                                   {result.name}
                                  </Link>
                             </div>
                             <div className="option">
-                                <Link to={"/container/"+result.id}>
+                                <Link to={"/containers/"+result.id}>
                                      <i className="fa fa-pencil"></i>
                                 </Link>
                                 <a onClick={this.generateContainer}>

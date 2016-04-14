@@ -9,11 +9,7 @@
 //= require jquery_ujs
 //= require turbolinks
 
-//= require jquery.sortable.min
-
 //= require bootstrap/dist/js/bootstrap.min.js
-//= require sb-admin-2
-//= require metisMenu.min
 
 //= require cke/cke_fix.js
 //= require ckeditor/ckeditor.js
