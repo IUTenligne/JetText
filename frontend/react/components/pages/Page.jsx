@@ -8,7 +8,9 @@ var Page = React.createClass({
         return {
           page: '',
           blocks: [],
-          newBlockValue: ''
+          newBlockValue: '',
+          types: [],
+          selectedType: 1
         };
     },
   
@@ -17,6 +19,12 @@ var Page = React.createClass({
             this.setState({
                 page: result.page,
                 blocks: result.blocks
+            });
+        }.bind(this));
+
+        this.serverRequest = $.get("/types.json", function (result) {
+            this.setState({
+                types: result.types
             });
         }.bind(this));
     },
@@ -34,16 +42,21 @@ var Page = React.createClass({
             type: "POST",
             url: '/blocks',
             context: this,
-            data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id } },
+            data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id, type_id: this.state.selectedType } },
             success: function(data) {
                 this.setState({ 
                     blocks: this.state.blocks.concat([data]),
-                    newBlockValue: ''
+                    newBlockValue: '',
+                    selectedType: 1
                 });
             }
         });
 
         event.target.value='';
+    },
+
+    _selectType: function(event) {
+        this.setState({ selectedType: event.target.value });
     },
 
     render: function() {
@@ -56,6 +69,11 @@ var Page = React.createClass({
                 })}
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
+                    <select value="1" onChange={this._selectType}>
+                        {this.state.types.map(function(type){
+                            return <option value={type.id} key={type.id}>{type.name}</option>
+                        })}
+                    </select>
                     <input type="submit" value='Create' className="btn-success" onClick={this.createBlock}/>
                 </form>
             </div>
