@@ -73,9 +73,8 @@ var Container = React.createClass({
         event.preventDefault();
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
-            message: 'Are you sure you want to delete the page?',
+            message: 'Are you sure you want to delete the page ?',
             level: 'success',
-
             position: 'tc',
             timeout: '10000',
             action: {
@@ -134,15 +133,10 @@ var Container = React.createClass({
 
                             <Menu key={Math.random()} className="menu" items={pages} container={container.id} ref="menuElm" />
                             
-                            <ul id="add_new_page">
-                                <form >
-                                <p>Create new page</p>
-                                    <p>
-                                        <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off"/>
-                                        <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
-                                    </p>
-                                </form>
-                            </ul>
+                            <div>
+                                <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off"/>
+                                <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
+                            </div>
                        </div>
                     </div>
                 </nav>

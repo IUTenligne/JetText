@@ -37,12 +37,10 @@ var Page = React.createClass({
             context: this,
             data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id } },
             success: function(data) {
-                console.log("before:",this.state.blocks);
                 this.setState({ 
                     blocks: this.state.blocks.concat([data]),
                     newBlockValue: ''
                 });
-                console.log("after:",this.state.blocks);
             }
         });
 

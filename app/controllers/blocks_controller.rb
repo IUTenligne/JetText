@@ -25,8 +25,10 @@ class BlocksController < ApplicationController
     @block = Block.find(params[:id])
     if current_user.id == @block.user_id
       @block.update_attributes(:content => params[:content])
+      respond_to do |format|
+        format.json { render json: {content: @block.content} }
+      end
     end
-    render :nothing => true
   end
 
   private
