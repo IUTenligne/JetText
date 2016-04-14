@@ -11,18 +11,17 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find(params[:id])
-    @page.content = @page.content.force_encoding('UTF-8')
+    #@page.content = @page.content.force_encoding('UTF-8')
+    @pages = Page.select("id, name").where(:container_id => @page.container_id).order(weight: :asc)
     @upload = Upload.new
-    @uploads = Upload.all
-    @container = Container.find(@page.container_id)
-    @pages = Page.select("id, name").where(:container_id => @container.id).order(weight: :asc)
     @new_page = Page.new
+    @blocks = Block.select("id, name, content").where(page_id: @page.id)
     unless @page.user_id == current_user.id
       redirect_to action: "index"
     end
     respond_to do |format|
       format.html
-      format.json { render json: {page: @page, container: @page.container.name, pages: @pages} }
+      format.json { render json: { page: @page, container: @page.container.name, pages: @pages, blocks: @blocks } }
     end 
   end
 
@@ -49,7 +48,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page = Page.where(:id => params[:id]).where(:user_id => current_user.id).take
+    @page = Page.where(:id => params[:id]).where(:user_id => current_user.id).take #mauvaise requete
     @container = Container.find(@page.container_id)
 
     if params[:page][:content].empty?
@@ -77,6 +76,7 @@ class PagesController < ApplicationController
         end
       end
     else
+      redirect_to "#/containers/#{@page.container_id}"
     end
   end
 

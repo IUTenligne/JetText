@@ -21,4 +21,6 @@
 //= require cke/custom_config.js
 //= require_tree ./cke/plugins
 
+// require alloyeditor/dist/alloy-editor/alloy-editor-no-ckeditor-min.js
+
 //= require main

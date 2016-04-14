@@ -1,0 +1,36 @@
+$grey:#E9EBEC;
+$darkGrey: #7C848D;
+$white: #FFFFFF;
+$blue: #4A8AC7;
+
+
+img{
+	max-width: 100%;
+}
+body {
+	#wrapper {
+		background: $white;
+		#sidebar-wrapper {
+			background: $grey;
+			.sidebar-nav{ 
+				ul {
+					list-style: none;
+					margin: 0;
+					padding: 0;
+					color: $darkGrey;
+				}
+				ul.nav-link{
+					border-top: 1px solid $blue;
+					border-bottom: 1px solid $blue;
+					i{
+						
+						font-size: 20px;
+					}
+				}
+				ul.nav-menu{
+
+				}
+			}
+		}
+	}
+}

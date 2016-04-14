@@ -28,8 +28,10 @@ CKEDITOR.dialog.add('uploaderDialog', function(editor) {
                 var editor_elem = editor.document.createElement('a');
                 editor_elem.setAttribute('href', url);
                 editor_elem.appendText('PDF');
-            } else if (file.type === 'video/mp4') {
+            } else if (file.type === 'video/mp4' || file.type === 'application/force-download') {
                 var editor_elem = editor.document.createElement('video');
+                editor_elem.setAttribute('src', url);
+                editor_elem.setAttribute('controls', '');
             }
 
             editor.insertElement(editor_elem);

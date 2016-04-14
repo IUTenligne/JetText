@@ -117,6 +117,7 @@ var Containers = React.createClass({
     _notificationSystem: null,
 
     render: function() {
+
         var results = this.state.containersList;
         return (
             <div className="containers">
@@ -124,6 +125,7 @@ var Containers = React.createClass({
                 <div className="row">
                     <div className="col-lg-12">
                         <h1 className="page-header">My containers</h1>
+
                     </div>
                 </div>
 

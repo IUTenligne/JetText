@@ -21,7 +21,8 @@ class Upload < ActiveRecord::Base
 			"video/mp4",
 			"application/pdf",
       "application/force-download",
-			"image/png"
+			"image/png",
+      "image/jpg"
 		],
 		:message => 'seuls les fichiers PDF et MP4 sont autorisés.'
 
