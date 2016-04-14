@@ -1,7 +1,9 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
-var Menu = require('./Menu.jsx');
 var Page = require('../pages/Page.jsx');
+var ReactDOM = require('react-dom');
+var dragula = require('react-dragula');
+
 var NotificationSystem = require('react-notification-system');
 
 
@@ -11,7 +13,8 @@ var Container = React.createClass({
             container: '',
             pages: [],
             activePage: '',
-            newPageValue: ''
+            newPageValue: '',
+            pagesLinks: []
         };
     },
 
@@ -30,6 +33,9 @@ var Container = React.createClass({
                     activePage: ''
                 });
             }
+            var container = ReactDOM.findDOMNode(this.refs.dragulable);
+            var drake = dragula([container]);
+            this.moveItems(drake, result.pages);
         }.bind(this));
 
         this._notificationSystem = this.refs.notificationSystem;
@@ -102,6 +108,46 @@ var Container = React.createClass({
         });
     },
 
+    moveItems: function(drake, pages) {
+        drake.on('drag', function(element, source) {
+          var index = [].indexOf.call(element.parentNode.children, element);
+        });
+
+        var that = this;
+
+        drake.on('drop', function(element, target, source, sibling) {
+            var index = [].indexOf.call(element.parentNode.children, element)
+            var updated_order = [];
+
+            $(source).children().each(function(i) {
+                updated_order.push({ id: $(this).data('id'), weight: i });
+            });
+
+            $.ajax({
+                type: "PUT",
+                url: '/pages/sort',
+                context: that,
+                data: { order: updated_order },
+                success: function(data) {
+                    var sortedPages = [];
+                    for (var i in updated_order) {
+                        var o = updated_order[i];
+                        var page = $.grep(pages, function(e){ 
+                        if (e.id == o.id)
+                            return e; 
+                        });
+                        sortedPages.push(page[0]);
+                    }
+
+                    that.setState({ 
+                        pages: sortedPages,
+                        pagesLinks: sortedPages
+                    });           
+                }
+            });
+        });
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -131,7 +177,17 @@ var Container = React.createClass({
                                 <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
                             </a>
 
-                            <Menu key={Math.random()} className="menu" items={pages} container={container.id} ref="menuElm" />
+                            <div>
+                                <ul className="menu-container nav" id="side-menu" ref="dragulable">
+                                  {pages.map((page, i) => {
+                                    return (
+                                      <li key={Math.random()} data-pos={i} data-id={page.id}>
+                                        <Link to={"/containers/"+this.props.container+"/"+page.id}>{page.name}</Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                            </div>
                             
                             <div>
                                 <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off"/>
@@ -140,8 +196,6 @@ var Container = React.createClass({
                        </div>
                     </div>
                 </nav>
-
-                
 
                 <div id="page-wrapper">
                     <div className="row">

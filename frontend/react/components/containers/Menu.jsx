@@ -7,7 +7,8 @@ var Menu = React.createClass({
   getInitialState: function() {
     return {
       currentPage: '',
-      pagesOrder: []
+      pages: [],
+      pagesLinks: []
     };
   },
 
@@ -17,15 +18,18 @@ var Menu = React.createClass({
     {this.props.items.map((page, i) => {
         order.push(page.id);
     })};
-    this.setState({pagesOrder: order});
+
+    this.setState({
+      pages: this.props.items,
+      pagesLinks: this.props.items
+    });
 
     var container = ReactDOM.findDOMNode(this.refs.dragulable);
     var drake = dragula([container]);
-
-    this.moveItems(drake);
+    this.moveItems(drake, this.props.items);
   },
 
-  moveItems: function(drake) {
+  moveItems: function(drake, pages) {
     drake.on('drag', function(element, source) {
       var index = [].indexOf.call(element.parentNode.children, element);
     });
@@ -46,19 +50,26 @@ var Menu = React.createClass({
         context: that,
         data: { order: updated_order },
         success: function(data) {
-          that.setState({ pagesOrder: updated_order }); 
-          // updater un champ key sur les items du menu ?
-          location.reload();
+          var sortedPages = [];
+          for (var i in updated_order) {
+            var o = updated_order[i];
+            var page = $.grep(pages, function(e){ 
+              if (e.id == o.id)
+                return e; 
+            });
+            sortedPages.push(page[0]);
+          }
+
+          that.setState({ 
+            pages: sortedPages,
+            pagesLinks: sortedPages
+          });           
         }
       });
     });
   },
 
   _notificationSystem: null,
-
-  changePage: function(event) {
-    this.setState({ currentPage: event.target.id });
-  },
 
   _checkActive: function(id) {
     return (id == this.state.currentPage) ? "active" : ""
@@ -68,10 +79,10 @@ var Menu = React.createClass({
     return (
       <div>
         <ul className="menu-container nav" id="side-menu" ref="dragulable">
-          {this.props.items.map((page, i) => {
+          {this.state.pages.map((page, i) => {
             return (
-              <li key={page.id} data-pos={i} data-id={page.id}>
-                <Link to={"/containers/"+this.props.container+"/"+page.id} key={Math.random()} id={page.id} data-pos={i} data-id={page.id} className={this._checkActive(page.id)} onClick={this.changePage}>{page.name}</Link>
+              <li key={Math.random()} data-pos={i} data-id={page.id}>
+                <Link to={"/containers/"+this.props.container+"/"+this.state.pagesLinks[i].id} key={this.state.pagesLinks[i].id} className={this._checkActive(this.state.pagesLinks[i].id)} >{this.state.pagesLinks[i].name}</Link>
               </li>
             );
           })}

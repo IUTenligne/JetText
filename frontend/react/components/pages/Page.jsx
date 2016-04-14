@@ -51,6 +51,7 @@ var Page = React.createClass({
         var page = this.state.page;
         return (
             <div className="row">
+                <h2>{page.name}</h2>
                 {this.state.blocks.map(function(block){
                     return <Block key={Math.random()} item={block} />
                 })}
