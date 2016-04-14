@@ -31,6 +31,21 @@ gulp.task('sass', function () {
       gutil.log(gutil.colors.magenta('ʕ•ᴥ•ʔ ') + gutil.colors.green(' CSS generated !'))
     });
 });
+
+gulp.task('template', function () {
+  gulp.src('./frontend/template/*.scss')
+    .pipe(sass({outputStyle: 'compressed'})
+      .on('error', sass.logError)
+      .on('error', function(){
+        gutil.log(gutil.colors.red(' ( ⓛ ω ⓛ ) not good'));
+      })
+    )
+    .pipe(concat("template.css"))
+    .pipe(gulp.dest('./public/yaourtnut@gmail.com/assets/css'))
+    .on('end', function() { 
+      gutil.log(gutil.colors.green('/ᐠ｡ꞈ｡ᐟ\\') + gutil.colors.green(' CSS generated !'))
+    });
+});
  
 gulp.task('sass:watch', function () {
   gulp.watch('./frontend/stylesheets/**/*.scss', ['sass']);
@@ -50,6 +65,7 @@ gulp.task("es6", function () {
 
 gulp.task('watch', function () {
   gulp.watch('./frontend/stylesheets/**/*.scss', ['sass']);
+  gulp.watch('./frontend/template/*.scss', ['template']);
   gulp.watch('./frontend/javascripts/**/*.es6', ['js']);
   gulp.watch('./frontend/react/**/*.jsx', ['react']);
 });

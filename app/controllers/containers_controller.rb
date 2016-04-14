@@ -62,10 +62,11 @@ class ContainersController < ApplicationController
     @container = Container.find(params[:id])
     if @container.user_id == current_user.id
       if @container.destroy
-        redirect_to action: "index"
+        respond_to do |format|
+          format.json { render json: {status: "ok", container: @container.id} }
+        end
       end
     else
-      redirect_to action: "index"
     end
   end
 

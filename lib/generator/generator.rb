@@ -12,10 +12,10 @@ module Generator
         + "\t<head>\n" \
         + "\t\t<script type=\"text/x-mathjax-config\">" \
         + "\t\t\tMathJax.Hub.Config({tex2jax: {inlineMath: [[\"$\",\"$\"]]},displayAlign: \"center\",displayIndent: \"0.1em\"});" \
-        + "\t\t</script>" \
-        + "\t\t<script type=\"text/javascript\" src=\"/assets/MathJax/MathJax.js?config=TeX-AMS_HTML\" defer></script>" \
-        + "\t\t<script type=\"text/javascript\" src=\"/assets/MathJax/extensions/MathMenu.js\" defer></script>" \
-        + "\t\t<script type=\"text/javascript\" src=\"/assets/MathJax/extensions/MathZoom.js\" defer></script>" \
+        + "\t\t</script>\n" \
+        + "\t\t<script type=\"text/javascript\" src=\"/assets/MathJax/MathJax.js?config=TeX-AMS_HTML\" defer></script>\n" \
+        + "\t\t<script type=\"text/javascript\" src=\"/assets/MathJax/extensions/MathMenu.js\" defer></script>\n" \
+        + "\t\t<script type=\"text/javascript\" src=\"/assets/MathJax/extensions/MathZoom.js\" defer></script>\n" \
         + "\t</head>\n" \
         + "\t<body>\n\n" \
       )
@@ -34,18 +34,82 @@ module Generator
         f.write(
 	        "<html>\n" \
           + "\t<head>\n" \
-          + "\t\t<script type=\"text/x-mathjax-config\">" \
-          + "\t\t\tMathJax.Hub.Config({tex2jax: {inlineMath: [[\"$\",\"$\"]]},displayAlign: \"center\",displayIndent: \"0.1em\"});" \
-          + "\t\t</script>" \
-          + "\t\t<script type=\"text/javascript\" src=\"/Users/pierre/Documents/Developpement/Ruby/Rails/JetText/bower_components/MathJax/MathJax.js?config=TeX-AMS_HTML\" defer></script>" \
-          + "\t\t<script type=\"text/javascript\" src=\"/Users/pierre/Documents/Developpement/Ruby/Rails/JetText/bower_components/MathJax/extensions/MathMenu.js\" defer></script>" \
-          + "\t\t<script type=\"text/javascript\" src=\"/Users/pierre/Documents/Developpement/Ruby/Rails/JetText/bower_components/MathJax/extensions/MathZoom.js\" defer></script>" \
-          + "\t</head>\n" \
-          + "\t<body>\n\n" \
+          + "\t\t<meta charset=\"utf-8\">\n" \
+          + "\t\t<title>"+container.name+"</title>\n" \
+          + "\t\t<script type=\"text/x-mathjax-config\">\n" \
+          + "\t\t\tMathJax.Hub.Config({tex2jax: {inlineMath: [[\"$\",\"$\"]]},displayAlign: \"center\",displayIndent: \"0.1em\"});\n" \
+          + "\t\t</script>\n" \
+          + "\t\t<script type=\"text/javascript\" src=\"/Users/pierre/Documents/Developpement/Ruby/Rails/JetText/bower_components/MathJax/MathJax.js?config=TeX-AMS_HTML\" defer></script>\n" \
+          + "\t\t<script type=\"text/javascript\" src=\"/Users/pierre/Documents/Developpement/Ruby/Rails/JetText/bower_components/MathJax/extensions/MathMenu.js\" defer></script>\n" \
+          + "\t\t<script type=\"text/javascript\" src=\"/Users/pierre/Documents/Developpement/Ruby/Rails/JetText/bower_components/MathJax/extensions/MathZoom.js\" defer></script>\n" \
+          + "\t\t<link href=\"assets/css/bootstrap.min.css\" rel=\"stylesheet\">\n" \
+          + "\t\t<link href=\"assets/css/simple-sidebar.css\" rel=\"stylesheet\">\n" \
+          + "\t\t<link href=\"assets/css/template.css\" rel=\"stylesheet\">\n" \
+          + "\t\t<link href=\"assets/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n" \
+          + "\t</head>\n\n" \
+          + "\t<body>\n" \
         )
-        f.write("\t\t<div>"+page.content+"\t\t</div>\n\n") if page.content
+        if page.content
+          f.write(
+            "\t\t<div id=\"wrapper\">\n" \
+            +"\t\t\t<div id=\"sidebar-wrapper\">\n" \
+            +"\t\t\t\t<div class=\"sidebar-nav\">\n" \
+            +"\t\t\t\t\t<a href=\"http://www.iutenligne.net/resources.html\">\n" \
+            +"\t\t\t\t\t\t<img src=\"files/image/iutenligne.png\" border=\"0\">\n" \
+            +"\t\t\t\t\t</a>\n\n" \
+            +"\t\t\t\t\t<ul class=\"nav-link\">\n" \
+            +"\t\t\t\t\t\t<li>\n" \
+            +"\t\t\t\t\t\t\t<i class=\"fa fa-home\"></i>\n" \
+            +"\t\t\t\t\t\t</li>\n" \
+            +"\t\t\t\t\t\t<li>\n" \
+            +"\t\t\t\t\t\t\t<i class=\"fa fa-facebook\"></i>\n" \
+            +"\t\t\t\t\t\t</li>\n" \
+            +"\t\t\t\t\t\t<li>\n" \
+            +"\t\t\t\t\t\t\t<i class=\"fa fa-pencil\"></i>\n" \
+            +"\t\t\t\t\t\t</li>\n" \
+            +"\t\t\t\t\t\t<li>\n" \
+            +"\t\t\t\t\t\t\t<a href=\"#menu-toggle\" id=\"menu-toggle\">\n" \
+            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-chevron-left\"></i>\n" \
+            +"\t\t\t\t\t\t\t</a>\n" \
+            +"\t\t\t\t\t\t</li>\n" \
+            +"\t\t\t\t\t</ul>\n\n" \
+            +"\t\t\t\t\t<ul>\n" \
+          )
+          pages.each do |p|
+            f.write("\t\t\t\t\t\t<li class=\"sidebar-brand\"> <a>" + p.name + "</a></li>\n")
+          end
+          f.write(
+            "\t\t\t\t\t</ul>\n" \
+            +"\t\t\t\t</div>\n\n" \
+            +"\t\t\t</div>\n\n" \
+            +"\t\t\t<div id=\"page-content-wrapper\">\n" \
+            +"\t\t\t\t<div class=\"container-fluid\">\n" \
+            +"\t\t\t\t\t<!-- title --> \n\n" \
+            +"\t\t\t\t\t<div class=\"row\">\n" \
+            +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n" \
+            +"\t\t\t\t\t\t\t<h1 class=\"page-header\">" + page.name + "</h1>\n" \
+            +"\t\t\t\t\t\t</div>\n" \
+            +"\t\t\t\t\t</div>\n" \
+            +"\t\t\t\t\t<!-- / title --> \n\n" \
+            +"\t\t\t\t\t<!-- content --> \n" \
+            +"\t\t\t\t\t<div class=\"row\">\n" \
+            +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n\n" \
+            +"\t\t\t\t\t\t\t" + page.content + "\n" \
+            +"\t\t\t\t\t\t</div>\n" \
+            +"\t\t\t\t\t</div>\n" \
+            +"\t\t\t\t\t<!-- / content --> \n\n" \
+            +"\t\t\t\t</div>\n" \
+            +"\t\t\t</div>\n" \
+            +"\t\t</div>\n\n" \
+          )
+        end
         f.write(
-          "\t</body>\n" \
+          "\t\t<script src=\"assets/js/bootstrap.min.js\"></script>\n" \
+          +"\t\t<script src=\"assets/js/jquery.js\"></script>\n" \
+          +"\t\t<script>\n" \
+          +"\t\t\t $(\"#menu-toggle\").click(function(e){e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\"); });\n" \
+          +"\t\t</script>\n" \
+          +"\t</body>\n" \
           + "</html>" \
         )
         f.close
