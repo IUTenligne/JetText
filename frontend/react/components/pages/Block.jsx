@@ -1,32 +1,28 @@
 var React = require('react');
-var AlloyEditor = require('alloyeditor');
 
 var Block = React.createClass({
     getInitialState: function() {
         return {
-          blockContent: '',
-          editedBlock: ''
+          blockContent: ''
         };
     },
 
-    handleClick: function(event) {
+    componentDidMount: function() {
         var that = this;
-        if (this._editor) {
-            this._editor.destroy();
-        }
 
-        this.setState({ editedBlock: event.target });
-
-        /*var editor = CKEDITOR.replace(event.target, {
+        var editor = CKEDITOR.replace("block_"+this.props.item.id, {
             customConfig: '/assets/cke/custom_config.js'
         });
         editor.on('change', function( evt ) {
             // setState to allow changes to be saved on submit
             that.setState({ blockContent: evt.editor.getData() });
         });
-        CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');*/
-        console.log(this.state.editedBlock);
-        this._editor = AlloyEditor.editable(this.state.editedBlock);
+        CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');
+    },
+
+    componentWillUnmount: function() {
+        var editor = CKEDITOR.instances["block_"+this.props.item.id];
+        if (editor) { editor.destroy(true); }
     },
 
     saveBlock: function(event) {
@@ -55,9 +51,7 @@ var Block = React.createClass({
             <div>
                 <div className="row" key={block.id}>
                     <h3>{block.name}</h3>
-                    <div id={this.dynamicId(block.id)} onClick={this.handleClick}>
-                        <div ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(block.content)} />
-                    </div>
+                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(block.content)} />
                 </div>
                 <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} />
             </div>
