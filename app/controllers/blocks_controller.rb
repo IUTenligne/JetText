@@ -16,7 +16,7 @@ class BlocksController < ApplicationController
   	@block.user_id = current_user.id
   	if @block.save
       respond_to do |format|
-        format.json { render json: {block: @block} }
+        format.json { render json: {content: @block.content, id: @block.id, name: @block.name} }
       end
     end 
   end

@@ -41,7 +41,10 @@ var Block = React.createClass({
         var block = this.props.item;
         return (
             <div>
-                <div className="row" key={block.id} ref="editableblock" onClick={this.handleClick} dangerouslySetInnerHTML={createMarkup(block.content)} />
+                <div className="row" key={block.id}>
+                    <h3>{block.name}</h3>
+                    <div ref="editableblock" onClick={this.handleClick} dangerouslySetInnerHTML={createMarkup(block.content)} />
+                </div>
                 <input type="submit" value='Save' className="btn-success" onClick={this.saveBlock}/>
             </div>
         );

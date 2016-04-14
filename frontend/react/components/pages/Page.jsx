@@ -37,10 +37,12 @@ var Page = React.createClass({
             context: this,
             data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id } },
             success: function(data) {
+                console.log("before:",this.state.blocks);
                 this.setState({ 
                     blocks: this.state.blocks.concat([data]),
                     newBlockValue: ''
                 });
+                console.log("after:",this.state.blocks);
             }
         });
 
@@ -52,11 +54,11 @@ var Page = React.createClass({
         return (
             <div className="row">
                 {this.state.blocks.map(function(block){
-                    return <Block key={block.id} item={block} />
+                    return <Block key={Math.random()} item={block} />
                 })}
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
-                    <input type="submit" value='Save' className="btn-success" onClick={this.createBlock}/>
+                    <input type="submit" value='Create' className="btn-success" onClick={this.createBlock}/>
                 </form>
             </div>
         );

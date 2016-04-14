@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: variables
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  value      :integer
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
 class VariablesController < ApplicationController
 
   before_action :authenticate_user!
@@ -35,12 +23,19 @@ class VariablesController < ApplicationController
   end
 
   def edit
+    @variable = Variable.find(params[:id])
   end
 
   def update
+    @variable = Variable.find(params[:id])
+    @variable.update_attributes(name: params[:name], value: params[:value])
   end
 
   def destroy
+    @variable = Variable.find(params[:id])
+    if @variable.destroy
+      redirect_to action: "index"
+    end
   end
 
   private
@@ -49,3 +44,15 @@ class VariablesController < ApplicationController
     end
 
 end
+
+# == Schema Information
+#
+# Table name: variables
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  value      :integer
+#  user_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
