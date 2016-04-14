@@ -3,7 +3,6 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 var Page = require('../pages/Page.jsx');
 var ReactDOM = require('react-dom');
 var dragula = require('react-dragula');
-
 var NotificationSystem = require('react-notification-system');
 
 
@@ -13,8 +12,7 @@ var Container = React.createClass({
             container: '',
             pages: [],
             activePage: '',
-            newPageValue: '',
-            pagesLinks: []
+            newPageValue: ''
         };
     },
 
@@ -129,6 +127,8 @@ var Container = React.createClass({
                 context: that,
                 data: { order: updated_order },
                 success: function(data) {
+                    /* necessary to reorder the pages correctly 
+                    sortedPages is filled with this.state.pages values following updated_order's new order */
                     var sortedPages = [];
                     for (var i in updated_order) {
                         var o = updated_order[i];
@@ -139,9 +139,8 @@ var Container = React.createClass({
                         sortedPages.push(page[0]);
                     }
 
-                    that.setState({ 
-                        pages: sortedPages,
-                        pagesLinks: sortedPages
+                    that.setState({
+                        pages: sortedPages
                     });           
                 }
             });
@@ -181,8 +180,8 @@ var Container = React.createClass({
                                 <ul className="menu-container nav" id="side-menu" ref="dragulable">
                                   {pages.map((page, i) => {
                                     return (
-                                      <li key={Math.random()} data-pos={i} data-id={page.id}>
-                                        <Link to={"/containers/"+this.props.container+"/"+page.id}>{page.name}</Link>
+                                      <li key={ Math.floor((Math.random() * 900)) } data-pos={i} data-id={page.id}>
+                                        <Link to={"/containers/"+this.props.container+"/"+page.id} onClick={this._updateMenuKey}>{page.name}</Link>
                                       </li>
                                     );
                                   })}

@@ -1,7 +1,6 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Editor = require('./Editor.jsx');
-var Menu = require('../containers/Menu.jsx');
 var Block = require('./Block.jsx');
 
 var Page = React.createClass({
@@ -53,7 +52,7 @@ var Page = React.createClass({
             <div className="row">
                 <h2>{page.name}</h2>
                 {this.state.blocks.map(function(block){
-                    return <Block key={Math.random()} item={block} />
+                    return <Block key={block.id} item={block} />
                 })}
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>

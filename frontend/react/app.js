@@ -6,7 +6,6 @@ var App = require('./components/App.jsx');
 var Containers = require('./components/containers/Containers.jsx');
 var Container = require('./components/containers/Container.jsx');
 var Page = require('./components/pages/Page.jsx');
-var Menu = require('./components/containers/Menu.jsx');
 
 $(document).ready(function () {
 	if (document.getElementById('appcontainer')) {
