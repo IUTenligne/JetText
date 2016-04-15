@@ -35,9 +35,7 @@ var Result = React.createClass({
                         context: that,
                         success: function(data) {
                             /* passes the container.id to the parent using removeContainer's props */
-                            that.props.removeContainer(
-                                data.container
-                            )
+                            that.props.removeContainer(data.container)
                         }
                     });
                 }
@@ -116,6 +114,7 @@ var Containers = React.createClass({
     },
 
     handleContainerDeletion: function(containerId) {
+        /* updates the containers list with the containerId returned by the prop this.props.deleteContainer of the child <Result /> */
         this.setState({
             containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
         });

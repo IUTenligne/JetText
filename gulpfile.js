@@ -15,6 +15,7 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     watchify = require('watchify'),
     react = require('gulp-react'),
+    uglify = require('gulp-uglify'),
     reactify = require('reactify');
  
 gulp.task('sass', function () {
@@ -99,5 +100,7 @@ gulp.task("react", function () {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(concat("main.js"))
+    //.pipe(sourcemaps.write("."))
+    //.pipe(uglify())
     .pipe(gulp.dest("./app/assets/javascripts/"));
 });

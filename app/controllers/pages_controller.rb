@@ -34,9 +34,9 @@ class PagesController < ApplicationController
     if @container.present? && current_user.id == @container.user_id
       if @page.save
         respond_to do |format|
-          format.json { render json: {id: @page.id, name: @page.name} }
+          format.json { render json: @page }
         end
-      end 
+      end
     end
   end
 

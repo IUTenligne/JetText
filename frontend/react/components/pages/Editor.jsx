@@ -134,8 +134,7 @@ var Editor = React.createClass({
                         <li>
                             <div className="hexagon" >
                                 <a href='#' key={page.name}>
-                                    <i className="fa fa-home">
-                                    </i>
+                                    <i className="fa fa-home"></i>
                                  </a>
                             </div>
                         </li>
@@ -192,7 +191,7 @@ var Editor = React.createClass({
                             </div>
                         </li>
                         <ul>
-                          <Sharebar />
+                            <Sharebar />
                         </ul>
                     </ul>
                 </div>

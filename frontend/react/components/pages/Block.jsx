@@ -59,7 +59,7 @@ var Block = React.createClass({
             }
         });
 
-        event.target.value='';
+        event.target.value = '';
 
         var editor = CKEDITOR.instances["block_"+this.props.item.id];
         if (editor) { editor.destroy(true); }
