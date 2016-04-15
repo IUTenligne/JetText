@@ -1,6 +1,15 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
 
+var style = {
+    NotificationItem: { 
+        DefaultStyle: { 
+            margin: '50px 5px 2px 1px',
+            background: " #eeeeee",
+        },
+    }
+}
+
 var Block = React.createClass({
     getInitialState: function() {
         return {
@@ -67,7 +76,7 @@ var Block = React.createClass({
     },
 
     dynamicId: function(id){
-        return "block_" + id
+        return "block_" + id;
     },
 
     _notificationSystem: null,
@@ -83,7 +92,7 @@ var Block = React.createClass({
 
                 { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlock} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
 
-                <NotificationSystem ref="notificationSystem"/>
+                <NotificationSystem ref="notificationSystem" style={style}/>
             </div>
         );
     }

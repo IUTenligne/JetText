@@ -69,7 +69,7 @@ var Page = React.createClass({
                 })}
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
-                    <select value="1" onChange={this._selectType}>
+                    <select onChange={this._selectType}>
                         {this.state.types.map(function(type){
                             return <option value={type.id} key={type.id}>{type.name}</option>
                         })}

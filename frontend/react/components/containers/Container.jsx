@@ -77,7 +77,7 @@ var Container = React.createClass({
         event.preventDefault();
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
-            message: 'Are you sure you want to delete the page ?',
+            message: 'Delete the page ?',
             level: 'success',
             position: 'tc',
             timeout: '10000',
@@ -189,7 +189,7 @@ var Container = React.createClass({
                             </div>
                             
                             <div>
-                                <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off"/>
+                                <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off" placeholder="Create new page..."/>
                                 <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
                             </div>
                        </div>
