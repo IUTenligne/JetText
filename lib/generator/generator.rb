@@ -30,7 +30,8 @@ module Generator
     pages.each do |page|
       page.content = gsub_content(username, page.content, container.url) if page.content
       page.content = gsub_glossary(page.id, page.content) if page.content
-      File.open("#{Rails.public_path}/#{container.url}/#{page.name}.html", "w+") do |f|
+      file_name = gsub_page_name(page.name)
+      File.open("#{Rails.public_path}/#{container.url}/#{file_name}.html", "w+") do |f|
         f.write(
 	        "<html>\n" \
           + "\t<head>\n" \
@@ -57,26 +58,39 @@ module Generator
             +"\t\t\t\t\t<a href=\"http://www.iutenligne.net/resources.html\">\n" \
             +"\t\t\t\t\t\t<img src=\"files/image/iutenligne.png\" border=\"0\">\n" \
             +"\t\t\t\t\t</a>\n\n" \
+            +"\t\t\t\t\t<hr>\n\n" \
             +"\t\t\t\t\t<ul class=\"nav-link\">\n" \
             +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<i class=\"fa fa-home\"></i>\n" \
+            +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
+            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-home fa-fw\" title=\"Home\" aria-hidden=\"true\"></i>\n" \
+            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Home</span>\n" \
+            +"\t\t\t\t\t\t\t</a>\n" \
             +"\t\t\t\t\t\t</li>\n" \
             +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<i class=\"fa fa-facebook\"></i>\n" \
+            +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
+            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook fa-fw\" title=\"Facebook\" aria-hidden=\"true\"></i>\n" \
+            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Facebook</span>\n" \
+            +"\t\t\t\t\t\t\t</a>\n" \
             +"\t\t\t\t\t\t</li>\n" \
             +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<i class=\"fa fa-pencil\"></i>\n" \
+            +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
+            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-pencil fa-fw\" title=\"Mail\" aria-hidden=\"true\"></i>\n" \
+            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Mail</span>\n" \
+            +"\t\t\t\t\t\t\t</a>\n" \
             +"\t\t\t\t\t\t</li>\n" \
             +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<a href=\"#menu-toggle\" id=\"menu-toggle\">\n" \
-            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-chevron-left\"></i>\n" \
+            +"\t\t\t\t\t\t\t<a href=\"#menu-toggle\" id=\"menu-toggle\" class=\"btn btn-default\">\n" \
+            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-chevron-left fa-fw\" title=\"Navigation\" aria-hidden=\"true\"></i>\n" \
+            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Navigation</span>\n" \
             +"\t\t\t\t\t\t\t</a>\n" \
             +"\t\t\t\t\t\t</li>\n" \
             +"\t\t\t\t\t</ul>\n\n" \
-            +"\t\t\t\t\t<ul>\n" \
+            +"\t\t\t\t\t<hr>\n\n" \
+            +"\t\t\t\t\t<ul class=\"nav-menu\">\n" \
           )
           pages.each do |p|
-            f.write("\t\t\t\t\t\t<li class=\"sidebar-brand\"> <a>" + p.name + "</a></li>\n")
+            file_name =  gsub_page_name(p.name) if p.name
+            f.write("\t\t\t\t\t\t<li class=\"sidebar-brand\"> <a href=\""+file_name+".html\">" + p.name + "</a></li>\n")
           end
           f.write(
             "\t\t\t\t\t</ul>\n" \
@@ -151,6 +165,10 @@ module Generator
       end
     end
     return content
+  end
+
+  def self.gsub_page_name(page_name)
+    return page_name.gsub(/[^a-zA-Z1-9_-]/, "").to_s.downcase
   end
 
 end
