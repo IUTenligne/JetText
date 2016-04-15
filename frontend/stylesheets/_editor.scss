@@ -273,6 +273,27 @@ img{
         min-height: 800px;
         background-color: #fff;
         div.row, div.col-lg-12{
+        	.content{
+        		h2.header-block{
+        			border-bottom: 1px solid #eee;
+        		}
+        		.block{
+        			margin: 15px;
+					padding: 5px;
+					h3{
+						padding: 0;
+						margin: 0;
+					}
+        		}
+        		.block:nth-child(even){
+        			background: $whiteSmoke;
+        			border-radius: 4px;
+					-webkit-border-radius:4px;
+					-moz-border-radius:4px;
+					-ms-border-radius:4px;
+					-o-border-radius:4px;
+        		}
+        	}
             div.editor {
                 @include span(12 of 12);
                 min-height: 800px;
@@ -342,6 +363,10 @@ img{
         }
     }
 }
+
+
+
+
 @include breakpoint(765px){
 	.middle{
 		margin-top: 50px;

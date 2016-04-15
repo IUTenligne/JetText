@@ -106,6 +106,19 @@ var Container = React.createClass({
         });
     },
 
+    generateContainer: function(event){
+       console.log(this.state.container.id);
+       $.ajax({
+            type: "GET",
+            url: '/generate_container/'+this.state.container.id,
+        });
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Container generate !',
+            level: 'success'
+        });   
+    },
+
     moveItems: function(drake, pages) {
         drake.on('drag', function(element, source) {
           var index = [].indexOf.call(element.parentNode.children, element);
@@ -199,6 +212,9 @@ var Container = React.createClass({
                 <div id="page-wrapper">
                     <div className="row">
                         <input type="button" onClick={this.deletePage} value="Delete"/>
+                        <a onClick={this.generateContainer}>
+                            <i className="fa fa-upload"></i>
+                        </a>
                         { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : <Page key={this.state.activePage.id} page={this.state.activePage.id} /> }
                     </div>
                 </div>
