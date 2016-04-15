@@ -1,16 +1,41 @@
 var React = require('react');
+var NotificationSystem = require('react-notification-system');
+
+var style = {
+    NotificationItem: { 
+        DefaultStyle: { 
+            margin: '50px 5px 2px 1px',
+            background: " #eeeeee",
+        },
+    }
+}
 
 var Block = React.createClass({
     getInitialState: function() {
         return {
-          blockContent: ''
+          blockContent: '',
+          editButton: true
         };
     },
 
-    handleClick: function(event) {
-        var that = this;
+    componentDidMount: function() {
+        this.setState({ 
+            blockContent: this.props.item.content
+        });
+        this._notificationSystem = this.refs.notificationSystem;
+    },
 
-        var editor = CKEDITOR.replace(event.target, {
+
+    componentWillUnmount: function() {
+        var editor = CKEDITOR.instances["block_"+this.props.item.id];
+        if (editor) { editor.destroy(true); }
+    },
+
+    unlock: function() {
+        var that = this;
+        this.setState({ editButton: false });
+
+        var editor = CKEDITOR.replace("block_"+this.props.item.id, {
             customConfig: '/assets/cke/custom_config.js'
         });
         editor.on('change', function( evt ) {
@@ -20,37 +45,58 @@ var Block = React.createClass({
         CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');
     },
 
-    componentWillUnmount: function() {
-        var editor = CKEDITOR.instances['editor1'];
-        if (editor) { editor.destroy(true); }
-    },
-
     saveBlock: function(event) {
         var block = this.props.item;
+        this.setState({ editButton: true });
 
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,
-            data: { id: block.id, content: this.state.blockContent }
+            context: this,
+            data: { id: block.id, content: this.state.blockContent },
+            success: function(data) {
+                this.setState({ blockContent: data.content })
+            }
         });
 
         event.target.value='';
+
+        var editor = CKEDITOR.instances["block_"+this.props.item.id];
+        if (editor) { editor.destroy(true); }
+
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Block saved !',
+            level: 'success'
+        }); 
     },
+
+    createMarkup: function(data) {
+        return {__html: data};
+    },
+
+    dynamicId: function(id){
+        return "block_" + id;
+    },
+
+    _notificationSystem: null,
 
     render: function() {
         var block = this.props.item;
         return (
             <div>
-                <div className="row" key={block.id} ref="editableblock" onClick={this.handleClick} dangerouslySetInnerHTML={createMarkup(block.content)} />
-                <input type="submit" value='Save' className="btn-success" onClick={this.saveBlock}/>
+                <div className="row" key={block.id}>
+                    <h3>{block.name}</h3>
+                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                </div>
+
+                { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlock} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
+
+                <NotificationSystem ref="notificationSystem" style={style}/>
             </div>
         );
     }
 });
-
-function createMarkup(data) {
-    return {__html: data};
-};
 
 module.exports = Block;
 

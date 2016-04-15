@@ -1,6 +1,6 @@
 class Container < ActiveRecord::Base
   belongs_to :user
-  has_many :pages, :dependent => :delete_all
+  has_many :pages, :dependent => :destroy
   has_many :uploads
 
   validates :name,		:presence => true, length: { maximum: 250 }

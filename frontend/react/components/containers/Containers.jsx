@@ -2,7 +2,6 @@ var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 
-
 var style = {
     NotificationItem: { 
         DefaultStyle: { 
@@ -18,7 +17,7 @@ var Result = React.createClass({
     },
 
     deleteContainer: function(event){
-        var that = this.props;
+        var that = this;
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
@@ -32,10 +31,13 @@ var Result = React.createClass({
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
-                        url: "/containers/"+that.item.id,
+                        url: "/containers/"+that.props.item.id,
                         context: that,
-                        success: function(data){
-                           window.location.replace("/#");
+                        success: function(data) {
+                            /* passes the container.id to the parent using removeContainer's props */
+                            that.props.removeContainer(
+                                data.container
+                            )
                         }
                     });
                 }
@@ -44,15 +46,14 @@ var Result = React.createClass({
     },
 
     generateContainer: function(event){
-       var that = this.props;
-       console.log(that.item.id);
-       $.ajax({
+        var that = this;
+        $.ajax({
             type: "GET",
-            url: '/generate_container/'+that.item.id,
+            url: '/generate_container/'+that.props.item.id,
         });
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Container generate !',
+            title: 'Container successfully generated !',
             level: 'success'
         });   
     },
@@ -62,18 +63,18 @@ var Result = React.createClass({
     render: function() {
         var result = this.props.item;
         return(
-
             <div className="col-lg-4 tags" >  
                 <li className="tag">
                     <div className="contenu">
                         <div className="elem">
                             <div className="name">
-                                <Link to={"/container/"+result.id}>
+                                <Link to={"/containers/"+result.id}>
                                   {result.name}
                                  </Link>
                             </div>
+
                             <div className="option">
-                                <Link to={"/container/"+result.id}>
+                                <Link to={"/containers/"+result.id}>
                                      <i className="fa fa-pencil"></i>
                                 </Link>
                                 <a onClick={this.generateContainer}>
@@ -86,6 +87,7 @@ var Result = React.createClass({
                         </div>
                     </div> 
                 </li>
+
                 <NotificationSystem ref="notificationSystem" style={style}/>
             </div>
         )
@@ -99,9 +101,9 @@ var Containers = React.createClass({
             containersList: []
         };
     },
-  
+
     componentDidMount: function() {
-        this.serverRequest = $.get("/containers.json", function (result) {
+        this.serverRequest = $.get("/containers.json", function(result) {
             this.setState({
                 containersList: result
             });
@@ -113,26 +115,28 @@ var Containers = React.createClass({
         this.serverRequest.abort();
     },
 
+    handleContainerDeletion: function(containerId) {
+        this.setState({
+            containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
+        });
+    },
 
     _notificationSystem: null,
 
     render: function() {
-
         var results = this.state.containersList;
+        var that = this;
         return (
             <div className="containers">
-
                 <div className="row">
                     <div className="col-lg-12">
                         <h1 className="page-header">My containers</h1>
-
                     </div>
                 </div>
-
                 <div className="row">
                     {results.map(function(result){
                         return (
-                            <Result item={result} key={result.id}/>
+                            <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
                         );
                     })}
                 </div>

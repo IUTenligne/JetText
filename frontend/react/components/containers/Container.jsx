@@ -1,7 +1,8 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
-var Menu = require('./Menu.jsx');
 var Page = require('../pages/Page.jsx');
+var ReactDOM = require('react-dom');
+var dragula = require('react-dragula');
 var NotificationSystem = require('react-notification-system');
 
 
@@ -30,6 +31,9 @@ var Container = React.createClass({
                     activePage: ''
                 });
             }
+            var container = ReactDOM.findDOMNode(this.refs.dragulable);
+            var drake = dragula([container]);
+            this.moveItems(drake, result.pages);
         }.bind(this));
 
         this._notificationSystem = this.refs.notificationSystem;
@@ -73,9 +77,8 @@ var Container = React.createClass({
         event.preventDefault();
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
-            message: 'Are you sure you want to delete the page?',
+            message: 'Delete the page ?',
             level: 'success',
-
             position: 'tc',
             timeout: '10000',
             action: {
@@ -100,6 +103,47 @@ var Container = React.createClass({
                     });
                 }
             }
+        });
+    },
+
+    moveItems: function(drake, pages) {
+        drake.on('drag', function(element, source) {
+          var index = [].indexOf.call(element.parentNode.children, element);
+        });
+
+        var that = this;
+
+        drake.on('drop', function(element, target, source, sibling) {
+            var index = [].indexOf.call(element.parentNode.children, element)
+            var updated_order = [];
+
+            $(source).children().each(function(i) {
+                updated_order.push({ id: $(this).data('id'), weight: i });
+            });
+
+            $.ajax({
+                type: "PUT",
+                url: '/pages/sort',
+                context: that,
+                data: { order: updated_order },
+                success: function(data) {
+                    /* necessary to reorder the pages correctly 
+                    sortedPages is filled with this.state.pages values following updated_order's new order */
+                    var sortedPages = [];
+                    for (var i in updated_order) {
+                        var o = updated_order[i];
+                        var page = $.grep(pages, function(e){ 
+                        if (e.id == o.id)
+                            return e; 
+                        });
+                        sortedPages.push(page[0]);
+                    }
+
+                    that.setState({
+                        pages: sortedPages
+                    });           
+                }
+            });
         });
     },
 
@@ -132,22 +176,25 @@ var Container = React.createClass({
                                 <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
                             </a>
 
-                            <Menu key={Math.random()} className="menu" items={pages} container={container.id} ref="menuElm" />
+                            <div>
+                                <ul className="menu-container nav" id="side-menu" ref="dragulable">
+                                  {pages.map((page, i) => {
+                                    return (
+                                      <li key={ Math.floor((Math.random() * 900)) } data-pos={i} data-id={page.id}>
+                                        <Link to={"/containers/"+this.props.container+"/"+page.id} onClick={this._updateMenuKey}>{page.name}</Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                            </div>
                             
-                            <ul id="add_new_page">
-                                <form >
-                                <p>Create new page</p>
-                                    <p>
-                                        <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off"/>
-                                        <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
-                                    </p>
-                                </form>
-                            </ul>
+                            <div>
+                                <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off" placeholder="Create new page..."/>
+                                <input type="submit" value='Save' className="btn-success" onClick={this.createPage}/>
+                            </div>
                        </div>
                     </div>
                 </nav>
-
-                
 
                 <div id="page-wrapper">
                     <div className="row">

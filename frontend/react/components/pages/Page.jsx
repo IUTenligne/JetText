@@ -1,7 +1,6 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Editor = require('./Editor.jsx');
-var Menu = require('../containers/Menu.jsx');
 var Block = require('./Block.jsx');
 
 var Page = React.createClass({
@@ -9,7 +8,9 @@ var Page = React.createClass({
         return {
           page: '',
           blocks: [],
-          newBlockValue: ''
+          newBlockValue: '',
+          types: [],
+          selectedType: 1
         };
     },
   
@@ -18,6 +19,12 @@ var Page = React.createClass({
             this.setState({
                 page: result.page,
                 blocks: result.blocks
+            });
+        }.bind(this));
+
+        this.serverRequest = $.get("/types.json", function (result) {
+            this.setState({
+                types: result.types
             });
         }.bind(this));
     },
@@ -35,11 +42,12 @@ var Page = React.createClass({
             type: "POST",
             url: '/blocks',
             context: this,
-            data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id } },
+            data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id, type_id: this.state.selectedType } },
             success: function(data) {
                 this.setState({ 
                     blocks: this.state.blocks.concat([data]),
-                    newBlockValue: ''
+                    newBlockValue: '',
+                    selectedType: 1
                 });
             }
         });
@@ -47,16 +55,26 @@ var Page = React.createClass({
         event.target.value='';
     },
 
+    _selectType: function(event) {
+        this.setState({ selectedType: event.target.value });
+    },
+
     render: function() {
         var page = this.state.page;
         return (
             <div className="row">
+                <h2>{page.name}</h2>
                 {this.state.blocks.map(function(block){
                     return <Block key={block.id} item={block} />
                 })}
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
-                    <input type="submit" value='Save' className="btn-success" onClick={this.createBlock}/>
+                    <select onChange={this._selectType}>
+                        {this.state.types.map(function(type){
+                            return <option value={type.id} key={type.id}>{type.name}</option>
+                        })}
+                    </select>
+                    <input type="submit" value='Create' className="btn-success" onClick={this.createBlock}/>
                 </form>
             </div>
         );
