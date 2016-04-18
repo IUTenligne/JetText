@@ -15,6 +15,7 @@ var MediaBlock = React.createClass({
         var formData = new FormData();
         formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
 
+        /* Ajax file upload handled by uploads_controller.rb & model upload.rb */
         $.ajax({
             url: '/uploads',
             type: "POST",
