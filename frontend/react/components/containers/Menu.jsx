@@ -15,7 +15,6 @@ var Menu = React.createClass({
         var container = ReactDOM.findDOMNode(this.refs.dragulable);
         var drake = dragula([container]);
         this.moveItems(drake, this.props.pages);
-        console.log(this.props.pages);
     },
 
     handleChange: function(event) {
