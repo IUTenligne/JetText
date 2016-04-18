@@ -96,12 +96,20 @@ module Generator
             "\t\t\t\t\t</ul>\n" \
             +"\t\t\t\t</div>\n\n" \
             +"\t\t\t</div>\n\n" \
+            +"\t\t\t<!-- icone bars--> \n" \
+            +"\t\t\t<div id=\"icone-menu\" class=\"none\">\n" \
+            +"\t\t\t\t<a href=\"#menu-bars\" id=\"menu-bars\" class=\"btn btn-default\">\n" \
+            +"\t\t\t\t\t<i class=\"fa fa-bars fa-fw\" title=\"Menu\" aria-hidden=\"true\"></i>\n" \
+            +"\t\t\t\t\t<span class=\"sr-only\">Menu</span>\n" \
+            +"\t\t\t\t</a>\n" \
+            +"\t\t\t</div>\n" \
+            +"\t\t\t<!-- / icone bars--> \n\n" \
             +"\t\t\t<div id=\"page-content-wrapper\">\n" \
             +"\t\t\t\t<div class=\"container-fluid\">\n" \
-            +"\t\t\t\t\t<!-- title container--> \n\n" \
+            +"\t\t\t\t\t<!-- title container--> \n" \
             +"\t\t\t\t\t<h1 class=\"container-title\">" + container.name + "</h1>\n" \
             +"\t\t\t\t\t<!-- / title container --> \n\n" \
-            +"\t\t\t\t\t<!-- title page--> \n\n" \
+            +"\t\t\t\t\t<!-- title page--> \n" \
             +"\t\t\t\t\t<h2 class=\"page-title\">" + page.name + "</h2>\n" \
             +"\t\t\t\t\t<!-- / title page --> \n\n" \
             +"\t\t\t\t\t<!-- content --> \n" \
@@ -130,7 +138,8 @@ module Generator
           "\t\t<script src=\"assets/js/bootstrap.min.js\"></script>\n" \
           +"\t\t<script src=\"assets/js/jquery.js\"></script>\n" \
           +"\t\t<script>\n" \
-          +"\t\t\t $(\"#menu-toggle\").click(function(e){e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\"); });\n" \
+          +"\t\t\t $(\"#menu-toggle\").click(function(e){e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\"); $(\"#icone-menu\").removeClass(\'none\').addClass(\'block\');});\n" \
+          +"\t\t\t $(\"#menu-bars\").click(function(e){e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\"); $(\"#icone-menu\").removeClass(\'block\').addClass(\'none\');});\n" \
           +"\t\t</script>\n" \
           +"\t</body>\n" \
           + "</html>" \

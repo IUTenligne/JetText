@@ -3,10 +3,28 @@ $darkGrey: #7C848D;
 $white: #FFFFFF;
 $blue: #4A8AC7;
 $lightBlue: #B7D0E9;
+@font-face {
+	 font-family: 'Pacifico';
+	 src:url('../font-awesome/fonts/pacifico.ttf') format('truetype');
+	 font-weight: normal;
+	 font-style: normal;
+}
+@font-face {
+	 font-family: 'Lobster';
+	 src:url('../font-awesome/fonts/Lobster-Regular.ttf') format('truetype');
+	 font-weight: normal;
+	 font-style: normal;
+}
 
 
 img{
 	max-width: 100%;
+}
+.none{
+	display: none;
+}
+.block{
+	display: block;
 }
 body {
 	padding: 0;
@@ -80,14 +98,48 @@ body {
 					color: $blue;
 					font-size: 45px;
 					border-bottom: 1px solid #eee;
+					font-family: "Pacifico",Helvetica,Arial,sans-serif;
 				}
 				h2.page-title{
-					text-align: center
+					margin-left: 50px;
+					font-size: 35px;
+					font-family: "Lobster",Helvetica,Arial,sans-serif;
 				}
 				.row, .col-lg-12{
 					div.content{
 						margin-left: 20px;
+						font-size: 17px;
+						text-align: justify;
+						blockquote{
+							font-style : italic;
+						}
 					}
+				}
+			}
+		}
+	}
+	#wrapper.toggled{
+		padding-left: 50px;
+		#icone-menu{
+			width: 50px;
+			position: fixed;
+			left: 0px;
+			a{
+				background: $darkGrey;
+				border-radius: 4px;
+				-webkit-border-radius:4px;
+				-moz-border-radius:4px;
+				-ms-border-radius:4px;
+				-o-border-radius:4px;
+				text-align: center;
+				font-size: 15px;
+				margin: 5px;
+				i {
+				color: $white;
+				font-size: 30px;
+				}
+				i:hover {
+					color: $lightBlue;
 				}
 			}
 		}
