@@ -13,7 +13,7 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
     #@page.content = @page.content.force_encoding('UTF-8')
     @pages = Page.select("id, name").where(:container_id => @page.container_id).order(weight: :asc)
-    @blocks = Block.select("id, name, content").where(page_id: @page.id)
+    @blocks = Block.select("id, name, content, type_id").where(page_id: @page.id)
     unless @page.user_id == current_user.id
       redirect_to action: "index"
     end

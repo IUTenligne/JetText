@@ -14,7 +14,8 @@ var Block = React.createClass({
     getInitialState: function() {
         return {
           blockContent: '',
-          editButton: true
+          editButton: true,
+          fileValue: ''
         };
     },
 
@@ -31,7 +32,7 @@ var Block = React.createClass({
         if (editor) { editor.destroy(true); }
     },
 
-    unlock: function() {
+    unlockEditor: function() {
         var that = this;
         this.setState({ editButton: false });
 
@@ -47,7 +48,6 @@ var Block = React.createClass({
 
     saveBlock: function(event) {
         var block = this.props.item;
-        this.setState({ editButton: true });
 
         $.ajax({
             type: "PUT",
@@ -55,7 +55,10 @@ var Block = React.createClass({
             context: this,
             data: { id: block.id, content: this.state.blockContent },
             success: function(data) {
-                this.setState({ blockContent: data.content })
+                this.setState({ 
+                    blockContent: data.content,
+                    editButton: true
+                })
             }
         });
 
@@ -71,6 +74,26 @@ var Block = React.createClass({
         }); 
     },
 
+    addFile: function(event) {
+        this.setState({ fileValue: event.target.files[0] });
+    },
+
+    submitMedia: function(event) {
+        event.preventDefault();
+        console.log($(this.refs.mediaFile.files[0])[0]);
+        var formData = new FormData();
+        formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
+
+        $.ajax({
+            url: '/uploads',
+            type: "POST",
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formData
+        });
+    },
+
     createMarkup: function(data) {
         return {__html: data};
     },
@@ -83,18 +106,41 @@ var Block = React.createClass({
 
     render: function() {
         var block = this.props.item;
-        return (
-            <div className="block">
-                <div key={block.id}>
-                    <h3>{block.name}</h3>
-                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+
+        /* Text block */
+        if (block.type_id === 1) {
+            return (
+                <div className="block">
+                    <div key={block.id}>
+                        <h3>{block.name}</h3>
+                        <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                    </div>
+                    { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }     
                 </div>
+            );
 
-                { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlock} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
+        /* Media block */    
+        } else if (block.type_id === 2) {
+            return (
+                <div className="block">
+                    <div key={block.id}>
+                        <h3>{block.name}</h3>
+                        <form className="new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onSubmit={this.submitMedia} action="/uploads" method="post">
+                            <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
+                            <input type="submit" value="Save" className="btn-success" />
+                        </form>
+                        
+                        <div id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                    </div>
+                    { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlock} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }     
+                </div>
+            );
 
-                <NotificationSystem ref="notificationSystem" style={style}/>
-            </div>
-        );
+        } else {
+            return null;
+        }
+
+        <NotificationSystem ref="notificationSystem" style={style}/>
     }
 });
 

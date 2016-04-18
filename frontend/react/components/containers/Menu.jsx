@@ -92,7 +92,7 @@ var Menu = React.createClass({
 	                        { this.props.pages.map((page, i) => {
 	                            return (
 	                                <li key={page.id} data-pos={i} data-id={page.id}>
-	                                    <Link to={"/containers/"+this.props.container+"/"+page.id}>{page.name}</Link>
+	                                    <Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
 	                                </li>
 	                            );
 	                        })}
