@@ -8,7 +8,7 @@ var NotificationSystem = require('react-notification-system');
 
 
 var Container = React.createClass({
-	getInitialState: function() {
+    getInitialState: function() {
         return {
             container: '',
             pages: [],

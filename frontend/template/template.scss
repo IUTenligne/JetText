@@ -15,13 +15,13 @@ body {
 		background: $white;
 		#sidebar-wrapper {
 			background: $grey;
-			.sidebar-nav{ 
-				a{
-					img{
+			.sidebar-nav { 
+				a {
+					img {
 						padding: 5px 10px 0 10px; 
 					}
 				}
-				hr{
+				hr {
 					height: 1px;
 					width: 80%;
 				    background: $blue;
@@ -35,14 +35,14 @@ body {
 					margin: 0;
 					padding: 0;
 				}
-				ul.nav-link{
+				ul.nav-link {
 					width: 100%;
 					text-align: center;
-					li{
+					li {
 						text-align: center;
 						text-indent: 0px;
 						display: inline-block;
-						a{
+						a {
 							display: inline !important;
 							background: $darkGrey;
 							border-radius: 4px;
@@ -53,16 +53,16 @@ body {
 							text-align: center;
 							font-size: 15px;
 							margin: 5px;
-							i{
+							i {
 								color: $white;
 							}
-							i:hover{
+							i:hover {
 								color: $lightBlue;
 							}
 						}
 					}
 				}
-				ul.nav-menu{
+				ul.nav-menu {
 					color: $darkGrey;
 					text-align: left;
 					li.sidebar-brand{
@@ -70,6 +70,23 @@ body {
 							background: $white;
 							color: $darkGrey;
 						}
+					}
+				}
+			}
+		}
+		#page-content-wrapper {
+			.container-fluid {
+				h1.container-title {
+					color: $blue;
+					font-size: 45px;
+					border-bottom: 1px solid #eee;
+				}
+				h2.page-title{
+					text-align: center
+				}
+				.row, .col-lg-12{
+					div.content{
+						margin-left: 20px;
 					}
 				}
 			}

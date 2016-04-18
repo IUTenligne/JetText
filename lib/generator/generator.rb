@@ -98,20 +98,29 @@ module Generator
             +"\t\t\t</div>\n\n" \
             +"\t\t\t<div id=\"page-content-wrapper\">\n" \
             +"\t\t\t\t<div class=\"container-fluid\">\n" \
-            +"\t\t\t\t\t<!-- title --> \n\n" \
-            +"\t\t\t\t\t<div class=\"row\">\n" \
-            +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n" \
-            +"\t\t\t\t\t\t\t<h1 class=\"page-header\">" + page.name + "</h1>\n" \
-            +"\t\t\t\t\t\t</div>\n" \
-            +"\t\t\t\t\t</div>\n" \
-            +"\t\t\t\t\t<!-- / title --> \n\n" \
+            +"\t\t\t\t\t<!-- title container--> \n\n" \
+            +"\t\t\t\t\t<h1 class=\"container-title\">" + container.name + "</h1>\n" \
+            +"\t\t\t\t\t<!-- / title container --> \n\n" \
+            +"\t\t\t\t\t<!-- title page--> \n\n" \
+            +"\t\t\t\t\t<h2 class=\"page-title\">" + page.name + "</h2>\n" \
+            +"\t\t\t\t\t<!-- / title page --> \n\n" \
             +"\t\t\t\t\t<!-- content --> \n" \
-            +"\t\t\t\t\t<div class=\"row\">\n" \
-            +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n\n" \
-            +"\t\t\t\t\t\t\t" + page.content + "\n" \
+            
+          )
+          page.blocks.each do |block|
+            f.write(
+            "\t\t\t\t\t<div class=\"row\">\n" \
+            +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n" \
+            +"\t\t\t\t\t\t\t<h3>" + block.name + "</h3>\n" \
+            +"\t\t\t\t\t\t\t<div class=\"content\">\n" \
+            +"\t\t\t\t\t\t\t\t" + block.content + "\n" \
+            +"\t\t\t\t\t\t\t</div>\n" \
             +"\t\t\t\t\t\t</div>\n" \
-            +"\t\t\t\t\t</div>\n" \
-            +"\t\t\t\t\t<!-- / content --> \n\n" \
+            +"\t\t\t\t\t</div>\n\n"
+            )
+          end
+          f.write(
+            "\t\t\t\t\t<!-- / content --> \n\n" \
             +"\t\t\t\t</div>\n" \
             +"\t\t\t</div>\n" \
             +"\t\t</div>\n\n" \
