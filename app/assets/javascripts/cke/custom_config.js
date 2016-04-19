@@ -1,17 +1,13 @@
 // Called by frontend/react/pages/Editor.jsx
 CKEDITOR.editorConfig = function( config ) {
-	config.toolbarGroups = [
-		{ name: 'undo' },
-		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-		{ name: 'links' },
-		{ name: 'insert' },
-		{ name: 'forms' },
-		{ name: 'tools' },
-		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-		{ name: 'others' },
-		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles' }
+	config.toolbar = [
+		{ name: 'clipboard', items: [ 'Undo', 'Redo' ] },
+		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor', 'Uploader' ] },
+		{ name: 'insert', items: [ 'Table', 'HorizontalRule', 'SpecialChar' ] },
+		{ name: 'document', items: [ 'Source' ] },
+		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+		{ name: 'styles', items: [ 'Format' ] }
 	];
 
 	config.removeButtons = 'Underline,Subscript,Superscript';

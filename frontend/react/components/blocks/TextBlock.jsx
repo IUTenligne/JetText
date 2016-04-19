@@ -88,7 +88,9 @@ var TextBlock = React.createClass({
                     <h3>{block.name}</h3>
                     <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                 </div>
+
                 { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
+                
                 <NotificationSystem ref="notificationSystem"/>     
             </div>
         );
