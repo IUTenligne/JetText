@@ -1,6 +1,6 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
-var Page = require('../pages/Page.jsx');
+var Page = require('./Page.jsx');
 var Menu = require('./Menu.jsx');
 var ReactDOM = require('react-dom');
 var dragula = require('react-dragula');

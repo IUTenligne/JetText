@@ -1,6 +1,5 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
-var Editor = require('./Editor.jsx');
 var Block = require('../blocks/Block.jsx');
 
 var Page = React.createClass({
