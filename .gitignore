@@ -12,6 +12,8 @@
 !/log/.keep
 /tmp
 
+.DS_Store
+
 # Custom
 /node_modules
 /bower_components
