@@ -4,6 +4,13 @@ class UploadsController < ApplicationController
 	def new
 		@upload = Upload.new
 	end
+
+	def show
+		@upload = Upload.find(params[:id])
+		respond_to do |format|
+			 format.json { render json: @upload }
+		end
+	end
 	
 	def create
 		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile], block_id: params[:block_id])

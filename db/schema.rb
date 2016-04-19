@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160412161613) do
     t.integer  "user_id",    limit: 4
     t.integer  "page_id",    limit: 4
     t.integer  "type_id",    limit: 4
+    t.integer  "upload_id",  limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end

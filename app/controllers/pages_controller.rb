@@ -12,7 +12,7 @@ class PagesController < ApplicationController
   def show
     @page = Page.find(params[:id])
     @pages = Page.select("id, name").where(:container_id => @page.container_id).order(sequence: :asc)
-    @blocks = Block.select("id, name, content, type_id").where(page_id: @page.id)
+    @blocks = Block.select("id, name, content, type_id, upload_id").where(page_id: @page.id)
     unless @page.user_id == current_user.id
       redirect_to action: "index"
     end

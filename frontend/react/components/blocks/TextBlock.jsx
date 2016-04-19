@@ -18,7 +18,7 @@ var TextBlock = React.createClass({
     },
 
     componentWillUnmount: function() {
-        var editor = CKEDITOR.instances["block_"+this.props.block.id];
+        var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
     },
 
@@ -40,7 +40,7 @@ var TextBlock = React.createClass({
 
         event.target.value = '';
 
-        var editor = CKEDITOR.instances["block_"+this.props.block.id];
+        var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
 
         event.preventDefault();
@@ -54,7 +54,7 @@ var TextBlock = React.createClass({
         var that = this;
         this.setState({ editButton: false });
 
-        var editor = CKEDITOR.replace("block_"+this.props.block.id, {
+        var editor = CKEDITOR.replace("text_block_"+this.props.block.id, {
             customConfig: '/assets/cke/custom_config.js'
         });
         editor.on('change', function( evt ) {
@@ -67,7 +67,7 @@ var TextBlock = React.createClass({
     _notificationSystem: null,
 
     dynamicId: function(id){
-        return "block_" + id;
+        return "text_block_" + id;
     },
 
     createMarkup: function(data) {

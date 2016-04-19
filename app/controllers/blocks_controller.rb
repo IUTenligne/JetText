@@ -16,7 +16,7 @@ class BlocksController < ApplicationController
   	@block.user_id = current_user.id
   	if @block.save
       respond_to do |format|
-        format.json { render json: {content: @block.content, id: @block.id, name: @block.name, type_id: @block.type_id} }
+        format.json { render json: {content: @block.content, id: @block.id, name: @block.name, type_id: @block.type_id, upload_id: @block.upload_id} }
       end
     end 
   end
@@ -32,13 +32,13 @@ class BlocksController < ApplicationController
   end
 
   def set_content
-    Block.find(params[:id]).update_attribute(:content, params[:content])
+    Block.find(params[:id]).update_attributes(content: params[:content], upload_id: params[:upload_id])
     render :nothing => true
   end
 
   private
     def block_params
-      params.require(:block).permit(:name, :content, :page_id, :user_id, :type_id)
+      params.require(:block).permit(:name, :content, :page_id, :user_id, :type_id, :upload_id)
     end
 
 end
