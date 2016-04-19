@@ -121,9 +121,12 @@ var Container = React.createClass({
 
                 <div id="page-wrapper">
                     <div className="row">
-                        { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete" /> }
                         { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
                         { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
+                        
+                        <div className="bottom_bar">
+                            { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                        </div>
                     </div>
                 </div>
             </div>

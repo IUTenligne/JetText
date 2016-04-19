@@ -119,7 +119,12 @@
   border: none !important;
   background: $lightBlue !important;
   box-shadow: inset 0 1px $blue,0px 5px $blue,0 2px 3px rgba(0,0,0,.3) !important;
-  @include specialFont(1.7em);
+  @include specialFont(1.5em);
+  padding: 3px 12px;
+}
+
+.btn {
+  @include specialFont(1.3em);
 }
 
 .panel-heading {
@@ -154,3 +159,7 @@
 .loader {
   font-size: 50px !important;
 }
+
+.bottom_bar {
+  margin-top: 20px;
+} 

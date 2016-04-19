@@ -79,6 +79,12 @@ var Menu = React.createClass({
         });
     },
 
+    _handleKeyPress: function(event) {
+        if (event.key === 'Enter') {
+            this.createPage(event);
+        }
+    },
+
 	render: function() {
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
@@ -100,8 +106,12 @@ var Menu = React.createClass({
 	                </div>
 	                
 	                <div id="add_new_page">
-	                    <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off" placeholder="Create new page..." />
-	                    <input type="submit" value='Save' className="btn-success" onClick={this.createPage} />
+                        <div className="input-group input-group-lg">
+                            <span className="input-group-addon">
+                                <i className="fa fa-plus fa-fw"></i>
+                            </span>
+	                        <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
+	                    </div>
 	                </div>
 	           </div>
 	        </div>
