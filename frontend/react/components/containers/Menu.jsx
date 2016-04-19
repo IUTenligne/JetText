@@ -82,9 +82,9 @@ var Menu = React.createClass({
 	render: function() {
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
-	            <div className="sidebar-nav navbar-collapse">
+	            <div className="sidebar-nav navbar-collapse collapse ">
 	                <a href="http://www.iutenligne.net/resources.html">
-	                    <img src="/templates/iutenligne/img/iutenligne.png" border="0"/>
+	                    <img src="/templates/iutenligne/assets/img/iutenligne.png" border="0"/>
 	                </a>
 
 	                <div>
@@ -99,7 +99,7 @@ var Menu = React.createClass({
 	                    </ul>
 	                </div>
 	                
-	                <div>
+	                <div id="add_new_page">
 	                    <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} autoComplet="off" placeholder="Create new page..." />
 	                    <input type="submit" value='Save' className="btn-success" onClick={this.createPage} />
 	                </div>

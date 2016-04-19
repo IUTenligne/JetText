@@ -1,4 +1,5 @@
 $grey:#E9EBEC;
+$greey:#d1d3d4;
 $darkGrey: #7C848D;
 $white: #FFFFFF;
 $blue: #4A8AC7;
@@ -33,7 +34,7 @@ body {
 		background: $white;
 		#sidebar-wrapper {
 			background: $grey;
-			.sidebar-nav { 
+			.sidebar-nav {
 				a {
 					img {
 						padding: 5px 10px 0 10px; 
@@ -88,11 +89,29 @@ body {
 							background: $white;
 							color: $darkGrey;
 						}
+						ul,li{
+							a{
+								background: $greey;
+								color: $darkGrey;
+							}
+						}
 					}
 					li.active{
 						a{
 							background: $white;
 							color: $darkGrey;
+						}
+						ul,li{
+							a{
+								background: $white;
+								color: $darkGrey;
+							}
+							ul,li{
+								a{
+									background: $white;
+									color: $darkGrey;
+								}
+							}
 						}
 					}
 				}

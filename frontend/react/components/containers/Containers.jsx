@@ -61,7 +61,7 @@ var Result = React.createClass({
     render: function() {
         var result = this.props.item;
         return(
-            <div className="col-lg-4 tags" >  
+            <div className="col-lg-6 tags" >  
                 <li className="tag">
                     <div className="contenu">
                         <div className="elem">
@@ -75,17 +75,16 @@ var Result = React.createClass({
                                 <Link to={"/containers/"+result.id}>
                                      <i className="fa fa-pencil"></i>
                                 </Link>
-                                <a onClick={this.generateContainer}>
+                                <a href="#" onClick={this.generateContainer}>
                                     <i className="fa fa-upload"></i>
                                 </a>
-                                <a onClick={this.deleteContainer}>
+                                <a href="#" onClick={this.deleteContainer}>
                                     <i className="fa fa-trash-o"></i>
                                 </a>
                             </div>
                         </div>
                     </div> 
                 </li>
-
                 <NotificationSystem ref="notificationSystem" style={style}/>
             </div>
         )

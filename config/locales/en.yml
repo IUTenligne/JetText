@@ -22,3 +22,5 @@
 en:
   container: "container"
   containers: "containers"
+  minimum_password_length: "At least 8 caracters"
+  email: "Email"

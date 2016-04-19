@@ -1,8 +1,8 @@
-<div className="row outlet">
-    <div className="col-lg-4 tags">
+<div className="containers">
+    <div className="row outlet ">
         <h1 className="page-header">Create new container</h1>
         <%= form_for @container do |f| %>
-          <div>
+          <div className="col-lg-6">
             <p><%= f.text_field :name, :placeholder => :title, class: "form-control" %></p>
           </div>
           <%= f.submit :save, class: "btn btn-success" %>

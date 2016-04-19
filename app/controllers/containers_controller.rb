@@ -75,8 +75,8 @@ class ContainersController < ApplicationController
     require 'generator/generator'
 
     @container = Container.find(params[:id])
-    @pages = Page.where(:container_id => @container.id)
-    
+    @pages = Page.where(:container_id => @container.id).order('sequence asc')
+
     Generator.generate(@container.user.email, @container, @pages)
 
     respond_to do |format|

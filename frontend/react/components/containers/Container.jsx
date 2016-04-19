@@ -106,10 +106,10 @@ var Container = React.createClass({
                 <nav className="navbar navbar-default navbar-static-top" role="navigation">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <i className="fa fa-bars"></i>
+                            <i className="fa fa-bars fa-fw"></i>
                         </button>
                         <a className="navbar-brand" href='#' key={container.id}>
-                            <img src="/templates/iutenligne/img/cartable.png" border="0"/>
+                            <img src="/templates/iutenligne/assets/img/cartable.png" border="0"/>
                             <h1>
                                 {container.name}
                             </h1>

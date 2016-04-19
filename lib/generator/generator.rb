@@ -5,8 +5,11 @@ module Generator
   require 'fileutils'
 
   def self.generate(username, container, pages)
+    dir_url = "#{Rails.public_path}/#{container.url}"
+    Dir.foreach(dir_url) { |file| File.delete("#{dir_url}/#{file}") if File.extname(file) == ".html" }
+    FileUtils.cp_r "#{Rails.public_path}/templates/iutenligne/assets/", dir_url
+
     container.content = gsub_content(username, container.content, container.url) if container.content
-    pages_items = Page.where(:container_id => container.id).order('weight asc')
 
     File.open("#{Rails.public_path}/#{container.url}/index.html", "w+") do |f|
       f.write(
@@ -30,10 +33,9 @@ module Generator
     end
 
     pages.each do |page|
-      page.content = gsub_content(username, page.content, container.url) if page.content
-      page.content = gsub_glossary(page.id, page.content) if page.content
       file_name = gsub_page_name(page.name)
       File.open("#{Rails.public_path}/#{container.url}/#{file_name}.html", "w+") do |f|
+
         f.write(
 	        "<html>\n" \
           + "\t<head>\n" \
@@ -51,91 +53,89 @@ module Generator
           + "\t\t<link href=\"assets/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n" \
           + "\t</head>\n\n" \
           + "\t<body>\n" \
+          + "\t\t<div id=\"wrapper\">\n" \
+          +"\t\t\t<div id=\"sidebar-wrapper\">\n" \
+          +"\t\t\t\t<div class=\"sidebar-nav\">\n" \
+          +"\t\t\t\t\t<a href=\"http://www.iutenligne.net/resources.html\">\n" \
+          +"\t\t\t\t\t\t<img src=\"assets/img/iutenligne.png\" border=\"0\">\n" \
+          +"\t\t\t\t\t</a>\n\n" \
+          +"\t\t\t\t\t<hr>\n\n" \
+          +"\t\t\t\t\t<ul class=\"nav-link\">\n" \
+          +"\t\t\t\t\t\t<li>\n" \
+          +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
+          +"\t\t\t\t\t\t\t\t<i class=\"fa fa-home fa-fw\" title=\"Home\" aria-hidden=\"true\"></i>\n" \
+          +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Home</span>\n" \
+          +"\t\t\t\t\t\t\t</a>\n" \
+          +"\t\t\t\t\t\t</li>\n" \
+          +"\t\t\t\t\t\t<li>\n" \
+          +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
+          +"\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook fa-fw\" title=\"Facebook\" aria-hidden=\"true\"></i>\n" \
+          +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Facebook</span>\n" \
+          +"\t\t\t\t\t\t\t</a>\n" \
+          +"\t\t\t\t\t\t</li>\n" \
+          +"\t\t\t\t\t\t<li>\n" \
+          +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
+          +"\t\t\t\t\t\t\t\t<i class=\"fa fa-pencil fa-fw\" title=\"Mail\" aria-hidden=\"true\"></i>\n" \
+          +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Mail</span>\n" \
+          +"\t\t\t\t\t\t\t</a>\n" \
+          +"\t\t\t\t\t\t</li>\n" \
+          +"\t\t\t\t\t\t<li>\n" \
+          +"\t\t\t\t\t\t\t<a href=\"#menu-toggle\" id=\"menu-toggle\" class=\"btn btn-default\">\n" \
+          +"\t\t\t\t\t\t\t\t<i class=\"fa fa-chevron-left fa-fw\" title=\"Navigation\" aria-hidden=\"true\"></i>\n" \
+          +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Navigation</span>\n" \
+          +"\t\t\t\t\t\t\t</a>\n" \
+          +"\t\t\t\t\t\t</li>\n" \
+          +"\t\t\t\t\t</ul>\n\n" \
+          +"\t\t\t\t\t<hr>\n\n" \
+          +"\t\t\t\t\t<ul class=\"nav-menu\">\n"
         )
-        if page.content
-          f.write(
-            "\t\t<div id=\"wrapper\">\n" \
-            +"\t\t\t<div id=\"sidebar-wrapper\">\n" \
-            +"\t\t\t\t<div class=\"sidebar-nav\">\n" \
-            +"\t\t\t\t\t<a href=\"http://www.iutenligne.net/resources.html\">\n" \
-            +"\t\t\t\t\t\t<img src=\"files/image/iutenligne.png\" border=\"0\">\n" \
-            +"\t\t\t\t\t</a>\n\n" \
-            +"\t\t\t\t\t<hr>\n\n" \
-            +"\t\t\t\t\t<ul class=\"nav-link\">\n" \
-            +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
-            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-home fa-fw\" title=\"Home\" aria-hidden=\"true\"></i>\n" \
-            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Home</span>\n" \
-            +"\t\t\t\t\t\t\t</a>\n" \
-            +"\t\t\t\t\t\t</li>\n" \
-            +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
-            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-facebook fa-fw\" title=\"Facebook\" aria-hidden=\"true\"></i>\n" \
-            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Facebook</span>\n" \
-            +"\t\t\t\t\t\t\t</a>\n" \
-            +"\t\t\t\t\t\t</li>\n" \
-            +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<a class=\"btn btn-default\" href=\"#\">\n" \
-            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-pencil fa-fw\" title=\"Mail\" aria-hidden=\"true\"></i>\n" \
-            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Mail</span>\n" \
-            +"\t\t\t\t\t\t\t</a>\n" \
-            +"\t\t\t\t\t\t</li>\n" \
-            +"\t\t\t\t\t\t<li>\n" \
-            +"\t\t\t\t\t\t\t<a href=\"#menu-toggle\" id=\"menu-toggle\" class=\"btn btn-default\">\n" \
-            +"\t\t\t\t\t\t\t\t<i class=\"fa fa-chevron-left fa-fw\" title=\"Navigation\" aria-hidden=\"true\"></i>\n" \
-            +"\t\t\t\t\t\t\t\t<span class=\"sr-only\">Navigation</span>\n" \
-            +"\t\t\t\t\t\t\t</a>\n" \
-            +"\t\t\t\t\t\t</li>\n" \
-            +"\t\t\t\t\t</ul>\n\n" \
-            +"\t\t\t\t\t<hr>\n\n" \
-            +"\t\t\t\t\t<ul class=\"nav-menu\">\n" \
-          )
 
-          menu = recur_block_level(pages_items, 0, "", 0)
-          f.write(menu)
+        menu = recur_page_level(pages, 0, "", 0)
+        f.write(menu)
 
+        f.write(
+          "\t\t\t\t\t</ul>\n" \
+          +"\t\t\t\t</div>\n\n" \
+          +"\t\t\t</div>\n\n" \
+          +"\t\t\t<!-- icone bars--> \n" \
+          +"\t\t\t<div id=\"icone-menu\" class=\"none\">\n" \
+          +"\t\t\t\t<a href=\"#menu-bars\" id=\"menu-bars\" class=\"btn btn-default\">\n" \
+          +"\t\t\t\t\t<i class=\"fa fa-bars fa-fw\" title=\"Menu\" aria-hidden=\"true\"></i>\n" \
+          +"\t\t\t\t\t<span class=\"sr-only\">Menu</span>\n" \
+          +"\t\t\t\t</a>\n" \
+          +"\t\t\t</div>\n" \
+          +"\t\t\t<!-- / icone bars--> \n\n" \
+          +"\t\t\t<div id=\"page-content-wrapper\">\n" \
+          +"\t\t\t\t<div class=\"container-fluid\">\n" \
+          +"\t\t\t\t\t<!-- title container--> \n" \
+          +"\t\t\t\t\t<h1 class=\"container-title\">" + container.name + "</h1>\n" \
+          +"\t\t\t\t\t<!-- / title container --> \n\n" \
+          +"\t\t\t\t\t<!-- title page--> \n" \
+          +"\t\t\t\t\t<h2 class=\"page-title\">" + page.name + "</h2>\n" \
+          +"\t\t\t\t\t<!-- / title page --> \n\n" \
+          +"\t\t\t\t\t<!-- content --> \n"
+        )
+
+        page.blocks.each do |block|
           f.write(
-            "\t\t\t\t\t</ul>\n" \
-            +"\t\t\t\t</div>\n\n" \
-            +"\t\t\t</div>\n\n" \
-            +"\t\t\t<!-- icone bars--> \n" \
-            +"\t\t\t<div id=\"icone-menu\" class=\"none\">\n" \
-            +"\t\t\t\t<a href=\"#menu-bars\" id=\"menu-bars\" class=\"btn btn-default\">\n" \
-            +"\t\t\t\t\t<i class=\"fa fa-bars fa-fw\" title=\"Menu\" aria-hidden=\"true\"></i>\n" \
-            +"\t\t\t\t\t<span class=\"sr-only\">Menu</span>\n" \
-            +"\t\t\t\t</a>\n" \
-            +"\t\t\t</div>\n" \
-            +"\t\t\t<!-- / icone bars--> \n\n" \
-            +"\t\t\t<div id=\"page-content-wrapper\">\n" \
-            +"\t\t\t\t<div class=\"container-fluid\">\n" \
-            +"\t\t\t\t\t<!-- title container--> \n" \
-            +"\t\t\t\t\t<h1 class=\"container-title\">" + container.name + "</h1>\n" \
-            +"\t\t\t\t\t<!-- / title container --> \n\n" \
-            +"\t\t\t\t\t<!-- title page--> \n" \
-            +"\t\t\t\t\t<h2 class=\"page-title\">" + page.name + "</h2>\n" \
-            +"\t\t\t\t\t<!-- / title page --> \n\n" \
-            +"\t\t\t\t\t<!-- content --> \n" \
-            
+          "\t\t\t\t\t<div class=\"row\">\n" \
+          +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n" \
+          +"\t\t\t\t\t\t\t<h3>" + block.name + "</h3>\n" \
+          +"\t\t\t\t\t\t\t<div class=\"content\">\n" \
+          +"\t\t\t\t\t\t\t\t" + block.content + "\n" \
+          +"\t\t\t\t\t\t\t</div>\n" \
+          +"\t\t\t\t\t\t</div>\n" \
+          +"\t\t\t\t\t</div>\n\n"
           )
-          page.blocks.each do |block|
-            f.write(
-            "\t\t\t\t\t<div class=\"row\">\n" \
-            +"\t\t\t\t\t\t<div class=\"col-lg-12\">\n" \
-            +"\t\t\t\t\t\t\t<h3>" + block.name + "</h3>\n" \
-            +"\t\t\t\t\t\t\t<div class=\"content\">\n" \
-            +"\t\t\t\t\t\t\t\t" + block.content + "\n" \
-            +"\t\t\t\t\t\t\t</div>\n" \
-            +"\t\t\t\t\t\t</div>\n" \
-            +"\t\t\t\t\t</div>\n\n"
-            )
-          end
-          f.write(
+        end
+
+        f.write(
             "\t\t\t\t\t<!-- / content --> \n\n" \
             +"\t\t\t\t</div>\n" \
             +"\t\t\t</div>\n" \
             +"\t\t</div>\n\n" \
-          )
-        end
+        )
+
         f.write(
           "\t\t<script src=\"assets/js/bootstrap.min.js\"></script>\n" \
           +"\t\t<script src=\"assets/js/jquery.js\"></script>\n" \
@@ -192,27 +192,23 @@ module Generator
     return page_name.gsub(/[^a-zA-Z1-9_-]/, "").to_s.downcase
   end
 
-  def self.get_pages_by_weight(container_id)
-    return Page.where(:container_id => container_id).order('weight asc').take
-  end
-
-  def self.recur_block_level(pages, i, content, ul)
-    content = content + "<li class=\"sidebar-brand\"> <a href=\""+pages[i].name+".html\">" + pages[i].name + "</a></li>\n"
-    if pages[i+1].present?
-      if pages[i].level == pages[i+1].level
+  def self.recur_page_level(p, i, content, ul)
+    content = content + "<li class=\"sidebar-brand\"> <a href=\""+p[i].name+".html\">" + p[i].name + "</a></li>\n"
+    if p[i+1].present?
+      if p[i].level == p[i+1].level
         i = i + 1
         ul = ul
-        recur_block_level(pages, i, content, ul)
-      elsif pages[i+1].level == pages[i].level + 1
+        recur_page_level(p, i, content, ul)
+      elsif p[i+1].level == p[i].level + 1
         i = i + 1
         ul = ul + 1
         content = content + "<ul>"
-        recur_block_level(pages, i , content, ul)
-      elsif pages[i+1].level == pages[i].level - 1
+        recur_page_level(p, i , content, ul)
+      elsif p[i+1].level == p[i].level - 1
         i = i + 1
         ul = ul - 1
         content = content + "</ul>"
-        recur_block_level(pages, i , content, ul)
+        recur_page_level(p, i , content, ul)
       end
     else
       ul.times do 

@@ -17,6 +17,9 @@ fr:
   Change my password: "Changer mon mot de passe"
   Send me reset password instructions: "M'envoyer les instructions"
   New password: "Nouveau mot de passe"
+
   firstname: "Prénom"
   lastname: "Nom"
   password_confirmation: "Confirmation du mot de passe"
+  minimum_password_length: "8 caractères minimum"
+  email: "Email"
