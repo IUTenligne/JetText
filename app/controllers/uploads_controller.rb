@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-	#skip_before_filter :verify_authenticity_token, :only => [:create]
+	skip_before_filter :verify_authenticity_token, :only => [:create]
 
 	def new
 		@upload = Upload.new
@@ -40,6 +40,5 @@ end
 #  file_updated_at   :datetime
 #  type              :string(255)
 #  url               :string(255)
-#  size              :integer
 #  user_id           :integer
 #

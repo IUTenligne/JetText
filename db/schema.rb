@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 20160412161613) do
     t.datetime "file_updated_at"
     t.string   "type",              limit: 255
     t.string   "url",               limit: 255
-    t.integer  "size",              limit: 4
     t.integer  "user_id",           limit: 4
   end
 
