@@ -48,14 +48,6 @@ ActiveRecord::Schema.define(version: 20160412161613) do
 
   add_index "glossaries", ["user_id"], name: "index_glossaries_on_user_id", using: :btree
 
-  create_table "glossaries_pages", id: false, force: :cascade do |t|
-    t.integer "page_id",     limit: 4, null: false
-    t.integer "glossary_id", limit: 4, null: false
-  end
-
-  add_index "glossaries_pages", ["glossary_id", "page_id"], name: "index_glossaries_pages_on_glossary_id_and_page_id", using: :btree
-  add_index "glossaries_pages", ["page_id", "glossary_id"], name: "index_glossaries_pages_on_page_id_and_glossary_id", using: :btree
-
   create_table "pages", force: :cascade do |t|
     t.string   "name",         limit: 255
     t.integer  "sequence",     limit: 2
@@ -68,11 +60,6 @@ ActiveRecord::Schema.define(version: 20160412161613) do
 
   add_index "pages", ["container_id"], name: "index_pages_on_container_id", using: :btree
   add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
-
-  create_table "pages_uploads", id: false, force: :cascade do |t|
-    t.integer "page_id",   limit: 4
-    t.integer "upload_id", limit: 4
-  end
 
   create_table "types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -88,11 +75,11 @@ ActiveRecord::Schema.define(version: 20160412161613) do
     t.datetime "file_updated_at"
     t.string   "type",              limit: 255
     t.string   "url",               limit: 255
-    t.integer  "container_id",      limit: 4
+    t.integer  "block_id",          limit: 4
     t.integer  "user_id",           limit: 4
   end
 
-  add_index "uploads", ["container_id"], name: "index_uploads_on_container_id", using: :btree
+  add_index "uploads", ["block_id"], name: "index_uploads_on_block_id", using: :btree
   add_index "uploads", ["user_id"], name: "index_uploads_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -132,7 +119,7 @@ ActiveRecord::Schema.define(version: 20160412161613) do
   add_foreign_key "glossaries", "users"
   add_foreign_key "pages", "containers"
   add_foreign_key "pages", "users"
-  add_foreign_key "uploads", "containers"
+  add_foreign_key "uploads", "blocks"
   add_foreign_key "uploads", "users"
   add_foreign_key "variables", "users"
 end

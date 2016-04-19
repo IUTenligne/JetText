@@ -1,6 +1,5 @@
 class Glossary < ActiveRecord::Base
   belongs_to :user
-  has_and_belongs_to_many :pages, :through => :pages_glossaries
 end
 
 # == Schema Information

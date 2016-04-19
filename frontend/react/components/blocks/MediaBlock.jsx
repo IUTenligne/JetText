@@ -12,12 +12,23 @@ var MediaBlock = React.createClass({
 	submitMedia: function(event) {
         event.preventDefault();
 
+        this.setState({ mediaResultContent: '<i class="fa fa-spinner fa-pulse"></i>' });
+
         var formData = new FormData();
+        var fileName = $(this.refs.mediaFile.files[0])[0].name;
+        var fileExt = fileName.split(".").slice(-1)[0];
+
         formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
+        formData.append("block_id", this.props.block.id);
+
+        $.ajax({
+            url: "/uploads/clear/" + this.props.block.id,
+            type: "DELETE"
+        });
 
         /* Ajax file upload handled by uploads_controller.rb & model upload.rb */
         $.ajax({
-            url: '/uploads',
+            url: "/uploads",
             type: "POST",
             contentType: false,
             cache: false,
@@ -25,15 +36,14 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                this.drawBlockContent(data);
+                var content = '<a href=""><i class="fa fa-file-pdf-o"></i> PDF !</a>';
+                $.ajax({
+                    url: "/blocks/set_content/" + this.props.block.id,
+                    type: "PUT",
+                    data: { content: content }
+                });
+                this.setState({ mediaResultContent: content });
             }
-        });
-    },
-
-    drawBlockContent: function(data) {
-        var content = React.createElement("a", {value: "And here is a child"});
-        this.setState({
-            mediaResultContent: content
         });
     },
 
@@ -47,9 +57,8 @@ var MediaBlock = React.createClass({
             <div className="block">
                 <div>
                     <h3>{block.name}</h3>
-                    <form className="new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onSubmit={this.submitMedia} action="/uploads" method="post">
+                    <form className="dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
                         <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
-                        <input type="submit" value="Save" className="btn-success" />
                     </form>
                     <div ref="mediaResult" dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
                 </div>
