@@ -30,7 +30,7 @@ class UploadsController < ApplicationController
 	end
 
 	def clear
-    Upload.where(params[:block_id]).destroy_all
+    Upload.where(block_id: params[:block_id]).destroy_all
     render :nothing => true
   end
 

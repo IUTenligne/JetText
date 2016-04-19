@@ -5,17 +5,11 @@ var NotificationSystem = require('react-notification-system');
 var MediaBlock = React.createClass({
 	getInitialState: function() {
         return {
-            mediaResultContent: '',
-            upload: ''
+            mediaResultContent: ''
         };
     },
 
     componentDidMount: function() {
-        if (this.props.block.upload_id != null) {
-            this.serverRequest = $.get("/uploads/"+this.props.block.upload_id+".json", function (result) {
-                this.setState({ upload: result });
-            }.bind(this));
-        }
         this.setState({ mediaResultContent: this.props.block.content });
     },
 
@@ -53,22 +47,16 @@ var MediaBlock = React.createClass({
                     type: "PUT",
                     data: { content: content, upload_id: data.id }
                 });
-                this.setState({ mediaResultContent: content, upload: '' });
-
-                if (fileExt == "mp3" || fileExt == "mpeg") {
-                    var wavesurfer = WaveSurfer.create({container: '#media_block_'+data.block_id, waveColor: '#00AEEF', progressColor: '#FF8500'});
-                    wavesurfer.load(data.url);
-                    wavesurfer.on('ready', function () { wavesurfer.play(); });
-                }
+                this.setState({ mediaResultContent: content });
             }
         });
     },
 
     makeHtmlContent: function(data, type) {
         if (type == "mp4") {
-            return '<video controls><source src="'+data.url+'" type="video\/mp4"></video>';
+            return '<video width="100%" controls><source src="'+data.url+'" type="video\/mp4"></video>';
         } else if (type == "mp3"|| type == "mpeg") {
-            return "<script type='text/javascrip'>var wavesurfer = WaveSurfer.create({container: '#block_"+data.block_id+"', waveColor: 'blue', progressColor: 'purple'}); wavesurfer.load(data.url); wavesurfer.on('ready', function () { wavesurfer.play(); });</script>";
+            return "<script type='text/javascrip'>var wavesurfer = WaveSurfer.create({container: '#block_"+data.block_id+"', waveColor: 'blue', progressColor: 'purple'}); wavesurfer.load(data.url); wavesurfer.on('ready', function () { wavesurfer.play(); });</script><audio controls><source src='"+data.url+"' type='audio/mpeg'></audio>";
         } else {
             return type;
         }
@@ -84,11 +72,6 @@ var MediaBlock = React.createClass({
 
 	render: function() {
 		var block = this.props.block;
-        if (this.state.upload.file_content_type == "audio/mpeg") {
-            var wavesurfer = WaveSurfer.create({container: '#media_block_'+this.props.block.id, waveColor: '#00AEEF', progressColor: '#FF8500'});
-            wavesurfer.load(this.state.upload.url);
-            wavesurfer.on('ready', function () { wavesurfer.play(); });
-        }
 		return (
             <div className="block">
                 <div>
