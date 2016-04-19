@@ -47,23 +47,23 @@ var Menu = React.createClass({
 
         drake.on('drop', function(element, target, source, sibling) {
             var index = [].indexOf.call(element.parentNode.children, element)
-            var updated_order = [];
+            var updated_sequence = [];
 
             $(source).children().each(function(i) {
-                updated_order.push({ id: $(this).data('id'), weight: i });
+                updated_sequence.push({ id: $(this).data('id'), sequence: i });
             });
 
             $.ajax({
                 type: "PUT",
                 url: '/pages/sort',
                 context: that,
-                data: { order: updated_order },
+                data: { sequence: updated_sequence },
                 success: function(data) {
-                    /* necessary to reorder the pages correctly 
-                    sortedPages is filled with this.state.pages values following updated_order's new order */
+                    /* necessary to resequence the pages correctly 
+                    sortedPages is filled with this.state.pages values following updated_sequence's new sequence */
                     var sortedPages = [];
-                    for (var i in updated_order) {
-                        var o = updated_order[i];
+                    for (var i in updated_sequence) {
+                        var o = updated_sequence[i];
                         var page = $.grep(pages, function(e){ 
                             if (e.id == o.id) return e; 
                         });

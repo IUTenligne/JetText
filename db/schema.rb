@@ -58,13 +58,12 @@ ActiveRecord::Schema.define(version: 20160412161613) do
 
   create_table "pages", force: :cascade do |t|
     t.string   "name",         limit: 255
-    t.binary   "content",      limit: 16777215
+    t.integer  "sequence",     limit: 2
+    t.integer  "level",        limit: 2
     t.integer  "container_id", limit: 4
     t.integer  "user_id",      limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "weight",       limit: 4
-    t.integer  "level",        limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "pages", ["container_id"], name: "index_pages_on_container_id", using: :btree
@@ -74,14 +73,6 @@ ActiveRecord::Schema.define(version: 20160412161613) do
     t.integer "page_id",   limit: 4
     t.integer "upload_id", limit: 4
   end
-
-  create_table "pages_variables", id: false, force: :cascade do |t|
-    t.integer "page_id",     limit: 4, null: false
-    t.integer "variable_id", limit: 4, null: false
-  end
-
-  add_index "pages_variables", ["page_id", "variable_id"], name: "index_pages_variables_on_page_id_and_variable_id", using: :btree
-  add_index "pages_variables", ["variable_id", "page_id"], name: "index_pages_variables_on_variable_id_and_page_id", using: :btree
 
   create_table "types", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -97,9 +88,11 @@ ActiveRecord::Schema.define(version: 20160412161613) do
     t.datetime "file_updated_at"
     t.string   "type",              limit: 255
     t.string   "url",               limit: 255
+    t.integer  "container_id",      limit: 4
     t.integer  "user_id",           limit: 4
   end
 
+  add_index "uploads", ["container_id"], name: "index_uploads_on_container_id", using: :btree
   add_index "uploads", ["user_id"], name: "index_uploads_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -139,6 +132,7 @@ ActiveRecord::Schema.define(version: 20160412161613) do
   add_foreign_key "glossaries", "users"
   add_foreign_key "pages", "containers"
   add_foreign_key "pages", "users"
+  add_foreign_key "uploads", "containers"
   add_foreign_key "uploads", "users"
   add_foreign_key "variables", "users"
 end

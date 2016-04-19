@@ -11,8 +11,7 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find(params[:id])
-    #@page.content = @page.content.force_encoding('UTF-8')
-    @pages = Page.select("id, name").where(:container_id => @page.container_id).order(weight: :asc)
+    @pages = Page.select("id, name").where(:container_id => @page.container_id).order(sequence: :asc)
     @blocks = Block.select("id, name, content, type_id").where(page_id: @page.id)
     unless @page.user_id == current_user.id
       redirect_to action: "index"
@@ -46,23 +45,8 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page = Page.where(:id => params[:id]).where(:user_id => current_user.id).take #mauvaise requete
-    @container = Container.find(@page.container_id)
-
-    if params[:page][:content].empty?
-      val = ""
-    else
-      val = params[:page][:content]
-    end
-
-    val.force_encoding("ASCII-8BIT").encode('UTF-8', undef: :replace, replace: '')
-
-    @doc = ImageGenerator.image_transformer(val, @container.url)
-    @page.update_attribute(:name, params[:page][:name])
-    if @page.update_attribute(:content, @doc)
-      redirect_to action: "show", id: @page.id
-    end
     @page = Page.find(params[:id])
+    @page.update_attribute(:name, params[:page][:name])
   end
 
   def destroy
@@ -81,14 +65,14 @@ class PagesController < ApplicationController
   def update_ajax
     @page = Page.find(params[:id])
     if current_user.id == @page.user_id
-      @page.update_attributes(:name => params[:name], :content => params[:content])
+      @page.update_attributes(:name => params[:name])
     end
     render :nothing => true
   end
 
   def sort
-    params[:order].each do |key,value|
-      Page.find(value[:id]).update_attribute(:weight, value[:weight])
+    params[:sequence].each do |key,value|
+      Page.find(value[:id]).update_attribute(:sequence, value[:sequence])
     end
     render :nothing => true
   end
@@ -115,22 +99,8 @@ class PagesController < ApplicationController
 
   private
     def page_params
-      params.require(:page).permit(:name, :content, :container_id, :user_id, :weight, :level)
+      params.require(:page).permit(:name, :sequence, :level, :container_id, :user_id)
     end
   
 end
 
-# == Schema Information
-#
-# Table name: pages
-#
-#  id           :integer          not null, primary key
-#  name         :string(255)
-#  content      :binary(16777215)
-#  container_id :integer
-#  user_id      :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  weight       :integer
-#  level        :integer
-#

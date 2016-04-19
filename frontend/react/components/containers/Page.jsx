@@ -62,10 +62,12 @@ var Page = React.createClass({
         var page = this.state.page;
         return (
             <div className="content">
+            
                 <h2 className="header-block">{page.name}</h2>
                 {this.state.blocks.map(function(block){
                     return <Block key={block.id} item={block} />
                 })}
+
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
                     <select value={this.state.selectedType} onChange={this._selectType}>
