@@ -13,7 +13,7 @@ class Upload < ActiveRecord::Base
   has_attached_file :file,
     :url => ":user/files/:file_type/:basename.:extension",
   	:path => ":rails_root/public/:user/files/:file_type/:basename.:extension",
-    :timestamp => false
+    :use_timestamp => false
 
   validates_attachment_content_type :file, 
 		:content_type => [
@@ -21,7 +21,9 @@ class Upload < ActiveRecord::Base
 			"application/pdf",
       "application/force-download",
 			"image/png",
-      "image/jpg"
+      "image/jpg",
+      "audio/mp3",
+      "audio/mpeg"
 		],
 		:message => 'seuls les fichiers PDF et MP4 sont autorisés.'
 

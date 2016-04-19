@@ -5,19 +5,25 @@ var NotificationSystem = require('react-notification-system');
 var MediaBlock = React.createClass({
 	getInitialState: function() {
         return {
-          mediaResultContent: ''
+            mediaResultContent: ''
         };
+    },
+
+    componentDidMount: function() {
+        this.setState({ 
+            mediaResultContent: this.props.block.content
+        });
     },
 
 	submitMedia: function(event) {
         event.preventDefault();
 
-        this.setState({ mediaResultContent: '<i class="fa fa-spinner fa-pulse"></i>' });
+        this.setState({ mediaResultContent: '<i class="fa fa-spinner fa-pulse loader"></i>' });
 
-        var formData = new FormData();
         var fileName = $(this.refs.mediaFile.files[0])[0].name;
         var fileExt = fileName.split(".").slice(-1)[0];
 
+        var formData = new FormData();
         formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
         formData.append("block_id", this.props.block.id);
 
@@ -36,15 +42,36 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                var content = '<a href=""><i class="fa fa-file-pdf-o"></i> PDF !</a>';
+                var content = this.makeHtmlContent(data, fileExt);
+                
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
                     type: "PUT",
                     data: { content: content }
                 });
                 this.setState({ mediaResultContent: content });
+
+                if (fileExt == "mp3" || fileExt == "mpeg") {
+                    var wavesurfer = WaveSurfer.create({container: '#block_'+data.block_id, waveColor: 'blue', progressColor: 'purple'});
+                    wavesurfer.load(data.url);
+                    wavesurfer.on('ready', function () { wavesurfer.play(); });
+                }
             }
         });
+    },
+
+    makeHtmlContent: function(data, type) {
+        if (type == "mp4") {
+            return '<video controls><source src="'+data.url+'" type="video\/mp4"></video>';
+        } else if (type == "mp3"|| type == "mpeg") {
+            return "<script type='text/javascrip'>var wavesurfer = WaveSurfer.create({container: '#block_"+data.block_id+"', waveColor: 'blue', progressColor: 'purple'}); wavesurfer.load(data.url); wavesurfer.on('ready', function () { wavesurfer.play(); });</script>";
+        } else {
+            return type;
+        }
+    },
+
+    dynamicId: function(id){
+        return "block_" + id;
     },
 
     createMarkup: function(data) {
@@ -60,7 +87,7 @@ var MediaBlock = React.createClass({
                     <form className="dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
                         <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
                     </form>
-                    <div ref="mediaResult" dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
+                    <div ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
                 </div>
                 <NotificationSystem ref="notificationSystem"/>
             </div>

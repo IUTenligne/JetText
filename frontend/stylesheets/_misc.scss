@@ -134,6 +134,7 @@
 .page-header {
   @include specialFont(2em);
 }
+
 .teste{
   font-size: 1000px !important;
   color: red;
@@ -148,4 +149,8 @@
 .dropzone::before {
   content: 'Select some files';
   display: inline-block;
+}
+
+.loader {
+  font-size: 50px !important;
 }
