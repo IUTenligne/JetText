@@ -84,7 +84,13 @@ body {
 					color: $darkGrey;
 					text-align: left;
 					li.sidebar-brand{
-						a:active, a:hover{
+						a.active, a:hover{
+							background: $white;
+							color: $darkGrey;
+						}
+					}
+					li.active{
+						a{
 							background: $white;
 							color: $darkGrey;
 						}
@@ -96,7 +102,7 @@ body {
 			.container-fluid {
 				h1.container-title {
 					color: $blue;
-					font-size: 45px;
+					font-size: 50px;
 					border-bottom: 1px solid #eee;
 					font-family: "Pacifico",Helvetica,Arial,sans-serif;
 				}

@@ -6,6 +6,8 @@ module Generator
 
   def self.generate(username, container, pages)
     container.content = gsub_content(username, container.content, container.url) if container.content
+    pages_items = Page.where(:container_id => container.id).order('weight asc')
+
     File.open("#{Rails.public_path}/#{container.url}/index.html", "w+") do |f|
       f.write(
         "<html>\n" \
@@ -88,10 +90,10 @@ module Generator
             +"\t\t\t\t\t<hr>\n\n" \
             +"\t\t\t\t\t<ul class=\"nav-menu\">\n" \
           )
-          pages.each do |p|
-            file_name =  gsub_page_name(p.name) if p.name
-            f.write("\t\t\t\t\t\t<li class=\"sidebar-brand\"> <a href=\""+file_name+".html\">" + p.name + "</a></li>\n")
-          end
+
+          menu = recur_block_level(pages_items, 0, "", 0)
+          f.write(menu)
+
           f.write(
             "\t\t\t\t\t</ul>\n" \
             +"\t\t\t\t</div>\n\n" \
@@ -136,6 +138,7 @@ module Generator
         end
         f.write(
           "\t\t<script src=\"assets/js/bootstrap.min.js\"></script>\n" \
+          +"\t\t<script src=\"assets/js/jquery.js\"></script>\n" \
           +"\t\t<script src=\"assets/js/jquery.js\"></script>\n" \
           +"\t\t<script>\n" \
           +"\t\t\t $(\"#menu-toggle\").click(function(e){e.preventDefault();$(\"#wrapper\").toggleClass(\"toggled\"); $(\"#icone-menu\").removeClass(\'none\').addClass(\'block\');});\n" \
@@ -187,6 +190,36 @@ module Generator
 
   def self.gsub_page_name(page_name)
     return page_name.gsub(/[^a-zA-Z1-9_-]/, "").to_s.downcase
+  end
+
+  def self.get_pages_by_weight(container_id)
+    return Page.where(:container_id => container_id).order('weight asc').take
+  end
+
+  def self.recur_block_level(pages, i, content, ul)
+    content = content + "<li class=\"sidebar-brand\"> <a href=\""+pages[i].name+".html\">" + pages[i].name + "</a></li>\n"
+    if pages[i+1].present?
+      if pages[i].level == pages[i+1].level
+        i = i + 1
+        ul = ul
+        recur_block_level(pages, i, content, ul)
+      elsif pages[i+1].level == pages[i].level + 1
+        i = i + 1
+        ul = ul + 1
+        content = content + "<ul>"
+        recur_block_level(pages, i , content, ul)
+      elsif pages[i+1].level == pages[i].level - 1
+        i = i + 1
+        ul = ul - 1
+        content = content + "</ul>"
+        recur_block_level(pages, i , content, ul)
+      end
+    else
+      ul.times do 
+        content = content + "</ul>"
+      end
+      return content
+    end
   end
 
 end
