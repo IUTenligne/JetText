@@ -58,7 +58,7 @@ class PagesController < ApplicationController
         end
       end
     else
-      redirect_to "#/containers/#{@page.container_id}"
+      redirect_to "/#/containers/#{@page.container_id}"
     end
   end
 
@@ -71,7 +71,7 @@ class PagesController < ApplicationController
   end
 
   def sort
-    params[:sequence].each do |key,value|
+    params[:sequence].each do |key, value|
       Page.find(value[:id]).update_attribute(:sequence, value[:sequence])
     end
     render :nothing => true

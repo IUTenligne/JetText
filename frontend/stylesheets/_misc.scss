@@ -134,7 +134,23 @@
 .page-header {
   @include specialFont(2em);
 }
+
 .teste{
   font-size: 1000px !important;
   color: red;
+}
+
+.dropzone {
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+}
+
+.dropzone::before {
+  content: 'Select some files';
+  display: inline-block;
+}
+
+.loader {
+  font-size: 50px !important;
 }

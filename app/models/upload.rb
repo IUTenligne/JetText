@@ -1,7 +1,6 @@
 class Upload < ActiveRecord::Base
   belongs_to :user
-  belongs_to :container
-  has_and_belongs_to_many :pages, :through => :pages_uploads
+  belongs_to :block
 
   Paperclip.interpolates('user') do |attachment, style|
     attachment.instance.user.email.to_s
@@ -14,7 +13,7 @@ class Upload < ActiveRecord::Base
   has_attached_file :file,
     :url => ":user/files/:file_type/:basename.:extension",
   	:path => ":rails_root/public/:user/files/:file_type/:basename.:extension",
-    :timestamp => false
+    :use_timestamp => false
 
   validates_attachment_content_type :file, 
 		:content_type => [
@@ -22,12 +21,21 @@ class Upload < ActiveRecord::Base
 			"application/pdf",
       "application/force-download",
 			"image/png",
-      "image/jpg"
+      "image/jpg",
+      "audio/mp3",
+      "audio/mpeg"
 		],
 		:message => 'seuls les fichiers PDF et MP4 sont autorisés.'
 
     def file_type
-      self.file_content_type.mb_chars.normalize(:kd).split('/')[0].to_s
+      ext = self.file_file_name.split('.')[-1]
+      type = self.file_content_type.mb_chars.normalize(:kd).split('/')
+      # forces directory's name if the mime-type's bug force-download is encounterd
+      if type[0] === "application" && type[1] === "force-download" && ext === "mp4"
+        return "video"
+      else
+        return type[0].to_s
+      end
     end
 end
 

@@ -31,6 +31,11 @@ class BlocksController < ApplicationController
     end
   end
 
+  def set_content
+    Block.find(params[:id]).update_attribute(:content, params[:content])
+    render :nothing => true
+  end
+
   private
     def block_params
       params.require(:block).permit(:name, :content, :page_id, :user_id, :type_id)

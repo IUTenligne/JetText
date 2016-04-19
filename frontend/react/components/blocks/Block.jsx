@@ -14,7 +14,7 @@ var Block = React.createClass({
         var block = this.props.item;
 
         if (block.type_id === 1) {
-            return <TextBlock block={block} key={block.id} />;  
+            return <TextBlock block={block} key={block.id} />;
         } else if (block.type_id === 2) {
             return <MediaBlock block={block} key={block.id} />;
         } else {

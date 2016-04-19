@@ -6,7 +6,7 @@ class UploadsController < ApplicationController
 	end
 	
 	def create
-		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile])
+		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile], block_id: params[:block_id])
 		@upload.user_id = current_user.id
 		@upload.url = @upload.file.url
 		if @upload.save
@@ -22,9 +22,19 @@ class UploadsController < ApplicationController
 		end
 	end
 
+	def clear
+    Upload.where(params[:block_id]).destroy_all
+    render :nothing => true
+  end
+
+  def destroy
+		Upload.find(params[:id]).destroy
+    render :nothing => true
+  end
+
 	private
 		def upload_params
-			params.require(:upload).permit(:name, :file, :url)
+			params.require(:upload).permit(:name, :file, :url, :block_id)
 		end
 end	
 
