@@ -1,7 +1,7 @@
 class Block < ActiveRecord::Base
   belongs_to :user
   belongs_to :page
-  has_one :upload, required: false
+  has_one :upload, required: false, :dependent => :destroy
 end
 
 # == Schema Information

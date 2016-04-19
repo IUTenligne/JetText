@@ -14,7 +14,13 @@ var TextBlock = React.createClass({
         this.setState({ 
             blockContent: this.props.block.content
         });
+        
         this._notificationSystem = this.refs.notificationSystem;
+
+        /* Opens CKEditor if the block has no content */
+        if (this.props.block.content == '') {
+            this.unlockEditor();
+        }
     },
 
     componentWillUnmount: function() {

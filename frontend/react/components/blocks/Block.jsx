@@ -3,13 +3,6 @@ var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 
 var Block = React.createClass({
-    getInitialState: function() {
-        return {
-            blockContent: '',
-            editButton: true
-        };
-    },
-
     render: function() {
         var block = this.props.item;
 

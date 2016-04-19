@@ -13,7 +13,7 @@ var MediaBlock = React.createClass({
         this.setState({ mediaResultContent: this.props.block.content });
     },
 
-	submitMedia: function(event) {
+    submitMedia: function(event) {
         event.preventDefault();
 
         this.setState({ mediaResultContent: '<i class="fa fa-spinner fa-pulse loader"></i>' });
@@ -47,6 +47,7 @@ var MediaBlock = React.createClass({
                     type: "PUT",
                     data: { content: content, upload_id: data.id }
                 });
+                
                 this.setState({ mediaResultContent: content });
             }
         });
