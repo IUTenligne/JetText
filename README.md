@@ -9,5 +9,5 @@
 * bundle update
 * bundle install
 * rake db:create
-* rake db:reset
+* rake db:migrate && rake db:seed
 * npm install && bower install
