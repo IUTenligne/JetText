@@ -1,11 +1,11 @@
 <div className="row outlet">
-		<div className="col-lg-4 tags">
+	<div className="col-lg-6 tags">
         <h1 className="page-header">Create new container</h1>
-				<%= form_for @container do |f| %>
-				  <div>
-				    <p><%= f.text_field :name, :placeholder => :title, class: "form-control" %></p>
-				  </div>
-				  <%= f.submit :save, class: "btn btn-success" %>
-				<% end %>
-		</div>
+		<%= form_for @container do |f| %>
+			<div >
+				   <p><%= f.text_field :name, :placeholder => :title, class: "form-control" %></p>
+			</div>
+			<%= f.submit :save, class: "btn btn-success" %>
+		<% end %>
+	</div>
 </div>
