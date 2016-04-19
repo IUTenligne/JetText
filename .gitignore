@@ -18,7 +18,9 @@
 /node_modules
 /bower_components
 /public/*
-!/public/templates
+/public/templates/assets
+!/public/templates/assets/img
+!/public/templates/assets/js
 !/public/404.html
 !/public/422.html
 !/public/500.html
