@@ -50,7 +50,7 @@ module Generator
           + "\t\t<link href=\"assets/css/bootstrap.min.css\" rel=\"stylesheet\">\n" \
           + "\t\t<link href=\"assets/css/simple-sidebar.css\" rel=\"stylesheet\">\n" \
           + "\t\t<link href=\"assets/css/template.css\" rel=\"stylesheet\">\n" \
-          + "\t\t<link href=\"assets/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n" \
+          + "\t\t<link href=\"assets/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n" \
           + "\t</head>\n\n" \
           + "\t<body>\n" \
           + "\t\t<div id=\"wrapper\">\n" \

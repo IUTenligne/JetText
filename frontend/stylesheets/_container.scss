@@ -1,0 +1,159 @@
+div#sidebar-wrapper{
+    background-color: #f8f8f8;
+
+    /* pour la vue Menu a droite */
+    div.sidebar-nav{
+    	margin: 0;
+        padding: 0;
+        div.iutenligne{
+            margin-bottom: 40px;
+            img{
+                width: 100%;
+                padding: 5px 10px 0 10px;
+            }
+        }
+        div.menu-container{
+            ul.menu-container{
+                margin: 0;
+                padding: 0;
+                border-top: 1px solid #e7e7e7;
+                li{
+                    list-style: none;
+                    border-bottom: 1px solid #e7e7e7;
+                    position: relative;
+                    display: block;
+                    a{
+                        text-decoration: none;
+                        padding: 10px 15px;
+                    }
+                    a:hover,a:focus{
+                        background-color: #eee;
+                        padding: 10px 15px;
+                    }
+
+                    ul,li{
+                        border: none;
+                        padding-left: 5px;
+                    }
+                }
+            }
+        }
+        div#add_new_page{
+            padding: 10px 5px 0 5px;
+            height: 25px;
+            .input-group{
+                height: 25px;
+                .input-group-addon{
+                    height: 25px;
+                }
+            }
+        }
+    }
+}
+
+div#page-content-wrapper {
+    background-color: #fff;
+    @include span(12 of 12);
+    div.container-fluid{
+        div.header{
+            float: none !important;
+            button {
+                i {
+                    font-size: 25px;
+                    color: #888;
+                }
+            }
+            a {
+                color: #777;
+                float: none;
+                line-height: 50px;
+                img, h1 {
+                    display: inline-block;
+                    margin: 0;
+                    vertical-align: middle;
+                }
+            }
+            a:focus, a:hover {
+                color: #333;
+                text-decoration: none;
+            }
+        }
+        div.content, .row{
+            div.bottom_bar{
+
+            }
+            div.page{
+                /* Titre de la page */
+                h2.header_page{
+                    border-bottom: 1px solid #eee;
+                    margin-bottom: 25px;
+                }
+                /* Vue des block crée */
+                div.blocks{
+                  .block{
+                      padding: 15px;
+                      margin: 15px 0;
+                      border: 1px solid #eee;
+                      border-radius: 0 10px 10px 0;
+                      div.content_block{
+                        h3{
+                            padding: 0;
+                            margin: 0 0 20px 0;
+                        }
+                      }
+                  }
+                  .block-text {
+                      border-left: 5px solid $veryLightBlue;
+                  }
+                  .block-media {
+                      border-left: 5px solid $lightOrange;
+                  }
+                }
+
+                /* Vue du formulair pour la céation des block */
+                form#add_new_block{
+                    #new_block{
+                        margin-bottom: 5px;
+                    }
+                    .input-group{
+                        font-size: 0;
+                        .input-group-addon{
+                            width: 50px;
+                            float: left;
+                            height: 40px;
+                            font-size: 16px;
+                            line-height: 1;
+                        }
+                        select {
+                            background: transparent;
+                            width: 100px;
+                           -webkit-appearance: none;
+                           -moz-appearance: none;
+                            appearance:none;
+                            height: 40px;
+                            vertical-align: middle;
+                            font-size: 16px;
+                            padding-top: 8px;
+                       }
+                    }
+                    .btn-success, .input-group{
+                        display:inline;
+                        margin-left: 20px;
+                    }
+                }
+            }
+        }
+    }
+    div.row, div.col-lg-12{
+    	.content{
+
+
+
+    	}
+    	 /* Vue de l'editeur */
+        div.editor {
+            @include span(12 of 12);
+            min-height: 800px;
+        }
+    }
+}

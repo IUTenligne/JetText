@@ -14,44 +14,35 @@ html, body {
 
 	section#main-outlet {
 		display: flex;
-	  min-height: 90vh;
+	  	min-height: 90vh;
 		flex: 1 0 auto;
 		margin-top: 50px;
 		@include span(12 of 12);
 
-		div#wrapper {
+		.outlet{
 			@include span(12 of 12);
-			margin: 0;
-			padding: 0;
-
-			#outlet {
-				@import 'editor';
+			img{
+				max-width: 100%;
+			}
+			div#login{
+				@import 'Login';
 				@include span(12 of 12);
-				margin-top: 50px;
+			}
+			div#containers{
+				@import 'containers';
+				@include span(12 of 12);
+				margin: 10px;
 				padding: 0;
 			}
 
-			.outlet {
-				@import 'editor';
-				@include span(12 of 12);
-				padding: 0;
-
-				.row {
-					h1.page-header {
-						color: $darkGrey;
-						border: none;
-					} 
-				}
-			}
-
-			.container{
-				@import 'editor';
-				clear: both;
-				margin-top: 50px;
+			div#wrapper {
+					@import 'container';
 			}
 		}
+
 	}
 
 	@import 'footer';
 	@import "cke";
+
 }
