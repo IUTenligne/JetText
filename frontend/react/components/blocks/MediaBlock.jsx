@@ -74,7 +74,7 @@ var MediaBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
 		return (
-            <div className="block block-media">
+            <div>
                 <div>
                     <h3>{block.name}</h3>
                     <form className="dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">

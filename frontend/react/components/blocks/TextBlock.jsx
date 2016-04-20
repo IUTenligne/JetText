@@ -83,7 +83,7 @@ var TextBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
 		return (
-            <div className="block block-text">
+            <div>
                 <div key={block.id}>
                     <h3>{block.name}</h3>
                     <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />

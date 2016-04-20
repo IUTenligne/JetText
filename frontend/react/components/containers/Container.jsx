@@ -125,7 +125,7 @@ var Container = React.createClass({
                         { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
                         
                         <div className="bottom_bar">
-                            { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                            { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn" /> }
                         </div>
                     </div>
                 </div>

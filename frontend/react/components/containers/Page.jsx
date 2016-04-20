@@ -54,18 +54,26 @@ var Page = React.createClass({
         event.target.value = 1;
     },
 
+    handleBlockDeletion: function(block_id) {
+        /* updates the blocks list after a block deletion */
+        this.setState({
+            blocks: this.state.blocks.filter((i, _) => i["id"] !== block_id)
+        });
+    },
+
     _selectType: function(event) {
         this.setState({ selectedType: event.target.value });
     },
 
     render: function() {
         var page = this.state.page;
+        var that = this;
         return (
             <div className="content">
             
                 <h2 className="header-block">{page.name}</h2>
                 {this.state.blocks.map(function(block){
-                    return <Block key={block.id} item={block} />
+                    return <Block key={block.id} item={block} removeBlock={that.handleBlockDeletion} />
                 })}
 
                 <form id="add_new_block">
