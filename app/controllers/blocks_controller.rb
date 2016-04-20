@@ -1,12 +1,20 @@
 class BlocksController < ApplicationController
 
 	before_action :authenticate_user!
+  before_filter :require_permission, only: [:update, :destroy, :set_content]
   respond_to :html, :json
+
+  def require_permission
+    if current_user != Block.find(params[:id]).user || current_user.nil?
+      respond_to do |format|
+        format.json { render json: { status: "error" } }
+      end 
+    end
+  end
 
 	def index
 		@blocks = Block.where(page_id: params[:id])
 		respond_to do |format|
-      format.html
       format.json { render json: { blocks: @blocks } }
     end
   end

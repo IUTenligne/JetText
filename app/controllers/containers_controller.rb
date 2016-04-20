@@ -1,9 +1,17 @@
 class ContainersController < ApplicationController
 
   before_action :authenticate_user!
+  before_filter :require_permission, only: [:show, :update, :destroy, :generate]
   respond_to :html, :json
   skip_before_filter :verify_authenticity_token
-  require 'image_generator/image_generator'
+
+  def require_permission
+    if current_user != Container.find(params[:id]).user || current_user.nil?
+      respond_to do |format|
+        format.json { render json: { status: "error" } }
+      end 
+    end
+  end
   
   def index
     @containers = Container.select("id, name").all.where(:user_id => current_user.id)
@@ -16,9 +24,6 @@ class ContainersController < ApplicationController
   def show
     @container = Container.find(params[:id])
     @new_page = Page.new
-    unless @container.user_id == current_user.id
-      redirect_to action: "index"
-    end
     respond_to do |format|
       format.html
       format.json { render json: {container: @container, pages: @container.pages} }
@@ -36,25 +41,6 @@ class ContainersController < ApplicationController
     if @container.save
       # redirects to React's container url after save
       redirect_to "/#/containers/#{@container.id}"
-    end
-  end
- 
-  def edit
-    @container = Container.find(params[:id])
-  end
-
-  def update
-    @container = Container.where(:id => params[:id]).where(:user_id => current_user.id).take
-    if params[:container][:content].empty?
-      val = ""
-    else
-      val = params[:container][:content]
-    end
-
-    @doc = ImageGenerator.image_transformer(val, @container.url)
-
-    if @container.update_attribute(:content, @doc)
-      redirect_to container_path(@container.id)
     end
   end
 

@@ -1,6 +1,27 @@
 class UploadsController < ApplicationController
+
+	before_action :authenticate_user!
+  before_filter :block_permission, only: [:create, :clear]
+  before_filter :require_permission, only: [:show, :destroy]
+  respond_to :html, :json
 	skip_before_filter :verify_authenticity_token, :only => [:create]
 
+	def block_permission
+    if current_user != Block.find(params[:block_id]).user || current_user.nil?
+      respond_to do |format|
+        format.json { render json: { status: "error" } }
+      end 
+    end
+  end
+
+  def require_permission
+    if current_user != Upload.find(params[:id]).user || current_user.nil?
+      respond_to do |format|
+        format.json { render json: { status: "error" } }
+      end 
+    end
+  end
+  
 	def new
 		@upload = Upload.new
 	end
