@@ -1,4 +1,7 @@
 class GlossariesController < ApplicationController
+
+  before_action :authenticate_user!
+
   def index
   	@glossaries = Glossary.all
   end
