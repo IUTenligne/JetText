@@ -26,7 +26,7 @@ var Menu = React.createClass({
             type: "POST",
             url: '/pages',
             context: this,
-            data: { page: { name: this.state.newPageValue, content: '', container_id: this.props.container.id } },
+            data: { page: { name: this.state.newPageValue, content: '', level: 0, container_id: this.props.container.id } },
             success: function(data) {
                 this.setState({ 
                     newPageValue: ''
@@ -70,9 +70,6 @@ var Menu = React.createClass({
                         sortedPages.push(page[0]);
                     }
 
-                    that.setState({
-                        pages: sortedPages
-                    });
                     that.props.dragAction(sortedPages);          
                 }
             });
@@ -85,7 +82,37 @@ var Menu = React.createClass({
         }
     },
 
+    handleLevelClick: function(page, event) {
+        var pageList = this.props.pages;
+        var newList = [];
+        var newLevel = page.level;
+        for (var i in pageList) {
+            if (pageList[i].id == page.id) {
+                newLevel += 1;
+                pageList[i].level = newLevel;
+            }
+            newList.push(pageList[i]);
+        }
+
+        console.log(pageList, newList);
+
+        $.ajax({
+            type: "PUT",
+            url: '/pages/update_level',
+            context: this,
+            data: { id: page.id, level: newLevel },
+            success: function(data) {
+                this.setState({
+                    pages: newList
+                });
+                /* passes the fresh pages list to the parent via callback */
+                this.props.levelizeAction(newList);     
+            }
+        });
+    },
+
 	render: function() {
+        var that = this;
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
 	            <div className="sidebar-nav navbar-collapse collapse ">
@@ -97,8 +124,11 @@ var Menu = React.createClass({
 	                    <ul className="menu-container nav" id="side-menu" ref="dragulable">
 	                        { this.props.pages.map((page, i) => {
 	                            return (
-	                                <li key={page.id} data-pos={i} data-id={page.id}>
+	                                <li key={page.id} data-pos={i} data-id={page.id} className={"level-"+page.level}>
 	                                    <Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
+                                        <a href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page)}>
+                                            <i className="fa fa-arrow-right"></i>
+                                        </a>
 	                                </li>
 	                            );
 	                        })}

@@ -92,6 +92,13 @@ var Container = React.createClass({
         });
     },
 
+    levelizePages: function(pageList, trick) {
+        /* updates this.state.pages from the levelize action into <Menu /> */
+        this.setState({
+            pages: pageList
+        });
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -116,7 +123,7 @@ var Container = React.createClass({
                         </a>
                     </div>
 
-                    <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
+                    <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} levelizeAction={this.levelizePages} />
                 </nav>
 
                 <div id="page-wrapper">
