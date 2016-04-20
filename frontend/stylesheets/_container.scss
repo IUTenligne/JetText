@@ -4,7 +4,7 @@ div#sidebar-wrapper{
     /* pour la vue Menu a droite */
     div.sidebar-nav{
     	margin: 0;
-        padding: 0;
+      padding: 0;
         div.iutenligne{
             margin-bottom: 40px;
             img{
@@ -101,6 +101,33 @@ div#page-content-wrapper {
                             margin: 0 0 20px 0;
                         }
                       }
+                      .btn{
+                        background-color: #f7f7f7;
+                        background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+                        background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
+                        background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
+                        background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
+                        background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
+                        color: #a7a7a7;
+                        width: 144px;
+                        height: 144px;
+                        border-radius: 50%;
+                        box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+                      }
+                      .btn:before {
+  content: "";
+  display: block;
+  background: #fff;
+  border-top: 2px solid #ddd;
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  bottom: -18px;
+  right: -18px;
+  z-index: -1;
+  border-radius: 50%;
+  box-shadow: inset 0px 8px 48px #ddd;
+}
                   }
                   .block-text {
                       border-left: 5px solid $veryLightBlue;
@@ -144,16 +171,5 @@ div#page-content-wrapper {
             }
         }
     }
-    div.row, div.col-lg-12{
-    	.content{
-
-
-
-    	}
-    	 /* Vue de l'editeur */
-        div.editor {
-            @include span(12 of 12);
-            min-height: 800px;
-        }
-    }
+    
 }
