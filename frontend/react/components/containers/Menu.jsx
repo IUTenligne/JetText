@@ -82,13 +82,17 @@ var Menu = React.createClass({
         }
     },
 
-    handleLevelClick: function(page, event) {
+    handleLevelClick: function(page, way, event) {
         var pageList = this.props.pages;
         var newList = [];
         var newLevel = page.level;
+
         for (var i in pageList) {
             if (pageList[i].id == page.id) {
-                newLevel += 1;
+                if (way == "add")
+                    newLevel += 1;
+                if (way == "remove")
+                    newLevel -= 1;
                 pageList[i].level = newLevel;
             }
             newList.push(pageList[i]);
@@ -126,9 +130,8 @@ var Menu = React.createClass({
 	                            return (
 	                                <li key={page.id} data-pos={i} data-id={page.id} className={"level-"+page.level}>
 	                                    <Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
-                                        <a href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page)}>
-                                            <i className="fa fa-arrow-right"></i>
-                                        </a>
+                                        {page.level <= 4 ? <a href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : null }
+                                        {page.level > 0 ? <a href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : null }
 	                                </li>
 	                            );
 	                        })}
