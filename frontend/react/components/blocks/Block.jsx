@@ -27,6 +27,7 @@ var Block = React.createClass({
                         url: "/blocks/" + that.props.item.id,
                         context: that,
                         success: function(data){
+                            /* passes the deleted block_id to the parent (Page) to handle the DOM rerendering */
                             that.props.removeBlock(data.block);
                         }
                     });
