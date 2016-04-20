@@ -87,35 +87,34 @@ var Menu = React.createClass({
 
 	render: function() {
 		return (
-			<div className="navbar-default sidebar menu" role="navigation">
-	            <div className="sidebar-nav navbar-collapse collapse ">
-                    <div className="iutenligne">
-    	                <a  href="http://www.iutenligne.net/resources.html">
-    	                    <img src="/templates/iutenligne/assets/img/iutenligne.png" border="0"/>
-    	                </a>
-                    </div>
+			<div className="sidebar-nav">
 
-	                <div className="menu-container">
-	                    <ul className="menu-container nav" id="side-menu" ref="dragulable">
-	                        { this.props.pages.map((page, i) => {
-	                            return (
-	                                <li key={page.id} data-pos={i} data-id={page.id}>
-	                                    <Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
-	                                </li>
-	                            );
-	                        })}
-	                    </ul>
-	                </div>
+                <div className="iutenligne">
+	                <a  href="http://www.iutenligne.net/resources.html">
+	                    <img src="/templates/iutenligne/assets/img/iutenligne.png" border="0"/>
+	                </a>
+                </div>
+
+                <div className="menu-container">
+                    <ul className="menu-container nav" id="side-menu" ref="dragulable">
+                        { this.props.pages.map((page, i) => {
+                            return (
+                                <li key={page.id} data-pos={i} data-id={page.id}>
+                                    <Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
 	                
-	                <div id="add_new_page">
-                        <div className="input-group input-group-lg">
-                            <span className="input-group-addon">
-                                <i className="fa fa-plus fa-fw"></i>
-                            </span>
-	                        <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
-	                    </div>
-	                </div>
-	           </div>
+                <div id="add_new_page">
+                    <div className="input-group input-group-lg">
+                        <span className="input-group-addon">
+                            <i className="fa fa-plus fa-fw"></i>
+                        </span>
+                        <input type="text" id="new_page" className="form-control" value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
+                    </div>
+                </div>
 	        </div>
 	    );
 	}

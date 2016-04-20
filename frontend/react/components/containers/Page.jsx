@@ -61,9 +61,10 @@ var Page = React.createClass({
     render: function() {
         var page = this.state.page;
         return (
-            <div className="content">
+            <div className="page">
             
-                <h2 className="header-block">{page.name}</h2>
+                <h2 className="header_page">{page.name}</h2>
+                
                 {this.state.blocks.map(function(block){
                     return <Block key={block.id} item={block} />
                 })}

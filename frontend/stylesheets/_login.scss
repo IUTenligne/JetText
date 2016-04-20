@@ -1,0 +1,22 @@
+.middle {
+	.panel-heading{
+		background: $lightBlue !important;
+		h2{
+			text-align: center;
+		}
+	}
+	.panel-body{
+		.input-group{
+			margin: 15px 0 25px 0;
+		}
+		.actions {
+			width: 80%;
+			margin: 0 auto;
+			.btn {
+				background: $blue;
+				border-color: #517cae;
+				margin-top: 5px;
+			}
+		}
+	}
+}

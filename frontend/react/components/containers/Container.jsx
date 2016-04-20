@@ -99,33 +99,37 @@ var Container = React.createClass({
         var pages = this.state.pages;
         var isNew = this.state.isNew;
         return (
-            <div className="col-lg-12">
+            <div id="container">
 
                 <NotificationSystem ref="notificationSystem" />
 
-                <nav className="navbar navbar-default navbar-static-top" role="navigation">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <i className="fa fa-bars fa-fw"></i>
-                        </button>
-                        <a className="navbar-brand" href='#' key={container.id}>
-                            <img src="/templates/iutenligne/assets/img/cartable.png" border="0"/>
-                            <h1>
-                                {container.name}
-                            </h1>
-                        </a>
-                    </div>
-
+  
+                <div id="sidebar-wrapper">
                     <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
-                </nav>
+                </div>
 
-                <div id="page-wrapper">
-                    <div className="row">
-                        { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
-                        { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
-                        
-                        <div className="bottom_bar">
-                            { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                <div id="page-content-wrapper">
+                    <div className="container-fluid">
+                    
+                        <div className="header">
+                            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <i className="fa fa-bars fa-fw"></i>
+                            </button>
+                            <a className="navbar-brand" href='#' key={container.id}>
+                                <img src="/templates/iutenligne/assets/img/cartable.png" border="0"/>
+                                <h1>
+                                    {container.name}
+                                </h1>
+                            </a>
+                        </div>
+
+                        <div className="row content">
+                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
+                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
+                            
+                            <div className="bottom_bar">
+                                { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                            </div>
                         </div>
                     </div>
                 </div>

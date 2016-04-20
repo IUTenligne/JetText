@@ -4,9 +4,7 @@
 
 
 /* pour les pages login*/
-img{
-	max-width: 100%;
-}
+
 .middle {
 	.panel-heading{
 		background: $lightBlue !important;
@@ -185,7 +183,6 @@ img{
         /* pour le titre en haut */
         div.navbar-header {
             float: none !important;
-            padding-bottom: 5px;
             button {
                 i {
                     font-size: 25px;
@@ -250,6 +247,13 @@ img{
 	        	}
 	            div#add_new_page{
 	            	padding: 10px 5px 0 5px;
+	            	height: 25px;
+	            	.input-group{
+	            		height: 25px;
+	            		.input-group-addon{
+	            			height: 25px;
+	            		}
+	            	}
 	            }
 	        }
 	    }
@@ -336,12 +340,15 @@ img{
 	}
 	.col-lg-12{
 		nav{
-			z-index: 1;
-			.sidebar {
-				z-index: 1;
+			div.navbar-header{
+				z-index: 10;
+			}
+			div.sidebar {
         		position: absolute;
         		width: 250px;
         		min-height: 778px;
+        		margin-top:1px;
+        		z-index: -2;
         		ul.menu-container{            	
 	            	li{
 	            		a{
