@@ -1,0 +1,25 @@
+.cke_chrome {
+	border: 0;
+	box-shadow: none;
+}
+.cke_top {
+	background: $lightBlue;
+	border-bottom: 4px solid $blue;
+	padding: 7px 7px 0 7px;
+	border-radius: 4px 4px 2px 2px;
+}
+.cke_bottom {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	color: $grey;
+}
+.cke_toolgroup {
+	border: 0px;
+}
+.cke_toolgroup, .cke_combo_button {
+	box-shadow: none;
+	background: $white;
+	background-image: none;
+	border: 0px;
+}
