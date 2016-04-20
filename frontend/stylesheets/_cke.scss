@@ -1,12 +1,18 @@
+.cke {
+	margin-bottom: 10px;
+}
 .cke_chrome {
-	border: 1px dashed grey;
+	border: 0px;
 	box-shadow: none;
 }
 .cke_top {
-	background: $lightBlue;
-	border-bottom: 4px solid $blue;
+	background: transparent;
 	padding: 7px 7px 0 7px;
-	border-radius: 4px 4px 2px 2px;
+	border-radius: 0px;
+	border-top: 1px solid $lightGrey;
+	border-right: 1px solid $lightGrey;
+	border-left: 1px solid $lightGrey;
+	border-bottom: 0px;
 }
 .cke_bottom {
 	background: transparent;
@@ -19,7 +25,12 @@
 }
 .cke_toolgroup, .cke_combo_button {
 	box-shadow: none;
-	background: $white;
-	background-image: none;
-	border: 0px;
+	background-image: none !important;
+	background: $white !important;
+}
+.cke_contents {
+	border: 1px solid $lightGrey;
+}
+.cke_focus .cke_contents {
+	border: 1px solid $lightBlue !important;
 }

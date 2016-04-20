@@ -17,6 +17,4 @@
 //= require cke/custom_config.js
 //= require_tree ./cke/plugins
 
-//= require wavesurfer
-
 //= require main

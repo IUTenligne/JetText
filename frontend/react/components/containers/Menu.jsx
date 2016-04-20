@@ -83,6 +83,7 @@ var Menu = React.createClass({
     },
 
     handleLevelClick: function(page, way, event) {
+        /* changes the level of a page in the menu */
         var pageList = this.props.pages;
         var newList = [];
         var newLevel = page.level;
