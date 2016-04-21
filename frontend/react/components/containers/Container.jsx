@@ -106,7 +106,7 @@ var Container = React.createClass({
         var pages = this.state.pages;
         var isNew = this.state.isNew;
         return (
-            <div id="wrapper">
+            <div className="col-lg-12">
 
 
                     <NotificationSystem ref="notificationSystem" />
@@ -132,8 +132,8 @@ var Container = React.createClass({
 
                             <div className="row content">
                             { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
--                           { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
--
+                           { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
+
 
                                 <div className="bottom_bar">
                                     { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
