@@ -1,34 +1,24 @@
 class TermsController < ApplicationController
 	
 	before_action :authenticate_user!
+  	respond_to :json
 
 	def index
-		@terms = Terms.all
+		@terms = Term.select("id, name").all
+		respond_to do |format|
+	      format.json { render json: { term: @term } }
+	    end
 	end
 
 	def show
-  		@terms = Terms.find(params[:id])
+  		@terms = Term.find(params[:id])
   	end
 
 	def new
-  		@terms = Terms.new
+  		@terms = Term.new
   	end
-
-	def create
-		@terms = Terms.new(terms_params)
-	    @terms.user_id = current_user.id
-	    if @terms.save
-	      respond_to do |format|
-	        format.json { render json: @page }
-	      end
-	    end
-	end
 
 	def edit
   	end
 
-  	private
-    	def term_params
-      		params.require(:term).permit(:name, :description)
-    	end
 end

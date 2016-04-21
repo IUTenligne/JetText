@@ -6,6 +6,7 @@ var App = require('./components/App.jsx');
 var Containers = require('./components/containers/Containers.jsx');
 var Container = require('./components/containers/Container.jsx');
 var Glossaries = require('./components/glossaries/Glossaries.jsx');
+var Glossary = require('./components/glossaries/Glossary.jsx');
 
 $(document).ready(function () {
 	if (document.getElementById('appcontainer')) {
@@ -16,6 +17,7 @@ $(document).ready(function () {
 		    <Route path="containers/:id" component={Container}/>
 		    <Route path="containers/:id/:pageId" component={Container}/>
 		    <Route path="glossaries" component={Glossaries}/>
+		    <Route path="glossaries/:id" component={Glossary}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {

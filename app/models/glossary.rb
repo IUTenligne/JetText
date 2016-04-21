@@ -1,12 +1,8 @@
 class Glossary < ActiveRecord::Base
-  	belongs_to :user
-
+	belongs_to :user
 
 	validates :name,          :presence => true
-	validates :desciption,    :presence => true
-  	validates :user_id,       :presence => true
 end
-
 # == Schema Information
 #
 # Table name: glossaries
