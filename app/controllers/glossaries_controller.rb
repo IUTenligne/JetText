@@ -28,9 +28,7 @@ class GlossariesController < ApplicationController
     @glossary = Glossary.new(glossary_params)
     @glossary.user_id = current_user.id
     if @glossary.save
-      respond_to do |format|
-        format.html { head :no_content }
-      end
+      render json: @glossary
     end
   end
 
