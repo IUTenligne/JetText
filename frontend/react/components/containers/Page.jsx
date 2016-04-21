@@ -12,7 +12,7 @@ var Page = React.createClass({
           selectedType: 1
         };
     },
-  
+
     componentDidMount: function() {
         this.serverRequest = $.get("/pages/"+this.props.page+".json", function (result) {
             this.setState({
@@ -43,7 +43,7 @@ var Page = React.createClass({
             context: this,
             data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id, type_id: this.state.selectedType } },
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     blocks: this.state.blocks.concat([data]),
                     newBlockValue: '',
                     selectedType: 1
@@ -54,21 +54,29 @@ var Page = React.createClass({
         event.target.value = 1;
     },
 
+    handleBlockDeletion: function(block_id) {
+        /* updates the blocks list after a block deletion */
+        this.setState({
+            blocks: this.state.blocks.filter((i, _) => i["id"] !== block_id)
+        });
+    },
+
     _selectType: function(event) {
         this.setState({ selectedType: event.target.value });
     },
 
     render: function() {
         var page = this.state.page;
+        var that = this;
         return (
             <div className="page">
-            
-                <h2 className="header_page">{page.name}</h2>
-                
-                {this.state.blocks.map(function(block){
-                    return <Block key={block.id} item={block} />
-                })}
 
+                <h2 className="header_page">{page.name}</h2>
+                <div className="blocks">
+                    {this.state.blocks.map(function(block){
+                        return <Block key={block.id} item={block} removeBlock={that.handleBlockDeletion} />
+                    })}
+                </div>
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
                     <div className="input-group input-group-lg">

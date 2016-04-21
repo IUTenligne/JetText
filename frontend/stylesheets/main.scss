@@ -19,11 +19,11 @@ html, body {
 		margin-top: 50px;
 		@include span(12 of 12);
 
-		div#wrapper {
+		.outlet{
+			@include span(12 of 12);
 			img{
 				max-width: 100%;
 			}
-
 			div#login{
 				@import 'Login';
 				@include span(12 of 12);
@@ -34,11 +34,14 @@ html, body {
 				margin: 10px;
 				padding: 0;
 			}
-			div#container{
-				@import 'container';
-			}			
+
+			div#wrapper {
+					@import 'container';
+			}
 		}
+
 	}
+
 	@import 'footer';
 	@import 'cke';
 }

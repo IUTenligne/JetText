@@ -26,12 +26,12 @@ var Menu = React.createClass({
             type: "POST",
             url: '/pages',
             context: this,
-            data: { page: { name: this.state.newPageValue, content: '', container_id: this.props.container.id } },
+            data: { page: { name: this.state.newPageValue, content: '', level: 0, container_id: this.props.container.id } },
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     newPageValue: ''
                 });
-                this.props.dragAction(this.props.pages.concat([data]));  
+                this.props.dragAction(this.props.pages.concat([data]));
             }
         });
 
@@ -59,21 +59,18 @@ var Menu = React.createClass({
                 context: that,
                 data: { sequence: updated_sequence },
                 success: function(data) {
-                    /* necessary to resequence the pages correctly 
+                    /* necessary to resequence the pages correctly
                     sortedPages is filled with this.state.pages values following updated_sequence's new sequence */
                     var sortedPages = [];
                     for (var i in updated_sequence) {
                         var o = updated_sequence[i];
-                        var page = $.grep(pages, function(e){ 
-                            if (e.id == o.id) return e; 
+                        var page = $.grep(pages, function(e){
+                            if (e.id == o.id) return e;
                         });
                         sortedPages.push(page[0]);
                     }
 
-                    that.setState({
-                        pages: sortedPages
-                    });
-                    that.props.dragAction(sortedPages);          
+                    that.props.dragAction(sortedPages);
                 }
             });
         });
@@ -85,7 +82,41 @@ var Menu = React.createClass({
         }
     },
 
+    handleLevelClick: function(page, way, event) {
+        var pageList = this.props.pages;
+        var newList = [];
+        var newLevel = page.level;
+
+        for (var i in pageList) {
+            if (pageList[i].id == page.id) {
+                if (way == "add")
+                    newLevel += 1;
+                if (way == "remove")
+                    newLevel -= 1;
+                pageList[i].level = newLevel;
+            }
+            newList.push(pageList[i]);
+        }
+
+        console.log(pageList, newList);
+
+        $.ajax({
+            type: "PUT",
+            url: '/pages/update_level',
+            context: this,
+            data: { id: page.id, level: newLevel },
+            success: function(data) {
+                this.setState({
+                    pages: newList
+                });
+                /* passes the fresh pages list to the parent via callback */
+                this.props.levelizeAction(newList);
+            }
+        });
+    },
+
 	render: function() {
+        var that = this;
 		return (
 			<div className="sidebar-nav">
 
@@ -97,16 +128,18 @@ var Menu = React.createClass({
 
                 <div className="menu-container">
                     <ul className="menu-container nav" id="side-menu" ref="dragulable">
-                        { this.props.pages.map((page, i) => {
-                            return (
-                                <li key={page.id} data-pos={i} data-id={page.id}>
-                                    <Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
-                                </li>
-                            );
-                        })}
+												{ this.props.pages.map((page, i) => {
+														return (
+																<li key={page.id} data-pos={i} data-id={page.id} className={"level-"+page.level}>
+																		<Link to={"/containers/"+this.props.container.id+"/"+page.id}>{page.name}</Link>
+																			{page.level <= 4 ? <a href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : null }
+																			{page.level > 0 ? <a href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : null }
+																</li>
+														);
+												})}
                     </ul>
                 </div>
-	                
+
                 <div id="add_new_page">
                     <div className="input-group input-group-lg">
                         <span className="input-group-addon">

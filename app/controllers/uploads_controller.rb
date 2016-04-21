@@ -23,7 +23,7 @@ class UploadsController < ApplicationController
 			end
 		else
 			respond_to do |format|
-			  format.json { render json: "error".to_json }
+			  format.json { render json: "error" }
 			  format.html { head :no_content }
 			end
 		end

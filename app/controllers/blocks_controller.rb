@@ -31,6 +31,21 @@ class BlocksController < ApplicationController
     end
   end
 
+  def destroy
+    @block = Block.find(params[:id])
+    if @block.user_id == current_user.id
+      if @block.destroy
+        respond_to do |format|
+          format.json { render json: { status: "ok", block: @block.id } }
+        end
+      end
+    else
+      respond_to do |format|
+        format.json { render json: { status: "error" } }
+      end
+    end
+  end
+
   def set_content
     Block.find(params[:id]).update_attributes(content: params[:content], upload_id: params[:upload_id])
     render :nothing => true

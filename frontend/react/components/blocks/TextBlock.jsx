@@ -11,10 +11,10 @@ var TextBlock = React.createClass({
     },
 
     componentDidMount: function() {
-        this.setState({ 
+        this.setState({
             blockContent: this.props.block.content
         });
-        
+
         this._notificationSystem = this.refs.notificationSystem;
 
         /* Opens CKEditor if the block has no content */
@@ -37,7 +37,7 @@ var TextBlock = React.createClass({
             context: this,
             data: { id: block.id, content: this.state.blockContent },
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     blockContent: data.content,
                     editButton: true
                 })
@@ -53,7 +53,7 @@ var TextBlock = React.createClass({
         this._notificationSystem.addNotification({
             title: 'Block saved !',
             level: 'success'
-        }); 
+        });
     },
 
     unlockEditor: function() {
@@ -83,15 +83,15 @@ var TextBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
 		return (
-            <div className="block block-text">
+            <div className="content_block">
                 <div key={block.id}>
                     <h3>{block.name}</h3>
                     <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                 </div>
 
                 { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
-                
-                <NotificationSystem ref="notificationSystem"/>     
+
+                <NotificationSystem ref="notificationSystem"/>
             </div>
         );
 	}

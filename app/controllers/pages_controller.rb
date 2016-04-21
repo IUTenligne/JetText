@@ -29,6 +29,9 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(page_params)
     @page.user_id = current_user.id
+    @page.level = 0 if @page.level.nil?
+    # sets the page.sequence to max+1 to push it at the bottom of the page's tree
+    @page.sequence = Page.where(container_id: @page.container_id).maximum("sequence") + 1
     @container = Container.find(@page.container_id) if Container.exists?(@page.container_id)
     if @container.present? && current_user.id == @container.user_id
       if @page.save
@@ -62,10 +65,10 @@ class PagesController < ApplicationController
     end
   end
 
-  def update_ajax
+  def update_level
     @page = Page.find(params[:id])
     if current_user.id == @page.user_id
-      @page.update_attributes(:name => params[:name])
+      @page.update_attributes(:level => params[:level])
     end
     render :nothing => true
   end
