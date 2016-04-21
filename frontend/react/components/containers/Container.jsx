@@ -107,11 +107,11 @@ var Container = React.createClass({
         var isNew = this.state.isNew;
         return (
             <div className="col-lg-12">
-
+            
                 <NotificationSystem ref="notificationSystem" />
 
                 <div id="sidebar-wrapper">
-                    <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} levelizeAction={this.levelizePages} />
+                    <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
                 </div>
 
                 <div id="page-content-wrapper">

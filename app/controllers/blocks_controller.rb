@@ -6,9 +6,7 @@ class BlocksController < ApplicationController
 
   def require_permission
     if current_user != Block.find(params[:id]).user || current_user.nil?
-      respond_to do |format|
-        format.json { render json: { status: "error" } }
-      end 
+      render json: { status: "error" }
     end
   end
 
@@ -23,9 +21,7 @@ class BlocksController < ApplicationController
   	@block = Block.new(block_params)
   	@block.user_id = current_user.id
   	if @block.save
-      respond_to do |format|
-        format.json { render json: {content: @block.content, id: @block.id, name: @block.name, type_id: @block.type_id, upload_id: @block.upload_id} }
-      end
+      render json: { id: @block.id, name: @block.name, content: @block.content, type_id: @block.type_id, upload_id: @block.upload_id }
     end 
   end
 
@@ -33,9 +29,7 @@ class BlocksController < ApplicationController
     @block = Block.find(params[:id])
     if current_user.id == @block.user_id
       @block.update_attributes(:content => params[:content])
-      respond_to do |format|
-        format.json { render json: {content: @block.content} }
-      end
+      render json: { content: @block.content }
     end
   end
 
@@ -43,14 +37,10 @@ class BlocksController < ApplicationController
     @block = Block.find(params[:id])
     if @block.user_id == current_user.id
       if @block.destroy
-        respond_to do |format|
-          format.json { render json: { status: "ok", block: @block.id } }
-        end
+        render json: { status: "ok", block: @block.id }
       end
     else
-      respond_to do |format|
-        format.json { render json: { status: "error" } }
-      end
+      render json: { status: "error" }
     end
   end
 
