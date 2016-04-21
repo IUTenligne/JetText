@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 
   def require_permission
     if current_user != Page.find(params[:id]).user || current_user.nil?
-      render json: { status: "error" }
+      raise JetText::NotLoggedIn.new
     end
   end
 

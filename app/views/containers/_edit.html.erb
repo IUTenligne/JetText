@@ -1,5 +1,0 @@
-<!-- custom form to deal with escaped HTML characters -->
-<%= form_for @container do |f| %>
-  <textarea name="container[content]" id="editor1"><%= CGI.unescapeHTML(@container.content).html_safe %></textarea>
-  <input name="commit" value="save" class="btn btn-primary" type="submit">
-<% end %>

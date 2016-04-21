@@ -6,7 +6,7 @@ class BlocksController < ApplicationController
 
   def require_permission
     if current_user != Block.find(params[:id]).user || current_user.nil?
-      render json: { status: "error" }
+      raise JetText::NotLoggedIn.new 
     end
   end
 

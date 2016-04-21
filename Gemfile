@@ -20,10 +20,6 @@ group :test do
   gem 'minitest-reporters'
   gem 'guard'
   gem 'guard-minitest'
-  gem 'guard-rspec'
-  gem 'rspec'
-  gem 'shoulda'
-  gem 'shoulda-matchers'
 end
 
 group :development, :test do

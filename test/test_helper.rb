@@ -1,10 +1,11 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
-require 'rails/test_help'
 
+require 'rails/test_help'
 require 'minitest/spec'
 require 'minitest/autorun'
-require "minitest/reporters"
+require 'minitest/reporters'
+#require 'factory_girl'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -16,4 +17,5 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+  #include FactoryGirl::Syntax::Methods
 end

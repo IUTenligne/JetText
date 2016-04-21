@@ -1,0 +1,9 @@
+container_one:
+  name: ressource 1
+  content: description de la ressource
+  user_id: user_one
+
+container_two:
+  name: cressource 2
+  content: description de la ressource2
+  user_id: user_two
