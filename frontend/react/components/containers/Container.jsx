@@ -106,30 +106,26 @@ var Container = React.createClass({
         var pages = this.state.pages;
         var isNew = this.state.isNew;
         return (
-            <div className="col-lg-12">
+            <div className="container col-lg-12 col-md-12">
             
                 <NotificationSystem ref="notificationSystem" />
 
-                <div id="sidebar-wrapper">
+                <aside id="sidebar-wrapper" className="col-lg-3 col-md-3 pull-left">
                     <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
-                </div>
+                </aside>
 
-                <div id="page-content-wrapper">
-                    <div className="container-fluid">
+                <div id="container-wrapper" className="col-lg-9 col-md-9">
+                    <div className="container-fluid col-lg-12 col-md-12">
 
-                        <div className="header">
-                            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <i className="fa fa-bars fa-fw"></i>
-                            </button>
-                            <a className="navbar-brand" href='#' key={container.id}>
-                                <img src="/templates/iutenligne/assets/img/cartable.png" border="0"/>
+                        <div className="header col-lg-12 col-md-12">
+                            <a href='#' key={container.id}>
                                 <h1>
                                     {container.name}
                                 </h1>
                             </a>
                         </div>
 
-                        <div className="row content">
+                        <div className="row content col-lg-12 col-md-12">
                             { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
                             { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
 

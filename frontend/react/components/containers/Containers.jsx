@@ -126,7 +126,7 @@ var Containers = React.createClass({
         var results = this.state.containersList;
         var that = this;
         return (
-            <div id="containers">
+            <section id="containers">
                 <div className="row">
                     <div className="col-lg-12">
                         <h1 className="page-header">My containers</h1>
@@ -142,7 +142,7 @@ var Containers = React.createClass({
                         );
                     })}
                 </div>
-            </div>
+            </section>
         );
     }
 });

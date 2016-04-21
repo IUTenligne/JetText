@@ -1,0 +1,19 @@
+@import "../vars";
+
+
+#container-wrapper {
+	
+
+	.container-fluid {
+		.header {
+
+		}
+
+		.content {
+			/* Page.jsx */
+			div.page {
+				@import 'pages';
+			}
+		}
+	}
+}

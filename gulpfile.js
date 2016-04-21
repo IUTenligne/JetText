@@ -33,6 +33,21 @@ gulp.task('sass', function () {
     });
 });
 
+gulp.task('editor', function () {
+  gulp.src('./frontend/stylesheets/editor/*.scss')
+    .pipe(sass({outputStyle: 'compressed'})
+      .on('error', sass.logError)
+      .on('error', function(){
+        gutil.log(gutil.colors.red('（ ﾟДﾟ） Aaargh, something bad happened !'));
+      })
+    )
+    .pipe(concat("main.css"))
+    .pipe(gulp.dest('./app/assets/stylesheets'))
+    .on('end', function() { 
+      gutil.log(gutil.colors.magenta('ʕ•ᴥ•ʔ ') + gutil.colors.green(' CSS generated !'))
+    });
+});
+
 gulp.task('template', function () {
   gulp.src('./frontend/templates/*.scss')
     .pipe(sass({outputStyle: 'compressed'})
@@ -66,6 +81,7 @@ gulp.task("es6", function () {
 
 gulp.task('watch', function () {
   gulp.watch('./frontend/stylesheets/**/*.scss', ['sass']);
+  gulp.watch('./frontend/stylesheets/editor/*.scss', ['editor']);
   gulp.watch('./frontend/templates/*.scss', ['template']);
   gulp.watch('./frontend/javascripts/**/*.es6', ['js']);
   gulp.watch('./frontend/react/**/*.jsx', ['react']);
