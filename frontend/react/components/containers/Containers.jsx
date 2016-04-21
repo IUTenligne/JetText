@@ -131,6 +131,9 @@ var Containers = React.createClass({
                         <h1 className="page-header">My containers</h1>
                     </div>
                 </div>
+                <Link to={"/glossaries/"}>
+                     blabla
+                </Link>
                 <div className="row">
                     {results.map(function(result){
                         return (

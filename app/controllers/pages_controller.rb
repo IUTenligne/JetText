@@ -21,7 +21,6 @@ class PagesController < ApplicationController
     @pages = Page.select("id, name").where(:container_id => @page.container_id).order(sequence: :asc)
     @blocks = Block.select("id, name, content, type_id, upload_id").where(page_id: @page.id)
     respond_to do |format|
-      format.html
       format.json { render json: { page: @page, container: @page.container.name, blocks: @blocks } }
     end 
   end

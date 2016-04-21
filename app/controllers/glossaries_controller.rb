@@ -1,6 +1,20 @@
 class GlossariesController < ApplicationController
+
+  before_action :authenticate_user!
+  before_filter :require_permission, only: [:show, :update, :destroy]
+  respond_to :json
+
+  def require_permission
+    if current_user != Glossary.find(params[:id]).user || current_user.nil?
+      render json: { status: "error" }
+    end
+  end
+
   def index
-  	@glossaries = Glossary.all
+  	@glossaries = Glossary.select("id, name").all
+    respond_to do |format|
+      format.json { render json: { glossaries: @glossaries } }
+    end
   end
 
   def show
