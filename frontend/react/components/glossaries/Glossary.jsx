@@ -5,15 +5,9 @@ var NotificationSystem = require('react-notification-system');
 var Glossary = React.createClass({
 	getInitialState: function() {
 	    return {
-	        newTermValue: '',
-	        termsList: [], 
-	        newDescriptionValue: ''
+	        termsList: []
 	    };
 	},
-
-    handleChange: function(event) {
-        this.setState({newGlossaryValue: event.target.value});
-    },
 
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossary.json", function(result){
@@ -27,28 +21,7 @@ var Glossary = React.createClass({
 	componentWillUnmount: function() {
         this.serverRequest.abort();
     },
-	
-	createTerm: function(event) {
-    	$.ajax({
-    		type: "POST",
-    		url:'/glossary',
-    		context: this,
-    		data: { 
-                term: {
-                    name: this.state.newTermValue, description: this.state.newDescriptionValue, glossary_id: this.props.glossary.id
-                }
-            },
-    		success: function(){
-    			console.log("ok");
-    		}
-    	})
-    },
 
-    _handleKeyPress: function(event) {
-        if (event.key === 'Enter') {
-            this.createTerm(event);
-        }
-    },
 
     deleteTerm: function(){
 
@@ -59,28 +32,27 @@ var Glossary = React.createClass({
     render: function(){
         var terms = this.state.termsList;
     	return(
-    		<div className="term">
+    		<div className="terms">
+					<div className="row">
+							<div className="col-lg-12">
+									<h1 className="page-header">My Terms</h1>
+							</div>
+					</div>
     			{terms.map(function(term){
     				return(
-    					<div>
-    						<p>{term.name}</p>
-    						<p>{term.description}</p>
-    					</div>
+						<li key={term.id}>
+								<Link to={"/glossaries/"+glossary.id +"/"+term.id}>
+										{term.name}
+								</Link>
+								<br/>
+								<a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
+										<i className="fa fa-trash-o"></i>
+								</a>
+						</li>
     				)
     			})}
-    			<div className="add_new_term">
-    				<div className="input-group input-group-lg">
-    					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_term" className="form-control" value={this.state.newTermValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new term..." />
-    				</div>
-    				<div className="input-group input-group-lg">
-    					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_term_desc" className="form-control" value={this.state.newDescriptionValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new decrition..." />
-    				</div>
+					<div className="add_new_term">
+    					<TermCreate term={term}/>
     			</div>
     		</div>
     	);

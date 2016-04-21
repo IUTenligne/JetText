@@ -72,13 +72,13 @@ var Page = React.createClass({
             <div className="page">
 
                 <h2 className="header_page">{page.name}</h2>
-                
+
                 <div className="blocks">
                     {this.state.blocks.map(function(block){
                         return <Block key={block.id} item={block} removeBlock={that.handleBlockDeletion} />
                     })}
                 </div>
-                
+
                 <form id="add_new_block">
                     <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
                     <div className="input-group input-group-lg">

@@ -18,6 +18,7 @@ $(document).ready(function () {
 		    <Route path="containers/:id/:pageId" component={Container}/>
 		    <Route path="glossaries" component={Glossaries}/>
 		    <Route path="glossaries/:id" component={Glossary}/>
+				<Route path="glossaries/:id/:termId" component={Container}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {

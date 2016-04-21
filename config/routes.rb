@@ -23,5 +23,5 @@ Rails.application.routes.draw do
     resources :glossaries
     get "/generate_container/:id" => "containers#generate", as: 'generate_container'
   end
-  
+
 end
