@@ -126,12 +126,15 @@ var Containers = React.createClass({
         var results = this.state.containersList;
         var that = this;
         return (
-            <div className="containers">
+            <div id="containers">
                 <div className="row">
                     <div className="col-lg-12">
                         <h1 className="page-header">My containers</h1>
                     </div>
                 </div>
+                <Link to={"/glossaries/"}>
+                     blabla
+                </Link>
                 <div className="row">
                     {results.map(function(result){
                         return (

@@ -5,6 +5,7 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 var App = require('./components/App.jsx');
 var Containers = require('./components/containers/Containers.jsx');
 var Container = require('./components/containers/Container.jsx');
+var Glossaries = require('./components/glossaries/Glossaries.jsx');
 
 $(document).ready(function () {
 	if (document.getElementById('appcontainer')) {
@@ -14,6 +15,7 @@ $(document).ready(function () {
 		    <Route path="containers" component={Containers}/>
 		    <Route path="containers/:id" component={Container}/>
 		    <Route path="containers/:id/:pageId" component={Container}/>
+		    <Route path="glossaries" component={Glossaries}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {
