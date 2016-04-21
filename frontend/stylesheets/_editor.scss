@@ -1,7 +1,9 @@
 @import "vars";
 @import "../../node_modules/breakpoint-sass/stylesheets/_breakpoint.scss";
 
-
+img{
+	max-width: 100%;
+}
 
 /* pour les pages login*/
 
