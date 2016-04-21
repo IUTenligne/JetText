@@ -61,7 +61,7 @@ var Result = React.createClass({
     render: function() {
         var result = this.props.item;
         return(
-            <div className="col-lg-6 tags" >  
+            <div className="col-lg-6 tags">  
                 <li className="tag">
                     <div className="contenu">
                         <div className="elem">
