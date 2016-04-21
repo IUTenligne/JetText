@@ -24,7 +24,13 @@ class PagesController < ApplicationController
     @page = Page.new(page_params)
     @page.user_id = current_user.id
     @page.level = 0 if @page.level.nil?
-    @page.sequence = 0
+
+    # sets sequence level to max + 1 if possible
+    if Page.where(container_id: @page.container_id).maximum(:sequence).present?
+      @page.sequence = Page.where(container_id: @page.container_id).maximum(:sequence) + 1
+    else
+      @page.sequence = 0
+    end
 
     @container = Container.find(@page.container_id) if Container.exists?(@page.container_id)
     if @container.present?

@@ -27,10 +27,8 @@ class BlocksController < ApplicationController
 
   def update
     @block = Block.find(params[:id])
-    if current_user.id == @block.user_id
-      @block.update_attributes(:content => params[:content])
-      render json: { content: @block.content }
-    end
+    @block.update_attributes(:content => params[:content])
+    render json: { content: @block.content }
   end
 
   def destroy
