@@ -10,6 +10,7 @@ class GlossariesController < ApplicationController
     end
   end
 
+
   def index
   	@glossaries = Glossary.select("id, name").all
     respond_to do |format|

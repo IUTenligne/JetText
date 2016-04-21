@@ -28,10 +28,10 @@ var Menu = React.createClass({
             context: this,
             data: { page: { name: this.state.newPageValue, content: '', level: 0, container_id: this.props.container.id } },
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     newPageValue: ''
                 });
-                this.props.dragAction(this.props.pages.concat([data]));  
+                this.props.dragAction(this.props.pages.concat([data]));
             }
         });
 
@@ -59,18 +59,18 @@ var Menu = React.createClass({
                 context: that,
                 data: { sequence: updated_sequence },
                 success: function(data) {
-                    /* necessary to resequence the pages correctly 
+                    /* necessary to resequence the pages correctly
                     sortedPages is filled with this.state.pages values following updated_sequence's new sequence */
                     var sortedPages = [];
                     for (var i in updated_sequence) {
                         var o = updated_sequence[i];
-                        var page = $.grep(pages, function(e){ 
-                            if (e.id == o.id) return e; 
+                        var page = $.grep(pages, function(e){
+                            if (e.id == o.id) return e;
                         });
                         sortedPages.push(page[0]);
                     }
 
-                    that.props.dragAction(sortedPages);          
+                    that.props.dragAction(sortedPages);
                 }
             });
         });
@@ -111,7 +111,7 @@ var Menu = React.createClass({
                     pages: newList
                 });
                 /* passes the fresh pages list to the parent via callback */
-                this.props.levelizeAction(newList);     
+                this.props.levelizeAction(newList);
             }
         });
     },
@@ -119,9 +119,10 @@ var Menu = React.createClass({
 	render: function() {
         var that = this;
 		return (
-			<div className="navbar-default sidebar menu" role="navigation">
-	            <div className="sidebar-nav navbar-collapse collapse ">
-	                <a href="http://www.iutenligne.net/resources.html">
+			<div className="sidebar-nav">
+
+                <div className="iutenligne">
+	                <a  href="http://www.iutenligne.net/resources.html">
 	                    <img src="/templates/iutenligne/assets/img/iutenligne.png" border="0"/>
 	                </a>
 
@@ -148,6 +149,7 @@ var Menu = React.createClass({
 	                    </div>
 	                </div>
 	           </div>
+
 	        </div>
 	    );
 	}
