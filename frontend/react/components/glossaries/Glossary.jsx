@@ -67,7 +67,7 @@ var Glossary = React.createClass({
     						<p>{term.description}</p>
     					</div>
     				)
-    			})};
+    			})}
     			<div className="add_new_term">
     				<div className="input-group input-group-lg">
     					<span className="input-group-addon">
@@ -77,8 +77,7 @@ var Glossary = React.createClass({
     				</div>
     				<div className="input-group input-group-lg">
     					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-f
-                            w"></i>
+                            <i className="fa fa-plus fa-fw"></i>
                         </span>
                         <input type="text" id="new_term_desc" className="form-control" value={this.state.newDescriptionValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new decrition..." />
     				</div>

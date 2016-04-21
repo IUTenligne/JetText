@@ -55,15 +55,38 @@ var Glossaries = React.createClass({
         }
     },
 
-    deleteGlossary: function(){
-
+    deleteGlossary: function(glossary_id, event){
+        var that = this;
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Confirm delete',
+            message: 'Are you sure you want to delete the container?',
+            level: 'success',
+            position: 'tr',
+            timeout: '20000',
+            action: {
+                label: 'yes',
+                callback: function() {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/glossaries/"+ glossary_id,
+                        context: that,
+                        success: function(data) {
+                            console.log("ok");
+                        }
+                    });
+                }
+            }
+        });
     },
 
     _notificationSystem: null,
 
     render: function(){
+        var that = this;
     	return(
     		<div className="glossary">
+                <NotificationSystem ref="notificationSystem" />
                 <div className="row">
                     <div className="col-lg-12">
                         <h1 className="page-header">My Glossaries</h1>
@@ -75,6 +98,10 @@ var Glossaries = React.createClass({
                                 <Link to={"/glossaries/"+glossary.id}>
                                     {glossary.name}
                                 </Link>
+                                <br/>
+                                <a href="#" onClick={that.deleteGlossary.bind(that, glossary.id)}>
+                                    <i className="fa fa-trash-o"></i>
+                                </a>
                             </li>
    
     				);

@@ -20,10 +20,6 @@ class GlossariesController < ApplicationController
     render json: { glossary: @glossary }
   end
 
-  def new
-  	@glossary = Glossary.new
-  end
-
   def create
     @glossary = Glossary.new(glossary_params)
     @glossary.user_id = current_user.id
@@ -32,7 +28,11 @@ class GlossariesController < ApplicationController
     end
   end
 
-  def edit
+  def destroy
+    @glossary = Glossary.find(params[:id])
+    if @glossary.destroy
+       render json: {status: "ok", glossary: @glossary.id}
+    end
   end
 
   private
