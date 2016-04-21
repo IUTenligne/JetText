@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
     resources :types
     resources :variables
+    resources :glossary
     resources :uploads do
       delete "/clear/:block_id" => "uploads#clear", on: :collection
     end

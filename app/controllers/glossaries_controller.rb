@@ -10,16 +10,14 @@ class GlossariesController < ApplicationController
     end
   end
 
-
   def index
   	@glossaries = Glossary.select("id, name").all
-    respond_to do |format|
-      format.json { render json: { glossaries: @glossaries } }
-    end
+    render json: { glossaries: @glossaries }
   end
 
   def show
   	@glossary = Glossary.find(params[:id])
+    render json: { glossary: @glossary }
   end
 
   def new
@@ -30,9 +28,7 @@ class GlossariesController < ApplicationController
     @glossary = Glossary.new(glossary_params)
     @glossary.user_id = current_user.id
     if @glossary.save
-      respond_to do |format|
-        format.html { head :no_content }
-      end
+      render json: @glossary
     end
   end
 
@@ -41,7 +37,7 @@ class GlossariesController < ApplicationController
 
   private
     def glossary_params
-      params.require(:glossary).permit(:name, :description)
+      params.require(:glossary).permit(:name)
     end
 end
 

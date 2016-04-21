@@ -1,4 +1,5 @@
 var React = require('react');
+import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 
 
@@ -7,18 +8,18 @@ var Glossaries = React.createClass({
 	getInitialState: function() {
 	    return {
 	        newGlossaryValue: '',
-	        glossariesList: [], 
-	        newDescriptionValue: '', 
+	        glossariesList: [] 
 	    };
 	},
 
     handleChange: function(event) {
         this.setState({newGlossaryValue: event.target.value});
     },
+
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossaries.json", function(result){
 	      	this.setState({
-	      		glossariesList: result.glossaries,
+	      		glossariesList: result.glossaries
 	      	});
 	    }.bind(this));
 	    this._notificationSystem = this.refs.notificationSystem;
@@ -35,13 +36,17 @@ var Glossaries = React.createClass({
     		context: this,
     		data: { 
                 glossary: {
-                    name: this.state.newGlossaryValue, description: this.state.newDescriptionValue, user_id: ''
+                    name: this.state.newGlossaryValue
                 } 
             },
-    		success: function(){
-    			console.log("ok");
+    		success: function(data){
+    			this.setState({
+                    newGlossaryValue: '',
+                    glossariesList: this.state.glossariesList.concat([data])
+                }); 
     		}
     	})
+         event.target.value='';
     },
 
     _handleKeyPress: function(event) {
@@ -57,7 +62,6 @@ var Glossaries = React.createClass({
     _notificationSystem: null,
 
     render: function(){
-        var glossaries = this.state.glossariesList;
     	return(
     		<div className="glossary">
                 <div className="row">
@@ -65,13 +69,15 @@ var Glossaries = React.createClass({
                         <h1 className="page-header">My Glossaries</h1>
                     </div>
                 </div>
-    			{glossaries.map(function(glossary){
+    			{this.state.glossariesList.map(function(glossary){
     				return(
-    					<div>
-    						<p>{glossary.name}</p>
-    						<p>{glossary.description}</p>
-    					</div>
-    				)
+                            <li key={glossary.id}>
+                                <Link to={"/glossaries/"+glossary.id}>
+                                    {glossary.name}
+                                </Link>
+                            </li>
+   
+    				);
     			})}
     			<div className="add_new_glossary">
     				<div className="input-group input-group-lg">
