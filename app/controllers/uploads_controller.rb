@@ -1,6 +1,6 @@
 class UploadsController < ApplicationController
 
-	before_action :authenticate_user!
+  before_action :authenticate_user!
   before_filter :block_permission, only: [:create, :clear]
   before_filter :require_permission, only: [:show, :destroy]
   respond_to :html, :json

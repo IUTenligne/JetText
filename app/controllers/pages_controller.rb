@@ -2,13 +2,11 @@ class PagesController < ApplicationController
 
   before_action :authenticate_user!
   before_filter :require_permission, only: [:show, :update, :destroy, :update_level]
-  respond_to :html, :json
+  respond_to :json
 
   def require_permission
     if current_user != Page.find(params[:id]).user || current_user.nil?
-      respond_to do |format|
-        format.json { render json: { status: "error" } }
-      end 
+      render json: { status: "error" }
     end
   end
 
@@ -17,13 +15,9 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = Page.find(params[:id])
-    @pages = Page.select("id, name").where(:container_id => @page.container_id).order(sequence: :asc)
+    @page = Page.select("id, name, sequence, level, container_id, user_id").find(params[:id])
     @blocks = Block.select("id, name, content, type_id, upload_id").where(page_id: @page.id)
-    respond_to do |format|
-      format.html
-      format.json { render json: { page: @page, container: @page.container.name, blocks: @blocks } }
-    end 
+    render json: { page: @page, container: @page.container.name, blocks: @blocks }
   end
 
   def create
@@ -35,9 +29,7 @@ class PagesController < ApplicationController
     @container = Container.find(@page.container_id) if Container.exists?(@page.container_id)
     if @container.present?
       if @page.save
-        respond_to do |format|
-          format.json { render json: @page }
-        end
+        render json: @page
       end
     end
   end
@@ -45,14 +37,13 @@ class PagesController < ApplicationController
   def update
     @page = Page.find(params[:id])
     @page.update_attribute(:name, params[:page][:name])
+    render :nothing => true
   end
 
   def destroy
     @page = Page.find(params[:id])
     if @page.destroy
-      respond_to do |format|
-        format.json { render json: {status: "ok", page: @page.id} }
-      end
+      render json: { status: "ok", page: @page.id }
     else
       redirect_to "/#/containers/#{@page.container_id}"
     end

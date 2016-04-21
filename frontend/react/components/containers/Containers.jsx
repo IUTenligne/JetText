@@ -85,6 +85,7 @@ var Result = React.createClass({
                         </div>
                     </div> 
                 </li>
+
                 <NotificationSystem ref="notificationSystem" style={style}/>
             </div>
         )
@@ -102,7 +103,7 @@ var Containers = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/containers.json", function(result) {
             this.setState({
-                containersList: result
+                containersList: result.containers
             });
         }.bind(this));
         this._notificationSystem = this.refs.notificationSystem;

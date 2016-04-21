@@ -99,8 +99,6 @@ var Menu = React.createClass({
             newList.push(pageList[i]);
         }
 
-        console.log(pageList, newList);
-
         $.ajax({
             type: "PUT",
             url: '/pages/update_level',
@@ -121,7 +119,7 @@ var Menu = React.createClass({
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
 	            <div className="sidebar-nav navbar-collapse collapse ">
-	                <a href="http://www.iutenligne.net/resources.html">
+	                <a href="/#/">
 	                    <img src="/templates/iutenligne/assets/img/iutenligne.png" border="0"/>
 	                </a>
 

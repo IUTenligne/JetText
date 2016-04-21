@@ -6,6 +6,14 @@ class Container < ActiveRecord::Base
   validates :name,		:presence => true, length: { maximum: 250 }
   validates :content, 	:presence => false
   validates :user_id, 	:presence => true
+
+  private
+	  def create_folder
+	    return nil unless current_user.present?
+	    dest = "#{Rails.root}/public/#{current_user.email}"
+	    FileUtils.mkdir_p dest
+	    return dest
+	  end
 end
 
 # == Schema Information

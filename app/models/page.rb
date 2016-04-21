@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+
   belongs_to :container
   belongs_to :user
   has_many :uploads
@@ -9,4 +10,5 @@ class Page < ActiveRecord::Base
   validates :container_id,  :presence => true
 
   default_scope { order("sequence ASC") }
+
 end

@@ -3,31 +3,22 @@ class ContainersController < ApplicationController
   before_action :authenticate_user!
   before_filter :require_permission, only: [:show, :update, :destroy, :generate]
   respond_to :html, :json
-  skip_before_filter :verify_authenticity_token
 
   def require_permission
     if current_user != Container.find(params[:id]).user || current_user.nil?
-      respond_to do |format|
-        format.json { render json: { status: "error" } }
-      end 
+      render json: { status: "error" }
     end
   end
   
   def index
     @containers = Container.select("id, name").all.where(:user_id => current_user.id)
-    respond_to do |format|
-      format.html
-      format.json { render json: @containers }
-    end
+    render json: { containers: @containers }
   end
 
   def show
-    @container = Container.find(params[:id])
+    @container = Container.select("id, name").find(params[:id])
     @new_page = Page.new
-    respond_to do |format|
-      format.html
-      format.json { render json: {container: @container, pages: @container.pages} }
-    end
+    render json: { container: @container, pages: @container.pages }
   end
 
   def new
@@ -46,13 +37,8 @@ class ContainersController < ApplicationController
 
   def destroy
     @container = Container.find(params[:id])
-    if @container.user_id == current_user.id
-      if @container.destroy
-        respond_to do |format|
-          format.json { render json: {status: "ok", container: @container.id} }
-        end
-      end
-    else
+    if @container.destroy
+      render json: { status: "ok", container: @container.id }
     end
   end
 
@@ -74,14 +60,7 @@ class ContainersController < ApplicationController
     def container_params
       params.require(:container).permit(:name, :content, :url)
     end
-
-    def create_folder
-      return nil unless current_user.present?
-      dest = "#{Rails.root}/public/#{current_user.email}"
-      FileUtils.mkdir_p dest
-      return dest
-    end
-
+ 
 end
 
 # == Schema Information
