@@ -8,7 +8,7 @@
   </button>
 	<div id="top-menu" class="header-collapse">
 		<ul>
-			<li><%= link_to t(:containers), containers_path, data: { no_turbolink: true } %></li>
+			<li><%= link_to t(:containers), "/#/", data: { no_turbolink: true } %></li>
 			<li><%= link_to t(:new_container), new_container_path %></li>
 			<% if user_signed_in? %>
 				<% if current_user.firstname && current_user.lastname %>

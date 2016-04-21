@@ -258,7 +258,7 @@ DEPENDENCIES
   paperclip
   pry
   rails (= 4.2.4)
-  rspec (~> 3.0)
+  rspec
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   shoulda

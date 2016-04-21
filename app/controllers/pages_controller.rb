@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   def show
     @page = Page.select("id, name, sequence, level, container_id, user_id").find(params[:id])
     @blocks = Block.select("id, name, content, type_id, upload_id").where(page_id: @page.id)
-    render json: { page: @page, container: @page.container.name, blocks: @blocks }
+    render json: { container: @page.container.name, page: @page, blocks: @blocks }
   end
 
   def create
