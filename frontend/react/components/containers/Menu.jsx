@@ -129,7 +129,7 @@ var Menu = React.createClass({
                         return (
                             <li key={page.id} data-pos={i} data-id={page.id} className={"level-"+page.level}>
                                 <Link to={"/containers/"+this.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
-                                <span class="levels">
+                                <span className="levels">
                                     {page.level <= levels.max ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : null }
                                     {page.level > levels.min ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : null }
                                 </span>

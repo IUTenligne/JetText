@@ -17,8 +17,9 @@ class ContainersController < ApplicationController
 
   def show
     @container = Container.select("id, name").find(params[:id])
+    @pages = Page.select("id, name, sequence, level").where(container_id: params[:id])
     @new_page = Page.new
-    render json: { container: @container, pages: @container.pages }
+    render json: { container: @container, pages: @pages }
   end
 
   def new
