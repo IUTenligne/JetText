@@ -19,7 +19,11 @@ class ContainersController < ApplicationController
     @container = Container.select("id, name").find(params[:id])
     @pages = Page.select("id, name, sequence, level").where(container_id: params[:id])
     @new_page = Page.new
-    render json: { container: @container, pages: @pages }
+    if @container.present?
+      render json: { status: { state: 0 }, container: @container, pages: @pages }
+    else
+      render json: { status: { state: "error", message: t(:not_allowed) } }
+    end
   end
 
   def new

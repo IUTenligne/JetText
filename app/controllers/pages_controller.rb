@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   respond_to :json
 
   def require_permission
-    if current_user == Page.find(params[:id]).user || current_user.nil?
+    if current_user != Page.find(params[:id]).user || current_user.nil?
       raise JetText::NotAllowed.new
     end
   end
@@ -18,9 +18,9 @@ class PagesController < ApplicationController
     @page = Page.select("id, name, sequence, level, container_id, user_id").find(params[:id])
     @blocks = Block.select("id, name, content, type_id, upload_id").where(page_id: @page.id)
     if @page.present?
-      render json: { status: { state: 0 }, container: @page.container.name, page: @page, blocks: @blocks }
+      render json: { status: { state: "error" }, container: @page.container.name, page: @page, blocks: @blocks }
     else
-      render json: { status: { state: "error" } }
+      render json: { status: { state: "error", message: t(:not_allowed) } }
     end
   end
 

@@ -4,12 +4,23 @@ var Page = require('./Page.jsx');
 var Menu = require('./Menu.jsx');
 var ReactDOM = require('react-dom');
 var dragula = require('react-dragula');
+var ErrorsHandler = require('../general/ErrorsHandler.jsx');
 var NotificationSystem = require('react-notification-system');
 
+var ErrorsHandling = {
+    hasError: function(status) {
+        if (status.state != 0)
+            return (<ErrorsHandler status={status} />);
+        return false;
+    }
+};
 
 var Container = React.createClass({
+    mixins: [ErrorsHandling],
+
     getInitialState: function() {
         return {
+            status: 0,
             container: '',
             pages: [],
             activePage: '',
@@ -20,19 +31,25 @@ var Container = React.createClass({
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
-            if (result.pages[0]) {
-                this.setState({
-                    container: result.container,
-                    pages: result.pages,
-                    activePage: result.pages[0]
-                });
+            if (result.status.state != 0) {
+                this.setState({ status: result.status });
             } else {
-                this.setState({
-                    container: result.container,
-                    pages: [],
-                    activePage: '',
-                    isNew: true
-                });
+                if (result.pages[0]) {
+                    this.setState({
+                        status: result.status,
+                        container: result.container,
+                        pages: result.pages,
+                        activePage: result.pages[0]
+                    });
+                } else {
+                    this.setState({
+                        status: result.status,
+                        container: result.container,
+                        pages: [],
+                        activePage: '',
+                        isNew: true
+                    });
+                }
             }
         }.bind(this));
 
@@ -102,42 +119,46 @@ var Container = React.createClass({
     _notificationSystem: null,
 
     render: function() {
-        var container = this.state.container;
-        var pages = this.state.pages;
-        var isNew = this.state.isNew;
-        return (
-            <div className="container col-lg-12 col-md-12">
-            
-                <NotificationSystem ref="notificationSystem" />
+        if (this.state.status.state != 0) {
+            return this.hasError(this.state.status);
+        } else {
+            var container = this.state.container;
+            var pages = this.state.pages;
+            var isNew = this.state.isNew;
+            return (
+                <div className="container col-lg-12 col-md-12">
 
-                <aside id="sidebar-wrapper" className="col-lg-3 col-md-3 pull-left">
-                    <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
-                </aside>
+                    <NotificationSystem ref="notificationSystem" />
 
-                <div id="container-wrapper" className="col-lg-9 col-md-9">
-                    <div className="container-fluid col-lg-12 col-md-12">
+                    <aside id="sidebar-wrapper" className="col-lg-3 col-md-3 pull-left">
+                        <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
+                    </aside>
 
-                        <div className="header col-lg-12 col-md-12">
-                            <a href={"/#/containers/"+container.id} key={container.id}>
-                                <h1>
-                                    {container.name}
-                                </h1>
-                            </a>
-                        </div>
+                    <div id="container-wrapper" className="col-lg-9 col-md-9">
+                        <div className="container-fluid col-lg-12 col-md-12">
 
-                        <div className="row content col-lg-12 col-md-12">
-                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
-                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
+                            <div className="header col-lg-12 col-md-12">
+                                <a href={"/#/containers/"+container.id} key={container.id}>
+                                    <h1>
+                                        {container.name}
+                                    </h1>
+                                </a>
+                            </div>
 
-                            <div className="bottom_bar">
-                                { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                            <div className="row content col-lg-12 col-md-12">
+                                { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
+                                { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
+
+                                <div className="bottom_bar">
+                                    { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
-        );
+                </div>
+            );
+        }
     }
 });
 
