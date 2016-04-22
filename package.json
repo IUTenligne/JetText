@@ -60,6 +60,7 @@
     "alloyeditor": "^1.0.1",
     "react-dragula": "^1.1.15",
     "react-dropzone": "^3.4.0",
+    "react-onclickoutside": "^5.0.0",
     "react-popup": "^0.3.0",
     "requirejs": "^2.1.22"
   },
