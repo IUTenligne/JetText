@@ -6,7 +6,7 @@ class ContainersController < ApplicationController
 
   def require_permission
     if current_user != Container.find(params[:id]).user || current_user.nil?
-      raise JetText::NotLoggedIn.new 
+      raise JetText::NotAllowed.new 
     end
   end
   

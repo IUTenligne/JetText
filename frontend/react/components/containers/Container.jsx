@@ -118,7 +118,7 @@ var Container = React.createClass({
                     <div className="container-fluid col-lg-12 col-md-12">
 
                         <div className="header col-lg-12 col-md-12">
-                            <a href='#' key={container.id}>
+                            <a href={"/#/containers/"+container.id} key={container.id}>
                                 <h1>
                                     {container.name}
                                 </h1>

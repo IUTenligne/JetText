@@ -67,13 +67,13 @@ var Result = React.createClass({
                         <div className="elem">
                             <div className="name">
                                 <Link to={"/containers/"+result.id}>
-                                  {result.name}
-                                 </Link>
+                                    {result.name}
+                                </Link>
                             </div>
 
                             <div className="option">
                                 <Link to={"/containers/"+result.id}>
-                                     <i className="fa fa-pencil"></i>
+                                    <i className="fa fa-pencil"></i>
                                 </Link>
                                 <a href="#" onClick={this.generateContainer}>
                                     <i className="fa fa-upload"></i>
