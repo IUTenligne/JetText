@@ -10,29 +10,28 @@ var TermCreate = React.createClass({
 	    };
 	},
 
+    handleChange: function(input, event) {
+        if (input == "new_term")
+            this.setState({newTermValue: event.target.value});
+        if (input == "new_term_desc")
+            this.setState({newDescriptionValue: event.target.value});
+    },
+
 	componentDidMount: function() {
-	    this.serverRequest = $.get("/glossary.json", function(result){
-	      	this.setState({
-	      		termsList: result.terms
-	      	});
-	    }.bind(this));
 	    this._notificationSystem = this.refs.notificationSystem;
 	},
 
-	componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
-
 	createTerm: function(event) {
+        event.preventDefault();
     	$.ajax({
-    		type: "PUT",
-    		url:'/glossary',
+    		type: "POST",
+    		url: '/terms',
     		context: this,
     		data: {
                 term: {
                     name: this.state.newTermValue,
-										description: this.state.newDescriptionValue,
-										glossary_id: this.props.glossary.id
+					description: this.state.newDescriptionValue,
+					glossary_id: this.props.glossary
                 }
             },
     		success: function(){
@@ -48,24 +47,23 @@ var TermCreate = React.createClass({
     _notificationSystem: null,
 
     render: function(){
-        var terms = this.state.termsList;
     	return(
-					<form className="add_new_term" action="" method="post">
-    				<div className="input-group input-group-lg">
-    					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_term" className="form-control" value={this.state.newTermValue}   autoComplet="off" placeholder="Create new term..." />
-    				</div>
-    				<div className="input-group input-group-lg">
-    					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_term_desc" className="form-control" value={this.state.newDescriptionValue}  autoComplet="off" placeholder="Create new decription..." />
-    				</div>
-						<input type="submit" value='Create' className="btn-success" onClick={this.createTerm}/>
-    			</form>
-    		</div>
+			<form className="add_new_term">
+				<div className="input-group input-group-lg">
+					<span className="input-group-addon">
+                        <i className="fa fa-plus fa-fw"></i>
+                    </span>
+                    <input type="text" id="new_term" className="form-control" value={this.state.newTermValue}  onChange={this.handleChange.bind(this, "new_term")} autoComplet="off" placeholder="Create new term..." />
+				</div>
+				<div className="input-group input-group-lg">
+					<span className="input-group-addon">
+                        <i className="fa fa-plus fa-fw"></i>
+                    </span>
+                    <input type="text" id="new_term_desc" className="form-control" value={this.state.newDescriptionValue} onChange={this.handleChange.bind(this, "new_term_desc")} autoComplet="off" placeholder="Create new decription..." />
+				</div>
+				<input type="submit" value='Create' className="btn-success" onClick={this.createTerm}/>
+    		</form>
+
     	);
     }
 });

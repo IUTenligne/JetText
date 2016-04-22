@@ -1,5 +1,6 @@
 class Glossary < ActiveRecord::Base
 	belongs_to :user
+	has_many :terms
 
 	validates :name,          :presence => true
 end

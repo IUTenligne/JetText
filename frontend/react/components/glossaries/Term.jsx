@@ -25,16 +25,16 @@ var Term = React.createClass({
     render: function(){
         var terms = this.state.termsList;
     	return(
-				<div className="term">
-            {terms.map(function(term){
-              return(
-              <li key={term.id}>
-                  {term.name}
-                  <br/>
-                  {term.description}
-              </li>
-              )
-            })}
+			<div className="term">
+                {terms.map(function(term){
+                    return(
+                        <li key={term.id}>
+                            {term.name}
+                            <br/>
+                            {term.description}
+                        </li>
+                    )
+                })}
     		</div>
     	);
     }
