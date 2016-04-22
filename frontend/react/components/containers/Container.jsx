@@ -4,20 +4,10 @@ var Page = require('./Page.jsx');
 var Menu = require('./Menu.jsx');
 var ReactDOM = require('react-dom');
 var dragula = require('react-dragula');
-var ErrorsHandler = require('../general/ErrorsHandler.jsx');
 var NotificationSystem = require('react-notification-system');
 
-var ErrorsHandling = {
-    hasError: function(status) {
-        if (status.state != 0)
-            return (<ErrorsHandler status={status} />);
-        return false;
-    }
-};
 
 var Container = React.createClass({
-    mixins: [ErrorsHandling],
-
     getInitialState: function() {
         return {
             status: 0,
@@ -31,25 +21,24 @@ var Container = React.createClass({
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
-            if (result.status.state != 0) {
-                this.setState({ status: result.status });
+            if (result.pages && result.pages[0]) {
+                this.setState({
+                    status: result.status,
+                    container: result.container,
+                    pages: result.pages,
+                    activePage: result.pages[0]
+                });
+            } else if (result.container) {
+                this.setState({
+                    status: result.status,
+                    container: result.container,
+                    isNew: true
+                });
             } else {
-                if (result.pages[0]) {
-                    this.setState({
-                        status: result.status,
-                        container: result.container,
-                        pages: result.pages,
-                        activePage: result.pages[0]
-                    });
-                } else {
-                    this.setState({
-                        status: result.status,
-                        container: result.container,
-                        pages: [],
-                        activePage: '',
-                        isNew: true
-                    });
-                }
+                this.setState({
+                    status: result.status,
+                    isNew: true
+                });
             }
         }.bind(this));
 
@@ -119,12 +108,10 @@ var Container = React.createClass({
     _notificationSystem: null,
 
     render: function() {
-        if (this.state.status.state != 0) {
-            return this.hasError(this.state.status);
-        } else {
-            var container = this.state.container;
-            var pages = this.state.pages;
-            var isNew = this.state.isNew;
+        var container = this.state.container;
+        var pages = this.state.pages;
+        var isNew = this.state.isNew;
+        try {
             return (
                 <div className="container col-lg-12 col-md-12">
 
@@ -158,6 +145,8 @@ var Container = React.createClass({
 
                 </div>
             );
+        } catch(err) {
+            console.log(err);
         }
     }
 });
