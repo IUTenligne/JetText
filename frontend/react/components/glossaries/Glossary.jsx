@@ -26,6 +26,11 @@ var Glossary = React.createClass({
         this.serverRequest.abort();
     },
 
+    handleTermAdd: function(term){
+    	this.setState({
+    		termsList: this.state.termsList.concat([term]),
+    	})
+    },
 
     deleteTerm: function(term_id, event){
         var that = this;
@@ -44,7 +49,9 @@ var Glossary = React.createClass({
                         url: "/terms/"+ term_id,
                         context: that,
                         success: function() {
-                            console.log("ok");
+                            that.setState({
+                                termsList: that.state.termsList.filter((i, _) => i["id"] !== term_id)
+                            })
                         }
                     });
                 }
@@ -79,7 +86,7 @@ var Glossary = React.createClass({
     				)
     			})}
 				<div className="add_new_term">
-    				<TermCreate glossary={this.state.glossary.id}/>
+    				<TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
     			</div>
     		</div>
     	);

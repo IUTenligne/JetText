@@ -34,8 +34,9 @@ var TermCreate = React.createClass({
 					glossary_id: this.props.glossary
                 }
             },
-    		success: function(){
-    			console.log("ok");
+    		success: function(data){
+                console.log(data);
+    			this.props.addTerm(data)
     		}
     	})
     },
