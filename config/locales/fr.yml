@@ -23,3 +23,6 @@ fr:
   password_confirmation: "Confirmation du mot de passe"
   minimum_password_length: "8 caractères minimum"
   email: "Email"
+
+  not_logged_in: "Veuillez vous connecter."
+  not_allowed: "Cette action n'est pas autorisée."

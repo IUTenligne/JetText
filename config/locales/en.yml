@@ -24,3 +24,5 @@ en:
   containers: "containers"
   minimum_password_length: "At least 8 caracters"
   email: "Email"
+  not_logged_in: "Please log in."
+  not_allowed: "You are not allowed to do this."

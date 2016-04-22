@@ -1,21 +1,26 @@
 var React = require('react');
+var ErrorsHandler = require('../general/ErrorsHandler.jsx');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Block = require('../blocks/Block.jsx');
 
 var Page = React.createClass({
+    mixins: [ErrorHandling],
+
     getInitialState: function() {
         return {
-          page: '',
-          blocks: [],
-          newBlockValue: '',
-          types: [],
-          selectedType: 1
+            status: 0,
+            page: '',
+            blocks: [],
+            newBlockValue: '',
+            types: [],
+            selectedType: 1
         };
     },
 
     componentDidMount: function() {
         this.serverRequest = $.get("/pages/"+this.props.page+".json", function (result) {
             this.setState({
+                status: result.status,
                 page: result.page,
                 blocks: result.blocks
             });
@@ -68,9 +73,9 @@ var Page = React.createClass({
     render: function() {
         var page = this.state.page;
         var that = this;
+        { ErrorHandling.checkStatus(this.state.status) }
         return (
             <div className="page">
-
                 <h2 className="header_page">{page.name}</h2>
 
                 <div className="blocks">
