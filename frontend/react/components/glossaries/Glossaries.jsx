@@ -30,6 +30,7 @@ var Glossaries = React.createClass({
     },
 
     createGlossary: function(event) {
+         event.preventDefault();
     	$.ajax({
     		type: "POST",
     		url:'/glossaries',
@@ -60,7 +61,7 @@ var Glossaries = React.createClass({
         event.preventDefault();
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
-            message: 'Are you sure you want to delete the container?',
+            message: 'Are you sure you want to delete the glossary?',
             level: 'success',
             position: 'tr',
             timeout: '20000',
@@ -71,8 +72,10 @@ var Glossaries = React.createClass({
                         type: "DELETE",
                         url: "/glossaries/"+ glossary_id,
                         context: that,
-                        success: function(data) {
-                            console.log("ok");
+                        success: function() {
+                            that.setState({
+                                glossariesList: that.state.glossariesList.filter((i, _) => i["id"] !== glossary_id)
+                            })
                         }
                     });
                 }
@@ -84,6 +87,7 @@ var Glossaries = React.createClass({
 
     render: function(){
         var that = this;
+        console.log(this.state.glossariesList);
     	return(
     		<div className="glossary">
                 <NotificationSystem ref="notificationSystem" />
@@ -94,16 +98,15 @@ var Glossaries = React.createClass({
                 </div>
     			{this.state.glossariesList.map(function(glossary){
     				return(
-                            <li key={glossary.id}>
-                                <Link to={"/glossaries/"+glossary.id}>
-                                    {glossary.name}
-                                </Link>
-                                <br/>
-                                <a href="#" onClick={that.deleteGlossary.bind(that, glossary.id)}>
-                                    <i className="fa fa-trash-o"></i>
-                                </a>
-                            </li>
-   
+                        <li key={glossary.id} >
+                            <Link to={"/glossaries/"+glossary.id}>
+                                {glossary.name}
+                            </Link>
+                            <br/>
+                            <a href="#" onClick={that.deleteGlossary.bind(that, glossary.id)} >
+                                <i className="fa fa-trash-o" ></i>
+                            </a>
+                        </li>
     				);
     			})}
     			<div className="add_new_glossary">
