@@ -1,6 +1,6 @@
 class Glossary < ActiveRecord::Base
 	belongs_to :user
-	has_many :terms
+	has_many :terms, :dependent => :delete_all
 
 	validates :name,          :presence => true
 end

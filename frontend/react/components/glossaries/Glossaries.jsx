@@ -87,7 +87,6 @@ var Glossaries = React.createClass({
 
     render: function(){
         var that = this;
-        console.log(this.state.glossariesList);
     	return(
     		<div className="glossary">
                 <NotificationSystem ref="notificationSystem" />
