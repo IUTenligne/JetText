@@ -16,12 +16,12 @@ Rails.application.routes.draw do
     end
     resources :types
     resources :variables
-    resources :glossary
     resources :uploads do
       delete "/clear/:block_id" => "uploads#clear", on: :collection
     end
     resources :glossaries
+    resources :terms
     get "/generate_container/:id" => "containers#generate", as: 'generate_container'
   end
-  
+
 end

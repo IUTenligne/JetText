@@ -17,7 +17,7 @@ class GlossariesController < ApplicationController
 
   def show
   	@glossary = Glossary.find(params[:id])
-    render json: { glossary: @glossary }
+    render json: { glossary: @glossary, terms: @glossary.terms }
   end
 
   def create
