@@ -5,7 +5,7 @@ class ContainersController < ApplicationController
   respond_to :html, :json
 
   def require_permission
-    if current_user == Container.find(params[:id]).user || current_user.nil?
+    if current_user != Container.find(params[:id]).user || current_user.nil?
       raise JetText::NotAllowed.new 
     end
   end
