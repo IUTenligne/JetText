@@ -1,12 +1,13 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
+var onClickOutside = require('react-onclickoutside');
 
-
-var TextBlock = React.createClass({
+var TextBlock = onClickOutside(React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
-            editButton: true
+            editButton: true,
+            focusPopup: false
         };
     },
 
@@ -80,13 +81,32 @@ var TextBlock = React.createClass({
         return {__html: data};
     },
 
+    overTerm: function(event){
+        console.log(this.getSelection());
+    },
+
+    downTerm: function(event){
+        this.setState({ focusPopup: false });
+    },
+
+    handleClickOutside: function(event){
+        this.setState({ focusPopup: false });
+    },
+
+    getSelection: function(input) {
+        var selection = document.getSelection().toString();
+        this.setState({ focusPopup: true });
+        return selection;
+    },
+
 	render: function() {
 		var block = this.props.block;
 		return (
             <div className="content_block">
-                <div key={block.id}>
+                {this.state.focusPopup ? <div className="focus"><a href="/#/">hello</a></div> : null }
+                <div key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm}>
                     <h3>{block.name}</h3>
-                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                 </div>
 
                 { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
@@ -95,6 +115,6 @@ var TextBlock = React.createClass({
             </div>
         );
 	}
-});
+}));
 
 module.exports = TextBlock;
