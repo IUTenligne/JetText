@@ -1,13 +1,17 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
 var onClickOutside = require('react-onclickoutside');
+var TermCreate = require('../glossaries/TermCreate.jsx');
 
 var TextBlock = onClickOutside(React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
             editButton: true,
-            focusPopup: false
+            focusPopup: false,
+            myStyle: '',
+            left: '',
+            top: ''
         };
     },
 
@@ -82,29 +86,39 @@ var TextBlock = onClickOutside(React.createClass({
     },
 
     overTerm: function(event){
-        console.log(this.getSelection());
-    },
-
+        this.setState({
+            left: event.screenX,
+            top: event.clientY - 60,
+        });
+        this.setState({ focusPopup: true });
+        var select = document.getSelection().toString();
+        var myStyle = "left : " + this.state.left + "px ; top:" + this.state.top + "px;" ;
+        },
     downTerm: function(event){
         this.setState({ focusPopup: false });
     },
-
     handleClickOutside: function(event){
         this.setState({ focusPopup: false });
     },
 
-    getSelection: function(input) {
-        var selection = document.getSelection().toString();
-        this.setState({ focusPopup: true });
-        return selection;
-    },
+
 
 	render: function() {
 		var block = this.props.block;
+        var myStyle = "left : " + this.state.left + "0px ; top: " + this.state.top + "px " ;
+        console.log(myStyle);
 		return (
             <div className="content_block">
-                {this.state.focusPopup ? <div className="focus"><a href="/#/">hello</a></div> : null }
-                <div key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm}>
+                {this.state.focusPopup ? 
+                    <div className="focus" style={{myStyle}} >
+                        <a href="/#/" class="btn btn-default">
+                            <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
+                        </a>
+                        <a href="/#/" class="btn btn-default">
+                            <i className="fa fa-plus fa-fw" title="Add" aria-hidden="true"></i>
+                        </a>
+                    </div> : null }
+                <div key={block.id} onMouseUp={this.overTerm}  onMouseDown={this.downTerm}>
                     <h3>{block.name}</h3>
                     <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                 </div>

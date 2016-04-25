@@ -10,7 +10,23 @@
 		margin-top: 0;
 	}
 	.focus{
-		color:write;
 		background: $lightBlue;
+		padding: 7px;
+		text-align: center;
+		width: 150 px;
+		border-radius: 7px;
+		position: fixed;
+		z-index: 50;
+		a{
+			color: $white;
+			background: $lightBlue;
+			padding: 7px;
+			i{
+				font-size: 17px;
+			}
+		}
+		a:hover{
+			color: $blue;
+		}
 	}
 }
