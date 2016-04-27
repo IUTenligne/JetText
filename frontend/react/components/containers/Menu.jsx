@@ -126,6 +126,7 @@ var Menu = React.createClass({
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
                 <ul className="menu-container nav" id="side-menu" ref="dragulable">
+                    <h2 className="zone-header">Menu</h2>
                     { this.props.pages.map((page, i) => {
                         return (
                             <li key={page.id} data-pos={i} data-id={page.id} className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}>
@@ -137,16 +138,14 @@ var Menu = React.createClass({
                             </li>
                         );
                     })}
-                </ul>
-                
-                <div id="add_new_page">
-                    <div className="input-group input-group-lg">
+
+                    <div id="add_new_page" className="input-group">
                         <span className="input-group-addon">
                             <i className="fa fa-plus fa-fw"></i>
                         </span>
                         <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
                     </div>
-                </div>
+                </ul> 
 	        </div>
 	    );
 	}

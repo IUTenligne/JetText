@@ -83,10 +83,13 @@ var TextBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
 		return (
-            <div className="content_block">
+            <div className="block-inner">
                 <div key={block.id}>
-                    <h3>{block.name}</h3>
-                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                    <div className="block-title">
+                        <i className="fa fa-file-text-o"></i>
+                        <h3>{block.name}</h3>
+                    </div>
+                    <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
                 </div>
 
                 { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }

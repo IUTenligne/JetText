@@ -2,18 +2,26 @@
 
 
 #container-wrapper {
-	background: #A7ADAE;
+	@include span(9 of 12);
+	padding: 0 36px;
 
-	.container-fluid {
-		.header {
 
-		}
+	.header {
+		a, a:hover {
+			text-decoration: none;
 
-		.content {
-			/* Page.jsx */
-			div.page {
-				@import 'pages';
+			h1 {
+				color: $uiGrey;
+				padding-bottom: 10px;
+				border-bottom: 1px solid $lightBlue;
 			}
+		}
+	}
+
+	.content {
+		/* Page.jsx */
+		div.page {
+			@import 'pages';
 		}
 	}
 }

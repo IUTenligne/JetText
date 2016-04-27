@@ -2,12 +2,41 @@
 
 .block {
 	background: white;
-	padding: 15px;
-	border-radius: 4px;
 	margin-bottom: 20px;
 	box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
 
-	h3 {
-		margin-top: 0;
+	.block-inner {
+		.block-title {
+			margin-top: 0;
+			background: $uiGrey;
+			color: white;
+			height: 40px;
+			width: 100%;
+			display: inline-block;
+			line-height: 30px;
+			background: $lightGrey;
+
+			i {
+				width: 40px;
+				float: left;
+				padding: 6px 15px;
+				line-height: 28px;
+				background: $uiGrey;
+			}
+
+			h3 {
+				line-height: 38px;
+				color: $uiGrey;
+				float: left;
+				padding: 0 15px;
+				margin: 0;
+			}
+		}
+
+		.block-content,
+		.cke {
+			clear: both;
+			padding: 10px 15px;
+		}
 	}
 }

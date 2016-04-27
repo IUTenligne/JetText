@@ -5,11 +5,14 @@ section#containers {
 
 }
 
-.container {
+#container {
+	padding: 0;
 	@import 'container';
 }
 
 aside#sidebar-wrapper {
 	/* Menu.jsx */
+	@include span(3 of 12);
+	padding: 0;
 	@import 'menu';
 }

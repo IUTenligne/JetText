@@ -113,32 +113,29 @@ var Container = React.createClass({
         var isNew = this.state.isNew;
         try {
             return (
-                <div className="container col-lg-12 col-md-12">
+                <div id="container">
 
                     <NotificationSystem ref="notificationSystem" />
 
-                    <aside id="sidebar-wrapper" className="col-lg-3 col-md-3 pull-left">
+                    <aside id="sidebar-wrapper">
                         <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
                     </aside>
 
-                    <div id="container-wrapper" className="col-lg-9 col-md-9">
-                        <div className="container-fluid col-lg-12 col-md-12">
+                    <div id="container-wrapper">
+                        <div className="header">
+                            <a href={"/#/containers/"+container.id} key={container.id}>
+                                <h1>
+                                    {container.name}
+                                </h1>
+                            </a>
+                        </div>
 
-                            <div className="header col-lg-12 col-md-12">
-                                <a href={"/#/containers/"+container.id} key={container.id}>
-                                    <h1>
-                                        {container.name}
-                                    </h1>
-                                </a>
-                            </div>
+                        <div className="content">
+                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
+                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
 
-                            <div className="row content col-lg-12 col-md-12">
-                                { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
-                                { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
-
-                                <div className="bottom_bar">
-                                    { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
-                                </div>
+                            <div className="bottom_bar">
+                                { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
                             </div>
                         </div>
                     </div>

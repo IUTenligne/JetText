@@ -3,15 +3,20 @@
 .sidebar.menu {
 	border-radius: 0;
 
+	.zone-header {
+		text-transform: uppercase;
+		color: white;
+		font-size: 15px;
+		padding-left: 15px;
+	} 
+
 	ul#side-menu {
-		background: #2E2F33;
+		background: $uiGrey;
 
 		li {
 			width: 100%;
 			display: inline-block;
-			border-bottom: 1px solid rgba(0,0,0,0.005);
 			border-top: 1px solid rgba(0,0,0,0.025);
-			padding: 0px;
 			color: white;
 
 			a {
@@ -31,6 +36,7 @@
 			span.levels {
 				width: 20%;
 				float: right;
+				line-height: 18px;
 
 				a.level-action {
 					padding: 0;
@@ -38,8 +44,10 @@
 			}
 		}
 
-		li:hover {
-			background: red;
+		li:hover,
+		li.active {
+			background: $lightBlue;
+			color: #302E2C;
 		}	
 
 		li.active:after {
@@ -52,10 +60,14 @@
 			position: absolute;
 			pointer-events: none;
 			border-color: rgba(136, 183, 213, 0);
-			border-right-color: #A7ADAE;
-			border-width: 15px;
-			margin-left: -15px;
-			margin-top: -15px;
+			border-left-color: $lightBlue;
+			border-width: 12px;
+			margin-left: 0px;
+			margin-top: -12px;
+		}
+
+		#add_new_page {
+			padding: 10px;
 		}
 	}
 }
