@@ -1,17 +1,12 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
-var onClickOutside = require('react-onclickoutside');
-var TermCreate = require('../glossaries/TermCreate.jsx');
 
-var TextBlock = onClickOutside(React.createClass({
+
+var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
-            editButton: true,
-            focusPopup: false,
-            myStyle: '',
-            left: '',
-            top: ''
+            editButton: true
         };
     },
 
@@ -85,34 +80,13 @@ var TextBlock = onClickOutside(React.createClass({
         return {__html: data};
     },
 
-    overTerm: function(event){
-        this.setState({
-            left: event.screenX,
-            top: event.clientY - 60,
-        });
-        this.setState({ focusPopup: true });
-        var select = document.getSelection().toString();
-        var myStyle = "left : " + this.state.left + "px ; top:" + this.state.top + "px;" ;
-        },
-    downTerm: function(event){
-        this.setState({ focusPopup: false });
-    },
-    handleClickOutside: function(event){
-        this.setState({ focusPopup: false });
-    },
-
-
-
 	render: function() {
 		var block = this.props.block;
-        var myStyle = "left : " + this.state.left + "0px ; top: " + this.state.top + "px " ;
-        console.log(myStyle);
 		return (
             <div className="content_block">
-                {this.state.focusPopup ? <div className="focus" style={{myStyle}} ><a href="/#/" ><i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i></a><a href="/#/" ><i className="fa fa-plus fa-fw" title="Add" aria-hidden="true"></i></a></div> : null }
-                <div key={block.id} onMouseUp={this.overTerm}  onMouseDown={this.downTerm}>
+                <div key={block.id}>
                     <h3>{block.name}</h3>
-                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
                 </div>
 
                 { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
@@ -121,6 +95,6 @@ var TextBlock = onClickOutside(React.createClass({
             </div>
         );
 	}
-}));
+});
 
 module.exports = TextBlock;

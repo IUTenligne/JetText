@@ -5,11 +5,10 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 
 var Glossary = React.createClass({
-
 	getInitialState: function() {
 	    return {
 	    	glossary: '',
-	        termsList: [],
+	        termsList: []
 	    };
 	},
 
@@ -20,7 +19,6 @@ var Glossary = React.createClass({
 	      		termsList: result.terms
 	      	});
 	    }.bind(this));
-
 	    this._notificationSystem = this.refs.notificationSystem;
 	},
 
@@ -58,7 +56,7 @@ var Glossary = React.createClass({
                     });
                 }
             }
-        })
+        });
     },
 
     _notificationSystem: null,
@@ -66,35 +64,32 @@ var Glossary = React.createClass({
     render: function(){
         var terms = this.state.termsList;
         var that = this;
-        console.log(that.state.glossary);
-        return(
-            <div className="terms">
-                <NotificationSystem ref="notificationSystem" />
-                <div className="row">
-                    <div className="col-lg-12">
-                        <h1 className="page-header">My Terms in glossary {that.state.glossary.name}</h1>
-                    </div>
-                </div>
-                {terms.map(function(term){
-                    return(
-                        <li key={term.id}>
-                            <Link to={"/#/"}>
-                                {term.name}
-                            </Link>
-                            <br/>
-                            <a href="/#/" onClick={that.deleteTerm.bind(that, term.id)}>
-                                <i className="fa fa-trash-o"></i>
-                            </a>
-                        </li>
-                    );
-                })}
-                <div className="add_new_term">
-                    {that.state.termsList.map(function(TermCreate){
-                        return <TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
-                    })}
-                </div>
-            </div>
-        );
+    	return(
+    		<div className="terms">
+    		<NotificationSystem ref="notificationSystem" />
+				<div className="row">
+					<div className="col-lg-12">
+						<h1 className="page-header">My Terms in glossary {that.state.glossary.name}</h1>
+					</div>
+				</div>
+    			{terms.map(function(term){
+    				return(
+						<li key={term.id}>
+							<Link to={"/glossaries/"+that.state.glossary.id+"/"+term.id}>
+								{term.name}
+							</Link>
+							<br/>
+							<a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
+								<i className="fa fa-trash-o"></i>
+							</a>
+						</li>
+    				)
+    			})}
+				<div className="add_new_term">
+    				<TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
+    			</div>
+    		</div>
+    	);
     }
 });
 
