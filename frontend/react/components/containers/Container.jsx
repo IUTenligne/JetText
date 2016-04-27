@@ -118,7 +118,7 @@ var Container = React.createClass({
                     <NotificationSystem ref="notificationSystem" />
 
                     <aside id="sidebar-wrapper" className="col-lg-3 col-md-3 pull-left">
-                        <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
+                        <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
                     </aside>
 
                     <div id="container-wrapper" className="col-lg-9 col-md-9">

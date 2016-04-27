@@ -6,7 +6,7 @@ html, body {
 	@include container(100%);
 	margin: 0;
 	padding: 0;
-	background: #D3D3D3 !important;
+	background: #e5e5e5 !important;
 
 	header {
 		@import "header";
@@ -15,6 +15,8 @@ html, body {
 	section#main-outlet {
 	  margin-bottom: 30px;
 		margin-top: 60px;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
 		@include span(12 of 12);
 
 		div#wrapper {

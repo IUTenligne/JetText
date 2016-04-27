@@ -1,14 +1,31 @@
 @import "../vars";
 
 .sidebar.menu {
+	border-radius: 0;
+
 	ul#side-menu {
+		background: #2E2F33;
+
 		li {
 			width: 100%;
 			display: inline-block;
+			border-bottom: 1px solid rgba(0,0,0,0.005);
+			border-top: 1px solid rgba(0,0,0,0.025);
+			padding: 0px;
+			color: white;
+
+			a {
+				color: white;
+			}
+
+			a:hover {
+				background-color: transparent;
+			}
 
 			a.page-link {
 				width: 80%;
 				float: left;
+				height: 100%;
 			}
 
 			span.levels {
@@ -19,7 +36,27 @@
 					padding: 0;
 				}
 			}
-		}		
+		}
+
+		li:hover {
+			background: red;
+		}	
+
+		li.active:after {
+			left: 100%;
+			top: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			border-color: rgba(136, 183, 213, 0);
+			border-right-color: #A7ADAE;
+			border-width: 15px;
+			margin-left: -15px;
+			margin-top: -15px;
+		}
 	}
 }
 

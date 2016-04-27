@@ -18,6 +18,7 @@ var Menu = React.createClass({
     },
 
     componentDidMount: function() {
+        this.setState({ activePage: this.props.activePage });
         var container = ReactDOM.findDOMNode(this.refs.dragulable);
         var drake = dragula([container]);
         this.moveItems(drake, this.props.pages);
@@ -127,7 +128,7 @@ var Menu = React.createClass({
                 <ul className="menu-container nav" id="side-menu" ref="dragulable">
                     { this.props.pages.map((page, i) => {
                         return (
-                            <li key={page.id} data-pos={i} data-id={page.id} className={"level-"+page.level}>
+                            <li key={page.id} data-pos={i} data-id={page.id} className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}>
                                 <Link to={"/containers/"+this.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
                                 <span className="levels">
                                     {page.level <= levels.max ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : null }
