@@ -109,17 +109,7 @@ var TextBlock = onClickOutside(React.createClass({
         console.log(myStyle);
 		return (
             <div className="content_block">
-                {this.state.focusPopup ?
-                    <div className="focus" style={{myStyle}} >
-                        <a href="/#/" class="btn btn-default">
-                            <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true">
-														</i>
-                        </a>
-                        <a href="/#/" class="btn btn-default">
-                            <i className="fa fa-plus fa-fw" title="Add" aria-hidden="true">
-														</i>
-                        </a>
-                    </div> : null }
+                {this.state.focusPopup ? <div className="focus" style={{myStyle}} ><a href="/#/" ><i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i></a><a href="/#/" ><i className="fa fa-plus fa-fw" title="Add" aria-hidden="true"></i></a></div> : null }
                 <div key={block.id} onMouseUp={this.overTerm}  onMouseDown={this.downTerm}>
                     <h3>{block.name}</h3>
                     <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
