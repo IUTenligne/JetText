@@ -83,7 +83,7 @@ var Container = React.createClass({
                                 pages: that.state.pages.filter((i, _) => i["id"] !== data.page)
                             });
 
-                            window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0].id);
+                            window.location.replace("/#/containers/"+this.state.container.id);
                         }
                     });
                 }
@@ -93,9 +93,18 @@ var Container = React.createClass({
 
     dragPages: function(pageList) {
         /* updates this.state.pages from a drag and drop action into <Menu /> */
-        this.setState({
-            pages: pageList
-        });
+        if (pageList.length == 0) {
+            this.setState({
+                pages: pageList,
+                isNew: true,
+                activePage: ''
+            });
+        } else {
+            this.setState({
+                pages: pageList,
+                isNew: false
+            });
+        }
     },
 
     levelizePages: function(pageList, trick) {
