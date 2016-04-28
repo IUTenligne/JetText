@@ -1,12 +1,16 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
+var TermCreate = require('../glossaries/glossaries.jsx');
 
 
 var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
-            editButton: true
+            editButton: true,
+            myStyle: '',
+            left: '',
+            top: ''
         };
     },
 
@@ -79,18 +83,45 @@ var TextBlock = React.createClass({
     createMarkup: function(data) {
         return {__html: data};
     },
+    overTerm: function(event){
+        this.setState({
+            left: event.screenX,
+            top: event.clientY - 60,
+        });
+        this.setState({ focusPopup: true });
+        var select = document.getSelection().toString();
+    },
+    // downTerm: function(event){
+        // this.setState({ focusPopup: false });
+    // },
+    // handleClickOutside: function(event){
+        // this.setState({ focusPopup: false });
+    // },
+    actionOverlay: function(){
+        this.setState({ overlayPopup: true });
+    },
 
 	render: function() {
 		var block = this.props.block;
+        var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
 		return (
             <div className="content_block">
-                <div key={block.id}>
-                    <h3>{block.name}</h3>
-                    <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                <div className="content">
+                    <div className="focus" style={{myStyle}} >
+                        <a  onClick={this.actionOverlay}>
+                            <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
+                        <h3>{block.name}</h3>
+                        <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                    </div>
+
+                    { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
                 </div>
-
-                { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
-
+                {this.state.overlayPopup ? <div className="overlay">
+                    <p>test</p>
+                </div>: null }
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );

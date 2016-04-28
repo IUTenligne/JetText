@@ -5,8 +5,42 @@
 	padding: 15px;
 	border-radius: 4px;
 	margin-bottom: 20px;
-
+	width: 100%;
 	h3 {
 		margin-top: 0;
+	}
+	.content_block{
+		.content{
+			.focus{
+				background: $lightBlue;
+				padding: 7px;
+				text-align: center;
+				width: 150 px;
+				border-radius: 7px;
+				position: absolute;
+				z-index: 50;
+				a{
+					color: $white;
+					background: $lightBlue;
+					padding: 7px;
+					i{
+						font-size: 17px;
+					}
+				}
+				a:hover{
+					color: $blue;
+				}
+			}
+		}
+		.overlay{
+			position: fixed;
+			top:50%;
+			left: 50%;
+			background: $white;
+			border-radius: 4px;
+			width: 20%;
+			padding: 15px;
+			text-align: center;
+		}
 	}
 }
