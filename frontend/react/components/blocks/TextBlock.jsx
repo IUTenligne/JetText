@@ -92,7 +92,7 @@ var TextBlock = React.createClass({
                     <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
                 </div>
 
-                { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
+                { this.state.editButton ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button> : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button> }
 
                 <NotificationSystem ref="notificationSystem"/>
             </div>
