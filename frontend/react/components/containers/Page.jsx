@@ -9,7 +9,6 @@ var Page = React.createClass({
             page: '',
             blocks: [],
             newBlockValue: '',
-            types: [],
             selectedType: 1
         };
     },
@@ -20,12 +19,6 @@ var Page = React.createClass({
                 status: result.status,
                 page: result.page,
                 blocks: result.blocks
-            });
-        }.bind(this));
-
-        this.serverRequest = $.get("/types.json", function (result) {
-            this.setState({
-                types: result.types
             });
         }.bind(this));
     },
@@ -88,7 +81,7 @@ var Page = React.createClass({
                             <i className="fa fa-chevron-down fa-fw"></i>
                         </span>
                         <select className="form-control" value={this.state.selectedType} onChange={this._selectType}>
-                            {this.state.types.map(function(type){
+                            {this.props.types.map(function(type){
                                 return <option value={type.id} key={type.id}>{type.name}</option>
                             })}
                         </select>

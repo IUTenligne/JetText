@@ -13,6 +13,7 @@ var Container = React.createClass({
             status: 0,
             container: '',
             pages: [],
+            types: [],
             activePage: '',
             newPageValue: '',
             isNew: false
@@ -40,6 +41,12 @@ var Container = React.createClass({
                     isNew: true
                 });
             }
+        }.bind(this));
+
+        this.serverRequest = $.get("/types.json", function (result) {
+            this.setState({
+                types: result.types
+            });
         }.bind(this));
 
         this._notificationSystem = this.refs.notificationSystem;
@@ -140,8 +147,8 @@ var Container = React.createClass({
                         </div>
 
                         <div className="content">
-                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
-                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
+                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} types={this.state.types} /> : null }
+                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
 
                             <div className="bottom_bar">
                                 { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
