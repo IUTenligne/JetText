@@ -3,29 +3,30 @@
 .block {
 	background: white;
 	margin-bottom: 20px;
-	box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+	box-shadow: 0 2px 4px 2px rgba(0,0,0,0.15);
+	border-radius: 4px 4px 4px 4px;
 
 	.block-inner {
 		.block-title {
+			border-radius: 4px 4px 0 0;
 			margin-top: 0;
-			background: $uiGrey;
-			color: white;
 			height: 40px;
 			width: 100%;
 			display: inline-block;
 			line-height: 30px;
-			background: $lightGrey;
+			background: rgba(0,0,0,0.08);
 
 			i {
+				border-radius: 4px 0 0 0;
 				float: left;
 				padding: 6px 15px;
 				line-height: 28px;
-				background: $uiGrey;
 			}
 
 			h3 {
 				line-height: 38px;
 				color: $uiGrey;
+				font-weight: bold;
 				float: left;
 				padding: 0 15px;
 				margin: 0;
@@ -35,6 +36,28 @@
 		.block-content,
 		.cke {
 			padding: 10px 15px;
+		}
+	}
+}
+
+.block-text {
+	.block-inner {
+		.block-title {
+			i {
+				background: $lightBlue;
+				color: #024A70;
+			}
+		}
+	}
+}
+
+.block-media {
+	.block-inner {
+		.block-title {
+			i {
+				background: #70C536;
+				color: #437F1F;
+			}
 		}
 	}
 }

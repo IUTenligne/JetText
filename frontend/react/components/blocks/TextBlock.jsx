@@ -86,7 +86,7 @@ var TextBlock = React.createClass({
             <div className="block-inner">
                 <div key={block.id}>
                     <div className="block-title">
-                        <i className="fa fa-file-text-o"></i>
+                        <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
                     </div>
                     <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
