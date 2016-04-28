@@ -20,6 +20,12 @@
   text-rendering: optimizelegibility;
 }
 
+@mixin mixinPadding() {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 .cke_textarea_inline {
 	border: solid 1px #e6f1fa;
 }

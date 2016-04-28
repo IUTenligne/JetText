@@ -7,12 +7,13 @@ section#containers {
 
 #container {
 	padding: 0;
+	background: white;
 	@import 'container';
 }
 
 aside#sidebar-wrapper {
 	/* Menu.jsx */
-	@include span(3 of 12);
-	padding: 0;
+	width: 300px;
+	float: left;
 	@import 'menu';
 }

@@ -2,9 +2,8 @@
 
 
 #container-wrapper {
-	@include span(9 of 12);
-	padding: 0 36px;
-
+	margin-left: 344px;
+	padding: 20px 36px;
 
 	.header {
 		a, a:hover {
@@ -14,6 +13,7 @@
 				color: $uiGrey;
 				padding-bottom: 10px;
 				border-bottom: 1px solid $lightBlue;
+				font-size: 26px;
 			}
 		}
 	}
