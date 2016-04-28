@@ -24,10 +24,12 @@ var Term = React.createClass({
 
     render: function(){
         var term = this.state.TermValue;
+        console.log(term);
         return(
             <div className="term">
                 <h2>{term.name}</h2>
                 <p>{term.description}</p>
+                <a href={"/#/glossaries/"+ term.glossary_id} className="btn-success">retour</a>
             </div>
         );
     }
