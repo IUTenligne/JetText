@@ -3,20 +3,11 @@
 		<h1><%= link_to(raw('<i class="fa fa-plane"></i>'), '/#/') %></h1>
 	</div>
 
-	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".header-collapse">
-    <i class="fa fa-bars"></i>
-  </button>
 	<div id="top-menu" class="header-collapse">
 		<ul>
 			<li><%= link_to raw('<i class="fa fa-users"></i>'), "/#/", data: { no_turbolink: true } %></li>
 			<li><%= link_to raw('<i class="fa fa-users"></i>'), new_container_path %></li>
 			<% if user_signed_in? %>
-				<% if current_user.firstname && current_user.lastname %>
-					<li>
-						<i class="fa fa-user"></i> <%= current_user.firstname + " " + current_user.lastname %>
-						<%= link_to raw('<i class="fa fa-users"></i>'), destroy_user_session_path, :method => :delete  %>
-					</li>
-				<% end %>
 			<% end %>
 		</ul>
 	</div>

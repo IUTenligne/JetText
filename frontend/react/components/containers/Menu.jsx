@@ -126,7 +126,7 @@ var Menu = React.createClass({
         var that = this;
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
-                <h2 className="zone-header">Menu</h2>
+                <h2 className="zone-header"><i className="fa fa-bars"></i> Menu</h2>
                 <ul className="menu-container nav" id="side-menu" ref="dragulable">
                     { this.props.pages.map((page, i) => {
                         return (
