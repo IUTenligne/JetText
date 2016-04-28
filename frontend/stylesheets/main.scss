@@ -17,6 +17,7 @@ html, body {
 		min-height: 100%;
 		float: left;
 		background: $uiGrey;
+		position: fixed;
 		@import "header";
 	}
 
