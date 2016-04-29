@@ -45,7 +45,7 @@ var Block = React.createClass({
             return (
                 <div className="block block-text">
                     <TextBlock block={block} key={block.id} />
-                    <input type="button" value="Delete Block" className="btn" onClick={this.removeBlock} />
+                    <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
@@ -53,7 +53,7 @@ var Block = React.createClass({
             return (
                 <div className="block block-media">
                     <MediaBlock block={block} key={block.id} />
-                    <input type="button" value="Delete Block" className="btn" onClick={this.removeBlock} />
+                    <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );

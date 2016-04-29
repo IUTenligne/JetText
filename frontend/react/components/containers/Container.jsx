@@ -13,6 +13,7 @@ var Container = React.createClass({
             status: 0,
             container: '',
             pages: [],
+            types: [],
             activePage: '',
             newPageValue: '',
             isNew: false
@@ -40,6 +41,12 @@ var Container = React.createClass({
                     isNew: true
                 });
             }
+        }.bind(this));
+
+        this.serverRequest = $.get("/types.json", function (result) {
+            this.setState({
+                types: result.types
+            });
         }.bind(this));
 
         this._notificationSystem = this.refs.notificationSystem;
@@ -83,7 +90,7 @@ var Container = React.createClass({
                                 pages: that.state.pages.filter((i, _) => i["id"] !== data.page)
                             });
 
-                            window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0].id);
+                            window.location.replace("/#/containers/"+this.state.container.id);
                         }
                     });
                 }
@@ -93,9 +100,18 @@ var Container = React.createClass({
 
     dragPages: function(pageList) {
         /* updates this.state.pages from a drag and drop action into <Menu /> */
-        this.setState({
-            pages: pageList
-        });
+        if (pageList.length == 0) {
+            this.setState({
+                pages: pageList,
+                isNew: true,
+                activePage: ''
+            });
+        } else {
+            this.setState({
+                pages: pageList,
+                isNew: false
+            });
+        }
     },
 
     levelizePages: function(pageList, trick) {
@@ -113,32 +129,29 @@ var Container = React.createClass({
         var isNew = this.state.isNew;
         try {
             return (
-                <div className="container col-lg-12 col-md-12">
+                <div id="container">
 
                     <NotificationSystem ref="notificationSystem" />
 
-                    <aside id="sidebar-wrapper" className="col-lg-3 col-md-3 pull-left">
-                        <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} />
+                    <aside id="sidebar-wrapper">
+                        <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
                     </aside>
 
-                    <div id="container-wrapper" className="col-lg-9 col-md-9">
-                        <div className="container-fluid col-lg-12 col-md-12">
+                    <div id="container-wrapper">
+                        <div className="header">
+                            <a href={"/#/containers/"+container.id} key={container.id}>
+                                <h1>
+                                    {container.name}
+                                </h1>
+                            </a>
+                        </div>
 
-                            <div className="header col-lg-12 col-md-12">
-                                <a href={"/#/containers/"+container.id} key={container.id}>
-                                    <h1>
-                                        {container.name}
-                                    </h1>
-                                </a>
-                            </div>
+                        <div className="content">
+                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} types={this.state.types} /> : null }
+                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
 
-                            <div className="row content col-lg-12 col-md-12">
-                                { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} /> : null }
-                                { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} /> : null }
-
-                                <div className="bottom_bar">
-                                    { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
-                                </div>
+                            <div className="bottom_bar">
+                                { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
                             </div>
                         </div>
                     </div>

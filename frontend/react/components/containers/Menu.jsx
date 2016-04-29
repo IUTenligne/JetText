@@ -18,6 +18,7 @@ var Menu = React.createClass({
     },
 
     componentDidMount: function() {
+        this.setState({ activePage: this.props.activePage });
         var container = ReactDOM.findDOMNode(this.refs.dragulable);
         var drake = dragula([container]);
         this.moveItems(drake, this.props.pages);
@@ -58,6 +59,7 @@ var Menu = React.createClass({
             $(source).children().each(function(i) {
                 updated_sequence.push({ id: $(this).data('id'), sequence: i });
             });
+            console.log(updated_sequence);
 
             $.ajax({
                 type: "PUT",
@@ -124,27 +126,25 @@ var Menu = React.createClass({
         var that = this;
 		return (
 			<div className="navbar-default sidebar menu" role="navigation">
+                <h2 className="zone-header"><i className="fa fa-bars"></i> Menu</h2>
                 <ul className="menu-container nav" id="side-menu" ref="dragulable">
                     { this.props.pages.map((page, i) => {
                         return (
-                            <li key={page.id} data-pos={i} data-id={page.id} className={"level-"+page.level}>
+                            <li key={page.id} data-pos={i} data-id={page.id} className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}>
                                 <Link to={"/containers/"+this.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
                                 <span className="levels">
-                                    {page.level <= levels.max ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : null }
-                                    {page.level > levels.min ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : null }
+                                    {page.level <= levels.max ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : <i className="fa fa-arrow-right forbidden"></i> }
+                                    {page.level > levels.min ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : <i className="fa fa-arrow-left forbidden"></i> }
                                 </span>
                             </li>
                         );
                     })}
-                </ul>
-                
-                <div id="add_new_page">
-                    <div className="input-group input-group-lg">
-                        <span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
-                    </div>
+                </ul> 
+                <div id="add_new_page" className="input-group">
+                    <span className="input-group-addon">
+                        <i className="fa fa-plus fa-fw"></i>
+                    </span>
+                    <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
                 </div>
 	        </div>
 	    );

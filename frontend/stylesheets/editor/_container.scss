@@ -2,18 +2,29 @@
 
 
 #container-wrapper {
-	
+	margin-left: 300px;
+	padding: 20px 36px;
 
-	.container-fluid {
-		.header {
+	.header {
+		margin-bottom: 25px;
 
-		}
+		a, a:hover {
+			text-decoration: none;
 
-		.content {
-			/* Page.jsx */
-			div.page {
-				@import 'pages';
+			h1 {
+				color: $uiGrey;
+				padding-bottom: 10px;
+				border-bottom: 1px solid $lightBlue;
+				font-size: 26px;
+				text-transform: capitalize;
 			}
+		}
+	}
+
+	.content {
+		/* Page.jsx */
+		div.page {
+			@import 'pages';
 		}
 	}
 }

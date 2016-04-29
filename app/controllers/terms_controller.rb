@@ -1,17 +1,23 @@
 class TermsController < ApplicationController
 
 	before_action :authenticate_user!
-  respond_to :json
+	before_filter :require_permission, only: [:show, :update, :destroy]
+  	respond_to :json
 
+	def require_permission
+	    if current_user != Glossary.find(params[:id]).user || current_user.nil?
+	      render json: { status: "error" }
+	    end
+	end
 	def index
 		@terms = Term.select("id, name").all
-		render json: { term: @term }
+		render json: { terms: @terms }
 	end
 
 	def show
-  	@term = Term.find(params[:id])
+	  	@term = Term.find(params[:id])
 		render json: { term: @term}
-  end
+	 end
 
 	def create
 		@term = Term.new(term_params)

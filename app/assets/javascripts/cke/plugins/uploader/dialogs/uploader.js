@@ -10,31 +10,43 @@ CKEDITOR.dialog.add('uploaderDialog', function(editor) {
                 elements: [
                     {
                         type: 'html',
-                        html: '<form class="new_upload" id="new_upload" enctype="multipart/form-data" action="/uploads" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" value="✓" type="hidden"><p><input class="uploader" name="upload[file]" id="upload_file" type="file"></p></form>'
+                        html: '<input name="upload[file]" id="cke_upload_file" type="file">'
                     }
                 ]
             }
         ],
         onOk: function() {
-            var dialog = this;
-            $('#new_upload').submit();
-            var file = $('#new_upload').find('#upload_file')[0].files[0];
-            var type = file.type.split('/')[0];
-            var url = currentUser.email + '/files/' + type + '/' + file.name;
-            if (file.type === 'image/png') {
-                var editor_elem = editor.document.createElement('img');
-                editor_elem.setAttribute('src', url);
-            } else if (file.type === 'application/pdf') {
-                var editor_elem = editor.document.createElement('a');
-                editor_elem.setAttribute('href', url);
-                editor_elem.appendText('PDF');
-            } else if (file.type === 'video/mp4' || file.type === 'application/force-download') {
-                var editor_elem = editor.document.createElement('video');
-                editor_elem.setAttribute('src', url);
-                editor_elem.setAttribute('controls', '');
-            }
+            var ed_name = editor.name.split("_");
+            var block_id = ed_name[ed_name.length - 1];
+            var file = $("#cke_upload_file")[0].files[0];
+            var type = file.type.split("/")[1];
 
-            editor.insertElement(editor_elem);
+            var formData = new FormData();
+            formData.append("tempfile", file);
+            formData.append("block_id", block_id);
+
+            $.ajax({
+                url: "/uploads",
+                type: "POST",
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: formData,
+                success: function(data) {
+                    if (type == "mp4") {
+                        var element = editor.document.createElement('video');
+                        element.setAttribute('src', data.url);
+                        element.setAttribute('controls', '');
+                    } else if (type == "mp3"|| type == "mpeg") {
+                        var element = "<script type='text/javascrip'>var wavesurfer = WaveSurfer.create({container: '#block_"+data.block_id+"', waveColor: 'blue', progressColor: 'purple'}); wavesurfer.load(data.url); wavesurfer.on('ready', function () { wavesurfer.play(); });</script><audio controls><source src='"+data.url+"' type='audio/mpeg'></audio>";
+                    } else if (type == "pdf") {
+                        var element = editor.document.createElement('a');
+                        element.setAttribute('href', data.url);
+                        element.appendText('PDF');
+                    }
+                    editor.insertElement(element);
+                }
+            });
         }
     };
 });

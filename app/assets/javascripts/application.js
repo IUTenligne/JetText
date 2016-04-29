@@ -9,8 +9,6 @@
 //= require jquery_ujs
 //= require turbolinks
 
-//= require bootstrap/dist/js/bootstrap.min.js
-
 //= require cke/cke_fix.js
 //= require ckeditor/ckeditor.js
 //= require ckeditor/lang/fr.js

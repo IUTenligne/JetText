@@ -1,12 +1,8 @@
 nav.navbar {
-	min-height: 44px;
-	height: 44px;
 	color: white;
-	background: $grey;
-	box-shadow: 0 2px 4px -1px rgba(0,0,0,0.50);
 
 	#logo {
-		@include span(4 of 12);
+		width: 100%;
 
 		h1 {
 			font-family: "Pacifico",Helvetica,Arial,sans-serif;
@@ -14,6 +10,7 @@ nav.navbar {
 			margin-top: 0;
 			padding: 1px 0;
 			color: white;
+			text-align: center;
 
 			a {
 				color: white;
@@ -24,7 +21,7 @@ nav.navbar {
 
 	div#user-menu,
 	div#top-menu {
-		@include span(8 of 12);
+		width: 100%;
 		padding: 10px 0;
 
 		ul {

@@ -1,22 +1,13 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar">
 	<div id="logo" data-no-turbolink>
-		<h1><%= link_to(raw('<i class="fa fa-plane"></i> JetText'), '/#/') %></h1>
+		<h1><%= link_to(raw('<i class="fa fa-plane"></i>'), '/#/') %></h1>
 	</div>
 
-	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".header-collapse">
-    <i class="fa fa-bars"></i>
-  </button>
 	<div id="top-menu" class="header-collapse">
 		<ul>
-			<li><%= link_to t(:containers), "/#/", data: { no_turbolink: true } %></li>
-			<li><%= link_to t(:new_container), new_container_path %></li>
+			<li><%= link_to raw('<i class="fa fa-users"></i>'), "/#/", data: { no_turbolink: true } %></li>
+			<li><%= link_to raw('<i class="fa fa-users"></i>'), new_container_path %></li>
 			<% if user_signed_in? %>
-				<% if current_user.firstname && current_user.lastname %>
-					<li>
-						<i class="fa fa-user"></i> <%= current_user.firstname + " " + current_user.lastname %>
-						<%= link_to t(:logout), destroy_user_session_path, :method => :delete  %>
-					</li>
-				<% end %>
 			<% end %>
 		</ul>
 	</div>

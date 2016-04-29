@@ -1,6 +1,7 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
 var Glossaries = require('../glossaries/Glossaries.jsx');
+var Term = require('../glossaries/term.jsx');
 
 
 var TextBlock = React.createClass({
@@ -119,11 +120,11 @@ var TextBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
         var TextBlock = this.props.item;
-        console.log(this.state.termsList);
+        console.log(this.state.termsList); 
         var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
 		return (
-            <div className="content_block">
-                <div className="content">
+            <div className="block-inner">
+                <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
                     <div className="focus" style={{myStyle}} >
                         <a onClick={this.termOverlay}>
                             <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
@@ -132,13 +133,14 @@ var TextBlock = React.createClass({
                             <i className="fa fa-plus fa-fw" title="Add" aria-hidden="true"></i>
                         </a>
                     </div>
-                    <div key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
+                    <div className="block-title">
+                        <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
-                        <div id={this.dynamicId(block.id)} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                     </div>
-
-                    { this.state.editButton ? <input type="button" className="btn-success" onClick={this.unlockEditor} value="Edit" /> : <input type="submit" value="Save" className="btn-success" onClick={this.saveBlock} /> }
+                    <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
                 </div>
+
+                { this.state.editButton ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button> : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button> }
 
                 {this.state.overlayAdd ? 
                 <div className="overlay">
@@ -150,7 +152,7 @@ var TextBlock = React.createClass({
                     <ul>
                         {this.state.termsList.map(function(term){
                             return(
-                                <li >
+                                <li key={term.id}>
                                     <label for={term.id}> 
                                         <input type="checkbox"/>
                                         {term.name} 
@@ -160,7 +162,6 @@ var TextBlock = React.createClass({
                         })}
                     </ul>
                 </div>: null }
-
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );
