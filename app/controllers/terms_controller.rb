@@ -10,7 +10,7 @@ class TermsController < ApplicationController
 	    end
 	end
 	def index
-		@terms = Term.select("id, name").all
+		@terms = Term.select("id, name, description").all
 		render json: { terms: @terms }
 	end
 

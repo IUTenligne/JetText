@@ -96,7 +96,6 @@ var TextBlock = React.createClass({
             top: event.clientY - 60,
         });
         this.setState({ focusPopup: true });
-        var select = document.getSelection().toString();
     },
     downTerm: function(event){
         this.setState({ focusPopup: false });
@@ -120,8 +119,9 @@ var TextBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
         var TextBlock = this.props.item;
-        console.log(this.state.termsList); 
+        var select = document.getSelection().toString();;
         var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
+        console.log(this.state.termsList);
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
@@ -137,7 +137,7 @@ var TextBlock = React.createClass({
                         <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
                     </div>
-                    <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                    <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                 </div>
 
                 { this.state.editButton ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button> : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button> }
@@ -148,19 +148,28 @@ var TextBlock = React.createClass({
                 </div>: null }
 
                 {this.state.overlayTerm ? 
-                <div className="overlay">
-                    <ul>
-                        {this.state.termsList.map(function(term){
-                            return(
-                                <li key={term.id}>
-                                    <label for={term.id}> 
-                                        <input type="checkbox"/>
-                                        {term.name} 
-                                    </label>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                <div className="overlay content">
+                    <div className="block-title">
+                        <i className="fa fa-book"></i>
+                        <h3> 
+                            Quel term associer à :<br/>
+                            <span className="bold"> {select} </span>?
+                        </h3>
+                    </div>
+                    <div className="block-content">
+                        <ul>
+                            {this.state.termsList.map(function(term){
+                                return(
+                                    <li key={term.id}>
+                                        <label for={term.id}> 
+                                            <input type="checkbox"/>
+                                            <span className="bold">{term.name}</span> : {term.description}.
+                                        </label>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
                 </div>: null }
                 <NotificationSystem ref="notificationSystem"/>
             </div>

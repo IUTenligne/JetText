@@ -1,5 +1,8 @@
 @import "../vars";
 
+span.bold{
+  font-weight: bold;
+}
 .block {
 	background: white;
 	margin-bottom: 20px;
@@ -31,7 +34,7 @@
 			.block-title {
 				border-radius: 4px 4px 0 0;
 				margin-top: 0;
-				height: 40px;
+				min-height: 40px;
 				width: 100%;
 				display: inline-block;
 				line-height: 30px;
@@ -57,12 +60,21 @@
 		.overlay{
 			position: fixed;
 			top:40%;
-			left:45%;
 			background: $whiteSmoke;
-			border-radius: 10px;
-			width: 35%; 
-			padding: 15px;
 			z-index: 50;
+			.block-title{
+				h3{
+					font-weight: normal;
+				}
+			}
+			.block-content{
+				ul{
+					margin-top: 20px;
+					li{
+						margin-bottom: 15px;
+					}
+				}
+			}
 		}
 		.block-content,
 		.cke {
