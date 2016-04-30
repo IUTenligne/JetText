@@ -1,4 +1,5 @@
 var React = require('react');
+var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 
 
@@ -6,7 +7,8 @@ var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
-            editButton: true
+            editButton: true,
+            loading: false
         };
     },
 
@@ -25,6 +27,16 @@ var TextBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
+        
+        /* Saves the block's content if before leaving the page */
+        var block = this.props.block;
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/'+block.id,
+            context: this,
+            data: { id: block.id, content: this.state.blockContent }
+        });
+
         if (editor) { editor.destroy(true); }
     },
 
@@ -63,6 +75,7 @@ var TextBlock = React.createClass({
         var editor = CKEDITOR.replace("text_block_"+this.props.block.id, {
             customConfig: '/assets/cke/custom_config.js'
         });
+
         editor.on('change', function( evt ) {
             // setState to allow changes to be saved on submit
             that.setState({ blockContent: evt.editor.getData() });
@@ -89,7 +102,10 @@ var TextBlock = React.createClass({
                         <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
                     </div>
-                    <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                    { this.state.loading
+                        ? <Loader />
+                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                    }
                 </div>
 
                 { this.state.editButton ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button> : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button> }

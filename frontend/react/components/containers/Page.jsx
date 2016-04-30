@@ -1,6 +1,8 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Block = require('../blocks/Block.jsx');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 
 var Page = React.createClass({
     getInitialState: function() {
@@ -69,9 +71,11 @@ var Page = React.createClass({
                 <h2 className="header_page">{page.name}</h2>
 
                 <div className="blocks">
+                    <ReactCSSTransitionGroup transitionName="blocks-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                     {this.state.blocks.map(function(block){
                         return <Block key={block.id} item={block} removeBlock={that.handleBlockDeletion} />
                     })}
+                    </ReactCSSTransitionGroup>
                 </div>
 
                 <form id="add_new_block">
