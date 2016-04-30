@@ -18,7 +18,7 @@ var Container = React.createClass({
             types: [],
             activePage: '',
             newPageValue: '',
-            isNew: false,
+            isNew: true,
             loading: true
         };
     },
@@ -31,6 +31,7 @@ var Container = React.createClass({
                     container: result.container,
                     pages: result.pages,
                     activePage: result.pages[0],
+                    isNew: false,
                     loading: false
                 });
             } else if (result.container) {
@@ -93,7 +94,8 @@ var Container = React.createClass({
                         context: that,
                         success: function(data){
                             that.setState({
-                                pages: that.state.pages.filter((i, _) => i["id"] !== data.page)
+                                pages: that.state.pages.filter((i, _) => i["id"] !== data.page),
+                                isNew: true
                             });
 
                             window.location.replace("/#/containers/"+this.state.container.id);
@@ -132,7 +134,6 @@ var Container = React.createClass({
     render: function() {
         var container = this.state.container;
         var pages = this.state.pages;
-        var isNew = this.state.isNew;
         try {
             return (
                 <div id="container">
@@ -163,7 +164,7 @@ var Container = React.createClass({
                                 { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
 
                                 <div className="bottom_bar">
-                                    { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                                    { this.state.isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
                                 </div>
                             </div>
                         }
