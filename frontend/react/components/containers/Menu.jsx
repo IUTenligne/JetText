@@ -18,7 +18,9 @@ var Menu = React.createClass({
     },
 
     componentDidMount: function() {
-        this.setState({ activePage: this.props.activePage });
+        this.setState({
+            activePage: this.props.activePage
+        });
         var container = ReactDOM.findDOMNode(this.refs.dragulable);
         var drake = dragula([container]);
         this.moveItems(drake, this.props.pages);
@@ -133,8 +135,8 @@ var Menu = React.createClass({
                             <li key={page.id} data-pos={i} data-id={page.id} className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}>
                                 <Link to={"/containers/"+this.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
                                 <span className="levels">
-                                    {page.level <= levels.max ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : <i className="fa fa-arrow-right forbidden"></i> }
-                                    {page.level > levels.min ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : <i className="fa fa-arrow-left forbidden"></i> }
+                                    { page.level > levels.min ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i></a> : <i className="fa fa-arrow-left forbidden"></i> }
+                                    { page.level <= levels.max ? <a className="level-action level-add" href="javascript:void(0);" onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i></a> : <i className="fa fa-arrow-right forbidden"></i> }
                                 </span>
                             </li>
                         );

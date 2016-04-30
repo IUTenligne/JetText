@@ -4,6 +4,8 @@ var Page = require('./Page.jsx');
 var Menu = require('./Menu.jsx');
 var ReactDOM = require('react-dom');
 var dragula = require('react-dragula');
+var Loader = require('../widgets/Loader.jsx');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var NotificationSystem = require('react-notification-system');
 
 
@@ -16,7 +18,8 @@ var Container = React.createClass({
             types: [],
             activePage: '',
             newPageValue: '',
-            isNew: false
+            isNew: false,
+            loading: true
         };
     },
 
@@ -27,18 +30,21 @@ var Container = React.createClass({
                     status: result.status,
                     container: result.container,
                     pages: result.pages,
-                    activePage: result.pages[0]
+                    activePage: result.pages[0],
+                    loading: false
                 });
             } else if (result.container) {
                 this.setState({
                     status: result.status,
                     container: result.container,
-                    isNew: true
+                    isNew: true,
+                    loading: false
                 });
             } else {
                 this.setState({
                     status: result.status,
-                    isNew: true
+                    isNew: true,
+                    loading: false
                 });
             }
         }.bind(this));
@@ -133,27 +139,34 @@ var Container = React.createClass({
 
                     <NotificationSystem ref="notificationSystem" />
 
-                    <aside id="sidebar-wrapper">
-                        <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
-                    </aside>
+                    <ReactCSSTransitionGroup transitionName="menu-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
+                        <aside id="sidebar-wrapper">
+                            <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
+                        </aside>
+                    </ReactCSSTransitionGroup>
 
                     <div id="container-wrapper">
-                        <div className="header">
-                            <a href={"/#/containers/"+container.id} key={container.id}>
-                                <h1>
-                                    {container.name}
-                                </h1>
-                            </a>
-                        </div>
-
-                        <div className="content">
-                            { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} types={this.state.types} /> : null }
-                            { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
-
-                            <div className="bottom_bar">
-                                { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                        { this.state.loading
+                            ? <Loader />
+                            : <div className="header">
+                                <a href={"/#/containers/"+container.id} key={container.id}>
+                                    <h1>
+                                        {container.name}
+                                    </h1>
+                                </a>
                             </div>
-                        </div>
+                        }
+                        { this.state.loading
+                            ? null
+                            : <div className="content">
+                                { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} types={this.state.types} /> : null }
+                                { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
+
+                                <div className="bottom_bar">
+                                    { isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
+                                </div>
+                            </div>
+                        }
                     </div>
 
                 </div>
