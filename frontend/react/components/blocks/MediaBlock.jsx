@@ -75,14 +75,17 @@ var MediaBlock = React.createClass({
 		var block = this.props.block;
 		return (
             <div className="block-inner">
-                <div className="block-title">
-                    <i className="fa fa-file-text"></i>
-                    <h3>{block.name}</h3>
+                <div className="content" key={block.id}>
+                    <div className="block-title">
+                        <i className="fa fa-file-text"></i>
+                        <h3>{block.name}</h3>
+                    </div>
+                    <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                        <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
+                    </form>
+                    <div className="block-content" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
                 </div>
-                <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                    <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
-                </form>
-                <div className="block-content" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
+
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );

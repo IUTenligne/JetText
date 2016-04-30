@@ -1,5 +1,8 @@
 @import "../vars";
 
+span.bold{
+  font-weight: bold;
+}
 .block {
 	background: white;
 	margin-bottom: 20px;
@@ -7,32 +10,76 @@
 	border-radius: 4px 4px 4px 4px;
 
 	.block-inner {
-		.block-title {
-			border-radius: 4px 4px 0 0;
-			margin-top: 0;
-			height: 40px;
-			width: 100%;
-			display: inline-block;
-			line-height: 30px;
-			background: rgba(0,0,0,0.08);
+		.content {
+			.focus {
+				background: $lightBlue;
+				padding: 7px;
+				text-align: center;
+				width: 150 px;
+				border-radius: 7px;
+				position: absolute;
+				right: 40px;
 
-			i {
-				border-radius: 4px 0 0 0;
-				float: left;
-				padding: 6px 15px;
-				line-height: 28px;
+				a {
+					color: $white;
+					background: $lightBlue;
+					padding: 7px;
+
+					i {
+						font-size: 17px;
+					}
+				}
+
+				a:hover {
+					color: $blue;
+				}
 			}
 
-			h3 {
-				line-height: 38px;
-				color: $uiGrey;
-				font-weight: bold;
-				float: left;
-				padding: 0 15px;
-				margin: 0;
+			.block-title {
+				border-radius: 4px 4px 0 0;
+				margin-top: 0;
+				min-height: 40px;
+				width: 100%;
+				display: inline-block;
+				line-height: 30px;
+				background: rgba(0,0,0,0.08);
+
+				i {
+					border-radius: 4px 0 0 0;
+					float: left;
+					padding: 6px 15px;
+					line-height: 28px;
+				}
+
+				h3 {
+					line-height: 38px;
+					color: $uiGrey;
+					font-weight: bold;
+					float: left;
+					padding: 0 15px;
+					margin: 0;
+				}
 			}
 		}
-
+		.overlay{
+			position: fixed;
+			top:40%;
+			background: $whiteSmoke;
+			z-index: 50;
+			.block-title{
+				h3{
+					font-weight: normal;
+				}
+			}
+			.block-content{
+				ul{
+					margin-top: 20px;
+					li{
+						margin-bottom: 15px;
+					}
+				}
+			}
+		}
 		.block-content,
 		.cke {
 			padding: 10px 15px;

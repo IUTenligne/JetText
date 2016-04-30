@@ -75,7 +75,7 @@ var Glossary = React.createClass({
     			{terms.map(function(term){
     				return(
 						<li key={term.id}>
-							<Link to={"/glossaries/"+that.state.glossary.id+"/"+term.id}>
+							<Link to={"/terms/"+term.id}>
 								{term.name}
 							</Link>
 							<br/>

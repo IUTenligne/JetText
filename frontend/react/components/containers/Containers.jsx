@@ -1,5 +1,6 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
+var Glossaries = require('../glossaries/Glossaries.jsx');
 var NotificationSystem = require('react-notification-system');
 
 var style = {
@@ -126,18 +127,26 @@ var Containers = React.createClass({
         var results = this.state.containersList;
         var that = this;
         return (
-            <section id="containers">
-                <div className="col-lg-12">
-                    <h1 className="page-header">My containers</h1>
-                </div>
-                <Link to={"/glossaries"}>
-                     blabla
-                </Link>
-                {results.map(function(result){
-                    return (
-                        <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
-                    );
-                })}
+            <section>
+                <article id="containers">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">My containers</h1>
+                        </div>
+                    </div>
+                    
+                    <div className="row">
+                        {results.map(function(result){
+                            return (
+                                <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
+                            );
+                        })}
+                    </div>
+                </article>
+
+                <article id="glossaries">
+                    <Glossaries />
+                </article>
             </section>
         );
     }
