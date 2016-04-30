@@ -1,5 +1,4 @@
 var React = require('react');
-var glossaries = require('./Glossaries.jsx');
 var TermCreate = require('./TermCreate.jsx');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
