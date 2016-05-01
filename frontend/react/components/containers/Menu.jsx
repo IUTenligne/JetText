@@ -61,7 +61,6 @@ var Menu = React.createClass({
             $(source).children().each(function(i) {
                 updated_sequence.push({ id: $(this).data('id'), sequence: i });
             });
-            console.log(updated_sequence);
 
             $.ajax({
                 type: "PUT",

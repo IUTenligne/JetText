@@ -93,12 +93,18 @@ var Container = React.createClass({
                         url: "/pages/"+pageId,
                         context: that,
                         success: function(data){
+                            var pagesList = that.state.pages.filter((i, _) => i["id"] !== data.page);
+                            
                             that.setState({
-                                pages: that.state.pages.filter((i, _) => i["id"] !== data.page),
-                                isNew: true
+                                pages: pagesList,
                             });
 
-                            window.location.replace("/#/containers/"+this.state.container.id);
+                            if (pagesList.length == 0) {
+                                this.setState({ isNew: true });
+                                window.location.replace("/#/containers/"+this.state.container.id);
+                            } else {
+                                window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0]["id"]);
+                            }
                         }
                     });
                 }

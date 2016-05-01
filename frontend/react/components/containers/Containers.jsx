@@ -1,6 +1,7 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Glossaries = require('../glossaries/Glossaries.jsx');
+var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 
 var style = {
@@ -97,14 +98,16 @@ var Result = React.createClass({
 var Containers = React.createClass({
     getInitialState: function() {
         return {
-            containersList: []
+            containersList: [],
+            loading: true
         };
     },
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers.json", function(result) {
             this.setState({
-                containersList: result.containers
+                containersList: result.containers,
+                loading: false
             });
         }.bind(this));
         this._notificationSystem = this.refs.notificationSystem;
@@ -136,6 +139,10 @@ var Containers = React.createClass({
                     </div>
                     
                     <div className="row">
+                        { this.state.loading
+                            ? <Loader />
+                            : null
+                        }
                         {results.map(function(result){
                             return (
                                 <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
