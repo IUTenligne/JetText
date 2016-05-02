@@ -1,4 +1,4 @@
-class =ContainerTermController  < ActiveSupport
+class ContainersTermsController  < ApplicationController
 
   before_action :authenticate_user!
   before_filter :require_permission, only: [:show, :update, :destroy]

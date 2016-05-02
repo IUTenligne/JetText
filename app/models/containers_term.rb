@@ -1,6 +1,5 @@
-class ContainerTerm < ActiveRecord::Base
-
-    belongs_to :container
+class ContainersTerm < ActiveRecord::Base
+  	belongs_to :container
 	belongs_to :term
 	
 	validates :container_id, presence: true

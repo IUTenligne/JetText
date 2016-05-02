@@ -170,12 +170,17 @@ var TextBlock = React.createClass({
                     }
                 </div>
 
-                { this.state.editButton ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button> : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button> }
+                { this.state.editButton 
+                    ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button>
+                    : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
+                }
 
-                {this.state.overlayAdd ? 
-                <div className="overlay">
-                    <Glossaries/>
-                </div>: null }
+                { this.state.overlayAdd 
+                    ? <div className="overlay">
+                        <Glossaries/>
+                    </div>
+                    : null
+                }
 
                 {this.state.overlayTerm 
                     ? <div className="overlay content">
