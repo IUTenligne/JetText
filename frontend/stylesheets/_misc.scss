@@ -83,24 +83,38 @@
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
-  opacity: 0.8;
+  opacity: 0;
   list-style-type: none;
 }
 
 .gu-hide {
-  display: none !important
+  display: none !important;
+}
+
+.gu-hide a {
+  display: none !important;
 }
 
 .gu-unselectable {
-  user-select: none !important
+  user-select: none !important;
+}
+
+.gu-unselectable a {
+  user-select: none !important;
 }
 
 .gu-transit {
   opacity: 0.8;
   padding-top: 5px;
   padding-bottom: 5px;
-  border: 1px $grey dashed !important;
+  border-top: 1px $lightBlue dashed !important;
+  border-bottom: 1px $lightBlue dashed !important;
+  color: $lightBlue !important;
 }
+
+.gu-transit a {
+  color: $lightBlue !important;
+}  
 /* */
 
 .mce-edit-area, .mce-statusbar {
