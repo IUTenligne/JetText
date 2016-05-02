@@ -147,7 +147,6 @@ var TextBlock = React.createClass({
         var TextBlock = this.props.item;
         var select = document.getSelection().toString();;
         var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
-        console.log(this.state.termsList);
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
@@ -166,7 +165,7 @@ var TextBlock = React.createClass({
 
                     { this.state.loading
                         ? <Loader />
-                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onClick={this.unlockEditor} />
+                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor} />
                     }
                 </div>
 

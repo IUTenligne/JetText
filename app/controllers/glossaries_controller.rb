@@ -11,7 +11,7 @@ class GlossariesController < ApplicationController
   end
 
   def index
-  	@glossaries = Glossary.select("id, name").all
+  	@glossaries = Glossary.select("id, name").where(user_id: current_user.id)
     render json: { glossaries: @glossaries }
   end
 
