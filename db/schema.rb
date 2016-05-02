@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420132228) do
+ActiveRecord::Schema.define(version: 20160420125928) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -38,14 +38,6 @@ ActiveRecord::Schema.define(version: 20160420132228) do
   end
 
   add_index "containers", ["user_id"], name: "index_containers_on_user_id", using: :btree
-
-  create_table "containers_terms", id: false, force: :cascade do |t|
-    t.integer "container_id", limit: 4, null: false
-    t.integer "term_id",      limit: 4, null: false
-  end
-
-  add_index "containers_terms", ["container_id", "term_id"], name: "index_containers_terms_on_container_id_and_term_id", using: :btree
-  add_index "containers_terms", ["term_id", "container_id"], name: "index_containers_terms_on_term_id_and_container_id", using: :btree
 
   create_table "glossaries", force: :cascade do |t|
     t.string   "name",        limit: 255

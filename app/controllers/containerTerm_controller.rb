@@ -10,8 +10,15 @@ class =ContainerTermController  < ActiveSupport
       end
   end
 
-  def setup
-    @containerTerm = ContainerTerm.new(term_id: 1, container_id: 2)
+  def new
+    @containerTerm = ContainerTerm.new
+  end
+
+  def create
+    @containerTerm = ContainerTerm.new(containerTerm_params)
+    if @interaction.save
+      render json: @containerTerm
+    end
   end
 
 end

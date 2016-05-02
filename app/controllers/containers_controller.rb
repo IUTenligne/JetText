@@ -18,7 +18,7 @@ class ContainersController < ApplicationController
   def show
     @container = Container.select("id, name").find(params[:id])
     @pages = Page.select("id, name, sequence, level").where(container_id: params[:id])
-    #sleep 1 #simulation long loading query
+    #sleep 3 #simulation long loading query
     render json: { status: { state: 0 }, container: @container, pages: @pages }
   end
 

@@ -2,7 +2,7 @@ class Container < ActiveRecord::Base
   belongs_to :user
   has_many :pages, :dependent => :destroy
   has_many :uploads
-  has_many :term
+  has_many :terms
 
   validates :name,		:presence => true, length: { maximum: 250 }
   validates :content, 	:presence => false
