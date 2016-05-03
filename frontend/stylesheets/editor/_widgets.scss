@@ -1,18 +1,38 @@
 .modal{
+    background: rgba(0,0,0,0.8) !important;
     position: fixed;
 	height: 100%;
 	width: 100%;
-	display: flex;
-	background: rgba(0,0,0,0.8);
-	z-index: 10;
 	top: 0;
 	left: 0;
-	#glossary{
-		width: 50%;
-		background: $whiteSmoke;
-		border-radius: 4px;
-		margin: auto;
-		position: relative;
+	background: rgba(0,0,0,0.8);
+	.modal-inner{
+		display: flex;
+		z-index: 10;
 		vertical-align: center;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+
+		#glossary{
+			width: 50%;
+			background: $whiteSmoke;
+			border-radius: 4px;
+			margin: auto;
+			position: relative;
+			vertical-align: center;
+		}
 	}
+}
+.modal-inner-transition-appear{
+  opacity: 0.1;
+  margin-top: -200px;
+}
+
+.modal-inner-transition-appear.modal-inner-transition-appear-active {
+  opacity: 1;
+  transition: 500ms;
+  margin-top: 0;
 }

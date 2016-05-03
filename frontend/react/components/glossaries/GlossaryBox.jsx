@@ -26,11 +26,44 @@ var GlossaryBox = React.createClass({
         this.serverRequest.abort();
     },
 
+    handleTermAdd: function(term){
+        this.setState({
+            termsList: this.state.termsList.concat([term]),
+        })
+    },
+
+    deleteTerm: function(term_id, event){
+        var that = this;
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Confirm delete',
+            message: 'Are you sure you want to delete the glossary?',
+            level: 'success',
+            position: 'tr',
+            timeout: '20000',
+            action: {
+                label: 'yes',
+                callback: function() {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/terms/"+ term_id,
+                        context: that,
+                        success: function() {
+                            that.setState({
+                                termsList: that.state.termsList.filter((i, _) => i["id"] !== term_id)
+                            })
+                        }
+                    });
+                }
+            }
+        });
+    },
 
     _notificationSystem: null,
 
     render: function(){
         var terms = this.state.termsList;
+        var that = this;
     	return(
     		
             <div className="terms">
@@ -40,6 +73,9 @@ var GlossaryBox = React.createClass({
         				return(
     						<li key={term.id}>
     							{term.name} : {term.description}
+                                <a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
+                                    <i className="fa fa-trash-o"></i>
+                                </a>
     						</li>
         				)
         			})}
