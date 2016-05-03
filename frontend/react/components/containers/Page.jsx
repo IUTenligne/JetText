@@ -110,12 +110,14 @@ var GlossaryMenu = React.createClass({
         }
     },
 
-
-
     showGlossaries: function(){
         this.setState({
             popUp: true
         })
+    },
+
+    changeModalState: function(st) {
+        this.setState({ popUp: false });
     },
 
     render: function(){
@@ -127,7 +129,7 @@ var GlossaryMenu = React.createClass({
                 </form>
 
                 <div>
-                    {this.state.popUp ? <GlossariesBox containerId={containerId} /> : null}
+                    {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
                 </div>
 
             </div>

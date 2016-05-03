@@ -3,6 +3,7 @@ var TermCreate = require('./TermCreate.jsx');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 
+
 var GlossaryBox = React.createClass({
 	getInitialState: function() {
 	    return {
@@ -30,27 +31,24 @@ var GlossaryBox = React.createClass({
 
     render: function(){
         var terms = this.state.termsList;
-        var that = this;
-        console.log(this.state.termsList);
     	return(
-    		<div className="terms">
-    		<NotificationSystem ref="notificationSystem" />
-				<div className="row">
-					<div className="col-lg-12">
-						<h1 className="page-header">My Terms in glossary {that.state.glossary.name}</h1>
-					</div>
-				</div>
-    			{terms.map(function(term){
-    				return(
-						<li key={term.id}>
-							{term.name} : {term.description}
-						</li>
-    				)
-    			})}
+    		
+            <div className="terms">
+    		    <NotificationSystem ref="notificationSystem" />
+                <ul>
+        			{terms.map(function(term){
+        				return(
+    						<li key={term.id}>
+    							{term.name} : {term.description}
+    						</li>
+        				)
+        			})}
+                </ul>
 				<div className="add_new_term">
-    				<TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
+    				<TermCreate glossary={this.state.glossary.id} addTerm={this.handleTermAdd}/>
     			</div>
     		</div>
+            
     	);
     }
 });

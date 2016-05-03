@@ -1,8 +1,9 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 var GlossaryBox = require('./GlossaryBox.jsx');
-
+var Modal = require('../widgets/Modal.jsx');
 
 var GlossaryItem = React.createClass({
     getInitialState: function() {
@@ -51,8 +52,7 @@ var GlossaryItem = React.createClass({
             });
         };
     },
-
-    showTerms: function(){
+    showTerms: function (){
         this.setState({
             popUp: true
         })
@@ -61,14 +61,14 @@ var GlossaryItem = React.createClass({
     render: function(){
         var glossary = this.props.glossary;
         return(
-            <li  >
+            <li>
                 <label for={glossary.id}> 
                     <input 
                         type="checkbox" 
                         checked={this.state.isChecked} 
                         onChange={this.onChange}
                     />
-                    <button onClick={this.showTerms}>
+                    <button id="appElement" onClick={this.showTerms}>
                         {glossary.name}
                     </button>
                     
@@ -77,11 +77,8 @@ var GlossaryItem = React.createClass({
                     </a>
 
                 </label>  
-                <div>
-                    {this.state.popUp ? <GlossaryBox glossary={glossary.id} />: null}
-                </div> 
+                { this.state.popUp? <GlossaryBox glossary={glossary.id} />:null}
             </li>
-
         );
     }
 });
@@ -90,7 +87,8 @@ var GlossariesBox = React.createClass({
 	getInitialState: function() {
 	    return {
 	        newGlossaryValue: '',
-	        glossariesList: [] 
+	        glossariesList: [],
+            active: true
 	    };
 	},
 
@@ -112,7 +110,7 @@ var GlossariesBox = React.createClass({
     },
 
     createGlossary: function(event) {
-         event.preventDefault();
+        event.preventDefault();
     	$.ajax({
     		type: "POST",
     		url:'/glossaries',
@@ -138,38 +136,42 @@ var GlossariesBox = React.createClass({
         }
     },
 
-    
 
     _notificationSystem: null,
+
+    changeEtat: function(etat) {
+        this.setState({ active: false });
+        this.props.handleModalState(false);
+    },
 
     render: function(){
         var that = this;
         var containerId= this.props.containerId;
         
     	return(
-    		<div className="glossary">
-                <NotificationSystem ref="notificationSystem" />
-                <div className="row">
-                    <div className="col-lg-12">
-                        <h1 className="page-header">My Glossaries</h1>
+            <Modal active={this.changeEtat}>
+        		<div className="glossary">
+                    <NotificationSystem ref="notificationSystem" />
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">My Glossaries</h1>
+                        </div>
                     </div>
-                </div>
-                <ul>
-    			{this.state.glossariesList.map(function(glossary){
-                    return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
-    				
-    			})}
-                </ul>
-    			<div className="add_new_glossary">
-    				<div className="input-group input-group-lg">
-    					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new glossary..." />
-    				</div>
-    			</div>
-                
-    		</div>
+                    <ul>
+            			{this.state.glossariesList.map(function(glossary){
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
+            			})}
+                    </ul>
+        			<div className="add_new_glossary">
+        				<div className="input-group input-group-lg">
+        					<span className="input-group-addon">
+                                <i className="fa fa-plus fa-fw"></i>
+                            </span>
+                            <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new glossary..." />
+        				</div>
+        			</div>
+        		</div>
+            </Modal>
     	);
     }
 });
