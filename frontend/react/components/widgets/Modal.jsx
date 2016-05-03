@@ -10,8 +10,10 @@ var Modal = React.createClass({
 	render: function(){
 		return(
 			<div className="modal" ref="mod">
-				<button onClick={this.closeModal}>Close modal</button>
-				{ this.props.children }
+				<div id="glossary">
+					<button onClick={this.closeModal}>Close modal</button>
+					{ this.props.children }
+				</div>
 			</div>
 		);
 	}

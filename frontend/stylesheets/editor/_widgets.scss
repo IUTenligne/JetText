@@ -1,10 +1,18 @@
 .modal{
-    position: absolute;
-    height: 143.6px;
-    width: 299.6px;
-    top: 144px;
-    left: 41px;
-    display: block;
-    right: auto;
-    bottom: auto;
+    position: fixed;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	background: rgba(0,0,0,0.8);
+	z-index: 10;
+	top: 0;
+	left: 0;
+	#glossary{
+		width: 50%;
+		background: $whiteSmoke;
+		border-radius: 4px;
+		margin: auto;
+		position: relative;
+		vertical-align: center;
+	}
 }
