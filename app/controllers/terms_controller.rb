@@ -5,7 +5,7 @@ class TermsController < ApplicationController
   	respond_to :json
 
 	def require_permission
-	    if current_user != Glossary.find(params[:id]).user || current_user.nil?
+	    if current_user != Term.find(params[:id]).glossary.user || current_user.nil?
 	      render json: { status: "error" }
 	    end
 	end

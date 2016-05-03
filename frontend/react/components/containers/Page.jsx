@@ -2,7 +2,7 @@ var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Block = require('../blocks/Block.jsx');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-
+var GlossariesBox = require('../glossaries/GlossariesBox.jsx');
 
 var Page = React.createClass({
     getInitialState: function() {
@@ -62,6 +62,8 @@ var Page = React.createClass({
         this.setState({ selectedType: event.target.value });
     },
 
+    
+
     render: function() {
         var page = this.state.page;
         var that = this;
@@ -92,9 +94,48 @@ var Page = React.createClass({
                     </div>
                     <input type="submit" value='Create' className="btn-success" onClick={this.createBlock}/>
                 </form>
+
+                <GlossaryMenu containerId={page.container_id}/>
             </div>
         );
     }
+});
+
+var GlossaryMenu = React.createClass({
+
+    getInitialState: function() {
+        return{
+            glossaries: [], 
+            popUp: false
+        }
+    },
+
+    showGlossaries: function(){
+        this.setState({
+            popUp: true
+        })
+    },
+
+    changeModalState: function(st) {
+        this.setState({ popUp: false });
+    },
+
+    render: function(){
+        var containerId = this.props.containerId;
+        return(
+            <div>
+                <form id="add_new_glossary">
+                    <button onClick={this.showGlossaries}>add glossary</button>
+                </form>
+
+                <div>
+                    {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
+                </div>
+
+            </div>
+        );
+    }
+
 });
 
 module.exports = Page;
