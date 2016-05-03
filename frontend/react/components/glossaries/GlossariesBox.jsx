@@ -1,12 +1,14 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
+var GlossaryBox = require('./GlossaryBox.jsx');
 
 
 var GlossaryItem = React.createClass({
     getInitialState: function() {
         return {
-            isChecked: false
+            isChecked: false,
+            popUp: false
         };
     },
 
@@ -50,6 +52,12 @@ var GlossaryItem = React.createClass({
         };
     },
 
+    showTerms: function(){
+        this.setState({
+            popUp: true
+        })
+    },
+
     render: function(){
         var glossary = this.props.glossary;
         return(
@@ -60,14 +68,20 @@ var GlossaryItem = React.createClass({
                         checked={this.state.isChecked} 
                         onChange={this.onChange}
                     />
-                    <Link to={"/glossaries/"+glossary.id}>
+                    <button onClick={this.showTerms}>
                         {glossary.name}
-                    </Link>
+                    </button>
+                    
                     <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} >
                         <i className="fa fa-trash-o" ></i>
                     </a>
-                </label>   
+
+                </label>  
+                <div>
+                    {this.state.popUp ? <GlossaryBox glossary={glossary.id} />: null}
+                </div> 
             </li>
+
         );
     }
 });
@@ -154,6 +168,7 @@ var GlossariesBox = React.createClass({
                         <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new glossary..." />
     				</div>
     			</div>
+                
     		</div>
     	);
     }
