@@ -9,13 +9,18 @@ var GlossaryItem = React.createClass({
     getInitialState: function() {
         return {
             isChecked: false,
-            popUp: false
+            active: false
         };
+    },
+    componentDidMount: function() {
+        this._notificationSystem = this.refs.notificationSystem;
     },
 
     deleteGlossary: function(glossary_id, event){
         var that = this;
         event.preventDefault();
+        this._notificationSystem = this.refs.notificationSystem;
+        
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
             message: 'Are you sure you want to delete the glossary?',
@@ -29,10 +34,8 @@ var GlossaryItem = React.createClass({
                         type: "DELETE",
                         url: "/glossaries/"+ glossary_id,
                         context: that,
-                        success: function() {
-                            that.setState({
-                                glossariesList: that.state.glossariesList.filter((i, _) => i["id"] !== glossary_id)
-                            })
+                        success: function(data) {
+                            that.props.removeGlossary(data.glossary)
                         }
                     });
                 }
@@ -54,30 +57,32 @@ var GlossaryItem = React.createClass({
     },
     showTerms: function (){
         this.setState({
-            popUp: true
+            active: !this.state.active
         })
     },
 
     render: function(){
         var glossary = this.props.glossary;
+        
         return(
             <li>
+                <NotificationSystem ref="notificationSystem"/>
                 <label for={glossary.id}> 
                     <input 
                         type="checkbox" 
                         checked={this.state.isChecked} 
-                        onChange={this.onChange}
-                    />
-                    <button id="appElement" onClick={this.showTerms}>
-                        {glossary.name}
-                    </button>
-                    
+                        onChange={this.onChange}/>
+                       
+                    <h3 id="appElement" onClick={this.showTerms}>
+                         {glossary.name}
+                    </h3>
                     <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} >
                         <i className="fa fa-trash-o" ></i>
                     </a>
+                    
 
                 </label>  
-                { this.state.popUp? <GlossaryBox glossary={glossary.id} />:null}
+                { this.state.active ? <GlossaryBox glossary={glossary.id} /> : null }
             </li>
         );
     }
@@ -97,7 +102,7 @@ var GlossariesBox = React.createClass({
     },
 
 	componentDidMount: function() {
-	    this.serverRequest = $.get("/glossaries.json", function(result){
+	    this.serverRequest = $.get("/glossaries/box/"+this.props.containerId+".json", function(result){
 	      	this.setState({
 	      		glossariesList: result.glossaries
 	      	});
@@ -136,6 +141,11 @@ var GlossariesBox = React.createClass({
         }
     },
 
+    handleGlossaryDeletion: function(glossaryId) {
+        this.setState({
+            glossariesList: this.state.glossariesList.filter((i, _) => i["id"] !== glossaryId)
+        });
+    },
 
     _notificationSystem: null,
 
@@ -147,7 +157,6 @@ var GlossariesBox = React.createClass({
     render: function(){
         var that = this;
         var containerId= this.props.containerId;
-        
     	return(
             <Modal active={this.changeEtat}>
         		<div className="glossary">
@@ -159,7 +168,7 @@ var GlossariesBox = React.createClass({
                     </div>
                     <ul>
             			{this.state.glossariesList.map(function(glossary){
-                            return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} removeGlossary={that.handleGlossaryDeletion} key={glossary.id}/>);
             			})}
                     </ul>
         			<div className="add_new_glossary">

@@ -19,7 +19,9 @@ Rails.application.routes.draw do
     resources :uploads do
       delete "/clear/:block_id" => "uploads#clear", on: :collection
     end
-    resources :glossaries
+    resources :glossaries do
+      get "/box/:id"=> "glossaries#glossaries_box", on: :collection
+    end
     resources :terms
     get "/generate_container/:id" => "containers#generate", as: 'generate_container'
     post "/containers_glossaries" => "containers_glossaries#create"
