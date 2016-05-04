@@ -17,7 +17,7 @@ class GlossariesController < ApplicationController
 
   def glossaries_box
     @glossaries = Glossary.select("id, name").where(user_id: current_user.id)
-    @containers_glossaries = ContainersGlossary.where(container_id: params["id"])
+    @containers_glossaries = ContainersGlossary.select("glossary_id").where(container_id: params["id"])
     render json: { glossaries: @glossaries, containers_glossaries: @containers_glossaries }
   end
 

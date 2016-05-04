@@ -145,7 +145,7 @@ var TextBlock = React.createClass({
 	render: function() {
 		var block = this.props.block;
         var TextBlock = this.props.item;
-        var select = document.getSelection().toString();;
+        var select = document.getSelection().toString();
         var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
 		return (
             <div className="block-inner">

@@ -8,14 +8,15 @@ class ContainersGlossariesController < ApplicationController
     end
   end 
 
-  def create
+  def check
     if ContainersGlossary.where(container_id: params["container_id"]).where(glossary_id: params["glossary_id"]).empty?
       @containers_glossaries = ContainersGlossary.new(container_id: params["container_id"], glossary_id: params["glossary_id"])
       if @containers_glossaries.save
         render json: @containers_glossaries
       end
     else
-      render json: "error"
+      ContainersGlossary.where(container_id: params["container_id"]).where(glossary_id: params["glossary_id"]).delete_all
+      render json: { status: "ok" }
     end
   end
 

@@ -12,8 +12,14 @@ var GlossaryItem = React.createClass({
             active: false
         };
     },
+
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
+        var containers_glossaries = this.props.containersGlossaries;
+        for (var i in containers_glossaries) {
+            if (this.props.glossary.id == containers_glossaries[i].glossary_id)
+                this.setState({isChecked: true});
+        }
     },
 
     deleteGlossary: function(glossary_id, event){
@@ -55,6 +61,7 @@ var GlossaryItem = React.createClass({
             });
         };
     },
+
     showTerms: function (){
         this.setState({
             active: !this.state.active
@@ -67,7 +74,7 @@ var GlossaryItem = React.createClass({
         return(
             <li>
                 <NotificationSystem ref="notificationSystem"/>
-                <label for={glossary.id}> 
+ 
                     <input 
                         type="checkbox" 
                         checked={this.state.isChecked} 
@@ -79,9 +86,8 @@ var GlossaryItem = React.createClass({
                     <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} >
                         <i className="fa fa-trash-o" ></i>
                     </a>
-                    
+        
 
-                </label>  
                 { this.state.active ? <GlossaryBox glossary={glossary.id} /> : null }
             </li>
         );
@@ -93,6 +99,7 @@ var GlossariesBox = React.createClass({
 	    return {
 	        newGlossaryValue: '',
 	        glossariesList: [],
+            containersGlossaries: [],
             active: true
 	    };
 	},
@@ -104,7 +111,8 @@ var GlossariesBox = React.createClass({
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossaries/box/"+this.props.containerId+".json", function(result){
 	      	this.setState({
-	      		glossariesList: result.glossaries
+	      		glossariesList: result.glossaries,
+                containersGlossaries: result.containers_glossaries
 	      	});
 	    }.bind(this));
 	    this._notificationSystem = this.refs.notificationSystem;
@@ -168,7 +176,7 @@ var GlossariesBox = React.createClass({
                     </div>
                     <ul>
             			{this.state.glossariesList.map(function(glossary){
-                            return(<GlossaryItem glossary={glossary} containerId={containerId} removeGlossary={that.handleGlossaryDeletion} key={glossary.id}/>);
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} removeGlossary={that.handleGlossaryDeletion} key={glossary.id}/>);
             			})}
                     </ul>
         			<div className="add_new_glossary">
