@@ -147,10 +147,11 @@ var TextBlock = React.createClass({
         var TextBlock = this.props.item;
         var select = document.getSelection().toString();
         var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
+
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
-                    <div className="focus" style={{myStyle}} >
+                    <div className="focus" style={{myStyle}}>
                         <a onClick={this.termOverlay}>
                             <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
                         </a>
@@ -181,7 +182,7 @@ var TextBlock = React.createClass({
                     : null
                 }
 
-                {this.state.overlayTerm 
+                { this.state.overlayTerm 
                     ? <div className="overlay content">
                         <div className="block-title">
                             <i className="fa fa-book"></i>
@@ -192,12 +193,12 @@ var TextBlock = React.createClass({
                         </div>
                         <div className="block-content">
                             <ul>
-                                {this.state.termsList.map(function(term){
+                                { this.state.termsList.map(function(term) {
                                     return(
                                         <li key={term.id}>
-                                            <label for={term.id}> 
+                                            <label for={term.id}>
                                                 <input type="checkbox"/>
-                                                <span className="bold">{term.name}</span> : {term.description}.
+                                                <span className="bold">{term.name}</span> : {term.description}
                                             </label>
                                         </li>
                                     );
