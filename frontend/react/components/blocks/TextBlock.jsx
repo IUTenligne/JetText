@@ -6,7 +6,7 @@ var Term = require('../glossaries/term.jsx');
 
 
 var TextBlock = React.createClass({
-	getInitialState: function() {
+    getInitialState: function() {
         return {
             blockContent: '',
             editButton: true,
@@ -142,16 +142,22 @@ var TextBlock = React.createClass({
         });
     },
 
-	render: function() {
-		var block = this.props.block;
-        var TextBlock = this.props.item;
-        var select = document.getSelection().toString();;
-        var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
+    selectText: function() {
+        var select = document.getSelection();
+        var text = document.getSelection().toString();
+        var oRange = select.getRangeAt(0);
+        var oRect = oRange.getBoundingClientRect());
+        console.log(text, oRange, oRect);
+    },
 
-		return (
+    render: function() {
+        var block = this.props.block;
+        var TextBlock = this.props.item;
+                
+        return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
-                    <div className="focus" style={{myStyle}}>
+                    <div className="focus">
                         <a onClick={this.termOverlay}>
                             <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
                         </a>
@@ -166,7 +172,7 @@ var TextBlock = React.createClass({
 
                     { this.state.loading
                         ? <Loader />
-                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor} />
+                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor} onMouseUp={this.selectText} />
                     }
                 </div>
 
@@ -212,7 +218,7 @@ var TextBlock = React.createClass({
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );
-	}
+    }
 });
 
 module.exports = TextBlock;
