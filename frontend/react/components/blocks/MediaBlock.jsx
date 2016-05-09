@@ -1,6 +1,7 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
+var Loader = require('../widgets/Loader.jsx');
 
 
 var FileType = React.createClass({
@@ -19,17 +20,19 @@ var FileType = React.createClass({
 var FileBrowser = React.createClass({
     getInitialState: function() {
         return {
-              browserList: [],
-              showType: false,
-              selectedType: '',
-              selectedFiles: [],
+            loading: true,
+            browserList: [],
+            showType: false,
+            selectedType: '',
+            selectedFiles: [],
         };
     },
 
     componentDidMount: function() {
         this.serverRequest = $.get("/uploads.json", function(result){
             this.setState({
-                browserList: result.uploads
+                browserList: result.uploads,
+                loading: false
             })
         }.bind(this));
     },
@@ -90,22 +93,25 @@ var FileBrowser = React.createClass({
             }
         });
 
-        console.log(videos);
-
         return (
-            <Modal active={this.handleModalState}>
-                <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDFs", pdfs)}>
-                    <i className="fa fa-file-pdf-o"></i>
-                </div>
+            <Modal active={this.handleModalState} title={"My files"}>
+                { this.state.loading
+                    ? <Loader />
+                    : null
+                }
 
-                <div className="file-type" onClick={this.handleTypeClick.bind(this, "videos", videos)}>
-                    <i className="fa fa-video-camera"></i>
-                </div>
+                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o"></i></div> : null }
+
+                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera"></i></div> : null }
+
+                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music"></i></div> : null }
+
+                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random"></i></div> : null }
 
                 <div className="files-zone">
                     { this.state.showType
                         ? <div>
-                            <h3>My {this.state.selectedType} :</h3>
+                            <h3>My {this.state.selectedType} files</h3>
                             <FileType files={this.state.selectedFiles} /> 
                         </div>
                         : null

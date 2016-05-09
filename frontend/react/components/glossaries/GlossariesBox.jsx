@@ -4,6 +4,8 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 var GlossaryBox = require('./GlossaryBox.jsx');
 var Modal = require('../widgets/Modal.jsx');
+var Loader = require('../widgets/Loader.jsx');
+
 
 var GlossaryItem = React.createClass({
     getInitialState: function() {
@@ -84,9 +86,11 @@ var GlossaryItem = React.createClass({
     }
 });
 
+
 var GlossariesBox = React.createClass({
 	getInitialState: function() {
 	    return {
+            loading: true,
 	        newGlossaryValue: '',
 	        glossariesList: [],
             modalState: true
@@ -100,7 +104,8 @@ var GlossariesBox = React.createClass({
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossaries.json", function(result){
 	      	this.setState({
-	      		glossariesList: result.glossaries
+	      		glossariesList: result.glossaries,
+                loading: false
 	      	});
 	    }.bind(this));
 	    this._notificationSystem = this.refs.notificationSystem;
@@ -150,15 +155,13 @@ var GlossariesBox = React.createClass({
         var containerId= this.props.containerId;
         
     	return(
-            <Modal active={this.handleModalState}>
+            <Modal active={this.handleModalState} title={"My Glossaries"}>
+                { this.state.loading
+                    ? <Loader />
+                    : null
+                }
         		<div className="glossary">
                     <NotificationSystem ref="notificationSystem" />
-
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1 className="page-header">My Glossaries</h1>
-                        </div>
-                    </div>
 
                     <ul>
             			{ this.state.glossariesList.map(function(glossary) {
