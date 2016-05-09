@@ -2,10 +2,27 @@ var React = require('react');
 var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
 
+
+var FileType = React.createClass({
+    render: function() {
+        return (
+            <div>
+                { this.props.files.map(function(file) {
+                    return( <li key={file.id}>{file.file_file_name} </li> );
+                })}
+            </div>
+        )
+    }
+});
+
+
 var FileBrowser = React.createClass({
     getInitialState: function() {
         return {
-              browserList: []
+              browserList: [],
+              showType: false,
+              selectedType: '',
+              selectedFiles: [],
         };
     },
 
@@ -25,17 +42,80 @@ var FileBrowser = React.createClass({
         this.props.active( st );
     },
 
+    handleFileType: function(type, name) {
+        var t = type.split("/");
+        var n = name.split(".")[1];
+
+        if ( t[0] === "application" ) {
+            if ( t[1] === "pdf" ) {
+                return "pdf";
+            } else if ( t[1] === "video" || ((t[1] === "force-download") && (n === "mp4")) ) {
+                return "video";
+            } else {
+                return "application";
+            }
+        } else if ( t[0] === "audio" ) {
+            return "audio";
+        } else {
+            return "misc";
+        }
+    },
+
+    handleTypeClick: function(type, files) {
+        this.setState({ 
+            showType: true,
+            selectedType: type,
+            selectedFiles: files
+        });
+    },
+
     render: function() {
-        console.log(this.state.browserList)
+        var that = this;
+
+        var pdfs = [],
+            videos = [],
+            audios = [],
+            miscs = [];
+
+        this.state.browserList.map(function(file) {
+            var type = that.handleFileType(file.file_content_type, file.file_file_name);
+            if (type === "pdf") {
+                pdfs.push(file);
+            } else if (type === "video") {
+                videos.push(file);
+            } else if (type === "audio") {
+                audios.push(file);
+            } else {
+                miscs.push(file);
+            }
+        });
+
+        console.log(videos);
+
         return (
             <Modal active={this.handleModalState}>
-                { this.state.browserList.map(function(file) {
-                    return( <li key={file.id}>{file.file_file_name}</li> );
-                })}
+                <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDFs", pdfs)}>
+                    <i className="fa fa-file-pdf-o"></i>
+                </div>
+
+                <div className="file-type" onClick={this.handleTypeClick.bind(this, "videos", videos)}>
+                    <i className="fa fa-video-camera"></i>
+                </div>
+
+                <div className="files-zone">
+                    { this.state.showType
+                        ? <div>
+                            <h3>My {this.state.selectedType} :</h3>
+                            <FileType files={this.state.selectedFiles} /> 
+                        </div>
+                        : null
+                    }
+                </div>
             </Modal>
         );
     }
 });
+
 
 var MediaBlock = React.createClass({
 	getInitialState: function() {

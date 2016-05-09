@@ -38,7 +38,7 @@ class Upload < ActiveRecord::Base
       "audio/mp3",
       "audio/mpeg"
 		],
-		:message => 'seuls les fichiers PDF et MP4 sont autorisés.'
+		:message => 'seuls les fichiers PDF, MP3, PNG, JPG et MP4 sont autorisés.'
 
   def file_type
     ext = self.file_file_name.split('.')[-1]
