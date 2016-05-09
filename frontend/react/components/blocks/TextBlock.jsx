@@ -146,7 +146,7 @@ var TextBlock = React.createClass({
         var select = document.getSelection();
         var text = document.getSelection().toString();
         var oRange = select.getRangeAt(0);
-        var oRect = oRange.getBoundingClientRect());
+        var oRect = oRange.getBoundingClientRect();
         console.log(text, oRange, oRect);
     },
 

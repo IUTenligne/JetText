@@ -100,19 +100,19 @@
 		}
 
 		.level-1 a.page-link:before {
-			content: "\f142\f141";
+			content: ".";
 		}
 		.level-2 a.page-link:before {
-			content: "\f142\f141\f142\f141";
+			content: ". .";
 		}
 		.level-3 a.page-link:before {
-			content: "\f142\f141\f142\f141\f142\f141";
+			content: ". . .";
 		}
 		.level-4 a.page-link:before {
-			content: "\f142\f141\f142\f141\f142\f141\f142\f141";
+			content: ". . . .";
 		}
 		.level-5 a.page-link:before {
-			content: "\f142\f141\f142\f141\f142\f141\f142\f141\f142\f141";
+			content: ". . . . .";
 		}
 
 		.level-0 a.page-link,

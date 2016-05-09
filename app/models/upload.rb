@@ -11,13 +11,21 @@ class Upload < ActiveRecord::Base
     attachment.instance.file_type
   end
 
-  Paperclip.interpolates :file_name do |attachment, style|
-    attachment.instance.file_name
+  Paperclip.interpolates :month do |attachment, style|
+    attachment.instance.month
+  end
+
+  Paperclip.interpolates :timestamp do |attachment, style|
+    attachment.instance.timestamp
+  end
+
+  Paperclip.interpolates :valid_name do |attachment, style|
+    attachment.instance.valid_name
   end
 
   has_attached_file :file,
-    :url => ":user/files/:file_type/:file_name.:extension",
-  	:path => ":rails_root/public/:user/files/:file_type/:file_name.:extension",
+    :url => ":user/files/:file_type/:month/:timestamp_:valid_name.:extension",
+  	:path => ":rails_root/public/:user/files/:file_type/:month/:timestamp_:valid_name.:extension",
     :use_timestamp => false
 
   validates_attachment_content_type :file, 
@@ -44,20 +52,16 @@ class Upload < ActiveRecord::Base
       end
     end
 
-    def file_name
-      filename = self.file_file_name.split('.')[0]
-      ext = self.file_file_name.split('.')[-1]
-      type = self.file_type
-      user = self.user.email
-      if FileTest.exists?("#{Rails.root}/public/#{user}/files/#{type}/#{self.file_file_name}")
-        filename = filename.to_s + "_1"
-        if FileTest.exists?("#{Rails.root}/public/#{user}/files/#{type}/#{filename}#{ext}")
-          filename = filename + filename.split("_")[-1].succ
-        end
-        return filename
-      else
-        return filename
-      end
+    def month
+      return Time.now.strftime("%Y-%m")
+    end
+
+    def timestamp
+      return Time.now.to_i
+    end
+
+    def valid_name
+      return self.file_file_name.split('.')[0].gsub(/[^a-zA-Z_-]/, '').downcase
     end
 
 end
