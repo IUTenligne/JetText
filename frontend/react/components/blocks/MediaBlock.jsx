@@ -3,30 +3,54 @@ var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
 var Loader = require('../widgets/Loader.jsx');
 
-
+/* File browser's content in the modal */
 var FileType = React.createClass({
+    getInitialState: function() {
+        return {
+            filePreview: ''
+        };
+    },
+
     handleSelection: function(file, event) {
         event.preventDefault();
         this.props.updateBlockContent(file);
     },
 
+    handleFilePreview: function(file, event) {
+        event.preventDefault();
+        this.setState({ 
+            filePreview: file
+        });
+    },
+
     render: function() {
         var that = this;
         return (
-            <ul>
-                { this.props.files.map(function(file) {
-                    return(
-                        <li key={file.id}>
-                            <a href="#" onClick={that.handleSelection.bind(that, file)}>{file.file_file_name}</a>
-                        </li>
-                    );
-                })}
-            </ul>
+            <div>
+                <ul>
+                    { this.props.files.map(function(file) {
+                        return(
+                            <li key={file.id}>
+                                <a href="#" onClick={that.handleFilePreview.bind(that, file)}>{file.file_file_name}</a>
+                            </li>
+                        );
+                    })}
+                </ul>
+
+                <div id="file-browser-preview">
+                    { this.state.filePreview != ''
+                        ? <object data={this.state.filePreview.url} width="100%" type={this.state.filePreview.file_content_type}><embed src={this.state.filePreview.url} type={this.state.filePreview.file_content_type}/></object>
+                        : null
+                    }
+                    <button onClick={this.handleSelection.bind(this, this.state.filePreview)} className="btn btn-success"><i className="fa fa-check white"></i></button>
+                </div>
+            </div> 
         )
     }
 });
 
 
+/* File browser in a modal */
 var FileBrowser = React.createClass({
     getInitialState: function() {
         return {
@@ -115,13 +139,13 @@ var FileBrowser = React.createClass({
                     : null
                 }
 
-                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o"></i></div> : null }
+                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o fa-fw pdfs"></i></div> : null }
 
-                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera"></i></div> : null }
+                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera fa-fw videos"></i></div> : null }
 
-                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music"></i></div> : null }
+                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music fa-fw audios"></i></div> : null }
 
-                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random"></i></div> : null }
+                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random fa-fw miscs"></i></div> : null }
 
                 <div id="files-zone">
                     { this.state.showType

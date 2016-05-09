@@ -10,7 +10,7 @@ var Modal = React.createClass({
 	render: function(){
 		return(
 			<div className="modal">
-				<ReactCSSTransitionGroup transitionName="modal-inner-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
+				<ReactCSSTransitionGroup transitionName="modal-inner-transition" transitionEnterTimeout={500} transitionLeaveTimeout={500} transitionAppear={true} transitionAppearTimeout={500}>
 					<div className="modal-inner">
 						<div id="modal-content">
 							<div id="modal-header">
