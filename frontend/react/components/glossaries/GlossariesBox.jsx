@@ -52,6 +52,7 @@ var GlossaryItem = React.createClass({
             });
         };
     },
+    
     showTerms: function (){
         this.setState({
             popUp: true
@@ -77,7 +78,7 @@ var GlossaryItem = React.createClass({
                     </a>
 
                 </label>  
-                { this.state.popUp? <GlossaryBox glossary={glossary.id} />:null}
+                { this.state.popUp ? <GlossaryBox glossary={glossary.id} /> : null }
             </li>
         );
     }
@@ -88,7 +89,7 @@ var GlossariesBox = React.createClass({
 	    return {
 	        newGlossaryValue: '',
 	        glossariesList: [],
-            active: true
+            modalState: true
 	    };
 	},
 
@@ -139,9 +140,9 @@ var GlossariesBox = React.createClass({
 
     _notificationSystem: null,
 
-    changeEtat: function(etat) {
-        this.setState({ active: false });
-        this.props.handleModalState(false);
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+        this.props.handleModalState(st);
     },
 
     render: function(){
@@ -149,19 +150,22 @@ var GlossariesBox = React.createClass({
         var containerId= this.props.containerId;
         
     	return(
-            <Modal active={this.changeEtat}>
+            <Modal active={this.handleModalState}>
         		<div className="glossary">
                     <NotificationSystem ref="notificationSystem" />
+
                     <div className="row">
                         <div className="col-lg-12">
                             <h1 className="page-header">My Glossaries</h1>
                         </div>
                     </div>
+
                     <ul>
-            			{this.state.glossariesList.map(function(glossary){
+            			{ this.state.glossariesList.map(function(glossary) {
                             return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
             			})}
                     </ul>
+
         			<div className="add_new_glossary">
         				<div className="input-group input-group-lg">
         					<span className="input-group-addon">

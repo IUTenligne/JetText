@@ -21,10 +21,11 @@ class UploadsController < ApplicationController
       end 
     end
   end
-  
-	def new
-		@upload = Upload.new
-	end
+
+  def index
+  	@uploads = Upload.select("id, file_file_name, file_content_type, url").where(user_id: current_user.id).order(:file_content_type)
+  	render json: { uploads: @uploads }
+  end
 
 	def show
 		@upload = Upload.find(params[:id])

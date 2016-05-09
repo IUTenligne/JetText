@@ -49,6 +49,7 @@ var TextBlock = React.createClass({
         });
 
         if (editor) { editor.destroy(true); }
+        this.serverRequest.abort();
     },
 
     saveBlock: function(event) {

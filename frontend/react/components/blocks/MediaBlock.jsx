@@ -1,11 +1,48 @@
 var React = require('react');
 var NotificationSystem = require('react-notification-system');
+var Modal = require('../widgets/Modal.jsx');
 
+var FileBrowser = React.createClass({
+    getInitialState: function() {
+        return {
+              browserList: []
+        };
+    },
+
+    componentDidMount: function() {
+        this.serverRequest = $.get("/uploads.json", function(result){
+            this.setState({
+                browserList: result.uploads
+            })
+        }.bind(this));
+    },
+
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+
+    handleModalState: function(st) {
+        this.props.active( st );
+    },
+
+    render: function() {
+        console.log(this.state.browserList)
+        return (
+            <Modal active={this.handleModalState}>
+                { this.state.browserList.map(function(file) {
+                    return( <li key={file.id}>{file.file_file_name}</li> );
+                })}
+            </Modal>
+        );
+    }
+});
 
 var MediaBlock = React.createClass({
 	getInitialState: function() {
         return {
-            mediaResultContent: ''
+            mediaResultContent: '',
+            browserList: [],
+            modalState: false
         };
     },
 
@@ -63,6 +100,14 @@ var MediaBlock = React.createClass({
         }
     },
 
+    handleBrowseFiles: function() {
+        this.setState({ modalState: true });
+    },
+
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+    },
+
     dynamicId: function(id){
         return "media_block_" + id;
     },
@@ -80,9 +125,14 @@ var MediaBlock = React.createClass({
                         <i className="fa fa-file-text"></i>
                         <h3>{block.name}</h3>
                     </div>
+
                     <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
                         <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
                     </form>
+
+                    <button onClick={this.handleBrowseFiles}>Browse files</button>
+                    { this.state.modalState ? <FileBrowser active={this.handleModalState} /> : null }
+
                     <div className="block-content" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
                 </div>
 

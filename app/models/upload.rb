@@ -40,29 +40,31 @@ class Upload < ActiveRecord::Base
 		],
 		:message => 'seuls les fichiers PDF et MP4 sont autorisés.'
 
-    def file_type
-      ext = self.file_file_name.split('.')[-1]
-      type = self.file_content_type.mb_chars.normalize(:kd).split('/')
+  def file_type
+    ext = self.file_file_name.split('.')[-1]
+    type = self.file_content_type.mb_chars.normalize(:kd).split('/')
 
-      # forces directory's name if the mime-type's bug force-download is encounterd
-      if type[0] === "application" && type[1] === "force-download" && ext === "mp4"
-        return "video"
-      else
-        return type[0].to_s
-      end
+    # forces directory's name if the mime-type's bug force-download is encounterd
+    if type[0] === "application" && type[1] === "force-download" && ext === "mp4"
+      return "video"
+    elsif type[0] === "application" && type[1] === "pdf"
+      return "pdf"
+    else
+      return type[0].to_s
     end
+  end
 
-    def month
-      return Time.now.strftime("%Y-%m")
-    end
+  def month
+    return Time.now.strftime("%Y-%m")
+  end
 
-    def timestamp
-      return Time.now.to_i
-    end
+  def timestamp
+    return Time.now.to_i
+  end
 
-    def valid_name
-      return self.file_file_name.split('.')[0].gsub(/[^a-zA-Z_-]/, '').downcase
-    end
+  def valid_name
+    return self.file_file_name.split('.')[0].gsub(/[^a-zA-Z_-]/, '').downcase
+  end
 
 end
 
