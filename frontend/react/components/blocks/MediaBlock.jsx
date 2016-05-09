@@ -5,13 +5,23 @@ var Loader = require('../widgets/Loader.jsx');
 
 
 var FileType = React.createClass({
+    handleSelection: function(file, event) {
+        event.preventDefault();
+        this.props.updateBlockContent(file);
+    },
+
     render: function() {
+        var that = this;
         return (
-            <div>
+            <ul>
                 { this.props.files.map(function(file) {
-                    return( <li key={file.id}>{file.file_file_name} </li> );
+                    return(
+                        <li key={file.id}>
+                            <a href="#" onClick={that.handleSelection.bind(that, file)}>{file.file_file_name}</a>
+                        </li>
+                    );
                 })}
-            </div>
+            </ul>
         )
     }
 });
@@ -72,6 +82,11 @@ var FileBrowser = React.createClass({
         });
     },
 
+    handleBlockUpdate: function(data) {
+        this.props.updateBlock(data);
+        this.props.active(false);
+    },
+
     render: function() {
         var that = this;
 
@@ -108,11 +123,11 @@ var FileBrowser = React.createClass({
 
                 { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random"></i></div> : null }
 
-                <div className="files-zone">
+                <div id="files-zone">
                     { this.state.showType
                         ? <div>
                             <h3>My {this.state.selectedType} files</h3>
-                            <FileType files={this.state.selectedFiles} /> 
+                            <FileType files={this.state.selectedFiles} updateBlockContent={this.handleBlockUpdate} /> 
                         </div>
                         : null
                     }
@@ -194,6 +209,26 @@ var MediaBlock = React.createClass({
         this.setState({ modalState: st });
     },
 
+    handleBlockChange: function(data) {
+        var fileExt = data.file_file_name.split(".").slice(-1)[0];
+        var content = this.makeHtmlContent(data, fileExt);
+
+        $.ajax({
+            url: "/blocks/update_upload",
+            type: "PUT",
+            context: this,
+            data: {
+                id: this.props.block.id,
+                content: content,
+                upload_id: data.id,
+            },
+            success: function(data) {
+                console.log(data);
+                this.setState({ mediaResultContent: content });
+            }
+        });
+    },
+
     dynamicId: function(id){
         return "media_block_" + id;
     },
@@ -217,7 +252,7 @@ var MediaBlock = React.createClass({
                     </form>
 
                     <button onClick={this.handleBrowseFiles}>Browse files</button>
-                    { this.state.modalState ? <FileBrowser active={this.handleModalState} /> : null }
+                    { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
 
                     <div className="block-content" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
                 </div>

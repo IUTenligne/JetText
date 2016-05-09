@@ -1,7 +1,7 @@
 class Upload < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :block
+  has_and_belongs_to_many :blocks
 
   Paperclip.interpolates('user') do |attachment, style|
     attachment.instance.user.email.to_s

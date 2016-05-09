@@ -160,7 +160,7 @@ var GlossariesBox = React.createClass({
                     ? <Loader />
                     : null
                 }
-        		<div className="glossary">
+        		<div className="glossaries">
                     <NotificationSystem ref="notificationSystem" />
 
                     <ul>

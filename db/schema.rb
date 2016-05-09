@@ -39,20 +39,19 @@ ActiveRecord::Schema.define(version: 20160420132228) do
 
   add_index "containers", ["user_id"], name: "index_containers_on_user_id", using: :btree
 
-  create_table "containers_terms", id: false, force: :cascade do |t|
+  create_table "containers_glossaries", id: false, force: :cascade do |t|
     t.integer "container_id", limit: 4, null: false
-    t.integer "term_id",      limit: 4, null: false
+    t.integer "glossary_id",  limit: 4, null: false
   end
 
-  add_index "containers_terms", ["container_id", "term_id"], name: "index_containers_terms_on_container_id_and_term_id", using: :btree
-  add_index "containers_terms", ["term_id", "container_id"], name: "index_containers_terms_on_term_id_and_container_id", using: :btree
+  add_index "containers_glossaries", ["container_id", "glossary_id"], name: "index_containers_glossaries_on_container_id_and_glossary_id", using: :btree
+  add_index "containers_glossaries", ["glossary_id", "container_id"], name: "index_containers_glossaries_on_glossary_id_and_container_id", using: :btree
 
   create_table "glossaries", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.text     "description", limit: 65535
-    t.integer  "user_id",     limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "name",       limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "glossaries", ["user_id"], name: "index_glossaries_on_user_id", using: :btree
@@ -92,11 +91,9 @@ ActiveRecord::Schema.define(version: 20160420132228) do
     t.datetime "file_updated_at"
     t.string   "type",              limit: 255
     t.string   "url",               limit: 255
-    t.integer  "block_id",          limit: 4
     t.integer  "user_id",           limit: 4
   end
 
-  add_index "uploads", ["block_id"], name: "index_uploads_on_block_id", using: :btree
   add_index "uploads", ["user_id"], name: "index_uploads_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -137,7 +134,6 @@ ActiveRecord::Schema.define(version: 20160420132228) do
   add_foreign_key "pages", "containers"
   add_foreign_key "pages", "users"
   add_foreign_key "terms", "glossaries"
-  add_foreign_key "uploads", "blocks"
   add_foreign_key "uploads", "users"
   add_foreign_key "variables", "users"
 end
