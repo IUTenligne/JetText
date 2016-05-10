@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 var GlossaryBox = require('./GlossaryBox.jsx');
 var Modal = require('../widgets/Modal.jsx');
