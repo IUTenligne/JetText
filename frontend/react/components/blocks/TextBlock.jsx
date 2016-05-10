@@ -152,7 +152,7 @@ var TextBlock = React.createClass({
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
-                    <div className="focus" style={this.state.myStyle}>
+                    <div className="focus" style={{myStyle}}>
                         <a onClick={this.termOverlay}>
                             <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
                         </a>

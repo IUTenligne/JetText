@@ -4,6 +4,8 @@ import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 var GlossaryBox = require('./GlossaryBox.jsx');
 var Modal = require('../widgets/Modal.jsx');
+var Loader = require('../widgets/Loader.jsx');
+
 
 var GlossaryItem = React.createClass({
     getInitialState: function() {
@@ -87,20 +89,21 @@ var GlossaryItem = React.createClass({
                         <i className="fa fa-trash-o" ></i>
                     </a>
         
+                { this.state.popUp ? <GlossaryBox glossary={glossary.id} /> : null }
 
-                { this.state.active ? <GlossaryBox glossary={glossary.id} /> : null }
             </li>
         );
     }
 });
 
+
 var GlossariesBox = React.createClass({
 	getInitialState: function() {
 	    return {
+            loading: true,
 	        newGlossaryValue: '',
 	        glossariesList: [],
-            containersGlossaries: [],
-            active: true
+            modalState: true
 	    };
 	},
 
@@ -112,7 +115,7 @@ var GlossariesBox = React.createClass({
 	    this.serverRequest = $.get("/glossaries/box/"+this.props.containerId+".json", function(result){
 	      	this.setState({
 	      		glossariesList: result.glossaries,
-                containersGlossaries: result.containers_glossaries
+                loading: false
 	      	});
 	    }.bind(this));
 	    this._notificationSystem = this.refs.notificationSystem;
@@ -157,28 +160,29 @@ var GlossariesBox = React.createClass({
 
     _notificationSystem: null,
 
-    changeEtat: function(etat) {
-        this.setState({ active: false });
-        this.props.handleModalState(false);
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+        this.props.handleModalState(st);
     },
 
     render: function(){
         var that = this;
         var containerId= this.props.containerId;
     	return(
-            <Modal active={this.changeEtat}>
-        		<div className="glossary">
+            <Modal active={this.handleModalState} title={"My Glossaries"}>
+                { this.state.loading
+                    ? <Loader />
+                    : null
+                }
+        		<div className="glossaries">
                     <NotificationSystem ref="notificationSystem" />
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1 className="page-header">My Glossaries</h1>
-                        </div>
-                    </div>
+
                     <ul>
-            			{this.state.glossariesList.map(function(glossary){
-                            return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} removeGlossary={that.handleGlossaryDeletion} key={glossary.id}/>);
+            			{ this.state.glossariesList.map(function(glossary) {
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
             			})}
                     </ul>
+
         			<div className="add_new_glossary">
         				<div className="input-group input-group-lg">
         					<span className="input-group-addon">

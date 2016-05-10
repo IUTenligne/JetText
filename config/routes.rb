@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
     resources :blocks do
       put "/set_content/:id" => "blocks#set_content", on: :collection
+      put "/update_upload" => "blocks#update_upload", on: :collection
     end
     resources :types
     resources :variables

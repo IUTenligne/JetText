@@ -1,6 +1,7 @@
 class Upload < ActiveRecord::Base
+
   belongs_to :user
-  belongs_to :block
+  has_and_belongs_to_many :blocks
 
   Paperclip.interpolates('user') do |attachment, style|
     attachment.instance.user.email.to_s
@@ -10,9 +11,21 @@ class Upload < ActiveRecord::Base
     attachment.instance.file_type
   end
 
+  Paperclip.interpolates :month do |attachment, style|
+    attachment.instance.month
+  end
+
+  Paperclip.interpolates :timestamp do |attachment, style|
+    attachment.instance.timestamp
+  end
+
+  Paperclip.interpolates :valid_name do |attachment, style|
+    attachment.instance.valid_name
+  end
+
   has_attached_file :file,
-    :url => ":user/files/:file_type/:basename.:extension",
-  	:path => ":rails_root/public/:user/files/:file_type/:basename.:extension",
+    :url => ":user/files/:file_type/:month/:timestamp_:valid_name.:extension",
+  	:path => ":rails_root/public/:user/files/:file_type/:month/:timestamp_:valid_name.:extension",
     :use_timestamp => false
 
   validates_attachment_content_type :file, 
@@ -25,18 +38,34 @@ class Upload < ActiveRecord::Base
       "audio/mp3",
       "audio/mpeg"
 		],
-		:message => 'seuls les fichiers PDF et MP4 sont autorisés.'
+		:message => 'seuls les fichiers PDF, MP3, PNG, JPG et MP4 sont autorisés.'
 
-    def file_type
-      ext = self.file_file_name.split('.')[-1]
-      type = self.file_content_type.mb_chars.normalize(:kd).split('/')
-      # forces directory's name if the mime-type's bug force-download is encounterd
-      if type[0] === "application" && type[1] === "force-download" && ext === "mp4"
-        return "video"
-      else
-        return type[0].to_s
-      end
+  def file_type
+    ext = self.file_file_name.split('.')[-1]
+    type = self.file_content_type.mb_chars.normalize(:kd).split('/')
+
+    # forces directory's name if the mime-type's bug force-download is encounterd
+    if type[0] === "application" && type[1] === "force-download" && ext === "mp4"
+      return "video"
+    elsif type[0] === "application" && type[1] === "pdf"
+      return "pdf"
+    else
+      return type[0].to_s
     end
+  end
+
+  def month
+    return Time.now.strftime("%Y-%m")
+  end
+
+  def timestamp
+    return Time.now.to_i
+  end
+
+  def valid_name
+    return self.file_file_name.split('.')[0].gsub(/[^a-zA-Z_-]/, '').downcase
+  end
+
 end
 
 # == Schema Information

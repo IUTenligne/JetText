@@ -109,7 +109,7 @@
   padding-bottom: 5px;
   border-top: 1px $lightBlue dashed !important;
   border-bottom: 1px $lightBlue dashed !important;
-  color: $lightBlue !important;
+  color: $white !important;
 }
 
 .gu-transit a {
@@ -147,6 +147,22 @@
 
 .btn {
   @include specialFont(1.3em);
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  .panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
 }
 
 .panel-heading {
