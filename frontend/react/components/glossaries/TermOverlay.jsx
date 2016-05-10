@@ -9,7 +9,8 @@ var TermOverlay = React.createClass({
 	        glossarriesList: [] ,
             glossariesEmpty: false,
             term: "",
-            selectType: 1
+            selectType: 1, 
+            newGlossaryValue: ""
 	    };
 	},
 
@@ -37,14 +38,26 @@ var TermOverlay = React.createClass({
         this.serverRequest.abort();
     },
 
-    handleChange: function(event) {
-        this.setState({
-            term: event.target.value
-        })
+    handleChange: function(elem, event) {
+        if (elem == "term") {
+            this.setState({
+                term: event.target.value
+            })
+        } else if (elem == "newGlossaryValue") {
+            this.setState({
+                newGlossaryValue: event.target.value
+            })
+        } else if (elem == "newDescriptionValue") {
+            this.setState({
+                newDescriptionValue: event.target.value
+            })
+        }
     },
+
     createTerm: function(){
+        console.log(this.state.newGlossaryValue);
         if(this.state.glossariesEmpty == false){
-            $.ajax({
+            $.ajax ({
                 type: "POST",
                 url: '/terms',
                 context: this,
@@ -56,18 +69,19 @@ var TermOverlay = React.createClass({
                     }
                 }
             })
-        }else{
-            $.ajax({
+        }else {
+            $.ajax ({
                 type: "POST",
                 url: '/glossaries',
                 context: this,
                 data: {
                     glossary: {
-                        name: this.state.newDescriptionValue
+                        name: this.state.newGlossaryValue
                     }
                 },
                 success: function(data){
-                    $.ajax({
+                    console.log(this.state.newDescriptionValue);
+                    $.ajax ({
                         type: "POST",
                         url: '/terms',
                         context: this,
@@ -83,6 +97,7 @@ var TermOverlay = React.createClass({
             })
         }
     },
+
     selectType: function(event) {
         this.setState({ selectedType: event.target.value });
     },
@@ -103,19 +118,16 @@ var TermOverlay = React.createClass({
             				);
             			})}
                     </select>
-                : null }
-
-                { this.state.glossariesEmpty ?
-                    <div className="add_new_glossary">
+                :  <div className="add_new_glossary">
                         <h3> Vous n'avez pas de glossary !</h3>
                         <div className="input-group input-group-lg">
-                            <input type="text" id="new_glossary" value={this.state.newGlossaryValue}  placeholder="Create new glossary..." />
+                            <input type="text" id="new_glossary" value={this.state.newGlossaryValue}  onChange={this.handleChange.bind(this, "newGlossaryValue")} placeholder="Create new glossary..." />
                         </div>
                     </div>
-                : null }
+                }
                 <br/>
-                <input type="text" value={this.state.term} onChange={this.handleChange}  /><br/>
-    			<textarea  type="text" value={this.state.newDescriptionValue} placeholder="Create new definition..." />
+                <input type="text" value={this.state.term} onChange={this.handleChange.bind(this, "term")}  /><br/>
+    			<textarea  type="text" value={this.state.newDescriptionValue} onChange={this.handleChange.bind(this, "newDescriptionValue")} placeholder="Create new definition..." />
 
                 <input type="submit" value='Create' className="btn-success" onClick={this.createTerm}/>
     		</form>  
