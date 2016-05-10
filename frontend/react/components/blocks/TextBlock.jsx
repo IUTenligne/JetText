@@ -91,7 +91,6 @@ var TextBlock = React.createClass({
             // setState to allow changes to be saved on submit
             that.setState({ blockContent: evt.editor.getData() });
         });
-        CKEDITOR.plugins.addExternal('uploader', '/assets/cke/plugins/uploader/', 'plugin.js');
     },
 
     _notificationSystem: null,

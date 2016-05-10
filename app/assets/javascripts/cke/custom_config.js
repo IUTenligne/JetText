@@ -2,7 +2,7 @@
 CKEDITOR.editorConfig = function( config ) {
 	config.toolbar = [
 		{ name: 'clipboard', items: [ 'Undo', 'Redo' ] },
-		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor', 'Uploader' ] },
+		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor', 'Uploader', 'Variables' ] },
 		{ name: 'insert', items: [ 'Table', 'HorizontalRule', 'SpecialChar' ] },
 		{ name: 'document', items: [ 'Source' ] },
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
@@ -17,5 +17,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	// Custom plugins app/assets/javascripts/cke/plugins
-	config.extraPlugins = 'uploader';
+	config.extraPlugins = 'uploader,dynavar';
 };

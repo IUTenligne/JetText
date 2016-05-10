@@ -10,7 +10,6 @@ var Page = React.createClass({
             status: 0,
             page: '',
             blocks: [],
-            newBlockValue: '',
             selectedType: 1
         };
     },
@@ -29,16 +28,12 @@ var Page = React.createClass({
         this.serverRequest.abort();
     },
 
-    handleChange: function(event) {
-        this.setState({ newBlockValue: event.target.value });
-    },
-
     createBlock: function(event) {
         $.ajax({
             type: "POST",
             url: '/blocks',
             context: this,
-            data: { block: { name: this.state.newBlockValue, content: '', page_id: this.state.page.id, type_id: this.state.selectedType } },
+            data: { block: { name: '', content: '', page_id: this.state.page.id, type_id: this.state.selectedType } },
             success: function(data) {
                 this.setState({
                     blocks: this.state.blocks.concat([data]),
@@ -62,8 +57,6 @@ var Page = React.createClass({
         this.setState({ selectedType: event.target.value });
     },
 
-    
-
     render: function() {
         var page = this.state.page;
         var that = this;
@@ -81,11 +74,7 @@ var Page = React.createClass({
                 </div>
 
                 <form id="add_new_block">
-                    <input type="text" id="new_block" className="form-control" value={this.state.newBlockValue} onChange={this.handleChange} autoComplete="off"/>
                     <div className="input-group input-group-lg">
-                        <span className="input-group-addon">
-                            <i className="fa fa-chevron-down fa-fw"></i>
-                        </span>
                         <select className="form-control" value={this.state.selectedType} onChange={this._selectType}>
                             {this.props.types.map(function(type){
                                 return <option value={type.id} key={type.id}>{type.name}</option>

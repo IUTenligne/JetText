@@ -169,13 +169,18 @@ var MediaBlock = React.createClass({
 	getInitialState: function() {
         return {
             mediaResultContent: '',
+            blockName: '',
             browserList: [],
-            modalState: false
+            modalState: false,
+            changeName: false
         };
     },
 
     componentDidMount: function() {
-        this.setState({ mediaResultContent: this.props.block.content });
+        this.setState({ 
+            blockName: this.props.block.name,
+            mediaResultContent: this.props.block.content
+        });
     },
 
     submitMedia: function(event) {
@@ -250,8 +255,31 @@ var MediaBlock = React.createClass({
                 upload_id: data.id,
             },
             success: function(data) {
-                console.log(data);
                 this.setState({ mediaResultContent: content });
+            }
+        });
+    },
+
+    handleBlockName: function(event) {
+        this.setState({
+            blockName: event.target.value,
+            changeName: true
+        });
+    },
+
+    saveBlockName: function() {
+        $.ajax({
+            url: "/blocks/"+this.props.block.id,
+            type: "PUT",
+            context: this,
+            data: {
+                name: this.state.blockName
+            },
+            success: function(data) {
+                this.setState({ 
+                    changeName: false,
+                    blockName: data.name
+                });
             }
         });
     },
@@ -271,7 +299,10 @@ var MediaBlock = React.createClass({
                 <div className="content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-file-text"></i>
-                        <h3>{block.name}</h3>
+                        <h3>
+                            <input type="text" value={this.state.blockName} placeholder="Block name..." onChange={this.handleBlockName}/>
+                            { this.state.changeName ? <button onClick={this.saveBlockName}><i className="fa fa-check"></i></button> : null }
+                        </h3>
                     </div>
 
                     <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
