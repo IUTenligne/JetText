@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420132228) do
+ActiveRecord::Schema.define(version: 20160510132949) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20160420132228) do
 
   add_index "containers", ["user_id"], name: "index_containers_on_user_id", using: :btree
 
+  create_table "containers_formulas", id: false, force: :cascade do |t|
+    t.integer "container_id", limit: 4, null: false
+    t.integer "formula_id",   limit: 4, null: false
+  end
+
+  add_index "containers_formulas", ["container_id", "formula_id"], name: "index_containers_formulas_on_container_id_and_formula_id", using: :btree
+  add_index "containers_formulas", ["formula_id", "container_id"], name: "index_containers_formulas_on_formula_id_and_container_id", using: :btree
+
   create_table "containers_glossaries", id: false, force: :cascade do |t|
     t.integer "container_id", limit: 4, null: false
     t.integer "glossary_id",  limit: 4, null: false
@@ -46,6 +54,14 @@ ActiveRecord::Schema.define(version: 20160420132228) do
 
   add_index "containers_glossaries", ["container_id", "glossary_id"], name: "index_containers_glossaries_on_container_id_and_glossary_id", using: :btree
   add_index "containers_glossaries", ["glossary_id", "container_id"], name: "index_containers_glossaries_on_glossary_id_and_container_id", using: :btree
+
+  create_table "formulas", force: :cascade do |t|
+    t.string  "name",    limit: 255
+    t.string  "value",   limit: 255
+    t.integer "user_id", limit: 4
+  end
+
+  add_index "formulas", ["user_id"], name: "index_formulas_on_user_id", using: :btree
 
   create_table "glossaries", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -130,6 +146,7 @@ ActiveRecord::Schema.define(version: 20160420132228) do
   add_foreign_key "blocks", "types"
   add_foreign_key "blocks", "users"
   add_foreign_key "containers", "users"
+  add_foreign_key "formulas", "users"
   add_foreign_key "glossaries", "users"
   add_foreign_key "pages", "containers"
   add_foreign_key "pages", "users"

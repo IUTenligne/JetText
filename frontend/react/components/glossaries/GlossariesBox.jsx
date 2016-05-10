@@ -11,7 +11,7 @@ var GlossaryItem = React.createClass({
     getInitialState: function() {
         return {
             isChecked: false,
-            active: false
+            showTerms: false
         };
     },
 
@@ -66,7 +66,7 @@ var GlossaryItem = React.createClass({
 
     showTerms: function (){
         this.setState({
-            active: !this.state.active
+            showTerms: !this.state.showTerms
         })
     },
 
@@ -89,7 +89,7 @@ var GlossaryItem = React.createClass({
                         <i className="fa fa-trash-o" ></i>
                     </a>
         
-                { this.state.popUp ? <GlossaryBox glossary={glossary.id} /> : null }
+                { this.state.showTerms ? <GlossaryBox glossary={glossary.id} /> : null }
 
             </li>
         );

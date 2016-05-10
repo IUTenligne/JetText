@@ -2,7 +2,7 @@ class TermsController < ApplicationController
 
 	before_action :authenticate_user!
 	before_filter :require_permission, only: [:show, :update, :destroy]
-  	respond_to :json
+  respond_to :json
 
 	def require_permission
 	    if current_user != Term.find(params[:id]).glossary.user || current_user.nil?

@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :containers, dependent: :destroy       
-  has_many :variabels, dependent: :destroy 
 end
 
 # == Schema Information
