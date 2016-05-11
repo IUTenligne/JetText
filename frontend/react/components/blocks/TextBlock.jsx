@@ -55,7 +55,7 @@ var TextBlock = React.createClass({
         if (editor) { editor.destroy(true); }
     },
 
-    saveBlock: function(event) {
+    saveBlock: function() {
         var block = this.props.block;
 
         $.ajax({
@@ -71,12 +71,9 @@ var TextBlock = React.createClass({
             }
         });
 
-        event.target.value = '';
-
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
 
-        event.preventDefault();
         this._notificationSystem.addNotification({
             title: 'Block saved !',
             level: 'success'
@@ -92,24 +89,30 @@ var TextBlock = React.createClass({
         });
 
         editor.on('change', function( evt ) {
-            // setState to allow changes to be saved on submit
-            var cases = that._highlightText(evt.editor.getData(), editor);
-            if (cases) {
-                console.log(cases);
-            }
-            that.setState({ blockContent: evt.editor.getData() });
+            var content = that._highlightText(evt.editor.getData(), editor);
+            //console.log(content);
+            //that.setState({blockContent: content}); 
         });
     },
 
     _highlightText: function(query, editor) {
-        var extract = query.match(/{{(.*?)}}/).pop();
-        if (extract) {
+        if ( query.match(/{{(.*?)}}/) ) {
+            var extract = query.match(/{{(.*?)}}/).pop();
+            var formula = extract.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            var content = query.replace(/{{(.*?)}}/, '<span class="formula">' + formula + '</span>');
+
             this.setState({ 
-                modalState: true,
                 getEditor: editor,
-                formulaString: extract.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+                formulaString: formula,
+                blockContent: query.replace(/{{(.*?)}}/, '<span class="formula">' + formula + '</span>'),
+                modalState: true
             });
+        } else {
+            this.setState({
+                blockContent: query
+            })
         }
+        return this.state.blockContent;
     },
 
     handleModalState: function(st) {
@@ -122,9 +125,16 @@ var TextBlock = React.createClass({
 
     saveFormula: function() {
         var editor = this.state.getEditor;
-        var newData = editor.getData().replace(/{{(.*?)}}/, this.state.formulaString);
+        var newData = this.state.blockContent;
         editor.setData(newData);
-        this.setState({ modalState: false });
+        console.log(1, "bc: ", newData);
+
+        this.setState({ 
+            modalState: false, 
+            blockContent: newData
+        });
+
+        this.saveBlock();
     },
 
     _notificationSystem: null,

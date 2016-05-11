@@ -9,13 +9,14 @@ class TermsController < ApplicationController
 	      render json: { status: "error" }
 	    end
 	end
+
 	def index
 		@terms = Term.select("id, name, description").all
 		render json: { terms: @terms }
 	end
 
 	def show
-	  	@term = Term.find(params[:id])
+	  @term = Term.find(params[:id])
 		render json: { term: @term}
 	 end
 
