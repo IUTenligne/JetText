@@ -3,6 +3,7 @@ var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 var Glossaries = require('../glossaries/Glossaries.jsx');
 var Term = require('../glossaries/term.jsx');
+var Modal = require('../widgets/Modal.jsx');
 
 
 var TextBlock = React.createClass({
@@ -14,7 +15,10 @@ var TextBlock = React.createClass({
             myStyle: '',
             left: '',
             top: '',
-            termsList: []
+            termsList: [],
+            modalState: false,
+            formulaString: '',
+            getEditor: ''
         };
     },
 
@@ -89,8 +93,38 @@ var TextBlock = React.createClass({
 
         editor.on('change', function( evt ) {
             // setState to allow changes to be saved on submit
+            var cases = that._highlightText(evt.editor.getData(), editor);
+            if (cases) {
+                console.log(cases);
+            }
             that.setState({ blockContent: evt.editor.getData() });
         });
+    },
+
+    _highlightText: function(query, editor) {
+        var extract = query.match(/{{(.*?)}}/).pop();
+        if (extract) {
+            this.setState({ 
+                modalState: true,
+                getEditor: editor,
+                formulaString: extract.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+            });
+        }
+    },
+
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+    },
+
+    handleFormulaChange: function(event) {
+        this.setState({ formulaString: event.target.value });
+    },
+
+    saveFormula: function() {
+        var editor = this.state.getEditor;
+        var newData = editor.getData().replace(/{{(.*?)}}/, this.state.formulaString);
+        editor.setData(newData);
+        this.setState({ modalState: false });
     },
 
     _notificationSystem: null,
@@ -103,7 +137,7 @@ var TextBlock = React.createClass({
         return {__html: data};
     },
 
-    overTerm: function(event){
+    overTerm: function(event) {
         this.setState({
             left: event.screenX,
             top: event.clientY - 60,
@@ -111,7 +145,7 @@ var TextBlock = React.createClass({
         });
     },
 
-    downTerm: function(event){
+    downTerm: function(event) {
         this.setState({
             focusPopup: false,
             overlayAdd: false,
@@ -119,7 +153,7 @@ var TextBlock = React.createClass({
         });
     },
 
-    handleClickOutside: function(event){
+    handleClickOutside: function(event) {
         this.setState({
             focusPopup: false,
             overlayAdd: false,
@@ -207,6 +241,16 @@ var TextBlock = React.createClass({
                         </div>
                     </div>
                     : null
+                }
+
+                { this.state.modalState
+                    ? <Modal active={this.handleModalState} title={"Add a formula"}>
+                        <div>
+                            <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
+                            <input type="submit" value="Ok" onClick={this.saveFormula} />
+                        </div>
+                    </Modal>
+                    : null 
                 }
 
                 <NotificationSystem ref="notificationSystem"/>

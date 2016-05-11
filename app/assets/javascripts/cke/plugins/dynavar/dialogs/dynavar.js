@@ -30,19 +30,22 @@ CKEDITOR.dialog.add('dynavarDialog', function(editor) {
                 		type: 'select',
                 		id: 'variable',
                 		items: [],
-                		onClick: function() {
+                		onLoad: function() {
                 			$.ajax({
                 				url: "/formulas.json",
                 				type: "GET",
                 				context: this,
                 				success: function(data) {
                 					var that = this;
-                					that.items = [];
                 					$.each(data.formulas, function(index, item) {
 					                    that.add(item["name"], item["name"])
 					                });
                 				}
                 			});
+                		},
+                		onChange: function() {
+                			var dialog = CKEDITOR.ui.dialog;
+        					console.log(dialog);
                 		}
                 	},
                     {
@@ -50,9 +53,9 @@ CKEDITOR.dialog.add('dynavarDialog', function(editor) {
 		                id: 'formula',
 		                label: 'Formula',
 		                onChange: function(api) {
-                			console.log(api.data.value);
+                			//console.log(api.data.value);
                 			var test = CKEDITOR.ui.dialog.select;
-                			console.log(test);
+                			//console.log(test);
                 		}
                     },
                     {
