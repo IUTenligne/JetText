@@ -102,6 +102,7 @@ var GlossariesBox = React.createClass({
             loading: true,
 	        newGlossaryValue: '',
 	        glossariesList: [],
+            containersGlossaries: [],
             modalState: true
 	    };
 	},
@@ -114,6 +115,7 @@ var GlossariesBox = React.createClass({
 	    this.serverRequest = $.get("/glossaries/box/"+this.props.containerId+".json", function(result){
 	      	this.setState({
 	      		glossariesList: result.glossaries,
+                containersGlossaries: result.containers_glossaries,
                 loading: false
 	      	});
 	    }.bind(this));
@@ -178,7 +180,7 @@ var GlossariesBox = React.createClass({
 
                     <ul>
             			{ this.state.glossariesList.map(function(glossary) {
-                            return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} key={glossary.id}/>);
             			})}
                     </ul>
 

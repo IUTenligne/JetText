@@ -10,7 +10,8 @@ var TermOverlay = React.createClass({
             glossariesEmpty: false,
             term: "",
             selectedGlossary: "", 
-            newGlossaryValue: ""
+            newGlossaryValue: "",
+            inputCreate: false
 	    };
 	},
 
@@ -27,9 +28,11 @@ var TermOverlay = React.createClass({
                 });
             }
 	    }.bind(this));
+
         this.setState({
-            term: this.props.select
+            term: this.props.select.replace(/^\s\s*/, '').replace(/\s\s*$/, '').replace(/,/, '')
         });
+
 	    this._notificationSystem = this.refs.notificationSystem;
 	},
 
@@ -48,13 +51,13 @@ var TermOverlay = React.createClass({
             })
         } else if (elem == "newDescriptionValue") {
             this.setState({
-                newDescriptionValue: event.target.value
+                newDescriptionValue: event.target.value,
+                inputCreate: true
             })
         }
     },
 
     createTerm: function(){
-        console.log( this.state.glossarriesList[0]["id"]);
         if(this.state.glossariesEmpty == false){
             $.ajax ({
                 type: "POST",
@@ -66,8 +69,11 @@ var TermOverlay = React.createClass({
                         description: this.state.newDescriptionValue,
                         glossary_id: this.state.selectedGlossary
                     }
-                }
-            })
+                },
+                success: function(){
+                    this.props.modalState(false)
+                },
+            });
         }else {
             $.ajax ({
                 type: "POST",
@@ -89,10 +95,13 @@ var TermOverlay = React.createClass({
                                 description: this.state.newDescriptionValue,
                                 glossary_id: data.id
                             }
-                        }
+                        },
+                        success: function(){
+                            this.props.modalState(false)
+                        },
                     })
-                }
-            })
+                },
+            });
         }
     },
 
@@ -118,7 +127,6 @@ var TermOverlay = React.createClass({
             			})}
                     </select>
                 :  <div className="add_new_glossary">
-                        <h3> Vous n'avez pas de glossary !</h3>
                         <div className="input-group input-group-lg">
                             <input type="text" id="new_glossary" value={this.state.newGlossaryValue}  onChange={this.handleChange.bind(this, "newGlossaryValue")} placeholder="Create new glossary..." />
                         </div>
@@ -127,8 +135,11 @@ var TermOverlay = React.createClass({
                 <br/>
                 <input type="text" value={this.state.term} onChange={this.handleChange.bind(this, "term")}  /><br/>
     			<textarea  type="text" value={this.state.newDescriptionValue} onChange={this.handleChange.bind(this, "newDescriptionValue")} placeholder="Create new definition..." />
-
-                <input type="submit" value='Create' className="btn-success" onClick={this.createTerm}/>
+                { this.state.inputCreate 
+                    ? <input type="submit" value='Create' className="btn-success" onClick={this.createTerm}/>
+                    : null
+                }
+                
     		</form>  
     	);
     }

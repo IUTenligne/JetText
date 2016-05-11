@@ -44,7 +44,7 @@ var Block = React.createClass({
         if (block.type_id === 1) {
             return (
                 <div className="block block-text">
-                    <TextBlock block={block} key={block.id} />
+                    <TextBlock block={block} key={block.id} containerId={this.props.containerId} />
                     <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
                     <NotificationSystem ref="notificationSystem" />
                 </div>

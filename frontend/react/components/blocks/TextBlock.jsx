@@ -15,26 +15,53 @@ var TextBlock = React.createClass({
             left: '',
             top: '',
             termsList: [],
-            modalState: false
+            modalState: false,
+            selectedText: '',
+            focusPopup: false,
+            containersGlossariesList: []
         };
     },
 
     componentDidMount: function() {
-        this.setState({
-            blockContent: this.props.block.content
-        });
-        this.serverRequest = $.get("/terms.json", function(result){
+        this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
-                termsList: result.terms
+                containersGlossariesList: result.containers_glossaries
             });
-        }.bind(this));
+            
+            if (result.containers_glossaries.length > 0){
+                var that = this;
 
+                for( var i in result.containers_glossaries ){
+                    that.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] +  ".json", function(result){
+                        that.setState({
+                            termsList: result.terms,
+                            blockContent: this.regexTerm(result.terms, this.props.block.content)
+                        });
+                    }.bind(that));
+                }
+            } else {
+                this.setState({
+                    blockContent: this.props.block.content
+                });
+            }
+        }.bind(this));
+        
         this._notificationSystem = this.refs.notificationSystem;
 
         /* Opens CKEditor if the block has no content */
         if (this.props.block.content == '') {
             this.unlockEditor();
         }
+    },
+
+    regexTerm: function(termsList, content){
+        for ( var i in termsList) {
+            var regex = new RegExp(termsList[i]["name"], "gi");
+            if ( content.match(regex) ) {
+                content = content.replace(regex, '<span style="background: red">'+termsList[i]["name"]+'</span>');
+            }
+        }
+        return content;
     },
 
     componentWillUnmount: function() {
@@ -105,12 +132,22 @@ var TextBlock = React.createClass({
         return {__html: data};
     },
 
+
+
     overTerm: function(event){
-        this.setState({
+        this.setState({ 
+            selectedText: document.getSelection().toString(),
             left: event.pageX-40,
-            top: event.pageY -50,
-            focusPopup: true
+            top: event.pageY -50
         });
+        
+        var txt = document.getSelection().toString();
+        
+        if ( (txt.length > 0) && (!txt.match(/^\s$/))) {
+            this.setState({ focusPopup: true });
+        } else {
+            this.setState({ focusPopup: false });
+        }
     },
 
     termOverlay: function(){
@@ -123,8 +160,6 @@ var TextBlock = React.createClass({
 
 	render: function() {
 		var block = this.props.block;
-        var TextBlock = this.props.item;
-        var select = document.getSelection().toString();
         var myStyle = {
             left: this.state.left + "px",
             top: this.state.top + "px",
@@ -135,11 +170,15 @@ var TextBlock = React.createClass({
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
-                    <div className="focus" style={myStyle}>
-                        <a onClick={this.termOverlay}>
-                            <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                    { this.state.focusPopup
+                        ? <div className="focus" style={myStyle}>
+                            <a onClick={this.termOverlay}>
+                                <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        : null
+                    }
+                    
                     <div className="block-title">
                         <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
@@ -158,12 +197,10 @@ var TextBlock = React.createClass({
 
                 { this.state.modalState
                     ? <Modal active={this.handleModalState} title={"Create new definition"}>
-                        <TermOverlay select={select} />
+                        <TermOverlay select={this.state.selectedText} modalState={this.handleModalState}/>
                     </Modal>
                     : null
                 }
-
-
 
                 <NotificationSystem ref="notificationSystem"/>
             </div>

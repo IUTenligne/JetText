@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
     resources :terms
     get "/generate_container/:id" => "containers#generate", as: 'generate_container'
+    get "/containers_glossaries/:container_id" => "containers_glossaries#show"
     post "/containers_glossaries" => "containers_glossaries#check"
   end
 

@@ -75,7 +75,7 @@ var Page = React.createClass({
                 <div className="blocks">
                     <ReactCSSTransitionGroup transitionName="blocks-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                     {this.state.blocks.map(function(block){
-                        return <Block key={block.id} item={block} removeBlock={that.handleBlockDeletion} />
+                        return <Block key={block.id} item={block} containerId={page.container_id} removeBlock={that.handleBlockDeletion} />
                     })}
                     </ReactCSSTransitionGroup>
                 </div>

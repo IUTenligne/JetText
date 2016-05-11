@@ -18,4 +18,6 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Custom plugins app/assets/javascripts/cke/plugins
 	config.extraPlugins = 'uploader';
+
+	config.allowedContent = true;
 };
