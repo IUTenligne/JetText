@@ -20,4 +20,9 @@ class ContainersGlossariesController < ApplicationController
     end
   end
 
+  def show
+    @containers_glossaries = ContainersGlossary.where(container_id: params["container_id"])
+    render json: { containers_glossaries: @containers_glossaries }
+  end
+
 end

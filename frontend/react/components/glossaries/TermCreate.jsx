@@ -1,5 +1,4 @@
 var React = require('react');
-var Term= require('./Glossary.jsx');
 var NotificationSystem = require('react-notification-system');
 
 var TermCreate = React.createClass({
@@ -35,7 +34,6 @@ var TermCreate = React.createClass({
                 }
             },
     		success: function(data){
-                console.log(data);
     			this.props.addTerm(data)
     		}
     	})

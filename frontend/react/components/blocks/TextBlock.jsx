@@ -3,6 +3,7 @@ var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 var Glossaries = require('../glossaries/Glossaries.jsx');
 var Term = require('../glossaries/term.jsx');
+var TermOverlay = require('../glossaries/termOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 
 
@@ -18,26 +19,53 @@ var TextBlock = React.createClass({
             termsList: [],
             modalState: false,
             formulaString: '',
-            getEditor: ''
+            getEditor: '',
+            selectedText: '',
+            focusPopup: false,
+            containersGlossariesList: []
         };
     },
 
     componentDidMount: function() {
-        this.setState({
-            blockContent: this.props.block.content
-        });
-        this.serverRequest = $.get("/terms.json", function(result){
+        this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
-                termsList: result.terms
+                containersGlossariesList: result.containers_glossaries
             });
-        }.bind(this));
+            
+            if (result.containers_glossaries.length > 0){
+                var that = this;
 
+                for( var i in result.containers_glossaries ){
+                    that.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] +  ".json", function(result){
+                        that.setState({
+                            termsList: result.terms,
+                            blockContent: this.regexTerm(result.terms, this.props.block.content)
+                        });
+                    }.bind(that));
+                }
+            } else {
+                this.setState({
+                    blockContent: this.props.block.content
+                });
+            }
+        }.bind(this));
+        
         this._notificationSystem = this.refs.notificationSystem;
 
         /* Opens CKEditor if the block has no content */
         if (this.props.block.content == '') {
             this.unlockEditor();
         }
+    },
+
+    regexTerm: function(termsList, content){
+        for ( var i in termsList) {
+            var regex = new RegExp(termsList[i]["name"], "gi");
+            if ( content.match(regex) ) {
+                content = content.replace(regex, '<span style="background: red">'+termsList[i]["name"]+'</span>');
+            }
+        }
+        return content;
     },
 
     componentWillUnmount: function() {
@@ -146,62 +174,51 @@ var TextBlock = React.createClass({
         return {__html: data};
     },
 
-    overTerm: function(event) {
-        this.setState({
-            left: event.screenX,
-            top: event.clientY - 60,
-            focusPopup: true
+    overTerm: function(event){
+        this.setState({ 
+            selectedText: document.getSelection().toString(),
+            left: event.pageX-40,
+            top: event.pageY -50
         });
-    },
-
-    downTerm: function(event) {
-        this.setState({
-            focusPopup: false,
-            overlayAdd: false,
-            overlayTerm: false
-        });
-    },
-
-    handleClickOutside: function(event) {
-        this.setState({
-            focusPopup: false,
-            overlayAdd: false,
-            overlayTerm: false
-        });
-    },
-
-    addOverlay: function(){
-        this.setState({
-            overlayAdd: true,
-            overlayTerm: false
-        });
+        
+        var txt = document.getSelection().toString();
+        
+        if ( (txt.length > 0) && (!txt.match(/^\s$/))) {
+            this.setState({ focusPopup: true });
+        } else {
+            this.setState({ focusPopup: false });
+        }
     },
 
     termOverlay: function(){
-        this.setState({
-            overlayTerm: true,
-            overlayAdd: false
-        });
+        this.setState({ modalState: true });
+    },
+
+    handleModalState: function(st){
+        this.setState({ modalState: st });
     },
 
 	render: function() {
 		var block = this.props.block;
-        var TextBlock = this.props.item;
-        var select = document.getSelection().toString();
-        var myStyle = "left : " + this.state.left + "px ; top: " + this.state.top + "px " ;
-        console.log(myStyle);
+        var myStyle = {
+            left: this.state.left + "px",
+            top: this.state.top + "px",
+            position: "absolute",
+            clear: "both"
+        };
 
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
-                    <div className="focus" style={{myStyle}}>
-                        <a onClick={this.termOverlay}>
-                            <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
-                        </a>
-                        <a onClick={this.addOverlay}>
-                            <i className="fa fa-plus fa-fw" title="Add" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                    { this.state.focusPopup
+                        ? <div className="focus" style={myStyle}>
+                            <a onClick={this.termOverlay}>
+                                <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        : null
+                    }
+                    
                     <div className="block-title">
                         <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
@@ -218,37 +235,10 @@ var TextBlock = React.createClass({
                     : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
                 }
 
-                { this.state.overlayAdd 
-                    ? <div className="overlay">
-                        <Glossaries/>
-                    </div>
-                    : null
-                }
-
-                { this.state.overlayTerm 
-                    ? <div className="overlay content">
-                        <div className="block-title">
-                            <i className="fa fa-book"></i>
-                            <h3> 
-                                Quel term associer à :<br/>
-                                <span className="bold"> {select} </span>?
-                            </h3>
-                        </div>
-                        <div className="block-content">
-                            <ul>
-                                { this.state.termsList.map(function(term) {
-                                    return(
-                                        <li key={term.id}>
-                                            <label for={term.id}>
-                                                <input type="checkbox"/>
-                                                <span className="bold">{term.name}</span> : {term.description}
-                                            </label>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </div>
-                    </div>
+                { this.state.modalState
+                    ? <Modal active={this.handleModalState} title={"Create new definition"}>
+                        <TermOverlay select={this.state.selectedText} modalState={this.handleModalState}/>
+                    </Modal>
                     : null
                 }
 

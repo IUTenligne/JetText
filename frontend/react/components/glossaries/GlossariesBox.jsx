@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
 var GlossaryBox = require('./GlossaryBox.jsx');
 var Modal = require('../widgets/Modal.jsx');
@@ -103,6 +102,7 @@ var GlossariesBox = React.createClass({
             loading: true,
 	        newGlossaryValue: '',
 	        glossariesList: [],
+            containersGlossaries: [],
             modalState: true
 	    };
 	},
@@ -115,6 +115,7 @@ var GlossariesBox = React.createClass({
 	    this.serverRequest = $.get("/glossaries/box/"+this.props.containerId+".json", function(result){
 	      	this.setState({
 	      		glossariesList: result.glossaries,
+                containersGlossaries: result.containers_glossaries,
                 loading: false
 	      	});
 	    }.bind(this));
@@ -179,7 +180,7 @@ var GlossariesBox = React.createClass({
 
                     <ul>
             			{ this.state.glossariesList.map(function(glossary) {
-                            return(<GlossaryItem glossary={glossary} containerId={containerId} key={glossary.id}/>);
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} key={glossary.id}/>);
             			})}
                     </ul>
 
