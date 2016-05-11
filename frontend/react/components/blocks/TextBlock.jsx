@@ -90,8 +90,6 @@ var TextBlock = React.createClass({
 
         editor.on('change', function( evt ) {
             var content = that._highlightText(evt.editor.getData(), editor);
-            //console.log(content);
-            //that.setState({blockContent: content}); 
         });
     },
 
@@ -104,7 +102,7 @@ var TextBlock = React.createClass({
             this.setState({ 
                 getEditor: editor,
                 formulaString: formula,
-                blockContent: query.replace(/{{(.*?)}}/, '<span class="formula">' + formula + '</span>'),
+                blockContent: content,
                 modalState: true
             });
         } else {
@@ -112,6 +110,7 @@ var TextBlock = React.createClass({
                 blockContent: query
             })
         }
+
         return this.state.blockContent;
     },
 
