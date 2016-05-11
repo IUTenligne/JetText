@@ -9,23 +9,22 @@ var TermOverlay = React.createClass({
 	        glossarriesList: [] ,
             glossariesEmpty: false,
             term: "",
-            selectType: 1, 
+            selectedGlossary: "", 
             newGlossaryValue: ""
 	    };
 	},
 
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossaries.json", function(result){
-            console.log(result.glossaries.length , this.state.glossariesEmpty);
             if (result.glossaries.length > 0 ){
                 this.setState({
-                    glossarriesList: result.glossaries
+                    glossarriesList: result.glossaries,
+                    selectedGlossary: result.glossaries[0]["id"]
                 });
             }else{
                 this.setState({
                     glossariesEmpty: true
                 });
-                console.log(this.state.glossariesEmpty);
             }
 	    }.bind(this));
         this.setState({
@@ -55,7 +54,7 @@ var TermOverlay = React.createClass({
     },
 
     createTerm: function(){
-        console.log(this.state.newGlossaryValue);
+        console.log( this.state.glossarriesList[0]["id"]);
         if(this.state.glossariesEmpty == false){
             $.ajax ({
                 type: "POST",
@@ -65,7 +64,7 @@ var TermOverlay = React.createClass({
                     term: {
                         name: this.state.term,
                         description: this.state.newDescriptionValue,
-                        glossary_id: this.state.selectedType
+                        glossary_id: this.state.selectedGlossary
                     }
                 }
             })
@@ -80,7 +79,6 @@ var TermOverlay = React.createClass({
                     }
                 },
                 success: function(data){
-                    console.log(this.state.newDescriptionValue);
                     $.ajax ({
                         type: "POST",
                         url: '/terms',
@@ -98,23 +96,24 @@ var TermOverlay = React.createClass({
         }
     },
 
-    selectType: function(event) {
-        this.setState({ selectedType: event.target.value });
+    selectGlossary: function(event) {
+        this.setState({ selectedGlossary: event.target.value });
     },
 
 
     _notificationSystem: null,
 
     render: function(){
+
     	return(
     		<form>
                 <NotificationSystem ref="notificationSystem" />
 
                 { !this.state.glossariesEmpty ?
-                    <select value={this.state.selectedType} onChange={this.selectType}>
+                    <select value={this.state.selectedGlossary} onChange={this.selectGlossary}>
             			{this.state.glossarriesList.map(function(glossary){
             				return(
-                                <option value={glossary.id} >{glossary.name}</option>
+                                <option value={glossary.id} key={glossary.id}>{glossary.name}</option>
             				);
             			})}
                     </select>

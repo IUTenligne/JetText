@@ -159,7 +159,6 @@ var TextBlock = React.createClass({
                 { this.state.modalState
                     ? <Modal active={this.handleModalState} title={"Create new definition"}>
                         <TermOverlay select={select} />
-                        <span className="bold"> {select} </span>
                     </Modal>
                     : null
                 }
