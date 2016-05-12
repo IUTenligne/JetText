@@ -126,3 +126,16 @@ span.bold{
 		}
 	}
 }
+
+/* dragula */
+.gu-mirror {
+  background: red !important;
+}
+
+.gu-transit {
+	.block-content,
+	.block-actions {
+		display: none;
+	} 
+} 
+/* */

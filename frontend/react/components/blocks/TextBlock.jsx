@@ -175,6 +175,8 @@ var TextBlock = React.createClass({
     },
 
     overTerm: function(event){
+        event.preventDefault(); 
+
         this.setState({ 
             selectedText: document.getSelection().toString(),
             left: event.pageX-40,
@@ -209,7 +211,7 @@ var TextBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id} onMouseUp={this.overTerm} onMouseDown={this.downTerm} >
+                <div className="content" key={block.id} onMouseUp={this.overTerm}>
                     { this.state.focusPopup
                         ? <div className="focus" style={myStyle}>
                             <a onClick={this.termOverlay}>
@@ -222,6 +224,7 @@ var TextBlock = React.createClass({
                     <div className="block-title">
                         <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
+                        <span className="handle">+</span>
                     </div>
 
                     { this.state.loading
@@ -231,8 +234,8 @@ var TextBlock = React.createClass({
                 </div>
 
                 { this.state.editButton 
-                    ? <button className="btn-block" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button>
-                    : <button className="btn-block" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
+                    ? <button className="btn-block block-actions" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button>
+                    : <button className="btn-block block-actions" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
                 }
 
                 { this.state.modalState

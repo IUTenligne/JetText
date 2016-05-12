@@ -46,16 +46,20 @@ var Block = React.createClass({
             return (
                 <div className="block block-text" data-id={block.id}>
                     <TextBlock block={block} key={block.id} containerId={this.props.containerId} />
-                    <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
-                    <NotificationSystem ref="notificationSystem" />
+                    <div className="block-actions">
+                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
+                        <NotificationSystem ref="notificationSystem" />
+                    </div>
                 </div>
             );
         } else if (block.type_id === 2) {
             return (
                 <div className="block block-media" data-id={block.id}>
                     <MediaBlock block={block} key={block.id} />
-                    <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
-                    <NotificationSystem ref="notificationSystem" />
+                    <div className="block-actions">
+                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
+                        <NotificationSystem ref="notificationSystem" />
+                    </div>
                 </div>
             );
         } else {

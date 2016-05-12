@@ -303,6 +303,7 @@ var MediaBlock = React.createClass({
                             <input type="text" value={this.state.blockName} placeholder="Block name..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlockName}><i className="fa fa-check"></i></button> : null }
                         </h3>
+                        <span className="handle">+</span>
                     </div>
 
                     <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">

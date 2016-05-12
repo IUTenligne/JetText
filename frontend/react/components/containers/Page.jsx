@@ -63,7 +63,11 @@ var Page = React.createClass({
         }.bind(this));
 
         var container = ReactDOM.findDOMNode(this.refs.dragableblocks);
-        var drake = dragula([container]);
+        var drake = dragula([container], {
+            moves: function (el, container, handle) {
+                return handle.className === 'handle';
+            }
+        });
         this.moveItems(drake);
     },
 
@@ -118,13 +122,13 @@ var Page = React.createClass({
                 context: that,
                 data: { sequence: updated_sequence },
                 success: function(data) {
-                    var sortedPages = [];
+                    var sortedBlocks = [];
                     for (var i in updated_sequence) {
                         var o = updated_sequence[i];
                         var block = $.grep(blocks, function(e){
                             if (e.id == o.id) return e;
                         });
-                        sortedPages.push(block[0]);
+                        sortedBlocks.push(block[0]);
                     }
 
                     that.setState({ blocks: sortedBlocks });
@@ -156,7 +160,7 @@ var Page = React.createClass({
                             return <Block key={block.id} item={block} containerId={page.container_id} removeBlock={that.handleBlockDeletion} />
                         })}
                     </div>
-                </ReactCSSTransitionGroup>
+                </ReactCSSTransitionGroup>      
 
                 <form id="add_new_block">
                     <div className="input-group input-group-lg">
