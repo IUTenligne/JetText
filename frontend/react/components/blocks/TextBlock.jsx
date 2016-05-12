@@ -35,17 +35,23 @@ var TextBlock = React.createClass({
                 blockContent: this.props.block.content
             });
             
-            if (result.containers_glossaries.length > 0){
-                var that = this;
+            if (result.containers_glossaries.length > 0) {
+                for (var i in result.containers_glossaries) {
+                    /* blockVirtualContent is a copy of blockContent, used to display a list of glossary terms 
+                    and to not override the block's content by adding <a> links in the database.
+                    Only used in the client-side to display a term description in a tooltip if a glossary is checked. */
 
-                for( var i in result.containers_glossaries ){
-                    that.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] + ".json", function(result){
-                        that.setState({
-                            termsList: result.terms,
-                            blockVirtualContent: this.regexTerm(result.terms, this.props.block.content)
+                    this.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] + ".json", function(result){
+                        this.setState({
+                            termsList: this.state.termsList.concat(result.terms),
+                            blockVirtualContent: this.regexTerm(this.state.termsList.concat(result.terms), this.props.block.content)
                         });
-                    }.bind(that));
+                    }.bind(this));
                 }
+
+                this.setState({
+                    blockVirtualContent: this.regexTerm(this.termsList, this.props.block.content)
+                });
             }
         }.bind(this));
         
@@ -58,12 +64,14 @@ var TextBlock = React.createClass({
     },
 
     regexTerm: function(termsList, content){
+        console.log(termsList, content);
         for ( var i in termsList ) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
                 content = content.replace(regex, '<a href="#" style="background: red" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
             }
         }
+        console.log(content);
         return content;
     },
 
