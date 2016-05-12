@@ -1,11 +1,43 @@
 @import "../vars";
 
+/* title page*/
 .header_page {
 	text-transform: capitalize;
 	margin-bottom: 25px;
 	font-weight: bold;
 }
 
+/* import css block*/
 .blocks {
 	@import 'blocks';
 }
+
+/* menu create block (media/ texte)*/
+#add_new_block{
+	text-align: center;
+	.selectAction{
+		width: calc(100%/9);
+		display: inline-block;
+		margin: 15px;
+		text-align: center;
+		color: white;
+		height: 100px;
+		i{
+			font-size: 40px;
+			padding: 10px;
+		}
+	}
+	.text{
+		background: $lightBlue;
+	}
+	.media{
+		background: $lightGreen;
+	}
+	.glossary{
+		background: $fileRed;
+	}
+	.delete{
+		background: $lightOrange;
+	}
+}
+

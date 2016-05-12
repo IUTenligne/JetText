@@ -89,6 +89,7 @@ span.bold{
 			}
 			a{
 				position: relative;
+				color: $lightBlue;
 
 			}
 			a[data]:hover:after{
@@ -140,7 +141,7 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background: #70C536;
+				background: $lightOrange;
 				color: #437F1F;
 			}
 		}

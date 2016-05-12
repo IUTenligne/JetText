@@ -29,9 +29,11 @@ var GlossaryMenu = React.createClass({
         var containerId = this.props.containerId;
         return(
             <div>
-                <form id="add_new_glossary">
-                    <button onClick={this.showGlossaries}>add glossary</button>
-                </form>
+                <a onClick={this.showGlossaries}>
+                    <i className="fa fa-book fa-fw" aria-hidden="true"></i><br/>
+                    glossary
+                </a>
+ 
 
                 <div>
                     {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
@@ -50,7 +52,10 @@ var Page = React.createClass({
             page: '',
             blocks: [],
             selectedType: 1,
-            retractedBlocks: false
+            retractedBlocks: false,
+            types: [],
+            typeText: [],
+            typeMedia: []
         };
     },
 
@@ -59,7 +64,15 @@ var Page = React.createClass({
             this.setState({
                 status: result.status,
                 page: result.page,
-                blocks: result.blocks
+                blocks: result.blocks,
+            });
+        }.bind(this));
+
+        this.serverRequest = $.get("/types.json", function (result) {
+            this.setState({
+                types: result.types,
+                typeText: result.types[0],
+                typeMedia: result.types[1]
             });
         }.bind(this));
 
@@ -70,6 +83,7 @@ var Page = React.createClass({
                 return handle.className === 'handle';
             }
         });
+
         this.moveItems(drake);
     },
 
@@ -77,7 +91,13 @@ var Page = React.createClass({
         this.serverRequest.abort();
     },
 
-    createBlock: function(event) {
+    createBlock: function(elem, event) {
+        if (elem == "text"){
+            this.setState({selectedType: this.state.typeText.id.value});
+        }else {
+            this.setState({selectedType: this.state.typeMedia.id.value}); 
+            console.log(this.state.selectedType);  
+        }
         $.ajax({
             type: "POST",
             url: '/blocks',
@@ -88,7 +108,7 @@ var Page = React.createClass({
                     content: '', 
                     sequence: this.state.blocks.length, 
                     page_id: this.state.page.id,
-                    type_id: this.state.selectedType
+                    type_id: "2"
                 } 
             },
             success: function(data) {
@@ -155,9 +175,6 @@ var Page = React.createClass({
         this.setState({ blocks: blockList });
     },
 
-    _selectType: function(event) {
-        this.setState({ selectedType: event.target.value });
-    },
 
     render: function() {
         var page = this.state.page;
@@ -175,18 +192,29 @@ var Page = React.createClass({
                     </div>
                 </ReactCSSTransitionGroup>      
 
-                <form id="add_new_block">
-                    <div className="input-group input-group-lg">
-                        <select className="form-control" value={this.state.selectedType} onChange={this._selectType}>
-                            {this.props.types.map(function(type){
-                                return <option value={type.id} key={type.id}>{type.name}</option>
-                            })}
-                        </select>
+                <div id="add_new_block">
+                    <div className="selectAction text" >
+                        <a value={this.state.typeText.id} onClick={this.createBlock.bind(this, "text")}>
+                            <i className="fa fa-pencil" aria-hidden="true"></i><br/>
+                            {this.state.typeText.name}
+                        </a>
                     </div>
-                    <input type="submit" value='Create' className="btn-success" onClick={this.createBlock}/>
-                </form>
-
-                <GlossaryMenu containerId={page.container_id}/>
+                    <div className="selectAction media">
+                        <a value={this.state.typeMedia.id} onClick={this.createBlock.bind(this,"media")}>
+                            <i className="fa fa-file-text" aria-hidden="true"></i><br/>
+                            {this.state.typeMedia.name}
+                        </a>
+                    </div>
+                    <div className="selectAction glossary">
+                        <GlossaryMenu containerId={page.container_id}/>
+                    </div>
+                    <div className="selectAction delete">
+                        <a >
+                            <i className="fa fa fa-trash-o fa-fw" aria-hidden="true"></i><br/>
+                            delete 
+                        </a>
+                    </div>
+                </div>
             </div>
         );
     }

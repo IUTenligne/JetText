@@ -63,7 +63,7 @@ var TextBlock = React.createClass({
         for ( var i in termsList) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
-                content = content.replace(regex, '<a href="#" style="background: red" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
+                content = content.replace(regex, '<a href="#" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
             }
         }
         return content;
@@ -236,8 +236,8 @@ var TextBlock = React.createClass({
                 </div>
 
                 { this.state.editButton 
-                    ? <button className="btn-block block-actions" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button>
-                    : <button className="btn-block block-actions" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
+                    ? <button className="btn-block block-actions" onClick={this.unlockEditor}><i className="fa fa-pencil"> Editer</i></button>
+                    : <button className="btn-block block-actions" onClick={this.saveBlock}><i className="fa fa-check">Enregister</i></button>
                 }
 
                 { this.state.glossaryModalState

@@ -57,7 +57,7 @@ var Block = React.createClass({
                 <div className="block block-media" data-id={block.id}>
                     <MediaBlock block={block} key={block.id} />
                     <div className="block-actions">
-                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
+                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove">Delete</i></button>
                         <NotificationSystem ref="notificationSystem" />
                     </div>
                 </div>
