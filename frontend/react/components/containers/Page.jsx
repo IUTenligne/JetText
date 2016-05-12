@@ -49,7 +49,8 @@ var Page = React.createClass({
             status: 0,
             page: '',
             blocks: [],
-            selectedType: 1
+            selectedType: 1,
+            retractedBlocks: false
         };
     },
 
@@ -63,6 +64,7 @@ var Page = React.createClass({
         }.bind(this));
 
         var container = ReactDOM.findDOMNode(this.refs.dragableblocks);
+        /* makes the blocks draggable by using "handle" class elements in block's jsx */
         var drake = dragula([container], {
             moves: function (el, container, handle) {
                 return handle.className === 'handle';
@@ -109,14 +111,15 @@ var Page = React.createClass({
     },
 
     moveItems: function(drake) {
-        drake.on('drag', function(element, source) {
-            var index = [].indexOf.call(element.parentNode.children, element);
-        });
-
         var that = this;
 
+        drake.on('drag', function(element, source) {
+            var index = [].indexOf.call(element.parentNode.children, element);
+            that.setState({ retractedBlocks: true });
+        });
+
         drake.on('drop', function(element, target, source, sibling) {
-            var index = [].indexOf.call(element.parentNode.children, element)
+            var index = [].indexOf.call(element.parentNode.children, element);
             var updated_sequence = [];
             var blocks = that.state.blocks;
 
@@ -142,6 +145,8 @@ var Page = React.createClass({
                     that.setState({ blocks: sortedBlocks });
                 }
             });
+
+            that.setState({ retractedBlocks: false });
         });
     },
 
@@ -163,7 +168,7 @@ var Page = React.createClass({
                 <h2 className="header_page">{page.name}</h2>
 
                 <ReactCSSTransitionGroup transitionName="blocks-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
-                    <div className="blocks" ref="dragableblocks">
+                    <div className={this.state.retractedBlocks ? "blocks retracted" : "blocks"} ref="dragableblocks">
                         {this.state.blocks.map(function(block){
                             return <Block key={block.id} item={block} containerId={page.container_id} removeBlock={that.handleBlockDeletion} />
                         })}
