@@ -35,7 +35,15 @@ var Menu = React.createClass({
             type: "POST",
             url: '/pages',
             context: this,
-            data: { page: { name: this.state.newPageValue, content: '', level: 0, container_id: this.props.container.id } },
+            data: { 
+                page: { 
+                    name: this.state.newPageValue, 
+                    content: '', 
+                    sequence: this.props.pages.length,
+                    level: 0, 
+                    container_id: this.props.container.id 
+                }
+            },
             success: function(data) {
                 this.setState({
                     newPageValue: ''
