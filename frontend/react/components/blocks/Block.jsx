@@ -3,6 +3,7 @@ var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NotificationSystem = require('react-notification-system');
 
+
 var Block = React.createClass({
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
@@ -43,7 +44,7 @@ var Block = React.createClass({
 
         if (block.type_id === 1) {
             return (
-                <div className="block block-text">
+                <div className="block block-text" data-id={block.id}>
                     <TextBlock block={block} key={block.id} containerId={this.props.containerId} />
                     <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
                     <NotificationSystem ref="notificationSystem" />
@@ -51,7 +52,7 @@ var Block = React.createClass({
             );
         } else if (block.type_id === 2) {
             return (
-                <div className="block block-media">
+                <div className="block block-media" data-id={block.id}>
                     <MediaBlock block={block} key={block.id} />
                     <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i></button>
                     <NotificationSystem ref="notificationSystem" />

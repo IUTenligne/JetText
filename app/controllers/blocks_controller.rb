@@ -53,9 +53,16 @@ class BlocksController < ApplicationController
     render :nothing => true
   end
 
+  def sort
+    params[:sequence].each do |key, value|
+      Block.find(value[:id]).update_attribute(:sequence, value[:sequence])
+    end
+    render :nothing => true
+  end
+
   private
     def block_params
-      params.require(:block).permit(:name, :content, :page_id, :user_id, :type_id, :upload_id)
+      params.require(:block).permit(:name, :content, :sequence, :page_id, :user_id, :type_id, :upload_id)
     end
 
 end

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :blocks do
       put "/set_content/:id" => "blocks#set_content", on: :collection
       put "/update_upload" => "blocks#update_upload", on: :collection
+      put :sort, on: :collection
     end
     resources :types
     resources :variables
