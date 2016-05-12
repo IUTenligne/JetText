@@ -19,7 +19,7 @@ span.bold{
 				width: 150 px;
 				border-radius: 7px;
 				position: absolute;
-				
+				z-index: 1000;
 				a {
 					color: $white;
 					background: $lightBlue;
@@ -87,7 +87,35 @@ span.bold{
 					margin-bottom: 15px;
 				}
 			}
-			
+			a{
+				position: relative;
+
+			}
+			a[data]:hover:after{
+			 	content: attr(data);
+			 	position:absolute; 
+			 	white-space: nowrap;
+			 	background: $uiGrey;
+			 	border-radius: 4px;
+			 	padding: 7px;
+			 	z-index: 10;
+			 	color: white;
+			 	top: - 40px;
+			 	left: 0px;
+			}
+			a[data]:hover:before{
+			  	content: "";
+			  	position: absolute;
+			  	bottom: -7px;
+			  	top: - 10px;
+			 	left: 0px;
+			  	margin-left: 15px;  
+			  	border-top: 8px solid $uiGrey;
+			  	border-left: 8px solid transparent;
+			  	border-right: 8px solid transparent;        
+			  	border-bottom: 0;  
+			  	clear: both;
+			}
 		}
 		.block-content,
 		.cke {
