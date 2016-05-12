@@ -80,7 +80,15 @@ var Page = React.createClass({
             type: "POST",
             url: '/blocks',
             context: this,
-            data: { block: { name: '', content: '', page_id: this.state.page.id, type_id: this.state.selectedType } },
+            data: { 
+                block: { 
+                    name: '', 
+                    content: '', 
+                    sequence: this.state.blocks.length, 
+                    page_id: this.state.page.id,
+                    type_id: this.state.selectedType
+                } 
+            },
             success: function(data) {
                 this.setState({
                     blocks: this.state.blocks.concat([data]),
