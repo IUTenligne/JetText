@@ -11,6 +11,7 @@ var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
+            blockVirtualContent: '',
             editButton: true,
             loading: false,
             myStyle: '',
@@ -30,24 +31,21 @@ var TextBlock = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
-                containersGlossariesList: result.containers_glossaries
+                containersGlossariesList: result.containers_glossaries,
+                blockContent: this.props.block.content
             });
             
             if (result.containers_glossaries.length > 0){
                 var that = this;
 
                 for( var i in result.containers_glossaries ){
-                    that.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] +  ".json", function(result){
+                    that.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] + ".json", function(result){
                         that.setState({
                             termsList: result.terms,
-                            blockContent: this.regexTerm(result.terms, this.props.block.content)
+                            blockVirtualContent: this.regexTerm(result.terms, this.props.block.content)
                         });
                     }.bind(that));
                 }
-            } else {
-                this.setState({
-                    blockContent: this.props.block.content
-                });
             }
         }.bind(this));
         
@@ -60,7 +58,7 @@ var TextBlock = React.createClass({
     },
 
     regexTerm: function(termsList, content){
-        for ( var i in termsList) {
+        for ( var i in termsList ) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
                 content = content.replace(regex, '<a href="#" style="background: red" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
@@ -117,9 +115,16 @@ var TextBlock = React.createClass({
             customConfig: '/assets/cke/custom_config.js'
         });
 
+        editor.setData(this.state.blockContent);
+
         editor.on('change', function( evt ) {
             var content = that._highlightText(evt.editor.getData(), editor);
+            that.setState({
+                blockContent: content,
+                blockVirtualContent: that.regexTerm(that.state.termsList, content)
+            });
         });
+
         this.setState({ focusPopup: false });
     },
 
@@ -229,8 +234,8 @@ var TextBlock = React.createClass({
                         <span className="handle">+</span>
                     </div>
 
-                    { this.state.loading
-                        ? <Loader />
+                    { this.state.blockVirtualContent != ''
+                        ? <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.unlockEditor} />
                         : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor} />
                     }
                 </div>
