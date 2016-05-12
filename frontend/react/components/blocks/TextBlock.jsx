@@ -17,7 +17,8 @@ var TextBlock = React.createClass({
             left: '',
             top: '',
             termsList: [],
-            modalState: false,
+            glossaryModalState: false,
+            formulaModalState: false,
             formulaString: '',
             getEditor: '',
             selectedText: '',
@@ -131,7 +132,7 @@ var TextBlock = React.createClass({
                 getEditor: editor,
                 formulaString: formula,
                 blockContent: content,
-                modalState: true
+                formulaModalState: true
             });
         } else {
             this.setState({
@@ -142,8 +143,8 @@ var TextBlock = React.createClass({
         return this.state.blockContent;
     },
 
-    handleModalState: function(st) {
-        this.setState({ modalState: st });
+    handleFormulaModalState: function(st) {
+        this.setState({ formulaModalState: st });
     },
 
     handleFormulaChange: function(event) {
@@ -157,7 +158,7 @@ var TextBlock = React.createClass({
         console.log(1, "bc: ", newData);
 
         this.setState({ 
-            modalState: false, 
+            formulaModalState: false, 
             blockContent: newData
         });
 
@@ -193,11 +194,11 @@ var TextBlock = React.createClass({
     },
 
     termOverlay: function(){
-        this.setState({ modalState: true });
+        this.setState({ glossaryModalState: true });
     },
 
-    handleModalState: function(st){
-        this.setState({ modalState: st });
+    handleGlossaryModalState: function(st){
+        this.setState({ glossaryModalState: st });
     },
 
 	render: function() {
@@ -238,15 +239,15 @@ var TextBlock = React.createClass({
                     : <button className="btn-block block-actions" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
                 }
 
-                { this.state.modalState
-                    ? <Modal active={this.handleModalState} title={"Create new definition"}>
-                        <TermOverlay select={this.state.selectedText} modalState={this.handleModalState}/>
+                { this.state.glossaryModalState
+                    ? <Modal active={this.handleGlossaryModalState} title={"Create new definition"}>
+                        <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
                     </Modal>
                     : null
                 }
 
-                { this.state.modalState
-                    ? <Modal active={this.handleModalState} title={"Add a formula"}>
+                { this.state.formulaModalState
+                    ? <Modal active={this.handleFormulaModalState} title={"Add a formula"}>
                         <div>
                             <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
                             <input type="submit" value="Ok" onClick={this.saveFormula} />

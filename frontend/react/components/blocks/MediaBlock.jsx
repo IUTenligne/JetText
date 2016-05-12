@@ -306,13 +306,15 @@ var MediaBlock = React.createClass({
                         <span className="handle">+</span>
                     </div>
 
-                    <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                        <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
-                    </form>
+                    <div className="block-content">
+                        <form className="block-content dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                            <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
+                        </form>
 
-                    <button onClick={this.handleBrowseFiles}>Browse files</button>
-                    { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
-
+                        <button onClick={this.handleBrowseFiles}>Browse files</button>
+                        { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
+                    </div>
+                    
                     <div className="block-content" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
                 </div>
 
