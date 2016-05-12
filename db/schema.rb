@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160510132949) do
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.text     "content",    limit: 65535
+    t.integer  "sequence",   limit: 2
     t.integer  "user_id",    limit: 4
     t.integer  "page_id",    limit: 4
     t.integer  "type_id",    limit: 4
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160510132949) do
 
   add_index "blocks", ["page_id"], name: "index_blocks_on_page_id", using: :btree
   add_index "blocks", ["type_id"], name: "index_blocks_on_type_id", using: :btree
+  add_index "blocks", ["upload_id"], name: "index_blocks_on_upload_id", using: :btree
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id", using: :btree
 
   create_table "containers", force: :cascade do |t|
@@ -132,18 +134,9 @@ ActiveRecord::Schema.define(version: 20160510132949) do
     t.string   "authentication_token",   limit: 255
   end
 
-  create_table "variables", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "value",      limit: 4
-    t.integer  "user_id",    limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "variables", ["user_id"], name: "index_variables_on_user_id", using: :btree
-
   add_foreign_key "blocks", "pages"
   add_foreign_key "blocks", "types"
+  add_foreign_key "blocks", "uploads"
   add_foreign_key "blocks", "users"
   add_foreign_key "containers", "users"
   add_foreign_key "formulas", "users"
@@ -152,5 +145,4 @@ ActiveRecord::Schema.define(version: 20160510132949) do
   add_foreign_key "pages", "users"
   add_foreign_key "terms", "glossaries"
   add_foreign_key "uploads", "users"
-  add_foreign_key "variables", "users"
 end
