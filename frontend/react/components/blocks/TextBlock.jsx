@@ -63,7 +63,7 @@ var TextBlock = React.createClass({
         for ( var i in termsList) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
-                content = content.replace(regex, '<span style="background: red">'+termsList[i]["name"]+'</span>');
+                content = content.replace(regex, '<a href="#" style="background: red">'+termsList[i]["name"]+'</a>');
             }
         }
         return content;
@@ -120,6 +120,7 @@ var TextBlock = React.createClass({
         editor.on('change', function( evt ) {
             var content = that._highlightText(evt.editor.getData(), editor);
         });
+        this.setState({ focusPopup: false });
     },
 
     _highlightText: function(query, editor) {
