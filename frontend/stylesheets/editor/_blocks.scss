@@ -94,14 +94,16 @@ span.bold{
 			a[data]:hover:after{
 			 	content: attr(data);
 			 	position:absolute; 
-			 	white-space: nowrap;
 			 	background: $uiGrey;
 			 	border-radius: 4px;
 			 	padding: 7px;
 			 	z-index: 10;
 			 	color: white;
-			 	top: - 40px;
+			 	bottom: 28px;
 			 	left: 0px;
+			 	word-wrap: break-word ;
+			 	width: 300px;
+			 	text-align: center;
 			}
 			a[data]:hover:before{
 			  	content: "";
@@ -113,8 +115,7 @@ span.bold{
 			  	border-top: 8px solid $uiGrey;
 			  	border-left: 8px solid transparent;
 			  	border-right: 8px solid transparent;        
-			  	border-bottom: 0;  
-			  	clear: both;
+			  	border-bottom: 0;
 			}
 		}
 		.block-content,
