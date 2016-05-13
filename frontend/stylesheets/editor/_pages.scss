@@ -21,7 +21,7 @@
 		display: inline-block;
 		margin: 15px;
 		text-align: center;
-		color: white;
+		color: $white;
 		height: 80px;
 		border-radius: 4px;
 		cursor: pointer;
@@ -35,16 +35,16 @@
 
 		.icon-text:before {
 			content: "\f040";
-    	font-family: FontAwesome;
+    		font-family: FontAwesome;
 		}
 
 		.icon-media:before {
 			content: "\f03e";
-    	font-family: FontAwesome;
+    		font-family: FontAwesome;
 		}
 		.icon-note:before {
 			content: "\f10e";
-    	font-family: FontAwesome;
+    		font-family: FontAwesome;
 		}
 	}
 
@@ -60,6 +60,9 @@
 
 	.glossary{
 		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
+		a{
+			color: $white;
+		}
 	}
 	
 	.note{
