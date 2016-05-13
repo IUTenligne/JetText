@@ -277,3 +277,19 @@
 .block-note-quote {
   border: 3px solid blue;
 }
+
+$backgrounds: ('fish.png', 'owl.png', 'bird.png');
+$img: nth($backgrounds, random(length($backgrounds)));
+
+html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
+li.container figure.book ul.hardcover_front div.coverDesign {
+  background-color: white !important;
+  background-size: 100% !important;
+  background-position: bottom left !important;
+  background-repeat: no-repeat !important;
+}
+
+html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
+li.container figure.book ul.hardcover_front div.coverDesign {
+  background-image: url($img) !important;
+}

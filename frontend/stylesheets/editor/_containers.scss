@@ -11,35 +11,43 @@ article#containers {
 
 	ul {
 		width: 100%;
+
 		li.container {
 			figure.book{
-				ul.hardcover_front{
-					div.coverDesign{
+				ul.hardcover_front {
+					div.coverDesign {
 						padding: 60px 3px 0 3px;
 						background: $lightGrey;
 						overflow: hidden;
-						p{
-							text-align: center;
-							color: $bookGrey;
-                    		overflow: hidden;
-                    		max-height: 140px;
+						z-index: 0 !important;
+
+						p {
+							text-align: left;
+							color: $white;
+							background: $lightBlue;
+							padding: 5px 3px;
+              overflow: hidden;
+              max-height: 140px;
+              z-index: 999 !important;
 						}
 					}
 				}
+
 				ul.sheet{
-					li.option{
-						a{
-	                        width: 100%;
-	                        display: block;
-	                        padding: 0;
-	                        text-align: left;
-	                        margin: 12px 0 5px 25px;
-	                        cursor: pointer;
-	                        color: $bookGrey;
-	                    }
-	                    a:hover{
-	                    	color: $lightBlue;
-	                    }
+					li.option {
+						a {
+              width: 100%;
+              display: block;
+              padding: 0;
+              text-align: left;
+              margin: 12px 0 5px 25px;
+              cursor: pointer;
+              color: $bookGrey;
+          	}
+
+	          a:hover{
+	          	color: $lightBlue;
+	          }
 					}
 				}
 			}
@@ -55,5 +63,3 @@ article#containers {
 	padding: 0;
 	@import 'container';
 }
-
-
