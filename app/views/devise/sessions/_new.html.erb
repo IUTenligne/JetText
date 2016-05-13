@@ -1,43 +1,40 @@
-<div class="container">
-    <div class="row">
-        <div class="middle">
-            <div class="login-panel panel panel-default">
+<div class="middle">
+    <div class="login-panel panel panel-default">
 
-                <div class="panel-heading">
-                    <h2 class="panel-title"><%= t("Log in") %></h2>
+        <div class="panel-heading">
+            <h2 class="panel-title"><%= t("Log in") %></h2>
+        </div>
+
+        <div class="panel-body">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope fa-fw"></i>
+                    </span>
+                    <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
                 </div>
 
-                <div class="panel-body">
-                    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <i class="fa fa-envelope fa-fw"></i>
-                            </span>
-                            <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
-                        </div>
-
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">
-                                <i class="fa fa-lock fa-fw"></i>
-                            </span>
-                            <%= f.password_field :password, autocomplete: "off", class: "form-control" , placeholder: t(:password)%>
-                        </div>
-
-                        <% if devise_mapping.rememberable? -%>
-                            <div class="field form-group">
-                              <%= f.check_box :remember_me %>
-                              <%= f.label t(:remember_me) %>
-                            </div>
-                        <% end -%>
-
-                        <div class="actions">
-                            <%= f.submit t(:login).capitalize, class: "btn btn-lg btn-success btn-block" %>
-                        </div>
-                    <% end %>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <i class="fa fa-lock fa-fw"></i>
+                    </span>
+                    <%= f.password_field :password, autocomplete: "off", class: "form-control" , placeholder: t(:password)%>
                 </div>
-            </div>
-            <%= render "devise/shared/links" %>
+
+                <% if devise_mapping.rememberable? -%>
+                    <div class="field form-group">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label t(:remember_me) %>
+                    </div>
+                <% end -%>
+
+                <div class="actions">
+                    <%= f.submit t(:login).capitalize, class: "btn btn-lg btn-success btn-block" %>
+                </div>
+            <% end %>
         </div>
     </div>
+    <%= render "devise/shared/links" %>
 </div>
+
 

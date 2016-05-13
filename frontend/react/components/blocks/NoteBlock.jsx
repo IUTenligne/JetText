@@ -37,7 +37,8 @@ var NoteBlock = React.createClass({
         this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
                 containersGlossariesList: result.containers_glossaries,
-                blockContent: this.props.block.content
+                blockContent: this.props.block.content,
+                selectedStyle: this.props.block.classes
             });
             
             if (result.containers_glossaries.length > 0) {
@@ -95,7 +96,12 @@ var NoteBlock = React.createClass({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { id: block.id, content: this.state.blockContent }
+            data: { 
+                id: block.id, 
+                name: this.state.blockName,
+                content: this.state.blockContent,
+                classes: this.state.selectedStyle
+            }
         });
 
         if (editor) { editor.destroy(true); }
@@ -112,12 +118,13 @@ var NoteBlock = React.createClass({
                 id: block.id,
                 name: this.state.blockName,
                 content: this.state.blockContent,
-                option: this.state.selected
+                classes: this.state.selectedStyle
             },
             success: function(data) {
                 this.setState({
                     blockName: data.name,
                     blockContent: data.content,
+                    classes: data.classes,
                     changeName: false
                 });
             }
@@ -280,8 +287,8 @@ var NoteBlock = React.createClass({
                     })}
 
                     { this.state.blockVirtualContent != ''
-                        ? <div id={this.dynamicId(block.id)} className={"block-content " + this.state.selectedStyle} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.handleUnlockEditor}/>
-                        : <div id={this.dynamicId(block.id)} className={"block-content " + this.state.selectedStyle} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.handleUnlockEditor}/>
+                        ? <div id={this.dynamicId(block.id)} className={"block-content " + this.state.selectedStyle + " " + block.classes} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.handleUnlockEditor}/>
+                        : <div id={this.dynamicId(block.id)} className={"block-content " + this.state.selectedStyle + " " + block.classes} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.handleUnlockEditor}/>
                     }
                 </div>
 

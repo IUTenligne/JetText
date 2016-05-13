@@ -127,6 +127,36 @@ span.bold{
 	}
 }
 
+.block-text {
+	.block-inner {
+		.block-title {
+			i {
+				background: $lightBlue;
+			}
+		}
+	}
+}
+
+.block-media {
+	.block-inner {
+		.block-title {
+			i {
+				background: $lightOrange;
+			}
+		}
+	}
+}
+
+.block-note {
+	.block-inner {
+		.block-title {
+			i {
+				background: $lightRed;
+			}
+		}
+	}
+}
+
 .note-icon-important:before {
 	content: "\f000";
   font-family: FontAwesome;

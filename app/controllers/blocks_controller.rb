@@ -31,8 +31,8 @@ class BlocksController < ApplicationController
 
   def update
     @block = Block.find(params[:id])
-    @block.update_attributes(:name => params[:name], :content => params[:content], :option => params[:option])
-    render json: { name: @block.name, content: @block.content }
+    @block.update_attributes(:name => params[:name], :content => params[:content], :classes => params[:classes])
+    render json: { name: @block.name, content: @block.content, classes: @block.classes }
   end
 
   def update_upload
@@ -66,7 +66,7 @@ class BlocksController < ApplicationController
 
   private
     def block_params
-      params.require(:block).permit(:name, :content, :sequence, :option, :page_id, :user_id, :type_id, :upload_id)
+      params.require(:block).permit(:name, :content, :sequence, :classes, :page_id, :user_id, :type_id, :upload_id)
     end
 
 end
