@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160510132949) do
     t.string   "name",       limit: 255
     t.text     "content",    limit: 65535
     t.integer  "sequence",   limit: 2
-    t.string   "option",     limit: 255
+    t.string   "classes",    limit: 255
     t.integer  "user_id",    limit: 4
     t.integer  "page_id",    limit: 4
     t.integer  "type_id",    limit: 4
