@@ -1,12 +1,14 @@
 <nav class="navbar">
 	<div id="logo" data-no-turbolink>
-		<h1><%= link_to(raw('<i class="fa fa-plane"></i>'), '/#/') %></h1>
+		<h1><%= link_to(raw('<i class="fa fa-plane"></i>'), "/#/", data: { no_turbolink: true }) %></h1>
 	</div>
 
 	<div id="top-menu" class="header-collapse">
 		<ul>
-			<li><%= link_to raw('<i class="fa fa-users"></i>'), "/#/", data: { no_turbolink: true } %></li>
-			<li><%= link_to raw('<i class="fa fa-users"></i>'), new_container_path %></li>
+			<li><%= link_to raw('<i class="fa fa-folder-open fa-fw "></i>'), "/#/" %></li>
+			<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), new_container_path %></li>
+			<li><%= link_to raw('<i class="fa fa-user fa-fw "></i>'), '/#/' %></li>
+			<li><%= link_to raw('<i class="fa fa-plus fa-fw "></i>'), new_container_path %></li>
 			<% if user_signed_in? %>
 			<% end %>
 		</ul>
