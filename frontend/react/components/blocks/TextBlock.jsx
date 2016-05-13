@@ -97,7 +97,7 @@ var TextBlock = React.createClass({
 
     saveBlock: function() {
         var block = this.props.block;
-
+        
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,

@@ -131,8 +131,8 @@ var Menu = React.createClass({
         });
     },
 
-    deletePage: function() {
-
+    deletePage: function(activePage, pageId) {
+        this.props.pageDeletion(activePage, pageId);
     },
 
     render: function() {
@@ -154,7 +154,7 @@ var Menu = React.createClass({
                                         ? <button onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i> Add level</button> 
                                         : null
                                     }
-                                    <button onClick={this.deletePage.bind(that, page.id)}><i className="fa fa-remove"></i> Delete</button>
+                                    <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)}><i className="fa fa-remove"></i> Delete</button>
                                 </div>
                             </li>
                         );
