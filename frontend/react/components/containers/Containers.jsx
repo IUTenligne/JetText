@@ -91,6 +91,17 @@ var Result = React.createClass({
                         <li></li>
                         <li>
                             <a class="btn" href="#">Download</a>
+                            <div className="option">
+                            <a href={"/#/containers/"+result.id}>
+                                <i className="fa fa-pencil fa-fw " aria-hidden="true"></i>
+                            </a>
+                            <a onClick={this.generateContainer}>
+                                <i className="fa fa-upload fa-fw " aria-hidden="true"></i>
+                            </a>
+                            <a onClick={this.deleteContainer}>
+                                <i className="fa fa-trash-o fa-fw " aria-hidden="true"></i>
+                            </a>
+                        </div>
                         </li>
                         <li></li>
                         <li></li>

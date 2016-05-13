@@ -20,14 +20,18 @@ class BlocksController < ApplicationController
   def create
   	@block = Block.new(block_params)
   	@block.user_id = current_user.id
-  	if @block.save
-      render json: { id: @block.id, name: @block.name, content: @block.content, type_id: @block.type_id, upload_id: @block.upload_id }
-    end 
+    if @block.page_id.present?
+    	if @block.save
+        render json: { id: @block.id, name: @block.name, content: @block.content, type_id: @block.type_id, upload_id: @block.upload_id }
+      end 
+    else
+      render json: { status: "error" }
+    end
   end
 
   def update
     @block = Block.find(params[:id])
-    @block.update_attributes(:name => params[:name], :content => params[:content])
+    @block.update_attributes(:name => params[:name], :content => params[:content], :option => params[:option])
     render json: { name: @block.name, content: @block.content }
   end
 
@@ -62,7 +66,7 @@ class BlocksController < ApplicationController
 
   private
     def block_params
-      params.require(:block).permit(:name, :content, :sequence, :page_id, :user_id, :type_id, :upload_id)
+      params.require(:block).permit(:name, :content, :sequence, :option, :page_id, :user_id, :type_id, :upload_id)
     end
 
 end

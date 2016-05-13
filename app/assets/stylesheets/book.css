@@ -139,13 +139,6 @@ Table of Contents
 	background: #fffbec;
 }
 
-.book_spine li:first-child {
-	background: #eee;
-}
-.book_spine li:last-child {
-	background: #333;
-}
-
 /* thickness of cover */
 
 .hardcover_front li:first-child:after,
@@ -227,7 +220,6 @@ Table of Contents
 
 .hardcover_front,
 .hardcover_back,
-.book_spine,
 .hardcover_front li,
 .hardcover_back li,
 .book_spine li {
@@ -377,64 +369,6 @@ Table of Contents
 	transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(2px) translateY(-78px);
 }
 
-/* BOOK SPINE */
-.book_spine {
-	-webkit-transform: rotateY(60deg) translateX(-5px) translateZ(-12px);
-	-moz-transform: rotateY(60deg) translateX(-5px) translateZ(-12px);
-	transform: rotateY(60deg) translateX(-5px) translateZ(-12px);
-	width: 16px;
-	z-index: 0;
-}
-
-.book_spine li:first-child {
-	-webkit-transform: translateZ(2px);
-	-moz-transform: translateZ(2px);
-	transform: translateZ(2px);
-}
-
-.book_spine li:last-child {
-	-webkit-transform: translateZ(-2px);
-	-moz-transform: translateZ(-2px);
-	transform: translateZ(-2px);
-}
-
-/* thickness of book spine */
-.book_spine li:first-child:after,
-.book_spine li:first-child:before {
-	width: 4px;
-	height: 100%;
-}
-
-.book_spine li:first-child:after {
-	-webkit-transform: rotateY(90deg) translateZ(-2px) translateX(2px);
-	-moz-transform: rotateY(90deg) translateZ(-2px) translateX(2px);
-	transform: rotateY(90deg) translateZ(-2px) translateX(2px);
-}
-
-.book_spine li:first-child:before {
-	-webkit-transform: rotateY(-90deg) translateZ(-12px);
-	-moz-transform: rotateY(-90deg) translateZ(-12px);
-	transform: rotateY(-90deg) translateZ(-12px);
-}
-
-.book_spine li:last-child:after,
-.book_spine li:last-child:before {
-	width: 4px;
-	height: 16px;
-}
-
-.book_spine li:last-child:after {
-	-webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px) translateY(-6px);
-	-moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px) translateY(-6px);
-	transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px) translateY(-6px);
-}
-
-.book_spine li:last-child:before {
-	box-shadow: 5px -1px 100px 40px rgba(0, 0, 0, 0.2);
-	-webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px) translateX(2px) translateY(-6px);
-	-moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px) translateX(2px) translateY(-6px);
-	transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px) translateX(2px) translateY(-6px);
-}
 
 .sheet,
 .sheet > li {
@@ -600,26 +534,7 @@ Table of Contents
 	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
 }
 
-.yellow {
-	background-color: #f1c40f;
-	background-image: -webkit-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-	background-image: -moz-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-	background-image: linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-}
 
-.blue {
-	background-color: #3498db;
-	background-image: -webkit-linear-gradient(top, #3498db 58%, #2a90d4 0%);
-	background-image: -moz-linear-gradient(top, #3498db 58%, #2a90d4 0%);
-	background-image: linear-gradient(top, #3498db 58%, #2a90d4 0%);
-}
-
-.grey {
-	background-color: #f8e9d1;
-	background-image: -webkit-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-	background-image: -moz-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-	background-image: linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-}
 
 /* Basic ribbon */
 
