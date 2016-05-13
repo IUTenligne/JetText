@@ -37,7 +37,6 @@ var GlossaryMenu = React.createClass({
                 <div>
                     {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
                 </div>
-
             </div>
         );
     }
@@ -169,22 +168,22 @@ var Page = React.createClass({
                             return <Block key={block.id} item={block} containerId={page.container_id} removeBlock={that.handleBlockDeletion} />
                         })}
                     </div>
-                </ReactCSSTransitionGroup>      
+                    
+                    <div id="add_new_block">
+                        { this.props.types.map(function(type) {
+                            return(
+                                <div key={type.id} className={"select-action " + type.name.toLowerCase()} onClick={that.createBlock.bind(that, type.id)}>
+                                    <i className={"fa fa-fw icon-" + type.name.toLowerCase()} aria-hidden="true"></i><br/>
+                                    {type.name}
+                                </div>
+                            );
+                        })}
 
-                <div id="add_new_block">
-                    { this.props.types.map(function(type) {
-                        return(
-                            <div key={type.id} className={"select-action " + type.name.toLowerCase()} onClick={that.createBlock.bind(that, type.id)}>
-                                <i className={"fa fa-fw icon-" + type.name.toLowerCase()} aria-hidden="true"></i><br/>
-                                {type.name}
-                            </div>
-                        );
-                    })}
-
-                    <div className="select-action glossary">
-                        <GlossaryMenu containerId={page.container_id}/>
+                        <div className="select-action glossary">
+                            <GlossaryMenu containerId={page.container_id}/>
+                        </div>
                     </div>
-                </div>
+                </ReactCSSTransitionGroup>      
             </div>
         );
     }

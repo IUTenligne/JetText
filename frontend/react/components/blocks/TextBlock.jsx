@@ -62,7 +62,6 @@ var TextBlock = React.createClass({
     },
 
     componentWillReceiveProps: function(newProps) {
-        console.log(newProps.editBlock);
         if (newProps.editBlock == false) {
             this.unlockEditor();
         } else if (newProps.editBlock == true) {
@@ -112,11 +111,6 @@ var TextBlock = React.createClass({
 
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
-
-        this._notificationSystem.addNotification({
-            title: 'Block saved !',
-            level: 'success'
-        });
     },
 
     unlockEditor: function() {
@@ -202,7 +196,7 @@ var TextBlock = React.createClass({
         
         var txt = document.getSelection().toString();
         
-        if ( !txt.match(/^\s$/)) {
+        if ( !txt.match(/^\s$/) && txt.length > 0 ) {
             this.setState({ focusPopup: true });
         } else {
             this.setState({ focusPopup: false });

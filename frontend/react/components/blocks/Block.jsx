@@ -3,7 +3,6 @@ var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NotificationSystem = require('react-notification-system');
 
-
 var Block = React.createClass({
     getInitialState: function() {
         return {

@@ -11,6 +11,11 @@
 	    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <% end %>
     <%= csrf_meta_tags %>
+    <% if user_signed_in? %>
+      <%= javascript_tag do %>
+        var currentUser = '<%= raw current_user.to_json %>';
+      <% end %>
+    <% end %>
   </head>
   <body>
     <header>

@@ -18,7 +18,6 @@ var Container = React.createClass({
             types: [],
             activePage: '',
             newPageValue: '',
-            isNew: true,
             loading: true
         };
     },
@@ -31,20 +30,17 @@ var Container = React.createClass({
                     container: result.container,
                     pages: result.pages,
                     activePage: result.pages[0],
-                    isNew: false,
                     loading: false
                 });
             } else if (result.container) {
                 this.setState({
                     status: result.status,
                     container: result.container,
-                    isNew: true,
                     loading: false
                 });
             } else {
                 this.setState({
                     status: result.status,
-                    isNew: true,
                     loading: false
                 });
             }
@@ -117,13 +113,11 @@ var Container = React.createClass({
         if (pageList.length == 0) {
             this.setState({
                 pages: pageList,
-                isNew: true,
                 activePage: ''
             });
         } else {
             this.setState({
-                pages: pageList,
-                isNew: false
+                pages: pageList
             });
         }
     },
@@ -148,7 +142,7 @@ var Container = React.createClass({
 
                     <ReactCSSTransitionGroup transitionName="menu-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                         <aside id="sidebar-wrapper">
-                            <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
+                            <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} levelizeAction={this.levelizePages} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
                         </aside>
                     </ReactCSSTransitionGroup>
 
@@ -168,10 +162,6 @@ var Container = React.createClass({
                             : <div className="content">
                                 { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} types={this.state.types} /> : null }
                                 { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
-
-                                <div className="bottom_bar">
-                                    { this.state.isNew ? null : <input type="button" onClick={this.deletePage} value="Delete page" className="btn btn-warning" /> }
-                                </div>
                             </div>
                         }
                     </div>
