@@ -1,6 +1,7 @@
 var React = require('react');
 var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
+var NoteBlock = require('./NoteBlock.jsx');
 var NotificationSystem = require('react-notification-system');
 
 var Block = React.createClass({
@@ -42,11 +43,11 @@ var Block = React.createClass({
         });
     },
 
-    editTextBlock: function() {
+    editBlock: function() {
         this.setState({ editBlock: !this.state.editBlock });
     },
 
-    handleTextBlockEditState: function(st) {
+    handleBlockEditState: function(st) {
         this.setState({ editBlock: st });
     },
 
@@ -58,11 +59,11 @@ var Block = React.createClass({
         if (block.type_id === 1) {
             return (
                 <div className="block block-text" data-id={block.id}>
-                    <TextBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleTextBlockEditState} editBlock={this.state.editBlock} />
+                    <TextBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
                     <div className="block-actions">
                         { this.state.editBlock
-                            ? <button className="text-block-edit" onClick={this.editTextBlock}><i className="fa fa-pencil"></i> Edit</button>
-                            : <button className="text-block-save" onClick={this.editTextBlock}><i className="fa fa-check"></i> Save</button>
+                            ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
+                            : <button className="text-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
                         }
                         <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button>
                         <button className="handle">+ Drag</button>
@@ -75,6 +76,21 @@ var Block = React.createClass({
                 <div className="block block-media" data-id={block.id}>
                     <MediaBlock block={block} key={block.id} />
                     <div className="block-actions">
+                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button>
+                        <button className="handle">+ Drag</button>
+                        <NotificationSystem ref="notificationSystem" />
+                    </div>
+                </div>
+            );
+        } if (block.type_id === 3) {
+            return (
+                <div className="block block-note" data-id={block.id}>
+                    <NoteBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
+                    <div className="block-actions">
+                        { this.state.editBlock
+                            ? <button className="note-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
+                            : <button className="note-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
+                        }
                         <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button>
                         <button className="handle">+ Drag</button>
                         <NotificationSystem ref="notificationSystem" />

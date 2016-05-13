@@ -30,6 +30,12 @@
 				border-bottom: 1px solid $lightBlue;
 				font-size: 26px;
 				text-transform: capitalize;
+
+				input {
+					background-color: transparent;
+					background-image: none;
+					border: none;
+				}
 			}
 		}
 	}

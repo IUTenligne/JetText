@@ -8,8 +8,8 @@ var App = React.createClass({
 		    	<h1>Welcome in JetText, <span className="capitalize">{JSON.parse(currentUser).firstname}</span> !</h1>
 
 		    	<div id="homeBtn">
-		    		<a  href={"/#/containers/"} className="btn-success" >Go in my Containers</a>
-		    		<a  href={"/#/glossaries/"} className="btn-success" >Go in my Glossaries</a>
+		    		<a  href={"/#/containers/"} className="btn-success" >My Containers</a>
+		    		<a  href={"/#/glossaries/"} className="btn-success" >My Glossaries</a>
 		    	</div>
 
 		    </div>

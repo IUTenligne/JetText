@@ -14,6 +14,8 @@ var Container = React.createClass({
         return {
             status: 0,
             container: '',
+            containerName: '',
+            changeContainerName: false,
             pages: [],
             types: [],
             activePage: '',
@@ -28,6 +30,7 @@ var Container = React.createClass({
                 this.setState({
                     status: result.status,
                     container: result.container,
+                    containerName: result.container.name,
                     pages: result.pages,
                     activePage: result.pages[0],
                     loading: false
@@ -36,10 +39,12 @@ var Container = React.createClass({
                 this.setState({
                     status: result.status,
                     container: result.container,
+                    containerName: result.container.name,
                     loading: false
                 });
             } else {
                 this.setState({
+                    containerName: result.container.name,
                     status: result.status,
                     loading: false
                 });
@@ -111,6 +116,29 @@ var Container = React.createClass({
         });
     },
 
+    handleContainerName: function(event) {
+        this.setState({
+            containerName: event.target.value,
+            changeContainerName: true
+        });
+    },
+
+    saveContainerName: function() {
+        $.ajax({
+            type: "PUT",
+            url: '/containers/'+this.state.container.id,
+            context: this,
+            data: { 
+                name: this.state.containerName
+            },
+            success: function(data) {
+                this.setState({
+                    changeContainerName: false
+                });
+            }
+        });
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -134,7 +162,8 @@ var Container = React.createClass({
                             : <div className="header">
                                 <a href={"/#/containers/"+container.id} key={container.id}>
                                     <h1>
-                                        {container.name}
+                                        <input ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
+                                        { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                     </h1>
                                 </a>
                             </div>

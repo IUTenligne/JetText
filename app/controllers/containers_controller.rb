@@ -26,6 +26,12 @@ class ContainersController < ApplicationController
     @container = Container.new
   end
 
+  def update
+    @container = Container.find(params[:id])
+    @container.update_attributes(:name => params[:name], :content => params[:content])
+    render json: { container: @container }
+  end
+
   def create
     @container = Container.new(container_params)
     @container.user_id = current_user.id
