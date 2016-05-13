@@ -251,6 +251,7 @@ var MediaBlock = React.createClass({
             context: this,
             data: {
                 id: this.props.block.id,
+                name: this.state.blockName,
                 content: content,
                 upload_id: data.id,
             },

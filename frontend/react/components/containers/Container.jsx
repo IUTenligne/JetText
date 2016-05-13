@@ -62,7 +62,6 @@ var Container = React.createClass({
     deletePage: function(activePage, pageId){
         var that = this;
         // NotificationSystem popup
-        console.log(activePage, pageId);
 
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
@@ -82,7 +81,6 @@ var Container = React.createClass({
                             that.setState({ pages: pagesList });
 
                             if ((pagesList.length == 0) || parseInt(activePage) == parseInt(pageId)) {
-                                console.log("ok");
                                 window.location.replace("/#/containers/"+this.state.container.id);
                             }
                         }

@@ -10,6 +10,8 @@ var Modal = require('../widgets/Modal.jsx');
 var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
+            changeName: false,
+            blockName: '',
             blockContent: '',
             blockVirtualContent: '',
             loading: false,
@@ -28,6 +30,8 @@ var TextBlock = React.createClass({
     },
 
     componentDidMount: function() {
+        this.setState({ blockName: this.props.block.name });
+
         this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
                 containersGlossariesList: result.containers_glossaries,
@@ -57,9 +61,9 @@ var TextBlock = React.createClass({
         this._notificationSystem = this.refs.notificationSystem;
 
         /* Opens CKEditor if the block has no content */
-        if (this.props.block.content == '') {
+        if ((this.props.block.content == '') || (this.props.block.content == null)) {
             this.handleUnlockEditor();
-        } 
+        }
     },
 
     componentWillReceiveProps: function(newProps) {
@@ -102,10 +106,16 @@ var TextBlock = React.createClass({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { id: block.id, content: this.state.blockContent },
+            data: { 
+                id: block.id,
+                name: this.state.blockName,
+                content: this.state.blockContent
+            },
             success: function(data) {
                 this.setState({
+                    blockName: data.name,
                     blockContent: data.content,
+                    changeName: false
                 });
             }
         });
@@ -216,6 +226,13 @@ var TextBlock = React.createClass({
         this.props.editBlockAction(false);
     },
 
+    handleBlockName: function(event) {
+        this.setState({
+            blockName: event.target.value,
+            changeName: true
+        });
+    },
+
 	render: function() {
 		var block = this.props.block;
         var myStyle = {
@@ -239,7 +256,10 @@ var TextBlock = React.createClass({
                     
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.handleUnlockEditor}></i>
-                        <h3>{block.name}</h3>
+                        <h3>
+                            <input type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
+                            { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
+                        </h3>
                     </div>
 
                     { this.state.blockVirtualContent != ''
