@@ -47,7 +47,6 @@ var Block = React.createClass({
     },
 
     handleTextBlockEditState: function(st) {
-        console.log(st);
         this.setState({ editBlock: st });
     },
 
