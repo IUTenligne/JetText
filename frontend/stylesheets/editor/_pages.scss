@@ -15,29 +15,45 @@
 /* menu create block (media/ texte)*/
 #add_new_block{
 	text-align: center;
-	.selectAction{
+
+	.select-action{
 		width: calc(100%/9);
 		display: inline-block;
 		margin: 15px;
 		text-align: center;
 		color: white;
 		height: 100px;
-		i{
+		border-radius: 4px;
+
+		i {
 			font-size: 40px;
 			padding: 10px;
 		}
+
+		.icon-text:before {
+			content: "\f040";
+    		font-family: FontAwesome;
+		}
+
+		.icon-media:before {
+			content: "\f03e";
+    		font-family: FontAwesome;
+		}
 	}
 	.text{
-		background: $lightBlue;
+		background: $lighTbBlue;
 	}
 	.media{
-		background: $lightGreen;
+		
+		background: $lightOrange;
 	}
 	.glossary{
-		background: $fileRed;
+		background: $lightGreen;
+		
 	}
+	
 	.delete{
-		background: $lightOrange;
+		background: $lightRed;
 	}
 }
 

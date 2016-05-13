@@ -31,10 +31,9 @@ var GlossaryMenu = React.createClass({
             <div>
                 <a onClick={this.showGlossaries}>
                     <i className="fa fa-book fa-fw" aria-hidden="true"></i><br/>
-                    glossary
+                    Glossary
                 </a>
  
-
                 <div>
                     {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
                 </div>
@@ -51,11 +50,7 @@ var Page = React.createClass({
             status: 0,
             page: '',
             blocks: [],
-            selectedType: 1,
-            retractedBlocks: false,
-            types: [],
-            typeText: [],
-            typeMedia: []
+            retractedBlocks: false
         };
     },
 
@@ -65,14 +60,6 @@ var Page = React.createClass({
                 status: result.status,
                 page: result.page,
                 blocks: result.blocks,
-            });
-        }.bind(this));
-
-        this.serverRequest = $.get("/types.json", function (result) {
-            this.setState({
-                types: result.types,
-                typeText: result.types[0],
-                typeMedia: result.types[1]
             });
         }.bind(this));
 
@@ -91,13 +78,7 @@ var Page = React.createClass({
         this.serverRequest.abort();
     },
 
-    createBlock: function(elem, event) {
-        if (elem == "text"){
-            this.setState({selectedType: this.state.typeText.id.value});
-        }else {
-            this.setState({selectedType: this.state.typeMedia.id.value}); 
-            console.log(this.state.selectedType);  
-        }
+    createBlock: function(typeId, event) {
         $.ajax({
             type: "POST",
             url: '/blocks',
@@ -108,14 +89,12 @@ var Page = React.createClass({
                     content: '', 
                     sequence: this.state.blocks.length, 
                     page_id: this.state.page.id,
-                    type_id: "2"
+                    type_id: typeId
                 } 
             },
             success: function(data) {
                 this.setState({
-                    blocks: this.state.blocks.concat([data]),
-                    newBlockValue: '',
-                    selectedType: 1
+                    blocks: this.state.blocks.concat([data])
                 });
             }
         });
@@ -193,26 +172,17 @@ var Page = React.createClass({
                 </ReactCSSTransitionGroup>      
 
                 <div id="add_new_block">
-                    <div className="selectAction text" >
-                        <a value={this.state.typeText.id} onClick={this.createBlock.bind(this, "text")}>
-                            <i className="fa fa-pencil" aria-hidden="true"></i><br/>
-                            {this.state.typeText.name}
-                        </a>
-                    </div>
-                    <div className="selectAction media">
-                        <a value={this.state.typeMedia.id} onClick={this.createBlock.bind(this,"media")}>
-                            <i className="fa fa-file-text" aria-hidden="true"></i><br/>
-                            {this.state.typeMedia.name}
-                        </a>
-                    </div>
-                    <div className="selectAction glossary">
+                    { this.props.types.map(function(type) {
+                        return(
+                            <div key={type.id} className={"select-action " + type.name.toLowerCase()} onClick={that.createBlock.bind(that, type.id)}>
+                                <i className={"fa fa-fw icon-" + type.name.toLowerCase()} aria-hidden="true"></i><br/>
+                                {type.name}
+                            </div>
+                        );
+                    })}
+
+                    <div className="select-action glossary">
                         <GlossaryMenu containerId={page.container_id}/>
-                    </div>
-                    <div className="selectAction delete">
-                        <a >
-                            <i className="fa fa fa-trash-o fa-fw" aria-hidden="true"></i><br/>
-                            delete 
-                        </a>
                     </div>
                 </div>
             </div>
