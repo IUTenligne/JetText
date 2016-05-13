@@ -7,7 +7,7 @@ var TermOverlay = require('../glossaries/termOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 
 
-var TextBlock = React.createClass({
+var NoteBlock = React.createClass({
 	getInitialState: function() {
         return {
             changeName: false,
@@ -85,7 +85,7 @@ var TextBlock = React.createClass({
     },
 
     componentWillUnmount: function() {
-        var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
+        var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
         
         /* Saves the block's content if before leaving the page */
         var block = this.props.block;
@@ -120,14 +120,14 @@ var TextBlock = React.createClass({
             }
         });
 
-        var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
+        var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
     },
 
     unlockEditor: function() {
         var that = this;
 
-        var editor = CKEDITOR.replace("text_block_"+this.props.block.id, {
+        var editor = CKEDITOR.replace("note_block_"+this.props.block.id, {
             customConfig: '/assets/cke/custom_config.js'
         });
 
@@ -189,7 +189,7 @@ var TextBlock = React.createClass({
     _notificationSystem: null,
 
     dynamicId: function(id){
-        return "text_block_" + id;
+        return "note_block_" + id;
     },
 
     createMarkup: function(data) {
@@ -257,7 +257,7 @@ var TextBlock = React.createClass({
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.handleUnlockEditor}></i>
                         <h3>
-                            <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
+                            <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
@@ -291,4 +291,4 @@ var TextBlock = React.createClass({
 	}
 });
 
-module.exports = TextBlock;
+module.exports = NoteBlock;
