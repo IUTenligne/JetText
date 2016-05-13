@@ -19,18 +19,6 @@ body {
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 
-html {
-	font-size: 100%;
-}
-
-body {
-	background: #ecf0f1;
-	color: #34495e;
-	font-family: 'Lato', 'Arial', sans-serif;
-	font-weight: 400;
-	line-height: 1.2;
-}
-
 ul {
 	margin: 0;
 	padding: 0;
@@ -42,24 +30,7 @@ a {
 	text-decoration: none;
 }
 
-.btn {
-	display: inline-block;
-	text-transform: uppercase;
-	border: 2px solid #2c3e50;
-	margin-top: 100px; 
-	font-size: 0.7em;
-	font-weight: 700;
-	padding: 0.1em 0.4em;
-	text-align: center;
-	-webkit-transition: color 0.3s, border-color 0.3s;
-	-moz-transition: color 0.3s, border-color 0.3s;
-	transition: color 0.3s, border-color 0.3s;
-}
 
-.btn:hover {
-	border-color: #16a085;
-	color: #16a085;
-}
 
 /* basic grid, only for this demo */
 
@@ -518,20 +489,10 @@ Table of Contents
 	right: 0;
 }
 
-.coverDesign h1 {
-	color: #fff;
-	font-size: 2.2em;
-	letter-spacing: 0.05em;
-	text-align: center;
-	margin: 54% 0 0 0;
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
-}
-
 .coverDesign p {
 	color: #f8f8f8;
 	font-size: 1em;
 	text-align: center;
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
 }
 
 

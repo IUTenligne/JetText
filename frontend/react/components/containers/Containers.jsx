@@ -89,26 +89,34 @@ var Result = React.createClass({
 
                     <ul className='sheet'>
                         <li></li>
-                        <li>
-                            <a class="btn" href="#">Download</a>
-                            <div className="option">
-                            <a href={"/#/containers/"+result.id}>
-                                <i className="fa fa-pencil fa-fw " aria-hidden="true"></i>
+                        <li className="option ">
+                            <a className="btn" href={"/#/containers/"+result.id}>
+                                <span className="fa-stack fa-lg">
+                                    <i className="fa fa-square fa-stack-2x"></i>
+                                    <i className="fa fa-pencil fa-stack-1x fa-inverse"></i> 
+                                </span>
+                                Edit
                             </a>
-                            <a onClick={this.generateContainer}>
-                                <i className="fa fa-upload fa-fw " aria-hidden="true"></i>
+
+                            <a className="btn list-group-item" onClick={this.generateContainer}>
+                                <span className="fa-stack fa-lg">
+                                    <i className="fa fa-square fa-stack-2x"></i>
+                                    <i className="fa fa-upload fa-stack-1x fa-inverse"></i> 
+                                </span>
+                                Upload
                             </a>
-                            <a onClick={this.deleteContainer}>
-                                <i className="fa fa-trash-o fa-fw " aria-hidden="true"></i>
+                            <a className="btn" onClick={this.deleteContainer}>
+                                <span className="fa-stack fa-lg">
+                                    <i className="fa fa-trash-o fa-stack-1x "></i> 
+                                    <i className="fa fa-ban fa-stack-2x"></i>
+                                </span>
+                                Delete
                             </a>
-                        </div>
                         </li>
                         <li></li>
                         <li></li>
                         <li></li>
                     </ul>
-
-          
 
                     <ul className='hardcover_back'>
                         <li></li>
@@ -116,6 +124,7 @@ var Result = React.createClass({
                     </ul>
 
                 </figure>
+                <NotificationSystem ref="notificationSystem" style={style}/>
             </li> 
         )
     }

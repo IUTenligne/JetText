@@ -19,12 +19,27 @@ article#containers {
 						background: $lightGrey;
 						overflow: hidden;
 						p{
-							border: 1px dashed $darkGrey;
 							text-align: center;
-							color: $lightBlue;
+							color: $bookGrey;
                     		overflow: hidden;
                     		max-height: 140px;
 						}
+					}
+				}
+				ul.sheet{
+					li.option{
+						a{
+	                        width: 100%;
+	                        display: block;
+	                        padding: 0;
+	                        text-align: left;
+	                        margin: 12px 0 5px 25px;
+	                        cursor: pointer;
+	                        color: $bookGrey;
+	                    }
+	                    a:hover{
+	                    	color: $lightBlue;
+	                    }
 					}
 				}
 			}
