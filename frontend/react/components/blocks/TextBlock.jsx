@@ -11,7 +11,7 @@ var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
             blockContent: '',
-            editButton: true,
+            blockVirtualContent: '',
             loading: false,
             myStyle: '',
             left: '',
@@ -30,23 +30,26 @@ var TextBlock = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
-                containersGlossariesList: result.containers_glossaries
+                containersGlossariesList: result.containers_glossaries,
+                blockContent: this.props.block.content
             });
             
-            if (result.containers_glossaries.length > 0){
-                var that = this;
+            if (result.containers_glossaries.length > 0) {
+                for (var i in result.containers_glossaries) {
+                    /* blockVirtualContent is a copy of blockContent, used to display a list of glossary terms 
+                    and to not override the block's content by adding <a> links in the database.
+                    Only used in the client-side to display a term description in a tooltip if a glossary is checked. */
 
-                for( var i in result.containers_glossaries ){
-                    that.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] +  ".json", function(result){
-                        that.setState({
-                            termsList: result.terms,
-                            blockContent: this.regexTerm(result.terms, this.props.block.content)
+                    this.serverRequest = $.get("/glossaries/" + result.containers_glossaries[i]["glossary_id"] + ".json", function(result){
+                        this.setState({
+                            termsList: this.state.termsList.concat(result.terms),
+                            blockVirtualContent: this.regexTerm(this.state.termsList.concat(result.terms), this.props.block.content)
                         });
-                    }.bind(that));
+                    }.bind(this));
                 }
-            } else {
+
                 this.setState({
-                    blockContent: this.props.block.content
+                    blockVirtualContent: this.regexTerm(this.termsList, this.props.block.content)
                 });
             }
         }.bind(this));
@@ -55,12 +58,20 @@ var TextBlock = React.createClass({
 
         /* Opens CKEditor if the block has no content */
         if (this.props.block.content == '') {
+            this.handleUnlockEditor();
+        } 
+    },
+
+    componentWillReceiveProps: function(newProps) {
+        if (newProps.editBlock == false) {
             this.unlockEditor();
+        } else if (newProps.editBlock == true) {
+            this.saveBlock();
         }
     },
 
     regexTerm: function(termsList, content){
-        for ( var i in termsList) {
+        for ( var i in termsList ) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
                 content = content.replace(regex, '<a href="#" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
@@ -86,7 +97,7 @@ var TextBlock = React.createClass({
 
     saveBlock: function() {
         var block = this.props.block;
-
+        
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,
@@ -95,31 +106,31 @@ var TextBlock = React.createClass({
             success: function(data) {
                 this.setState({
                     blockContent: data.content,
-                    editButton: true
-                })
+                });
             }
         });
 
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
-
-        this._notificationSystem.addNotification({
-            title: 'Block saved !',
-            level: 'success'
-        });
     },
 
     unlockEditor: function() {
         var that = this;
-        this.setState({ editButton: false });
 
         var editor = CKEDITOR.replace("text_block_"+this.props.block.id, {
             customConfig: '/assets/cke/custom_config.js'
         });
 
+        editor.setData(this.state.blockContent);
+
         editor.on('change', function( evt ) {
             var content = that._highlightText(evt.editor.getData(), editor);
+            that.setState({
+                blockContent: content,
+                blockVirtualContent: that.regexTerm(that.state.termsList, content)
+            });
         });
+
         this.setState({ focusPopup: false });
     },
 
@@ -156,7 +167,6 @@ var TextBlock = React.createClass({
         var editor = this.state.getEditor;
         var newData = this.state.blockContent;
         editor.setData(newData);
-        console.log(1, "bc: ", newData);
 
         this.setState({ 
             formulaModalState: false, 
@@ -177,7 +187,7 @@ var TextBlock = React.createClass({
     },
 
     overTerm: function(event){
-        event.preventDefault(); 
+        event.preventDefault();
 
         this.setState({ 
             selectedText: document.getSelection().toString(),
@@ -187,7 +197,7 @@ var TextBlock = React.createClass({
         
         var txt = document.getSelection().toString();
         
-        if ( (txt.length > 0) && (!txt.match(/^\s$/))) {
+        if ( (!txt.match(/^\s$/)) && (txt.length > 0) ) {
             this.setState({ focusPopup: true });
         } else {
             this.setState({ focusPopup: false });
@@ -200,6 +210,10 @@ var TextBlock = React.createClass({
 
     handleGlossaryModalState: function(st){
         this.setState({ glossaryModalState: st });
+    },
+
+    handleUnlockEditor: function() {
+        this.props.editBlockAction(false);
     },
 
 	render: function() {
@@ -224,21 +238,15 @@ var TextBlock = React.createClass({
                     }
                     
                     <div className="block-title">
-                        <i className="fa fa-pencil"></i>
+                        <i className="fa fa-pencil" onClick={this.handleUnlockEditor}></i>
                         <h3>{block.name}</h3>
-                        <span className="handle">+</span>
                     </div>
 
-                    { this.state.loading
-                        ? <Loader />
-                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor} />
+                    { this.state.blockVirtualContent != ''
+                        ? <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.handleUnlockEditor}/>
+                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.handleUnlockEditor}/>
                     }
                 </div>
-
-                { this.state.editButton 
-                    ? <button className="btn-block block-actions" onClick={this.unlockEditor}><i className="fa fa-pencil"> Editer</i></button>
-                    : <button className="btn-block block-actions" onClick={this.saveBlock}><i className="fa fa-check">Enregister</i></button>
-                }
 
                 { this.state.glossaryModalState
                     ? <Modal active={this.handleGlossaryModalState} title={"Create new definition"}>

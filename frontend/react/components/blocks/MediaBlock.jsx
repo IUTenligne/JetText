@@ -303,7 +303,6 @@ var MediaBlock = React.createClass({
                             <input type="text" value={this.state.blockName} placeholder="Block name..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlockName}><i className="fa fa-check"></i></button> : null }
                         </h3>
-                        <span className="handle">+</span>
                     </div>
 
                     <div className="block-content">
