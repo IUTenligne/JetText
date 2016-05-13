@@ -17,16 +17,17 @@
 	text-align: center;
 
 	.select-action{
-		width: calc(100%/9);
+		width: 100px;
 		display: inline-block;
 		margin: 15px;
 		text-align: center;
 		color: white;
-		height: 100px;
+		height: 80px;
 		border-radius: 4px;
+		cursor : pointer;
 
 		i {
-			font-size: 40px;
+			font-size: 35px;
 			padding: 10px;
 		}
 
@@ -41,15 +42,13 @@
 		}
 	}
 	.text{
-		background: $lighTbBlue;
+		background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 	}
 	.media{
-		
-		background: $lightOrange;
+		background-image:linear-gradient( $lightOrange,rgb(217,125,14));
 	}
 	.glossary{
-		background: $lightGreen;
-		
+		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
 	}
 	
 	.delete{
