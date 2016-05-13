@@ -4,6 +4,7 @@ class CreateBlocks < ActiveRecord::Migration
       t.string :name
       t.text :content
       t.integer :sequence, limit: 2
+      t.string :option
       t.references :user,   index: true, foreign_key: true
       t.references :page,   index: true, foreign_key: true
       t.references :type,   index: true, foreign_key: true

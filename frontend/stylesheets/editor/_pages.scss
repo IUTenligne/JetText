@@ -35,12 +35,16 @@
 
 		.icon-text:before {
 			content: "\f040";
-    		font-family: FontAwesome;
+    	font-family: FontAwesome;
 		}
 
 		.icon-media:before {
 			content: "\f03e";
-    		font-family: FontAwesome;
+    	font-family: FontAwesome;
+		}
+		.icon-note:before {
+			content: "\f10e";
+    	font-family: FontAwesome;
 		}
 	}
 
@@ -58,8 +62,8 @@
 		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
 	}
 	
-	.delete{
-		background: $lightRed;
+	.note{
+		background-image:linear-gradient( $lightRed,rgb(186,67,38));
 	}
 }
 

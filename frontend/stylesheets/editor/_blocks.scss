@@ -127,21 +127,25 @@ span.bold{
 	}
 }
 
-.block-text {
-	.block-inner {
-		.block-title {
-			i {
-				background: $lightBlue;
-			}
-		}
-	}
+.note-icon-important:before {
+	content: "\f000";
+  font-family: FontAwesome;
 }
 
-.block-media {
+.note-icon-quote:before {
+	content: "\f10d";
+  font-family: FontAwesome;
+}
+
+.block-note {
 	.block-inner {
-		.block-title {
-			i {
-				background: $lightOrange;
+		.content {
+			.block-content.important {
+				border: 3px solid red;
+			}
+
+			.block-content.quote {
+				border: 3px solid blue;
 			}
 		}
 	}

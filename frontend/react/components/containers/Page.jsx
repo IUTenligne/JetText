@@ -78,6 +78,10 @@ var Page = React.createClass({
     },
 
     createBlock: function(typeId, event) {
+        for(name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy(true);
+        }
+        
         $.ajax({
             type: "POST",
             url: '/blocks',
@@ -152,7 +156,6 @@ var Page = React.createClass({
         /* sent by its Block.jsx child */
         this.setState({ blocks: blockList });
     },
-
 
     render: function() {
         var page = this.state.page;
