@@ -2,6 +2,24 @@
 @import "../../node_modules/breakpoint-sass/stylesheets/_breakpoint.scss";
 
 
+
 	@import "editor/_containers.scss";
 	@import "editor/_glossaries.scss";
 	@import "editor/_widgets.scss";
+
+.home{
+	text-align: center;
+
+	h1{
+		font-size: 40px;
+		padding-top: 10px;
+		color: $darkGrey;
+	}
+	#homeBtn{
+		margin-top: 45px;
+		a{
+			margin: 10px;
+			color: $white;
+		}
+	}
+}

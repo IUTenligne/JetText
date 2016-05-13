@@ -2,7 +2,7 @@ class CreateContainers < ActiveRecord::Migration
   def change
     create_table :containers do |t|
       t.string :name
-      t.binary :content, limit: 16777215
+      t.text :content
       t.string :url, limit: 255
       t.references :user, index: true, foreign_key: true
 
