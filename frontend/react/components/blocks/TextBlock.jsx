@@ -12,7 +12,6 @@ var TextBlock = React.createClass({
         return {
             blockContent: '',
             blockVirtualContent: '',
-            editButton: true,
             loading: false,
             myStyle: '',
             left: '',
@@ -56,22 +55,28 @@ var TextBlock = React.createClass({
         }.bind(this));
         
         this._notificationSystem = this.refs.notificationSystem;
-
         /* Opens CKEditor if the block has no content */
         if (this.props.block.content == '') {
             this.unlockEditor();
         }
     },
 
+    componentWillReceiveProps: function(newProps) {
+        console.log(newProps.editBlock);
+        if (newProps.editBlock == false) {
+            this.unlockEditor();
+        } else if (newProps.editBlock == true) {
+            this.saveBlock();
+        }
+    },
+
     regexTerm: function(termsList, content){
-        console.log(termsList, content);
         for ( var i in termsList ) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
                 content = content.replace(regex, '<a href="#" style="background: red" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
             }
         }
-        console.log(content);
         return content;
     },
 
@@ -101,8 +106,7 @@ var TextBlock = React.createClass({
             success: function(data) {
                 this.setState({
                     blockContent: data.content,
-                    editButton: true
-                })
+                });
             }
         });
 
@@ -117,7 +121,6 @@ var TextBlock = React.createClass({
 
     unlockEditor: function() {
         var that = this;
-        this.setState({ editButton: false });
 
         var editor = CKEDITOR.replace("text_block_"+this.props.block.id, {
             customConfig: '/assets/cke/custom_config.js'
@@ -169,7 +172,6 @@ var TextBlock = React.createClass({
         var editor = this.state.getEditor;
         var newData = this.state.blockContent;
         editor.setData(newData);
-        console.log(1, "bc: ", newData);
 
         this.setState({ 
             formulaModalState: false, 
@@ -190,7 +192,7 @@ var TextBlock = React.createClass({
     },
 
     overTerm: function(event){
-        event.preventDefault(); 
+        event.preventDefault();
 
         this.setState({ 
             selectedText: document.getSelection().toString(),
@@ -200,7 +202,7 @@ var TextBlock = React.createClass({
         
         var txt = document.getSelection().toString();
         
-        if ( (txt.length > 0) && (!txt.match(/^\s$/))) {
+        if ( !txt.match(/^\s$/)) {
             this.setState({ focusPopup: true });
         } else {
             this.setState({ focusPopup: false });
@@ -239,7 +241,6 @@ var TextBlock = React.createClass({
                     <div className="block-title">
                         <i className="fa fa-pencil"></i>
                         <h3>{block.name}</h3>
-                        <span className="handle">+</span>
                     </div>
 
                     { this.state.blockVirtualContent != ''
@@ -247,11 +248,6 @@ var TextBlock = React.createClass({
                         : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor} />
                     }
                 </div>
-
-                { this.state.editButton 
-                    ? <button className="btn-block block-actions" onClick={this.unlockEditor}><i className="fa fa-pencil"></i></button>
-                    : <button className="btn-block block-actions" onClick={this.saveBlock}><i className="fa fa-check"></i></button>
-                }
 
                 { this.state.glossaryModalState
                     ? <Modal active={this.handleGlossaryModalState} title={"Create new definition"}>
