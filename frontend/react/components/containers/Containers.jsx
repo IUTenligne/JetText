@@ -1,6 +1,5 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
-var Glossaries = require('../glossaries/Glossaries.jsx');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 
@@ -14,6 +13,11 @@ var style = {
 }
 
 var Result = React.createClass({
+    getInitialState: function() {
+        return {
+            option: false
+        };
+    },
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
     },
@@ -58,38 +62,44 @@ var Result = React.createClass({
         });   
     },
 
+    optionContainer: function (){
+        this.setState({
+            option: true
+        });
+    },
+
     _notificationSystem: null, 
 
     render: function() {
         var result = this.props.item;
         return(
-            <div className="col-lg-6 tags">  
-                <li className="tag">
-                    <div className="contenu">
-                        <div className="elem">
-                            <div className="name">
-                                <Link to={"/containers/"+result.id}>
-                                    {result.name}
-                                </Link>
-                            </div>
-
-                            <div className="option">
-                                <Link to={"/containers/"+result.id}>
-                                    <i className="fa fa-pencil"></i>
-                                </Link>
-                                <a href="#" onClick={this.generateContainer}>
-                                    <i className="fa fa-upload"></i>
-                                </a>
-                                <a href="#" onClick={this.deleteContainer}>
-                                    <i className="fa fa-trash-o"></i>
-                                </a>
-                            </div>
+            <li className="container">
+                <div className="header">
+                    <i className="fa fa-ellipsis-v fa-fw " aria-hidden="true" onClick={this.optionContainer}></i>
+                    {this.state.option
+                        ?<div className="option">
+                            <a href={"/containers/"+result.id}>
+                                <i className="fa fa-pencil fa-fw " aria-hidden="true"></i>
+                            </a>
+                            <a  onClick={this.generateContainer}>
+                                <i className="fa fa-upload fa-fw " aria-hidden="true"></i>
+                            </a>
+                            <a  onClick={this.deleteContainer}>
+                                <i className="fa fa-trash-o fa-fw " aria-hidden="true"></i>
+                            </a>
                         </div>
-                    </div> 
-                </li>
+                        : null
+                    }
+                    
+                </div>
+
+                <Link className="contenu" to={"/containers/"+result.id}>
+                    <p className="title">{result.name}</p>
+                    <p className="content">{result.content}</p>
+                </Link>
 
                 <NotificationSystem ref="notificationSystem" style={style}/>
-            </div>
+            </li>  
         )
     }
 });
@@ -130,31 +140,21 @@ var Containers = React.createClass({
         var results = this.state.containersList;
         var that = this;
         return (
-            <section>
-                <article id="containers">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h1 className="page-header">My containers</h1>
-                        </div>
-                    </div>
-                    
-                    <div className="row">
-                        { this.state.loading
-                            ? <Loader />
-                            : null
-                        }
-                        {results.map(function(result){
-                            return (
-                                <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
-                            );
-                        })}
-                    </div>
-                </article>
+            <article id="containers">
+                <h1 className="page-header">My containers <i class="fa fa-folder-open fa-fw "></i></h1>
 
-                <article id="glossaries">
-                    <Glossaries />
-                </article>
-            </section>
+                <ul>
+                    { this.state.loading
+                        ? <Loader />
+                        : null
+                    }
+                    {results.map(function(result){
+                        return (
+                            <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
+                        );
+                    })}
+                </ul>
+            </article>
         );
     }
 });

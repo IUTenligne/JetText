@@ -11,7 +11,7 @@ class ContainersController < ApplicationController
   end
   
   def index
-    @containers = Container.select("id, name").all.where(:user_id => current_user.id)
+    @containers = Container.select("id, name, content").all.where(:user_id => current_user.id)
     render json: { containers: @containers }
   end
 
