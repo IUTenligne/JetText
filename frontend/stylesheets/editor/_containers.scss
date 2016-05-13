@@ -3,19 +3,32 @@
 /* Containers.jsx */
 article#containers {
 	padding: 20px;
+
 	h1.page-header {
 		color: $darkGrey;
 		border: none;
 	}
-	ul{
-		li.container{
+
+	ul {
+		width: 100%;
+		li.container {
 			cursor: pointer;
 			background: $lightGrey ;
-			div.header{
+			width: 40%;
+			height: 150px;
+			display: inline-block;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			box-shadow: 2px 2px 4px rgba(0,0,0,0.20);
+			margin: 0% 5% 0% 5%;
+			padding: 0;
+
+			div.header {
 				i{
 					color:$darkGrey;
 				}
-				div.option{
+				div.option {
 					background: $lightGrey;
 					border-radius: 4px;
 					width: 100px;
@@ -23,6 +36,18 @@ article#containers {
 						width: 100%;
 						display: block;
 					}
+				}
+			}
+
+			.contenu {
+				p{
+					padding: 5px;
+				}
+				p.title{
+					border-bottom: 1px solid $lightBlue;
+				}
+				p.content{
+					border: 1px dashed $darkGrey;
 				}
 			}
 		}
