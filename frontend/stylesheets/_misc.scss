@@ -279,7 +279,6 @@
 }
 
 $backgrounds: ('fish.png', 'owl.png', 'bird.png');
-$img: nth($backgrounds, random(length($backgrounds)));
 
 html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
 li.container figure.book ul.hardcover_front div.coverDesign {
@@ -289,7 +288,13 @@ li.container figure.book ul.hardcover_front div.coverDesign {
   background-repeat: no-repeat !important;
 }
 
-html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
-li.container figure.book ul.hardcover_front div.coverDesign {
-  background-image: url($img) !important;
+$elements: 15;
+@for $i from 0 to $elements {
+  $img: nth($backgrounds, random(length($backgrounds)));
+
+  html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
+  li.container:nth-child(#{$i}) figure.book ul.hardcover_front div.coverDesign {
+    background-image: url($img) !important;
+  }
 }
+
