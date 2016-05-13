@@ -73,33 +73,50 @@ var Result = React.createClass({
     render: function() {
         var result = this.props.item;
         return(
+            
             <li className="container">
-                <div className="header">
-                    <i className="fa fa-ellipsis-v fa-fw " aria-hidden="true" onClick={this.optionContainer}></i>
-                    {this.state.option
-                        ?<div className="option">
-                            <a href={"/containers/"+result.id}>
+                <figure className='book'>
+
+                    <ul className='hardcover_front'>
+                        <li>
+                            <div className="coverDesign grey capitalize ">
+                                <span className="ribbon">{JSON.parse(currentUser).firstname}</span>
+                                <p>{result.name}</p>
+                            </div>
+                        </li>
+                        <li></li>
+                    </ul>
+
+                    <ul className='sheet'>
+                        <li></li>
+                        <li>
+                            <a class="btn" href="#">Download</a>
+                            <div className="option">
+                            <a href={"/#/containers/"+result.id}>
                                 <i className="fa fa-pencil fa-fw " aria-hidden="true"></i>
                             </a>
-                            <a  onClick={this.generateContainer}>
+                            <a onClick={this.generateContainer}>
                                 <i className="fa fa-upload fa-fw " aria-hidden="true"></i>
                             </a>
-                            <a  onClick={this.deleteContainer}>
+                            <a onClick={this.deleteContainer}>
                                 <i className="fa fa-trash-o fa-fw " aria-hidden="true"></i>
                             </a>
                         </div>
-                        : null
-                    }
-                    
-                </div>
+                        </li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
 
-                <Link className="contenu" to={"/containers/"+result.id}>
-                    <p className="title">{result.name}</p>
-                    <p className="content">{result.content}</p>
-                </Link>
+          
 
-                <NotificationSystem ref="notificationSystem" style={style}/>
-            </li>  
+                    <ul className='hardcover_back'>
+                        <li></li>
+                        <li></li>
+                    </ul>
+
+                </figure>
+            </li> 
         )
     }
 });
@@ -143,7 +160,7 @@ var Containers = React.createClass({
             <article id="containers">
                 <h1 className="page-header">My containers <i class="fa fa-folder-open fa-fw "></i></h1>
 
-                <ul>
+                <ul className="align">
                     { this.state.loading
                         ? <Loader />
                         : null
