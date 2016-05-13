@@ -1,11 +1,59 @@
 @import "../vars";
 
+/* title page*/
 .header_page {
 	text-transform: capitalize;
 	margin-bottom: 25px;
 	font-weight: bold;
 }
 
+/* import css block*/
 .blocks {
 	@import 'blocks';
 }
+
+/* menu create block (media/ texte)*/
+#add_new_block{
+	text-align: center;
+
+	.select-action{
+		width: calc(100%/9);
+		display: inline-block;
+		margin: 15px;
+		text-align: center;
+		color: white;
+		height: 100px;
+		border-radius: 4px;
+
+		i {
+			font-size: 40px;
+			padding: 10px;
+		}
+
+		.icon-text:before {
+			content: "\f040";
+    		font-family: FontAwesome;
+		}
+
+		.icon-media:before {
+			content: "\f03e";
+    		font-family: FontAwesome;
+		}
+	}
+	.text{
+		background: $lighTbBlue;
+	}
+	.media{
+		
+		background: $lightOrange;
+	}
+	.glossary{
+		background: $lightGreen;
+		
+	}
+	
+	.delete{
+		background: $lightRed;
+	}
+}
+

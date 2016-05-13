@@ -29,10 +29,11 @@ var GlossaryMenu = React.createClass({
         var containerId = this.props.containerId;
         return(
             <div>
-                <form id="add_new_glossary">
-                    <button onClick={this.showGlossaries}>add glossary</button>
-                </form>
-
+                <a onClick={this.showGlossaries}>
+                    <i className="fa fa-book fa-fw" aria-hidden="true"></i><br/>
+                    Glossary
+                </a>
+ 
                 <div>
                     {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
                 </div>
@@ -49,7 +50,6 @@ var Page = React.createClass({
             status: 0,
             page: '',
             blocks: [],
-            selectedType: 1,
             retractedBlocks: false
         };
     },
@@ -59,7 +59,7 @@ var Page = React.createClass({
             this.setState({
                 status: result.status,
                 page: result.page,
-                blocks: result.blocks
+                blocks: result.blocks,
             });
         }.bind(this));
 
@@ -70,6 +70,7 @@ var Page = React.createClass({
                 return handle.className === 'handle';
             }
         });
+
         this.moveItems(drake);
     },
 
@@ -77,7 +78,7 @@ var Page = React.createClass({
         this.serverRequest.abort();
     },
 
-    createBlock: function(event) {
+    createBlock: function(typeId, event) {
         $.ajax({
             type: "POST",
             url: '/blocks',
@@ -88,14 +89,12 @@ var Page = React.createClass({
                     content: '', 
                     sequence: this.state.blocks.length, 
                     page_id: this.state.page.id,
-                    type_id: this.state.selectedType
+                    type_id: typeId
                 } 
             },
             success: function(data) {
                 this.setState({
-                    blocks: this.state.blocks.concat([data]),
-                    newBlockValue: '',
-                    selectedType: 1
+                    blocks: this.state.blocks.concat([data])
                 });
             }
         });
@@ -155,9 +154,6 @@ var Page = React.createClass({
         this.setState({ blocks: blockList });
     },
 
-    _selectType: function(event) {
-        this.setState({ selectedType: event.target.value });
-    },
 
     render: function() {
         var page = this.state.page;
@@ -175,18 +171,20 @@ var Page = React.createClass({
                     </div>
                 </ReactCSSTransitionGroup>      
 
-                <form id="add_new_block">
-                    <div className="input-group input-group-lg">
-                        <select className="form-control" value={this.state.selectedType} onChange={this._selectType}>
-                            {this.props.types.map(function(type){
-                                return <option value={type.id} key={type.id}>{type.name}</option>
-                            })}
-                        </select>
-                    </div>
-                    <input type="submit" value='Create' className="btn-success" onClick={this.createBlock}/>
-                </form>
+                <div id="add_new_block">
+                    { this.props.types.map(function(type) {
+                        return(
+                            <div key={type.id} className={"select-action " + type.name.toLowerCase()} onClick={that.createBlock.bind(that, type.id)}>
+                                <i className={"fa fa-fw icon-" + type.name.toLowerCase()} aria-hidden="true"></i><br/>
+                                {type.name}
+                            </div>
+                        );
+                    })}
 
-                <GlossaryMenu containerId={page.container_id}/>
+                    <div className="select-action glossary">
+                        <GlossaryMenu containerId={page.container_id}/>
+                    </div>
+                </div>
             </div>
         );
     }
