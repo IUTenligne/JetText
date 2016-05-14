@@ -78,7 +78,7 @@ var Page = React.createClass({
     },
 
     createBlock: function(typeId, event) {
-        for(name in CKEDITOR.instances) {
+        for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy(true);
         }
         

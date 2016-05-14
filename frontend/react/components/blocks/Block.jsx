@@ -18,6 +18,10 @@ var Block = React.createClass({
     removeBlock: function(event){
         var that = this;
 
+        for (name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy(true);
+        }
+
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
