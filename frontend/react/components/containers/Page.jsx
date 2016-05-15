@@ -113,6 +113,10 @@ var Page = React.createClass({
     },
 
     moveItems: function(drake) {
+        for (name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy(true);
+        }
+        
         var that = this;
 
         drake.on('drag', function(element, source) {
@@ -168,13 +172,20 @@ var Page = React.createClass({
                 <ReactCSSTransitionGroup transitionName="blocks-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                     <div className={this.state.retractedBlocks ? "blocks retracted" : "blocks"} ref="dragableblocks">
                         {this.state.blocks.map(function(block){
-                            return <Block key={block.id} item={block} containerId={page.container_id} removeBlock={that.handleBlockDeletion} />
+                            return (
+                                <Block 
+                                    key={block.id} 
+                                    item={block} 
+                                    containerId={page.container_id} 
+                                    removeBlock={that.handleBlockDeletion} 
+                                />
+                            );
                         })}
                     </div>
                     
                     <div id="add_new_block">
                         { this.props.types.map(function(type) {
-                            return(
+                            return (
                                 <div key={type.id} className={"select-action " + type.name.toLowerCase()} onClick={that.createBlock.bind(that, type.id)}>
                                     <i className={"fa fa-fw icon-" + type.name.toLowerCase()} aria-hidden="true"></i><br/>
                                     {type.name}

@@ -125,6 +125,11 @@ var TextBlock = React.createClass({
     },
 
     unlockEditor: function() {
+        for (name in CKEDITOR.instances) {
+            /* avoid CKE instances conflicts */
+            CKEDITOR.instances[name].destroy(true);
+        }
+
         var that = this;
 
         var editor = CKEDITOR.replace("text_block_"+this.props.block.id, {
