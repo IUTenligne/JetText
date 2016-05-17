@@ -72,14 +72,13 @@ var Result = React.createClass({
 
     render: function() {
         var result = this.props.item;
+
         return(
-            
             <li className="container">
                 <figure className='book'>
-
                     <ul className='hardcover_front'>
                         <li>
-                            <div className="coverDesign grey capitalize ">
+                            <div className="coverDesign capitalize">
                                 <span className="ribbon">{JSON.parse(currentUser).firstname}</span>
                                 <p>{result.name}</p>
                             </div>
@@ -89,7 +88,7 @@ var Result = React.createClass({
 
                     <ul className='sheet'>
                         <li></li>
-                        <li className="option ">
+                        <li className="option">
                             <a className="btn" href={"/#/containers/"+result.id}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-square fa-stack-2x"></i>
@@ -113,6 +112,7 @@ var Result = React.createClass({
                                 Delete
                             </a>
                         </li>
+
                         <li></li>
                         <li></li>
                         <li></li>
@@ -122,11 +122,11 @@ var Result = React.createClass({
                         <li></li>
                         <li></li>
                     </ul>
-
                 </figure>
+
                 <NotificationSystem ref="notificationSystem" style={style}/>
             </li> 
-        )
+        );
     }
 });
 
@@ -174,9 +174,14 @@ var Containers = React.createClass({
                         ? <Loader />
                         : null
                     }
-                    {results.map(function(result){
+
+                    { results.map(function(result){
                         return (
-                            <Result item={result} key={result.id} removeContainer={that.handleContainerDeletion} />
+                            <Result 
+                                item={result} 
+                                key={result.id} 
+                                removeContainer={that.handleContainerDeletion} 
+                            />
                         );
                     })}
                 </ul>

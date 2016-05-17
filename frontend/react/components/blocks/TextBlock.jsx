@@ -93,10 +93,15 @@ var TextBlock = React.createClass({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { id: block.id, content: this.state.blockContent }
+            data: { 
+                id: block.id, 
+                name: this.state.blockName,
+                content: this.state.blockContent 
+            }
         });
 
         if (editor) { editor.destroy(true); }
+        this.serverRequest.abort();
     },
 
     saveBlock: function() {

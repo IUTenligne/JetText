@@ -183,6 +183,17 @@ var MediaBlock = React.createClass({
         });
     },
 
+    componentWillUnmount: function() {
+         $.ajax({
+            url: "/blocks/"+this.props.block.id,
+            type: "PUT",
+            context: this,
+            data: {
+                name: this.state.blockName
+            }
+        });  
+    },
+
     submitMedia: function(event) {
         event.preventDefault();
 
