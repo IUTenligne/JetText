@@ -40,9 +40,10 @@ class GeneratorController < ApplicationController
       @page = page
       @blocks = Block.where(page_id: page.id)
       @blocks.map { |block| 
-        block.content = gsub_email(block.content, @container.user.email) 
-        unless block.upload_id.nil?
-          files.push("files/audio/2016-05/1463488390_glory_box.mp3")
+        block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
+        unless block.upload_id.nil? || block.upload_id == nil
+          @upload = Upload.find(block.upload_id)
+          files.push(gsub_email(@upload.url, @container.user.email))
         end
       }
 
@@ -66,7 +67,6 @@ class GeneratorController < ApplicationController
   def gsub_email(content, username)
     if content.include? "#{username}/files/"
       content.gsub!("#{username}/files/", "files/")
-      content.gsub!("/#{username}/files/", "files/")
     end
     return content
   end
