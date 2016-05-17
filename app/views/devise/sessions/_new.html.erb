@@ -1,5 +1,5 @@
 <div class="middle">
-    <div class="login-panel panel panel-default">
+    <div class="login-panel">
 
         <div class="panel-heading">
             <h2 class="panel-title"><%= t("Log in") %></h2>
@@ -7,15 +7,15 @@
 
         <div class="panel-body">
             <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon">
+                <div class="input-group">
+                    <span class="input-addon">
                         <i class="fa fa-envelope fa-fw"></i>
                     </span>
                     <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
                 </div>
 
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon">
+                <div class="input-group">
+                    <span class="input-addon">
                         <i class="fa fa-lock fa-fw"></i>
                     </span>
                     <%= f.password_field :password, autocomplete: "off", class: "form-control" , placeholder: t(:password)%>
@@ -34,7 +34,9 @@
             <% end %>
         </div>
     </div>
-    <%= render "devise/shared/links" %>
+    <p>
+        <%= render "devise/shared/links" %>
+    </p>
 </div>
 
 
