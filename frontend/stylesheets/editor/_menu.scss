@@ -1,20 +1,20 @@
 @import "../vars";
 
-.sidebar.menu {
+div.sidebar.menu {
 	border-radius: 0;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	max-height: 100%;
 	background: $uiGrey;
 	
-	.zone-header {
+	h2.zone-header {
 		text-transform: uppercase;
 		color: white;
 		font-size: 15px;
 		padding: 10px 15px;
 	} 
 
-	ul#side-menu {
+	ul.side-menu {
 		background: $uiGrey;
 
 		li {
@@ -26,51 +26,59 @@
 			border-top: 1px solid rgba(0,0,0,0.025);
 			border-bottom-color: rgba(0,0,0,0.2);
 			border-top-color: rgba(255,255,255,0.05);
+			display: table;
 
-			a {
-				color: white;
-				padding: 10px 0 10px 0px;
-				@include mixinPadding();
-				margin: 0;
-				text-transform: capitalize;
-				white-space: nowrap;
-  			overflow: hidden;
-				text-overflow: ellipsis;
-				width: 300px;
+
+			/* bouton drag */
+			div.handle{
+				width: 15px;
+				vertical-align: middle;
+				display: table-cell;
+				background: $lightGrey;
+				cursor: move;
+				text-align: center;
 			}
-
-			a:hover {
-				background-color: transparent;
+			.handle:before{
+				content: "\f142";
+				font-family: FontAwesome;
+				color: rgba($darkGrey, 0.9);
 			}
+			div.page{
+				width: 285px;
+				vertical-align: middle;
+				display: table-cell;
 
-			a.page-link {
-				width: 85%;
-				max-width: 85%;
-				float: left;
-			}
+				.page-link {
+					color: white;
+					padding: 10px 0 10px 0px;
+					@include mixinPadding();
+					margin: 0;
+					text-transform: capitalize;
+					white-space: nowrap;
+	  				overflow: hidden;
+					text-overflow: ellipsis;
+					width: 300px;
+					width: 85%;
+					max-width: 85%;
+					float: left;
+				}
 
-			span.levels {
-				width: 20%;
-				text-align: right;
-				@include mixinPadding();
+				.page-link:hover {
+					background-color: transparent;
+				}
+				div.menu-actions{
 
-				a.level-action {
-					padding: 0;
-
-					i.forbidden {
-
-					}
 				}
 			}
 		}
 
 		li:hover,
-		li:hover a.page-link {
+		li:hover .page-link {
 			background: #cccccc;
 			color: $uiGrey;
 		}	
 		li.active,
-		li.active a.page-link {
+		li.active .page-link {
 			background: $lightBlue;
 			color: $uiGrey;
 		}

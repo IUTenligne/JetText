@@ -22,7 +22,14 @@ var Menu = React.createClass({
             activePage: this.props.activePage
         });
         var container = ReactDOM.findDOMNode(this.refs.dragulable);
-        var drake = dragula([container]);
+     
+        
+        /* makes the blocks draggable by using "handle" class elements in block's jsx */
+        var drake = dragula([container], {
+            moves: function (el, container, handle) {
+                return handle.className === 'handle';
+            }
+        });
         this.moveItems(drake, this.props.pages);
     },
 
@@ -138,23 +145,28 @@ var Menu = React.createClass({
     render: function() {
         var that = this;
         return (
-            <div className="navbar-default sidebar menu" role="navigation">
+            <div className="sidebar menu" role="navigation">
                 <h2 className="zone-header"><i className="fa fa-bars"></i> Menu</h2>
-                <ul className="menu-container nav" id="side-menu" ref="dragulable">
+                <ul className="side-menu" ref="dragulable">
                     { this.props.pages.map((page, i) => {
                         return (
                             <li key={page.id} data-pos={i} data-id={page.id} className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}>
-                                <Link to={"/containers/"+that.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
-                                <div className="menu-actions">
-                                    { page.level > levels.min
-                                        ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i> Remove level</button>
-                                        : null
-                                    }
-                                    { page.level <= levels.max 
-                                        ? <button onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i> Add level</button> 
-                                        : null
-                                    }
-                                    <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)}><i className="fa fa-remove"></i> Delete</button>
+                                <div className="handle">
+                                   
+                                </div>
+                                <div className="page">
+                                    <Link to={"/containers/"+that.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
+                                    <div className="menu-actions">
+                                        { page.level > levels.min
+                                            ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i> Remove level</button>
+                                            : null
+                                        }
+                                        { page.level <= levels.max 
+                                            ? <button onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i> Add level</button> 
+                                            : null
+                                        }
+                                        <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)}><i className="fa fa-remove"></i> Delete</button>
+                                    </div>
                                 </div>
                             </li>
                         );
