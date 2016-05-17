@@ -30,7 +30,7 @@
 
 		i {
 			font-size: 35px;
-			padding: 10px;
+			padding: 10px 0 10px 0;
 		}
 
 		.icon-text:before {
@@ -57,14 +57,12 @@
 	.media{
 		background-image:linear-gradient( $lightOrange,rgb(217,125,14));
 	}
-
 	.glossary{
 		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
 		a{
 			color: $white;
 		}
-	}
-	
+	}	
 	.note{
 		background-image:linear-gradient( $lightRed,rgb(186,67,38));
 	}
