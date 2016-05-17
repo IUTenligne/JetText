@@ -71,6 +71,44 @@ class GeneratorController < ApplicationController
     return content
   end
 
+  def gsub_glossary(page_id, content)
+    glossaries = Glossary.all
+    unless glossaries.empty?
+      glossaries.each do |glossary|
+        if content.downcase.include? glossary.name.downcase
+          content.gsub!(/#{glossary.name}/i, "<span style='background:red'>#{glossary.name}</span><span>#{glossary.description}</span>")
+        end
+      end
+    end
+    return content
+  end
+
+  def recur_page_level(p, i, content, ul)
+    content = content + "<li class=\"sidebar-brand\"> <a href=\""+p[i].name+".html\">" + p[i].name + "</a></li>\n"
+    if p[i+1].present?
+      if p[i].level == p[i+1].level
+        i = i + 1
+        ul = ul
+        recur_page_level(p, i, content, ul)
+      elsif p[i+1].level == p[i].level + 1
+        i = i + 1
+        ul = ul + 1
+        content = content + "<ul>"
+        recur_page_level(p, i , content, ul)
+      elsif p[i+1].level == p[i].level - 1
+        i = i + 1
+        ul = ul - 1
+        content = content + "</ul>"
+        recur_page_level(p, i , content, ul)
+      end
+    else
+      ul.times do 
+        content = content + "</ul>"
+      end
+      return content
+    end
+  end
+
   def motherfucking_zipper(path, pages, files)
     require 'rubygems'
     require 'zip'
