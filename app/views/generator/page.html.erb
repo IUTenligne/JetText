@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%= @container.name.capitalize %></title>
+        <link href="/templates/iutenligne/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/templates/iutenligne/assets/css/simple-sidebar.css" rel="stylesheet">
+        <link href="/templates/iutenligne/assets/css/template.css" rel="stylesheet">
+        <link href="/templates/iutenligne/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="wrapper">
+        	<div id="sidebar-wrapper">
+          		<div class="sidebar-nav">
+          			<a href="http://www.iutenligne.net/resources.html">
+          				<img src="/templates/iutenligne/assets/img/iutenligne.png" width="200" border="0">
+          			</a>
+
+          			<hr>
+
+          			<ul class="nav-link">
+          				<li>
+					        <a class="btn btn-default" href="#">
+					          	<i class="fa fa-home fa-fw" title="Home" aria-hidden="true"></i>
+					          	<span class="sr-only">Home</span>
+          					</a>
+          				</li>
+          				<li>
+					        <a class="btn btn-default" href="#">
+						        <i class="fa fa-facebook fa-fw" title="Facebook" aria-hidden="true"></i>
+						        <span class="sr-only">Facebook</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a class="btn btn-default" href="#">
+					          	<i class="fa fa-pencil fa-fw" title="Mail" aria-hidden="true"></i>
+					          	<span class="sr-only">Mail</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#menu-toggle" id="menu-toggle" class="btn btn-default">
+						          <i class="fa fa-chevron-left fa-fw" title="Navigation" aria-hidden="true"></i>
+						          <span class="sr-only">Navigation</span>
+					        </a>
+					    </li>
+					</ul>
+
+					<hr>
+
+          			<ul class="nav-menu">
+          				<% @pages.each do |page| %>
+          					<li><a href="<%= page.id %>"><%= page.name.capitalize %></a></li>
+          				<% end %>
+					</ul> 
+          		</div>
+          	</div>
+
+          	<!-- icone bars-->  
+          	<div id="icone-menu" class="none">
+          		<a href="#menu-bars" id="menu-bars" class="btn btn-default">
+         			<i class="fa fa-bars fa-fw" title="Menu" aria-hidden="true"></i>
+          			<span class="sr-only">Menu</span> 
+          		</a> 
+          	</div>
+          	<!-- / icone bars-->
+         	<div id="page-content-wrapper">
+          		<div class="container-fluid">
+          			<!-- title container--> 
+          			<h1 class="container-title"><%= @container.name.capitalize %></h1>
+			        <!-- / title container -->
+
+			        <!-- title page -->
+			        <h2 class="page-title"><%= @page.name.capitalize %></h2>
+			        <!-- / title page --> 
+			        
+			        <!-- content -->
+                    <% @blocks.each do |block| %>
+              			<div class="row">
+              				<div class="col-lg-12"> 
+              					<h3><%= block.name.capitalize if block.name %></h3>
+              					<div class="content">
+               						<%= raw(block.content.capitalize) if block.content %>
+              					</div>
+              				</div> 
+              			</div>
+                    <% end %>
+					<!-- / content --> 
+
+            	</div>
+        	</div>
+        </div>
+
+		<script src="/templates/iutenligne/assets/js/bootstrap.min.js"></script>
+	    <script src="/templates/iutenligne/assets/js/jquery.js"></script>
+	    <script src="/templates/iutenligne/assets/js/jquery.js"></script>
+	    <script>
+	        $("#menu-toggle").click(function(e){e.preventDefault();$("#wrapper").toggleClass("toggled"); $("#icone-menu").removeClass('none').addClass('block');});
+	        $("#menu-bars").click(function(e){e.preventDefault();$("#wrapper").toggleClass("toggled"); $("#icone-menu").removeClass('block').addClass('none');});
+        </script>
+	</body>
+</html>
