@@ -221,7 +221,7 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                var content = this.makeHtmlContent(data, fileExt);
+                var content = this.makeHtmlContent(data, this.props.block.id, fileExt);
 
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
@@ -234,11 +234,11 @@ var MediaBlock = React.createClass({
         });
     },
 
-    makeHtmlContent: function(data, type) {
+    makeHtmlContent: function(data, blockId, type) {
         if (type == "mp4") {
-            return '<video width="100%" controls><source src="'+data.url+'" type="video\/mp4"></video>';
+            return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
         } else if (type == "mp3"|| type == "mpeg") {
-            return "<script type='text/javascrip'>var wavesurfer = WaveSurfer.create({container: '#block_"+data.block_id+"', waveColor: 'blue', progressColor: 'purple'}); wavesurfer.load(data.url); wavesurfer.on('ready', function () { wavesurfer.play(); });</script><audio controls><source src='"+data.url+"' type='audio/mpeg'></audio>";
+            return "<audio controls>\n\t<source src='"+data.url+"' type='audio/mpeg'>\n</audio>";
         } else {
             return type;
         }

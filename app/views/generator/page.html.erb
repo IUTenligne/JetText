@@ -7,6 +7,7 @@
         <link href="/templates/iutenligne/assets/css/template.css" rel="stylesheet">
         <link href="/templates/iutenligne/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
+
     <body>
         <div id="wrapper">
         	<div id="sidebar-wrapper">
@@ -50,7 +51,7 @@
           				<% @pages.each do |page| %>
           					<li><a href="<%= page.id %>"><%= page.name.capitalize %></a></li>
           				<% end %>
-					</ul> 
+					</ul>
           		</div>
           	</div>
 
@@ -62,6 +63,7 @@
           		</a> 
           	</div>
           	<!-- / icone bars-->
+
          	<div id="page-content-wrapper">
           		<div class="container-fluid">
           			<!-- title container--> 
@@ -75,11 +77,19 @@
 			        <!-- content -->
                     <% @blocks.each do |block| %>
               			<div class="row">
-              				<div class="col-lg-12"> 
-              					<h3><%= block.name.capitalize if block.name %></h3>
-              					<div class="content">
-               						<%= raw(block.content.capitalize) if block.content %>
-              					</div>
+              				<div class="col-lg-12">
+                                <h3><%= params[:sub] if block.name %></h3>
+                                <div class="content">
+                                    <!-- media blocks -->
+                                    <% if block.type_id == 2 %>
+                                        <%= raw(block.content) if block.content %>
+                                    <!-- note blocks -->
+                                    <% elsif block.type_id == 3 %>
+                       					<div class="<%= block.classes %>">
+                                            <%= raw(block.content.capitalize) if block.content %>
+                                        </div>
+                                    <% end %>
+                                </div>
               				</div> 
               			</div>
                     <% end %>
@@ -89,12 +99,22 @@
         	</div>
         </div>
 
+        <script src="/templates/iutenligne/assets/js/jquery.js"></script>
 		<script src="/templates/iutenligne/assets/js/bootstrap.min.js"></script>
-	    <script src="/templates/iutenligne/assets/js/jquery.js"></script>
-	    <script src="/templates/iutenligne/assets/js/jquery.js"></script>
-	    <script>
-	        $("#menu-toggle").click(function(e){e.preventDefault();$("#wrapper").toggleClass("toggled"); $("#icone-menu").removeClass('none').addClass('block');});
-	        $("#menu-bars").click(function(e){e.preventDefault();$("#wrapper").toggleClass("toggled"); $("#icone-menu").removeClass('block').addClass('none');});
+	    <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu-toggle").click(function(e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                    $("#icone-menu").removeClass('none').addClass('block');
+                });
+                $("#menu-bars").click(function(e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                    $("#icone-menu").removeClass('block').addClass('none');
+                });
+            });
         </script>
+
 	</body>
 </html>
