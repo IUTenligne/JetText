@@ -152,7 +152,14 @@ var Container = React.createClass({
 
                     <ReactCSSTransitionGroup transitionName="menu-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                         <aside id="sidebar-wrapper">
-                            <Menu key={Math.floor((Math.random() * 900))} pages={pages} container={container} dragAction={this.dragPages} levelizeAction={this.levelizePages} pageDeletion={this.deletePage} activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} />
+                            <Menu 
+                                key={Math.floor((Math.random() * 900))} 
+                                pages={pages} container={container} 
+                                dragAction={this.dragPages} 
+                                levelizeAction={this.levelizePages} 
+                                pageDeletion={this.deletePage} 
+                                activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} 
+                            />
                         </aside>
                     </ReactCSSTransitionGroup>
 
