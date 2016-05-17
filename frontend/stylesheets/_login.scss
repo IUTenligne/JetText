@@ -5,30 +5,95 @@
 	border-radius: 4px;
 	padding-top: 20%; 
 
-	.panel-heading {
-		background: $lightBlue !important;
+	.login-panel{
+		.panel-heading {
+			background: $lightBlue !important;
+			margin: 0;
+			padding: 5px;
+			border-radius: 4px 4px 0 0;
 
-		h2 {
-			text-align: center;
-		}
-	}
-	.panel-body {
-		background: $white;
-
-		.input-group {
-			margin: 15px 0 25px 0;
-		}
-
-		.actions {
-			width: 80%;
-			margin: 0 auto;
-			
-			.btn {
-				background: $blue;
-				border-color: #517cae;
-				margin-top: 5px;
+			h2 {
+				text-align: center;
 			}
 		}
+		.panel-body {
+			background: $white;
+			margin: 0;
+			padding: 10px;
+			border-radius: 0 0 4px 4px;
+
+			.input-group {
+				position: relative;
+				display: table;
+				border-collapse: separate;
+				display: table-cell;
+				margin-bottom: 5px !important;
+				position: relative;
+				z-index: 2;
+				width: 100%;
+				margin-bottom: 0;
+				float: left;
+
+				.input-addon{
+					padding: 6px;
+					font-size: 14px;
+					font-weight: normal;
+					line-height: 1.3;
+					color: #555;
+					text-align: center;
+					background-color: #eee;
+					border: 1px solid #ccc;
+					border-radius: 4px 0 0 4px;
+					width: 10%;
+					white-space: nowrap;
+					vertical-align: middle;
+					float: left;
+					height: 34px;
+				}
+				.form-control{
+					display: table-cell;
+					width: 90%;
+					height: 34px;
+					padding: 6px 12px;
+					font-size: 14px;
+					line-height: 1.42857143;
+					color: #555;
+					background-color: #fff;
+					background-image: none;
+					border: 1px solid #ccc;
+					border-radius:0 4px 4px 0;
+					border-left: none; 
+					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+					box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+					-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+					-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+					transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+					position: relative;
+					z-index: 2;
+					float: left;
+					margin-bottom: 0;
+				}
+				
+			}
+			.field{
+				text-align: left;
+			}
+			
+			.actions {
+				width: 80%;
+				margin: 0 auto;
+				padding: 8px 5px 0 5px;
+				text-align: center;
+				.btn {
+					background: $blue;
+					border-color: #517cae;
+					margin-top: 5px;
+				}
+			}
+		}
+	}
+	p{
+		margin-top: 5px;
 	}
 }
 
