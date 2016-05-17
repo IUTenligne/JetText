@@ -1,12 +1,13 @@
 class GeneratorController < ApplicationController
 
-	before_action :authenticate_user!
+  before_action :authenticate_user!
   
   def container
   	@container = Container.find(params[:id])
   	@pages = Page.where(container_id: params[:id])
     render :layout => false
   end
+  
 
   def page
   	@page = Page.find(params[:id])
@@ -16,6 +17,7 @@ class GeneratorController < ApplicationController
     render :layout => false
   end
 
+
   def page_generation
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
@@ -23,6 +25,7 @@ class GeneratorController < ApplicationController
     @blocks = Block.where(page_id: params[:id])
     render :layout => false
   end
+
 
   def save
     @container = Container.find(params[:id])
@@ -38,6 +41,8 @@ class GeneratorController < ApplicationController
 
     @pages.each_with_index do |page, index|
       @page = page
+      page_name = gsub_name(page.name) if page.name
+
       @blocks = Block.where(page_id: page.id)
       @blocks.map { |block| 
         block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
@@ -47,7 +52,6 @@ class GeneratorController < ApplicationController
         end
       }
 
-      page_name = gsub_name(page.name)
       filename = index.to_s + "-" + page_name + ".html"
       data = render_to_string(:action => :page_generation, :id => params[:id], :layout => false, :template => "generator/page.html.erb")
       File.open("#{Rails.public_path}/#{@container.url}/tmp/" + filename, "w") { |f| f << data }
@@ -60,9 +64,11 @@ class GeneratorController < ApplicationController
     render :nothing => true
   end
 
+
   def gsub_name(name)
     return name.gsub(/[^a-zA-Z1-9_-]/, "").to_s.downcase
   end
+
 
   def gsub_email(content, username)
     if content.include? "#{username}/files/"
@@ -70,6 +76,7 @@ class GeneratorController < ApplicationController
     end
     return content
   end
+
 
   def gsub_glossary(page_id, content)
     glossaries = Glossary.all
@@ -83,23 +90,29 @@ class GeneratorController < ApplicationController
     return content
   end
 
-  def recur_page_level(p, i, content, ul)
-    content = content + "<li class=\"sidebar-brand\"> <a href=\""+p[i].name+".html\">" + p[i].name + "</a></li>\n"
-    if p[i+1].present?
-      if p[i].level == p[i+1].level
+
+  def recur_page_level(page, page_name, i, content, ul)
+    if page_name
+      content = content + "<li class=\"sidebar-brand\"> <a href=\"" + page_name + ".html\">" + page_name + "</a></li>\n"
+    else
+      content = content + "<li class=\"sidebar-brand\"> <a href=\"" + i + "-page.html\">" + i + "</a></li>\n"
+    end
+
+    if page[i+1].present?
+      if page[i].level == page[i+1].level
         i = i + 1
         ul = ul
-        recur_page_level(p, i, content, ul)
-      elsif p[i+1].level == p[i].level + 1
+        recur_page_level(page, i, content, ul)
+      elsif page[i+1].level == page[i].level + 1
         i = i + 1
         ul = ul + 1
         content = content + "<ul>"
-        recur_page_level(p, i , content, ul)
-      elsif p[i+1].level == p[i].level - 1
+        recur_page_level(page, i , content, ul)
+      elsif page[i+1].level == page[i].level - 1
         i = i + 1
         ul = ul - 1
         content = content + "</ul>"
-        recur_page_level(p, i , content, ul)
+        recur_page_level(page, i , content, ul)
       end
     else
       ul.times do 
@@ -108,6 +121,7 @@ class GeneratorController < ApplicationController
       return content
     end
   end
+
 
   def motherfucking_zipper(path, pages, files)
     require 'rubygems'

@@ -78,7 +78,7 @@
                     <% @blocks.each do |block| %>
               			<div class="row">
               				<div class="col-lg-12">
-                                <h3><%= params[:sub] if block.name %></h3>
+                                <h3><%= block.name.capitalize if block.name %></h3>
                                 <div class="content">
                                     <!-- media blocks -->
                                     <% if block.type_id == 2 %>
@@ -88,6 +88,8 @@
                        					<div class="<%= block.classes %>">
                                             <%= raw(block.content.capitalize) if block.content %>
                                         </div>
+                                    <% else %>
+                                        <%= raw(block.content) if block.content %>
                                     <% end %>
                                 </div>
               				</div> 
