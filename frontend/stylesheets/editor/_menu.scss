@@ -20,12 +20,12 @@ div.sidebar.menu {
 		li {
 			width: 100%;
 			display: inline-block;
-			border-top: 1px solid rgba(0,0,0,0.025);
+			border-top: 1px solid rgba($black,0.025);
 			color: white;
-			border-bottom: 1px solid rgba(0,0,0,0.005);
-			border-top: 1px solid rgba(0,0,0,0.025);
-			border-bottom-color: rgba(0,0,0,0.2);
-			border-top-color: rgba(255,255,255,0.05);
+			border-bottom: 1px solid rgba($black,0.005);
+			border-top: 1px solid rgba($black,0.025);
+			border-bottom-color: rgba($black,0.2);
+			border-top-color: rgba($white,0.05);
 			display: table;
 
 
@@ -47,6 +47,7 @@ div.sidebar.menu {
 				width: 285px;
 				vertical-align: middle;
 				display: table-cell;
+				display: table;
 
 				.page-link {
 					color: white;
@@ -57,23 +58,55 @@ div.sidebar.menu {
 					white-space: nowrap;
 	  				overflow: hidden;
 					text-overflow: ellipsis;
-					width: 300px;
-					width: 85%;
-					max-width: 85%;
+					width: 270px;
 					float: left;
+					display: table-cell;
 				}
-
 				.page-link:hover {
 					background-color: transparent;
 				}
-				div.menu-actions{
+				.action-delete{
+					width: 15px;
+					display: table-cell;
+					vertical-align: top;
+					button{
+						color: $white;
+						background: none;
+						border: none;
+						font-size: 15px;
 
+					}
+				}
+				.action-delete.hidden{
+					display: none;
 				}
 			}
+			.menu-actions{
+				button{
+					margin: 5px;
+					width: 130px;
+					background: none;
+					text-align: center;
+					border: none;
+					color: $white;
+					
+					i{
+						border-radius: 100px;
+						font-size: 15px;
+						background: $lightGrey;
+						padding: 6px;
+						margin: 0 3px 0 3px;
+					}
+				}
+			}
+			.menu-actions.hidden{
+				display: none;
+			}
+
 		}
 
 		li:hover,
-		li:hover .page-link {
+		li:hover .page-link,{
 			background: #cccccc;
 			color: $uiGrey;
 		}	
@@ -81,6 +114,10 @@ div.sidebar.menu {
 		li.active .page-link {
 			background: $lightBlue;
 			color: $uiGrey;
+			
+			.menu-actions.hidden{
+				display: none;
+			}
 		}
 
 		$levelPadding: 8px;
@@ -157,7 +194,7 @@ div.sidebar.menu {
 			font-size: 14px;
 			line-height: 1.42857143;
 			color: #555;
-			background-color: #fff;
+			background-color: $white;
 			background-image: none;
 			border: 1px solid #ccc;
 			border-radius: 4px;
