@@ -13,7 +13,9 @@ var Menu = React.createClass({
     getInitialState: function() {
         return {
             newPageValue: '',
-            activePage: ''
+            activePage: '',
+            pageHover: false,
+            hoveredPage: ''
         };
     },
 
@@ -142,6 +144,17 @@ var Menu = React.createClass({
         this.props.pageDeletion(activePage, pageId);
     },
 
+    activeHover: function(page){
+        this.setState({ 
+            pageHover: true,
+            hoveredPage: page.id
+        });
+    },
+
+    hoverFalse: function(){
+        this.setState({ pageHover: false});
+    },
+
     render: function() {
         var that = this;
         return (
@@ -150,23 +163,34 @@ var Menu = React.createClass({
                 <ul className="side-menu" ref="dragulable">
                     { this.props.pages.map((page, i) => {
                         return (
-                            <li key={page.id} data-pos={i} data-id={page.id} className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}>
-                                <div className="handle">
-                                   
-                                </div>
+                            <li 
+                                key={page.id} 
+                                onMouseOver={this.activeHover.bind(that, page)} 
+                                onMouseOut={this.hoverFalse} 
+                                data-pos={i} 
+                                data-id={page.id} 
+                                className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}
+                            >
+                                <div className="handle"></div>
                                 <div className="page">
                                     <Link to={"/containers/"+that.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
-                                    <div className="menu-actions">
-                                        { page.level > levels.min
-                                            ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}><i className="fa fa-arrow-left"></i> Remove level</button>
-                                            : null
-                                        }
-                                        { page.level <= levels.max 
-                                            ? <button onClick={that.handleLevelClick.bind(that, page, "add")}><i className="fa fa-arrow-right"></i> Add level</button> 
-                                            : null
-                                        }
-                                        <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)}><i className="fa fa-remove"></i> Delete</button>
+                                    <div className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "action-delete" : "action-delete hidden"}>
+                                        <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)} ><i className="fa fa-remove"></i> </button> 
                                     </div>
+                                </div>
+                                <div className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "menu-actions" : "menu-actions hidden"}>
+                                    { page.level > levels.min
+                                        ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
+                                            <i className="fa fa-arrow-left"></i>
+                                        </button>
+                                        : null
+                                    }
+                                    { page.level <= levels.max 
+                                        ? <button onClick={that.handleLevelClick.bind(that, page, "add")}>
+                                            <i className="fa fa-arrow-right"></i> 
+                                        </button> 
+                                        : null
+                                    }
                                 </div>
                             </li>
                         );
