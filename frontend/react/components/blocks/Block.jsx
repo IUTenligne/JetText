@@ -4,7 +4,7 @@ var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 var NotificationSystem = require('react-notification-system');
-const enhanceWithClickOutside = require('react-click-outside');
+
 
 var Block = React.createClass({
     getInitialState: function() {
@@ -58,15 +58,16 @@ var Block = React.createClass({
     handleBlockEditState: function(st) {
         this.setState({ editBlock: st });
     },
+
     viewBlockAction: function(){
         this.setState({ actionBlock: !this.state.actionBlock });
     },
+    
     falseBlockAction: function(){
         this.setState({ actionBlock: false });
     },
-    handleClickOutside: function() {
-        this.setState({ actionBlock: false });
-    },
+
+
 
     _notificationSystem: null,
 
@@ -82,7 +83,7 @@ var Block = React.createClass({
                         <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
                     { this.state.actionBlock
-                        ? <Tooltip onClickOutside={this.handleClickOutside}>
+                        ? <Tooltip>
                             <div className="block-actions">
                                 { this.state.editBlock
                                     ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
@@ -94,7 +95,7 @@ var Block = React.createClass({
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
                             </Tooltip>
-                        :null
+                        : null
                     }
                 </div>
             );
@@ -149,4 +150,4 @@ var Block = React.createClass({
     }
 });
 
-module.exports = enhanceWithClickOutside(Block);
+module.exports = Block;

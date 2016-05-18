@@ -49,20 +49,6 @@ class ContainersController < ApplicationController
     end
   end
 
-  def generate
-    require 'fileutils'
-    require 'generator/generator'
-
-    @container = Container.find(params[:id])
-    @pages = Page.where(:container_id => @container.id).order('sequence asc')
-
-    Generator.generate(@container.user.email, @container, @pages)
-
-    respond_to do |format|
-      format.html { head :no_content }
-    end
-  end
-  
   private
     def container_params
       params.require(:container).permit(:name, :content, :url)

@@ -18,8 +18,6 @@ end
 group :test do
   gem 'minitest'
   gem 'minitest-reporters'
-  gem 'guard'
-  gem 'guard-minitest'
 end
 
 group :development, :test do
@@ -31,6 +29,6 @@ end
 
 # Custom gems
 gem 'devise'
+gem 'rubyzip'
 gem 'nokogiri'
 gem 'paperclip'
-gem 'unicorn'

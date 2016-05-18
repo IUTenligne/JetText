@@ -35,6 +35,8 @@ class Upload < ActiveRecord::Base
       "application/force-download",
 			"image/png",
       "image/jpg",
+      "image/jpeg",
+      "image/gif",
       "audio/mp3",
       "audio/mpeg"
 		],

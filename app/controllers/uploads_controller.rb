@@ -51,12 +51,6 @@ class UploadsController < ApplicationController
 		end
 	end
 
-	def clear
-		@upload_id = Block.select("upload_id").find(params[:block_id])
-    Upload.find(@upload_id).destroy
-    render :nothing => true
-  end
-
   def destroy
 		Upload.find(params[:id]).destroy
     render :nothing => true

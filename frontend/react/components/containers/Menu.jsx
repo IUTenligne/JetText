@@ -172,12 +172,14 @@ var Menu = React.createClass({
                                 className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}
                             >
                                 <div className="handle"></div>
+
                                 <div className="page">
                                     <Link to={"/containers/"+that.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
                                     <div className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "action-delete" : "action-delete hidden"}>
                                         <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)} ><i className="fa fa-remove"></i> </button> 
                                     </div>
                                 </div>
+                                
                                 <div className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "menu-actions" : "menu-actions hidden"}>
                                     { page.level > levels.min
                                         ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
