@@ -59,9 +59,9 @@ class GeneratorController < ApplicationController
       pages.push(filename)
     end
 
-    motherfucking_zipper("#{Rails.public_path}/#{@container.url}", pages, files)
+    url = motherfucking_zipper(@container.url, @container.user.email, pages, files)
 
-    render :nothing => true
+    render json: { :url => url }
   end
 
 
@@ -123,18 +123,25 @@ class GeneratorController < ApplicationController
   end
 
 
-  def motherfucking_zipper(path, pages, files)
+  def motherfucking_zipper(path, username, pages, files)
     require 'rubygems'
     require 'zip'
 
-    Zip::File.open(path + "/tmp/zip.zip", Zip::File::CREATE) do |zipfile|
+    username = username.split("@")[0].gsub!(".", "_")
+    zippath = "#{Rails.public_path}/#{path}/tmp/#{Time.now.to_i.to_s}_#{username}.zip"
+    relpath = "#{Rails.public_path}/#{path}"
+    url = "#{path}/tmp/#{Time.now.to_i.to_s}_#{username}.zip"
+
+    Zip::File.open(zippath, Zip::File::CREATE) do |zipfile|
       pages.each do |filename|
-        zipfile.add(filename, path + '/tmp/' + filename)
+        zipfile.add(filename, relpath + '/tmp/' + filename)
       end
       files.each do |filename|
-        zipfile.add(filename, path + '/' + filename)
+        zipfile.add(filename, relpath + '/' + filename)
       end
     end
+
+    return url
   end
 
 end

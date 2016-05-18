@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     get "/containers_glossaries/:container_id" => "containers_glossaries#show"
     post "/containers_glossaries" => "containers_glossaries#check"
     resources :formulas
-    
     resources :generator
     get "/generator/overview/:id" => "generator#container"
     get "/generator/overview/page/:id" => "generator#page"

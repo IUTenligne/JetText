@@ -53,7 +53,10 @@ var Result = React.createClass({
         var that = this;
         $.ajax({
             type: "GET",
-            url: '/generate_container/'+that.props.item.id,
+            url: '/generator/save/'+that.props.item.id,
+            success: function(data) {
+                window.location = data.url
+            }
         });
         event.preventDefault();
         this._notificationSystem.addNotification({
@@ -100,10 +103,11 @@ var Result = React.createClass({
                             <a className="btn list-group-item" onClick={this.generateContainer}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-upload fa-stack-1x fa-inverse"></i> 
+                                    <i className="fa fa-download fa-stack-1x fa-inverse"></i> 
                                 </span>
-                                Upload
+                                Download
                             </a>
+
                             <a className="btn" onClick={this.deleteContainer}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-trash-o fa-stack-1x "></i> 
@@ -112,7 +116,6 @@ var Result = React.createClass({
                                 Delete
                             </a>
                         </li>
-
                         <li></li>
                         <li></li>
                         <li></li>
