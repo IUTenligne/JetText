@@ -188,6 +188,9 @@ var Containers = React.createClass({
                             />
                         );
                     })}
+                    <li id="addContainer">
+                        <i className="fa fa-plus fa-fw "></i>
+                    </li>
                 </ul>
             </article>
         );

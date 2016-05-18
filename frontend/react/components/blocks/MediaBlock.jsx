@@ -343,7 +343,6 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
-                    <div className="block-content border" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
 
                 </div>
                 <NotificationSystem ref="notificationSystem"/>
