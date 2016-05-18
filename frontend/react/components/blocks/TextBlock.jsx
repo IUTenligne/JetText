@@ -5,6 +5,7 @@ var Glossaries = require('../glossaries/Glossaries.jsx');
 var Term = require('../glossaries/term.jsx');
 var TermOverlay = require('../glossaries/termOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
+var Tooltip = require('../widgets/Tooltip.jsx');
 
 
 var TextBlock = React.createClass({
@@ -25,7 +26,9 @@ var TextBlock = React.createClass({
             getEditor: '',
             selectedText: '',
             focusPopup: false,
-            containersGlossariesList: []
+            containersGlossariesList: [],
+            editBlock: true,
+            tooltipState: false
         };
     },
 
@@ -112,7 +115,8 @@ var TextBlock = React.createClass({
                 this.setState({
                     blockName: data.name,
                     blockContent: data.content,
-                    changeName: false
+                    changeName: false,
+                    editBlock: true
                 });
             }
         });
@@ -143,7 +147,7 @@ var TextBlock = React.createClass({
             });
         });
 
-        this.setState({ focusPopup: false });
+        this.setState({ focusPopup: false, editBlock: false });
     },
 
     _highlightText: function(query, editor) {
@@ -231,6 +235,18 @@ var TextBlock = React.createClass({
         });
     },
 
+    viewBlockAction: function() {
+        this.setState({ tooltipState: !this.state.tooltipState });
+    },
+
+    handleTooltipState: function(st) {
+        this.setState({ tooltipState: st });
+    },
+
+    handleRemoveBlock: function() {
+        this.props.removeMe(this.props.block);
+    },
+
 	render: function() {
 		var block = this.props.block;
         var myStyle = {
@@ -282,6 +298,25 @@ var TextBlock = React.createClass({
                     </Modal>
                     : null 
                 }
+
+                <div className="action">
+                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <button className="handle"></button>
+                </div>
+
+                <Tooltip tooltipState={this.handleTooltipState}>
+                    { this.state.tooltipState
+                        ? <div className="block-actions">
+                            { this.state.editBlock
+                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Edit</button>
+                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                            }
+                            <br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                        </div>
+                        : null
+                    }   
+                </Tooltip>
 
                 <NotificationSystem ref="notificationSystem"/>
             </div>
