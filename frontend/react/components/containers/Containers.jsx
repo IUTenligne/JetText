@@ -49,7 +49,8 @@ var Result = React.createClass({
         });
     },
 
-    generateContainer: function(event){
+    generateContainer: function(event) {
+        /* allow a container to be generated and downloaded */
         var that = this;
         $.ajax({
             type: "GET",
