@@ -92,10 +92,10 @@ span.bold{
 				}
 			}
 
+			/* glossary tooltip*/
 			a {
 				position: relative;
 				color: $lightBlue;
-
 			}
 
 			a[data]:hover:after {
@@ -132,7 +132,7 @@ span.bold{
 		}
 	}
 
-	/* option*/
+	/* option block (delete/ drag/ save / edite*/
 	.action {
 		text-align: right;
 		width: 100%;
@@ -196,11 +196,12 @@ span.bold{
 	}
 }
 
+/* spacial UI block */
 .block-text {
-	.block-inner {
-		.block-title {
+	div.block-inner {
+		div.block-title {
 			i {
-				background: $lightBlue;
+				background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 			}
 		}
 	}
@@ -210,8 +211,42 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background: $lightOrange;
+				background-image:linear-gradient( $lightOrange,rgb(217,125,14));
 			}
+		}
+		div.block-content{
+			border: 2px dashed $lightOrange;
+			width: 95%;
+			display: table;
+			text-align: center;			  	
+			border-radius: 4px;
+			margin: 0 auto;
+			margin-top: 5px;
+			
+			.dropzone {
+			  	width: 50%;
+			  	display: table-cell;
+			  	border-right: 2px solid  $lightOrange;
+			}
+			.dropzone:before {
+			  	content: '\f0f6';
+			  	font-family: FontAwesome;
+			  	display: inline-block;
+			  	font-size: 30px;
+			  	margin-bottom: 5px;
+			}
+			.browseFiles{
+				width: 50%;
+				vertical-align: middle;
+				display: table-cell;
+				i{
+					font-size: 30px;
+					margin-bottom: 5px;
+				}
+			}
+		}
+		div.block-content.border{
+			border: none;
 		}
 	}
 }
@@ -220,7 +255,7 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background: $lightRed;
+				background-image:linear-gradient( $lightRed,rgb(186,67,38));
 			}
 		}
 	}
@@ -228,12 +263,12 @@ span.bold{
 
 .note-icon-important:before {
 	content: "\f000";
-  font-family: FontAwesome;
+  	font-family: FontAwesome;
 }
 
 .note-icon-quote:before {
 	content: "\f10d";
-  font-family: FontAwesome;
+  	font-family: FontAwesome;
 }
 
 .block-note {
@@ -252,7 +287,7 @@ span.bold{
 
 /* dragula */
 .gu-mirror {
-  background: red !important;
+  	background: red !important;
 }
 
 .gu-transit {

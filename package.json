@@ -61,6 +61,7 @@
     "browserify": "*",
     "react": "*",
     "react-addons-css-transition-group": "^15.0.2",
+    "react-click-outside": "^2.1.0",
     "react-dom": "*",
     "react-dragula": "^1.1.15",
     "react-dropzone": "^3.4.0",
