@@ -139,6 +139,15 @@ var Container = React.createClass({
         });
     },
 
+    changePageName: function(pageName, pageId) {
+        var pages = this.state.pages;
+        for (var i in pages) {
+            if (pages[i].id == pageId)
+                pages[i].name = pageName;
+        }
+        this.setState({ pages: pages });
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -154,7 +163,8 @@ var Container = React.createClass({
                         <aside id="sidebar-wrapper">
                             <Menu 
                                 key={Math.floor((Math.random() * 900))} 
-                                pages={pages} container={container} 
+                                pages={pages} 
+                                container={container} 
                                 dragAction={this.dragPages} 
                                 levelizeAction={this.levelizePages} 
                                 pageDeletion={this.deletePage} 
@@ -178,8 +188,25 @@ var Container = React.createClass({
                         { this.state.loading
                             ? null
                             : <div className="content">
-                                { this.props.routeParams.pageId ? <Page key={this.props.routeParams.pageId} page={this.props.routeParams.pageId} types={this.state.types} /> : null }
-                                { !this.props.routeParams.pageId && this.state.activePage ? <Page key={this.state.activePage.id} page={this.state.activePage.id} types={this.state.types} /> : null }
+                                { this.props.routeParams.pageId 
+                                    ? <Page 
+                                            key={this.props.routeParams.pageId} 
+                                            page={this.props.routeParams.pageId} 
+                                            types={this.state.types}
+                                            changePageName={this.changePageName}
+                                        /> 
+                                    : null 
+                                }
+
+                                { !this.props.routeParams.pageId && this.state.activePage 
+                                    ? <Page 
+                                            key={this.state.activePage.id} 
+                                            page={this.state.activePage.id} 
+                                            types={this.state.types}
+                                            changePageName={this.changePageName} 
+                                        /> 
+                                    : null 
+                                }
                             </div>
                         }
                     </div>

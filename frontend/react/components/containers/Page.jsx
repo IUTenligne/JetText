@@ -49,7 +49,9 @@ var Page = React.createClass({
             status: 0,
             page: '',
             blocks: [],
-            retractedBlocks: false
+            retractedBlocks: false,
+            pageName: '',
+            changePageName: false
         };
     },
 
@@ -59,6 +61,7 @@ var Page = React.createClass({
                 status: result.status,
                 page: result.page,
                 blocks: result.blocks,
+                pageName: result.page.name
             });
         }.bind(this));
 
@@ -161,17 +164,42 @@ var Page = React.createClass({
         this.setState({ blocks: blockList });
     },
 
+    handlePageRename: function(event) {
+        this.setState({ 
+            pageName: event.target.value,
+            changePageName: true 
+        });
+    },
+
+    savePageName: function() {
+        $.ajax({
+            type: "PUT",
+            url: '/pages/'+this.state.page.id,
+            data: {
+                name: this.state.pageName
+            },
+            context: this,
+            success: function() {
+                this.setState({ changePageName: false });
+                this.props.changePageName(this.state.pageName, this.state.page.id);
+            }
+        });
+    },
+
     render: function() {
         var page = this.state.page;
         var that = this;
         
         return (
             <div className="page"> 
-                <h2 className="header_page">{page.name}</h2>
+                <h2 className="header_page">
+                    <input ref="containername" type="text" value={this.state.pageName} placeholder="Page's name..." onChange={this.handlePageRename}/>
+                    { this.state.changePageName ? <button onClick={this.savePageName}><i className="fa fa-check"></i></button> : null }
+                </h2>
 
                 <ReactCSSTransitionGroup transitionName="blocks-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                     <div className={this.state.retractedBlocks ? "blocks retracted" : "blocks"} ref="dragableblocks">
-                        {this.state.blocks.map(function(block){
+                        { this.state.blocks.map(function(block){
                             return (
                                 <Block 
                                     key={block.id} 

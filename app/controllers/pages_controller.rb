@@ -38,7 +38,7 @@ class PagesController < ApplicationController
 
   def update
     @page = Page.find(params[:id])
-    @page.update_attribute(:name, params[:page][:name])
+    @page.update_attribute(:name, params[:name])
     render :nothing => true
   end
 
