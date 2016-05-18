@@ -18,6 +18,7 @@ var Result = React.createClass({
             option: false
         };
     },
+    
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
     },
