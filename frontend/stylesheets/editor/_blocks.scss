@@ -10,6 +10,7 @@ span.bold{
 	box-shadow: 0 2px 4px 2px rgba(0,0,0,0.15);
 	border-radius: 4px 4px 0px 0px;
 
+	/* MediaBlock TextBlock NoteBlock*/
 	.block-inner {
 		.content {
 			.focus {
@@ -81,19 +82,23 @@ span.bold{
 			}
 		}
 		
-		.block-content{
-			ul{
+		.block-content {
+
+			ul {
 				margin-top: 20px;
-				li{
+
+				li {
 					margin-bottom: 15px;
 				}
 			}
-			a{
+
+			a {
 				position: relative;
 				color: $lightBlue;
 
 			}
-			a[data]:hover:after{
+
+			a[data]:hover:after {
 			 	content: attr(data);
 			 	position:absolute; 
 			 	background: $uiGrey;
@@ -107,7 +112,8 @@ span.bold{
 			 	width: 300px;
 			 	text-align: center;
 			}
-			a[data]:hover:before{
+
+			a[data]:hover:before {
 			  	content: "";
 			  	position: absolute;
 			  	bottom: -7px;
@@ -124,6 +130,69 @@ span.bold{
 		.cke {
 			padding: 10px 15px;
 		}
+	}
+
+	/* option*/
+	.action {
+		text-align: right;
+		width: 100%;
+		color: rgba($darkGrey,0.5);
+		font-size: 20px;
+
+		.handle {
+			background: none;
+			border: none;
+			color: rgba($darkGrey,0.5);
+			font-size: 17px;
+			margin: 5px;
+		}
+
+		.handle:before {
+			content: "\f047";
+			font-family: FontAwesome;
+		}
+	}
+	
+	.block-actions {
+		position: absolute;
+		background: $white;
+		width: 100px;
+		right: 55px;
+		margin-top: 4px;
+		border-bottom: none;
+		border-radius: 4px;
+		border: 1px solid $lightBlue;
+
+		button {
+			width: 100%;
+			border: none;
+			background: none;
+			color: $black;
+			font-size: 17px;
+			text-align: left;
+			padding: 2px;
+		}
+	}
+	.block-actions:after {
+		position: absolute;
+		right: 14px;
+		margin-top: -9px;
+		top:0;
+		border-top: 0;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;        
+		border-bottom: 9px solid $lightBlue;
+	}
+	.block-actions:before {
+		position: absolute;
+		right: 15px;
+		margin-top: -7px;
+		border-top: 0;
+		z-index: 10;
+		border-top: 0;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;        
+		border-bottom: 8px solid $white;
 	}
 }
 

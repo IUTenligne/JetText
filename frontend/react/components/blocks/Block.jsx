@@ -7,7 +7,8 @@ var NotificationSystem = require('react-notification-system');
 var Block = React.createClass({
     getInitialState: function() {
         return {
-            editBlock: true
+            editBlock: true,
+            actionBlock: false
         };
     },
 
@@ -54,6 +55,12 @@ var Block = React.createClass({
     handleBlockEditState: function(st) {
         this.setState({ editBlock: st });
     },
+    viewBlockAction: function(){
+        this.setState({ actionBlock: true });
+    },
+    falseBlockAction: function(){
+        this.setState({ actionBlock: false });
+    },
 
     _notificationSystem: null,
 
@@ -64,41 +71,64 @@ var Block = React.createClass({
             return (
                 <div className="block block-text" data-id={block.id}>
                     <TextBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
-                    <div className="block-actions">
-                        { this.state.editBlock
-                            ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
-                            : <button className="text-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
-                        }
-                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button>
-                        <button className="handle">+ Drag</button>
-                        <NotificationSystem ref="notificationSystem" />
+                    <div className="action">
+                        <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                        <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
+                    { this.state.actionBlock
+                        ? <div className="block-actions">
+                            { this.state.editBlock
+                                ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
+                                : <button className="text-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
+                            }
+                            <br/>
+                            <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            
+                            <NotificationSystem ref="notificationSystem" />
+                        </div>
+                        :null
+                    }
                 </div>
             );
         } else if (block.type_id === 2) {
             return (
                 <div className="block block-media" data-id={block.id}>
                     <MediaBlock block={block} key={block.id} />
-                    <div className="block-actions">
-                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button>
-                        <button className="handle">+ Drag</button>
-                        <NotificationSystem ref="notificationSystem" />
+                    <div className="action">
+                        <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                        <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
+                    { this.state.actionBlock
+                        ? <div className="block-actions">
+                            <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            
+                            <NotificationSystem ref="notificationSystem" />
+                        </div>
+                        :null
+                    }
                 </div>
             );
         } if (block.type_id === 3) {
             return (
                 <div className="block block-note" data-id={block.id}>
                     <NoteBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
-                    <div className="block-actions">
-                        { this.state.editBlock
-                            ? <button className="note-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
-                            : <button className="note-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
-                        }
-                        <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button>
-                        <button className="handle">+ Drag</button>
-                        <NotificationSystem ref="notificationSystem" />
+                    <div className="action">
+                        <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                        <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
+                    { this.state.actionBlock
+                        ? <div className="block-actions">
+                            { this.state.editBlock
+                                ? <button className="note-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
+                                : <button className="note-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
+                            }
+                            <br/>
+                            <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            
+                            <NotificationSystem ref="notificationSystem" />
+                        </div>
+                        :null
+                    }
                 </div>
             );
         } else {
