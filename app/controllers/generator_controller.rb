@@ -3,13 +3,32 @@ class GeneratorController < ApplicationController
   before_action :authenticate_user!
   
   def container
+    # Container overview method
+
   	@container = Container.find(params[:id])
   	@pages = Page.where(container_id: params[:id])
+    @assets_prefix = "/templates/iutenligne/"
+    @home_link = "/generator/overview/#{params[:id]}"
+    @org_link = "#"
+    render :layout => false
+  end
+
+
+  def container_generation
+    # Container generation method
+
+    @container = Container.find(params[:id])
+    @pages = Page.where(container_id: params[:id])
+    @assets_prefix = ""
+    @home_link = "#"
+    @org_link = "http://www.iutenligne.net/resources.html"
     render :layout => false
   end
   
 
   def page
+    # Page overview method
+
   	@page = Page.find(params[:id])
   	@container = Container.find(@page.container_id)
   	@pages = Page.where(container_id: @page.container_id)
@@ -18,72 +37,30 @@ class GeneratorController < ApplicationController
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
     }
     @assets_prefix = "/templates/iutenligne/"
-
-    @f = Array.new
-    @root = "#{Rails.public_path}/templates/iutenligne/"
-    Dir["#{Rails.public_path}/templates/iutenligne/**/**"].each do |file|
-        @f.push("#{file}".gsub!(@root, "")) if File.file?("#{file}")
-      end
+    @home_link = "/generator/overview/#{@container.id}"
+    @org_link = "#"
     render :layout => false
   end
 
 
   def page_generation
+    # Page generation method
+
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
     @pages = Page.where(container_id: @page.container_id)
     @blocks = Block.where(page_id: params[:id])
     @assets_prefix = ""
+    @home_link = "index.html"
+    @org_link = "http://www.iutenligne.net/resources.html"
     render :layout => false
-  end
-
-
-  def save
-    @container = Container.find(params[:id])
-    @pages = Page.where(container_id: params[:id])
-
-    data = render_to_string(:action => :container, :id => params[:id], :layout => false)
-    File.open("#{Rails.public_path}/#{@container.url}/tmp/index.html", "w") { |f| f << data }
-
-    pages = Array.new()
-    pages.push("index.html")
-
-    files = Array.new()
-
-    @pages.each_with_index do |page, index|
-      @page = page
-      page_name = gsub_name(page.name) if page.name
-
-      @blocks = Block.where(page_id: page.id)
-      @blocks.map { |block| 
-        block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
-        
-        # handle img files contained in text blocks
-        files = image_finder(block.content, files)
-
-        unless block.upload_id.nil? || block.upload_id == nil
-          @upload = Upload.find(block.upload_id)
-          files.push(gsub_email(@upload.url, @container.user.email))
-        end
-      }
-
-      filename = index.to_s + "-" + page_name + ".html"
-      data = render_to_string(:action => :page_generation, :id => params[:id], :layout => false, :template => "generator/page.html.erb")
-      File.open("#{Rails.public_path}/#{@container.url}/tmp/" + filename, "w") { |f| f << data }
-
-      pages.push(filename)
-    end
-
-    url = motherfucking_zipper(@container.url, @container.user.email, pages, files)
-
-    # url is used by Containers.jsx to allow the zip file to be downloaded
-    render json: { :url => url }
   end
 
 
   def gsub_name(name)
     return name.gsub(/[^a-zA-Z1-9_-]/, "").to_s.downcase
   end
+  helper_method :gsub_name
 
 
   def gsub_email(content, username)
@@ -182,6 +159,56 @@ class GeneratorController < ApplicationController
     end
 
     return url
+  end
+
+
+  def save
+    # Generation method
+    # Used by Containers.jsx to allow the users to generate and then download a zip of a container
+
+    @container = Container.find(params[:id])
+    @pages = Page.where(container_id: params[:id])
+    @assets_prefix = ""
+    @home_link = "#"
+    @org_link = "http://www.iutenligne.net/resources.html"
+
+    data = render_to_string(:action => :container_generation, :id => params[:id], :layout => false, :template => "generator/container.html.erb")
+    File.open("#{Rails.public_path}/#{@container.url}/tmp/index.html", "w") { |f| f << data }
+
+    pages = Array.new()
+    pages.push("index.html")
+
+    files = Array.new()
+    @home_link = "index.html"
+
+    @pages.each_with_index do |page, index|
+      @page = page
+      page_name = gsub_name(page.name) if page.name
+
+      @blocks = Block.where(page_id: page.id)
+      @blocks.map { |block| 
+        block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
+        
+        # handle img files contained in text blocks
+        files = image_finder(block.content, files)
+
+        unless block.upload_id.nil? || block.upload_id == nil
+          @upload = Upload.find(block.upload_id)
+          files.push(gsub_email(@upload.url, @container.user.email))
+        end
+      }
+
+      filename = index.to_s + "-" + page_name + ".html"
+      data = render_to_string(:action => :page_generation, :id => params[:id], :layout => false, :template => "generator/page.html.erb")
+      File.open("#{Rails.public_path}/#{@container.url}/tmp/" + filename, "w") { |f| f << data }
+
+      pages.push(filename)
+    end
+
+    url = motherfucking_zipper(@container.url, @container.user.email, pages, files)
+
+    # url is used by Containers.jsx to allow the zip file to be downloaded
+    render json: { :url => url }
   end
 
 end

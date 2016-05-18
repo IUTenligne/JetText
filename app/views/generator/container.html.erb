@@ -2,24 +2,24 @@
     <head>
         <meta charset="utf-8">
         <title><%= @container.name.capitalize %></title>
-        <link href="/templates/iutenligne/assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/templates/iutenligne/assets/css/simple-sidebar.css" rel="stylesheet">
-        <link href="/templates/iutenligne/assets/css/template.css" rel="stylesheet">
-        <link href="/templates/iutenligne/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<%= @assets_prefix %>assets/css/simple-sidebar.css" rel="stylesheet">
+        <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
+        <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div id="wrapper">
         	<div id="sidebar-wrapper">
           		<div class="sidebar-nav">
-          			<a href="http://www.iutenligne.net/resources.html">
-          				<img src="/templates/iutenligne/assets/img/iutenligne.png" width="200" border="0">
+          			<a href="<% @org_link %>" target="_blank">
+          				<img src="<%= @assets_prefix %>assets/img/iutenligne.png" width="200" border="0">
           			</a>
 
           			<hr>
 
           			<ul class="nav-link">
           				<li>
-					        <a class="btn btn-default" href="#">
+					        <a class="btn btn-default" href="<%= @home_link %>">
 					          	<i class="fa fa-home fa-fw" title="Home" aria-hidden="true"></i>
 					          	<span class="sr-only">Home</span>
           					</a>
@@ -46,10 +46,10 @@
 
 					<hr>
 
-          			<ul class="nav-menu">
-          				<% @pages.each do |page| %>
-          					<li><a href="page/<%= page.id %>"><%= page.name.capitalize %></a></li>
-          				<% end %>
+          <ul class="nav-menu">
+          	<% @pages.each_with_index do |page, index| %>
+          		<li><a href="<%= "#{index}-#{gsub_name(page.name)}.html" %>"><%= page.name.capitalize %></a></li>
+          	<% end %>
 					</ul> 
           		</div>
           	</div>
@@ -80,12 +80,22 @@
         	</div>
         </div>
 
-		<script src="/templates/iutenligne/assets/js/bootstrap.min.js"></script>
-	    <script src="/templates/iutenligne/assets/js/jquery.js"></script>
-	    <script src="/templates/iutenligne/assets/js/jquery.js"></script>
-	    <script>
-	        $("#menu-toggle").click(function(e){e.preventDefault();$("#wrapper").toggleClass("toggled"); $("#icone-menu").removeClass('none').addClass('block');});
-	        $("#menu-bars").click(function(e){e.preventDefault();$("#wrapper").toggleClass("toggled"); $("#icone-menu").removeClass('block').addClass('none');});
+		<script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
+	    <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
+	    <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
+	    <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu-toggle").click(function(e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                    $("#icone-menu").removeClass('none').addClass('block');
+                });
+                $("#menu-bars").click(function(e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                    $("#icone-menu").removeClass('block').addClass('none');
+                });
+            });
         </script>
 	</body>
 </html>
