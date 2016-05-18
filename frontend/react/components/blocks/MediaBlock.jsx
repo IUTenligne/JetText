@@ -184,7 +184,7 @@ var MediaBlock = React.createClass({
             blockName: this.props.block.name,
             blockContent: this.props.block.content
         });
-        
+
     },
 
     componentWillUnmount: function() {
@@ -320,12 +320,23 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        <form className="dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                            <br/>Select some files and <br/>
-                            <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
-                        </form>
+                        <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                            <div className="viewDropzone">
 
-                    <div className="block-content" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                            </div> 
+                            <div className="viewDropzonebis">
+                               <div className="textDropzone">
+                                     <i className="fa fa-file-text"></i>
+                                     <br/>
+                                     Add file
+                                 </div>
+                            </div>   
+                            <div className="zoneDropzone">
+                                <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                            </div>
+                        </div>
+
+                    
 
                         <div className="browseFiles" onClick={this.handleBrowseFiles}>
                             <i className="fa fa-folder-open"></i><br/>
@@ -333,8 +344,8 @@ var MediaBlock = React.createClass({
                         </div>
                         { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
                     </div>
-                    
-                    <div className="block-content border" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+
+                    <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
                 </div>
                 <NotificationSystem ref="notificationSystem"/>

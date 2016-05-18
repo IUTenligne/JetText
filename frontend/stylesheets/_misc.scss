@@ -63,15 +63,7 @@
   @include mce-fa("\f02c");
 }
 
-#uploadform {
-	height: 150px;
 
-	input[type=file].uploader {
-	  width: 100%;
-	  height: 150px;
-	  vertical-align: middle;
-	}
-}
 
 #editor1, .mce-tinymce.mce-container {
 	width: 100%;
