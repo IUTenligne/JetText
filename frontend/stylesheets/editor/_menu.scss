@@ -3,9 +3,10 @@
 div.sidebar.menu {
 	border-radius: 0;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
 	max-height: 100%;
 	background: $uiGrey;
+	width: 100%;
 	
 	h2.zone-header {
 		text-transform: uppercase;
@@ -31,7 +32,7 @@ div.sidebar.menu {
 
 			/* bouton drag */
 			div.handle{
-				width: 15px;
+				width: 4% !important;
 				vertical-align: middle;
 				display: table-cell;
 				background: $lightGrey;
@@ -44,7 +45,7 @@ div.sidebar.menu {
 				color: rgba($darkGrey, 0.9);
 			}
 			div.page{
-				width: 285px;
+				width: 96% !important;
 				vertical-align: middle;
 				display: table-cell;
 				display: table;
@@ -58,7 +59,7 @@ div.sidebar.menu {
 					white-space: nowrap;
 	  				overflow: hidden;
 					text-overflow: ellipsis;
-					width: 270px;
+					width: 92%;
 					float: left;
 					display: table-cell;
 				}
@@ -66,7 +67,7 @@ div.sidebar.menu {
 					background-color: transparent;
 				}
 				.action-delete{
-					width: 15px;
+					width: 4%;
 					display: table-cell;
 					vertical-align: top;
 					button{
@@ -74,7 +75,6 @@ div.sidebar.menu {
 						background: none;
 						border: none;
 						font-size: 15px;
-
 					}
 				}
 				.action-delete.hidden{
@@ -82,9 +82,10 @@ div.sidebar.menu {
 				}
 			}
 			.menu-actions{
+				width: 96% !important;
 				button{
 					margin: 5px;
-					width: 130px;
+					width: 45%;
 					background: none;
 					text-align: center;
 					border: none;
