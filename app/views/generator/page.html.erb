@@ -48,10 +48,8 @@
 					<hr>
 
           			<ul class="nav-menu">
-          				<% @pages.each_with_index do |page, index| %>
-          					<li><a href="<%= "#{index}-#{gsub_name(page.name)}.html" %>"><%= page.name.capitalize %></a></li>
-          				<% end %>
-					</ul>
+                  <%= raw(@menu) %>
+					      </ul>
           		</div>
           	</div>
 
@@ -101,8 +99,8 @@
         	</div>
         </div>
 
-        <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
-		<script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
+      <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
+		  <script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
 	    <script type="text/javascript">
             $(document).ready(function() {
                 $("#menu-toggle").click(function(e) {

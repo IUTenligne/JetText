@@ -62,15 +62,7 @@ var TextBlock = React.createClass({
 
         /* Opens CKEditor if the block has no content */
         if ((this.props.block.content == '') || (this.props.block.content == null)) {
-            this.handleUnlockEditor();
-        }
-    },
-
-    componentWillReceiveProps: function(newProps) {
-        if (newProps.editBlock == false) {
             this.unlockEditor();
-        } else if (newProps.editBlock == true) {
-            this.saveBlock();
         }
     },
 
@@ -232,10 +224,6 @@ var TextBlock = React.createClass({
         this.setState({ glossaryModalState: st });
     },
 
-    handleUnlockEditor: function() {
-        this.props.editBlockAction(false);
-    },
-
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value,
@@ -265,7 +253,7 @@ var TextBlock = React.createClass({
                     }
                     
                     <div className="block-title">
-                        <i className="fa fa-pencil" onClick={this.handleUnlockEditor}></i>
+                        <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
@@ -273,8 +261,8 @@ var TextBlock = React.createClass({
                     </div>
 
                     { this.state.blockVirtualContent != ''
-                        ? <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.handleUnlockEditor}/>
-                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.handleUnlockEditor}/>
+                        ? <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.unlockEditor}/>
+                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor}/>
                     }
                 </div>
 

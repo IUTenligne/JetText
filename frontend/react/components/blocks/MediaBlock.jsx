@@ -59,6 +59,7 @@ var FileBrowser = React.createClass({
             showType: false,
             selectedType: '',
             selectedFiles: [],
+            modalState: true
         };
     },
 
@@ -76,7 +77,9 @@ var FileBrowser = React.createClass({
     },
 
     handleModalState: function(st) {
-        this.props.active( st );
+        console.log(st);
+        this.setState({ modalState: st });
+        this.props.active(st);
     },
 
     handleFileType: function(type, name) {
@@ -327,11 +330,11 @@ var MediaBlock = React.createClass({
                         <div className="browseFiles" onClick={this.handleBrowseFiles}>
                             <i className="fa fa-folder-open"></i><br/>
                             Browse files
-                            { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
                         </div>
+                        { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
                     </div>
                     
-                    <div className="block-content border" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
+                    <div className="block-content border" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
                 </div>
                 <NotificationSystem ref="notificationSystem"/>

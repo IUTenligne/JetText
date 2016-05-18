@@ -75,7 +75,7 @@ var Block = React.createClass({
         if (block.type_id === 1) {
             return (
                 <div className="block block-text" data-id={block.id} >
-                    <TextBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
+                    <TextBlock block={block} key={block.id} containerId={this.props.containerId} />
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
                         <button className="handle"></button>
@@ -123,7 +123,7 @@ var Block = React.createClass({
         } if (block.type_id === 3) {
             return (
                 <div className="block block-note" data-id={block.id}>
-                    <NoteBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
+                    <NoteBlock block={block} key={block.id} containerId={this.props.containerId} />
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
                         <button className="handle"></button>
