@@ -181,7 +181,7 @@ var MediaBlock = React.createClass({
             blockName: this.props.block.name,
             mediaResultContent: this.props.block.content
         });
-        
+
     },
 
     componentWillUnmount: function() {
@@ -319,9 +319,17 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        <form className="dropzone new_upload" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                            <br/>Select some files and <br/>
-                            <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" />
+                        <form className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                            <div className="viewDropzone">
+                                 
+                            </div>
+
+                            <div className="zoneDropzone">
+                            <i className="fa fa-file-texts"></i>
+                                 <br/>
+                                 Add file
+                                <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                            </div>
                         </form>
 
                         <div className="browseFiles" onClick={this.handleBrowseFiles}>
