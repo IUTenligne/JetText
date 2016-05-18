@@ -9,7 +9,7 @@ CKEDITOR.plugins.add('uploader', {
 			label: 'Uploader',
 			command: 'startUpload',
 			toolbar: 'insert',
-			icon: plugin_path + 'icons/uploader.png'
+			icon: 'image'
 		});
 
 		CKEDITOR.dialog.add('uploaderDialog', plugin_path + 'dialogs/uploader.js');
