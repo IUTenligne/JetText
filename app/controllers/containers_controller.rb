@@ -37,8 +37,7 @@ class ContainersController < ApplicationController
     @container.user_id = current_user.id
     @container.url = current_user.email
     if @container.save
-      # redirects to React's container url after save
-      redirect_to "/#/containers/#{@container.id}"
+      render json: {content: "", id: @container.id, name: @container.name}
     end
   end
 
