@@ -55,9 +55,11 @@ var Block = React.createClass({
     handleBlockEditState: function(st) {
         this.setState({ editBlock: st });
     },
+
     viewBlockAction: function(){
         this.setState({ actionBlock: true });
     },
+    
     falseBlockAction: function(){
         this.setState({ actionBlock: false });
     },

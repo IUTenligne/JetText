@@ -168,8 +168,8 @@ var FileBrowser = React.createClass({
 var MediaBlock = React.createClass({
 	getInitialState: function() {
         return {
-            mediaResultContent: '',
             blockName: '',
+            blockContent: '',
             browserList: [],
             modalState: false,
             changeName: false
@@ -179,7 +179,7 @@ var MediaBlock = React.createClass({
     componentDidMount: function() {
         this.setState({ 
             blockName: this.props.block.name,
-            mediaResultContent: this.props.block.content
+            blockContent: this.props.block.content
         });
     },
 
@@ -189,7 +189,8 @@ var MediaBlock = React.createClass({
             type: "PUT",
             context: this,
             data: {
-                name: this.state.blockName
+                name: this.state.blockName,
+                content: this.state.blockContent
             }
         });  
     },
@@ -197,7 +198,7 @@ var MediaBlock = React.createClass({
     submitMedia: function(event) {
         event.preventDefault();
 
-        this.setState({ mediaResultContent: '<i class="fa fa-spinner fa-pulse loader"></i>' });
+        this.setState({ blockContent: '<i class="fa fa-spinner fa-pulse loader"></i>' });
 
         var fileName = $(this.refs.mediaFile.files[0])[0].name;
         var fileExt = fileName.split(".").slice(-1)[0];
@@ -205,11 +206,6 @@ var MediaBlock = React.createClass({
         var formData = new FormData();
         formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
         formData.append("block_id", this.props.block.id);
-
-        $.ajax({
-            url: "/uploads/clear/" + this.props.block.id,
-            type: "DELETE"
-        });
 
         /* Ajax file upload handled by uploads_controller.rb & model upload.rb */
         $.ajax({
@@ -221,7 +217,7 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                var content = this.makeHtmlContent(data, this.props.block.id, fileExt);
+                var content = this.makeHtmlContent(data, fileExt);
 
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
@@ -229,12 +225,12 @@ var MediaBlock = React.createClass({
                     data: { content: content, upload_id: data.id }
                 });
 
-                this.setState({ mediaResultContent: content });
+                this.setState({ blockContent: content });
             }
         });
     },
 
-    makeHtmlContent: function(data, blockId, type) {
+    makeHtmlContent: function(data,type) {
         if (type == "mp4") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
         } else if (type == "mp3"|| type == "mpeg") {
@@ -255,6 +251,7 @@ var MediaBlock = React.createClass({
     handleBlockChange: function(data) {
         var fileExt = data.file_file_name.split(".").slice(-1)[0];
         var content = this.makeHtmlContent(data, fileExt);
+        console.log(content);
 
         $.ajax({
             url: "/blocks/update_upload",
@@ -267,7 +264,7 @@ var MediaBlock = React.createClass({
                 upload_id: data.id,
             },
             success: function(data) {
-                this.setState({ mediaResultContent: content });
+                this.setState({ blockContent: content });
             }
         });
     },
@@ -285,7 +282,8 @@ var MediaBlock = React.createClass({
             type: "PUT",
             context: this,
             data: {
-                name: this.state.blockName
+                name: this.state.blockName,
+                content: this.state.blockContent
             },
             success: function(data) {
                 this.setState({ 
@@ -323,10 +321,19 @@ var MediaBlock = React.createClass({
                         </form>
 
                         <button onClick={this.handleBrowseFiles}>Browse files</button>
-                        { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
+
+                        { this.state.modalState 
+                            ? <FileBrowser 
+                                    active={this.handleModalState} 
+                                    block={block.id} 
+                                    updateBlock={this.handleBlockChange} 
+                                /> 
+                            : null 
+                        }
+
                     </div>
                     
-                    <div className="block-content" ref="mediaResult" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.mediaResultContent)} />
+                    <div className="block-content" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
                 </div>
 
                 <NotificationSystem ref="notificationSystem"/>
