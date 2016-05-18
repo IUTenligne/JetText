@@ -20,6 +20,7 @@ var Block = React.createClass({
 
     removeBlock: function(event){
         var that = this;
+        this._notificationSystem = this.refs.notificationSystem;
 
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy(true);
