@@ -46,6 +46,10 @@ class GeneratorController < ApplicationController
       @blocks = Block.where(page_id: page.id)
       @blocks.map { |block| 
         block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
+        
+        # handle img files contained in text blocks
+        files = image_finder(block.content, files)
+
         unless block.upload_id.nil? || block.upload_id == nil
           @upload = Upload.find(block.upload_id)
           files.push(gsub_email(@upload.url, @container.user.email))
@@ -88,6 +92,16 @@ class GeneratorController < ApplicationController
       end
     end
     return content
+  end
+
+
+  def image_finder(content, files)
+    require 'nokogiri'
+
+    doc = Nokogiri::HTML(content)
+    img_srcs = doc.css('img').map{ |i| files.push(i['src']) }
+
+    return files
   end
 
 
