@@ -2,7 +2,9 @@ var React = require('react');
 var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');
+var Tooltip = require('../widgets/Tooltip.jsx');
 var NotificationSystem = require('react-notification-system');
+const enhanceWithClickOutside = require('react-click-outside');
 
 var Block = React.createClass({
     getInitialState: function() {
@@ -56,9 +58,12 @@ var Block = React.createClass({
         this.setState({ editBlock: st });
     },
     viewBlockAction: function(){
-        this.setState({ actionBlock: true });
+        this.setState({ actionBlock: !this.state.actionBlock });
     },
     falseBlockAction: function(){
+        this.setState({ actionBlock: false });
+    },
+    handleClickOutside: function() {
         this.setState({ actionBlock: false });
     },
 
@@ -69,23 +74,25 @@ var Block = React.createClass({
 
         if (block.type_id === 1) {
             return (
-                <div className="block block-text" data-id={block.id}>
+                <div className="block block-text" data-id={block.id} >
                     <TextBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
                         <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
                     { this.state.actionBlock
-                        ? <div className="block-actions">
-                            { this.state.editBlock
-                                ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
-                                : <button className="text-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
-                            }
-                            <br/>
-                            <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
-                            
-                            <NotificationSystem ref="notificationSystem" />
-                        </div>
+                        ? <Tooltip onClickOutside={this.handleClickOutside}>
+                            <div className="block-actions">
+                                { this.state.editBlock
+                                    ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
+                                    : <button className="text-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
+                                }
+                                <br/>
+                                <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                                
+                                <NotificationSystem ref="notificationSystem" />
+                            </div>
+                            </Tooltip>
                         :null
                     }
                 </div>
@@ -99,11 +106,13 @@ var Block = React.createClass({
                         <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
                     { this.state.actionBlock
-                        ? <div className="block-actions">
-                            <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
-                            
-                            <NotificationSystem ref="notificationSystem" />
-                        </div>
+                        ? <Tooltip>
+                            <div className="block-actions">
+                                <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                                
+                                <NotificationSystem ref="notificationSystem" />
+                            </div>
+                        </Tooltip>
                         :null
                     }
                 </div>
@@ -117,16 +126,18 @@ var Block = React.createClass({
                         <button className="handle" onClick={this.falseBlockAction}></button>
                     </div>
                     { this.state.actionBlock
-                        ? <div className="block-actions">
-                            { this.state.editBlock
-                                ? <button className="note-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
-                                : <button className="note-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
-                            }
-                            <br/>
-                            <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
-                            
-                            <NotificationSystem ref="notificationSystem" />
-                        </div>
+                        ? <Tooltip>
+                            <div className="block-actions">
+                                { this.state.editBlock
+                                    ? <button className="note-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
+                                    : <button className="note-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
+                                }
+                                <br/>
+                                <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                                
+                                <NotificationSystem ref="notificationSystem" />
+                            </div>
+                        </Tooltip>
                         :null
                     }
                 </div>
@@ -137,4 +148,4 @@ var Block = React.createClass({
     }
 });
 
-module.exports = Block;
+module.exports = enhanceWithClickOutside(Block);
