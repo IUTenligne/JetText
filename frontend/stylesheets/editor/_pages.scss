@@ -12,7 +12,7 @@
 	@import 'blocks';
 }
 
-/* menu create block (media/ texte)*/
+/* menu create block (media/ texte/ note. glossary)*/
 #add_new_block{
 	text-align: center;
 
@@ -53,9 +53,11 @@
 	.text{
 		background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 	}
-
 	.media{
 		background-image:linear-gradient( $lightOrange,rgb(217,125,14));
+	}
+	.note{
+		background-image:linear-gradient( $lightRed,rgb(186,67,38));
 	}
 	.glossary{
 		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
@@ -63,8 +65,6 @@
 			color: $white;
 		}
 	}	
-	.note{
-		background-image:linear-gradient( $lightRed,rgb(186,67,38));
-	}
+	
 }
 

@@ -132,7 +132,7 @@ span.bold{
 		}
 	}
 
-	/* option*/
+	/* option block (delete/ drag/ save / edite*/
 	.action {
 		text-align: right;
 		width: 100%;
@@ -200,7 +200,7 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background: $lightBlue;
+				background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 			}
 		}
 	}
@@ -210,7 +210,7 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background: $lightOrange;
+				background-image:linear-gradient( $lightOrange,rgb(217,125,14));
 			}
 		}
 	}
@@ -220,7 +220,7 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background: $lightRed;
+				background-image:linear-gradient( $lightRed,rgb(186,67,38));
 			}
 		}
 	}
