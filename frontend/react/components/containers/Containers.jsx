@@ -181,7 +181,7 @@ var Containers = React.createClass({
             data: {
                 container: {
                     name: this.state.newContainerValue,
-                    content: '',
+                    content: "",
                     url: JSON.parse(currentUser).email
                 }
             },
