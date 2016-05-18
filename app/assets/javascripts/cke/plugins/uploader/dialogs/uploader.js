@@ -25,28 +25,27 @@ CKEDITOR.dialog.add('uploaderDialog', function(editor) {
             formData.append("tempfile", file);
             formData.append("block_id", block_id);
 
-            $.ajax({
-                url: "/uploads",
-                type: "POST",
-                contentType: false,
-                cache: false,
-                processData: false,
-                data: formData,
-                success: function(data) {
-                    if (type == "mp4") {
-                        var element = editor.document.createElement('video');
+            console.log(type);
+
+            if ((type === "png") || (type === "jpg") || (type === "gif") || (type === "jpeg")) {
+                $.ajax({
+                    url: "/uploads",
+                    type: "POST",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    data: formData,
+                    success: function(data) {
+                        var element = editor.document.createElement('img');
                         element.setAttribute('src', data.url);
-                        element.setAttribute('controls', '');
-                    } else if (type == "mp3"|| type == "mpeg") {
-                        var element = "<script type='text/javascrip'>var wavesurfer = WaveSurfer.create({container: '#block_"+data.block_id+"', waveColor: 'blue', progressColor: 'purple'}); wavesurfer.load(data.url); wavesurfer.on('ready', function () { wavesurfer.play(); });</script><audio controls><source src='"+data.url+"' type='audio/mpeg'></audio>";
-                    } else if (type == "pdf") {
-                        var element = editor.document.createElement('a');
-                        element.setAttribute('href', data.url);
-                        element.appendText('PDF');
+                        editor.insertElement(element);
                     }
-                    editor.insertElement(element);
-                }
-            });
+                });
+                return;
+            } else {
+                editor.showNotification( 'Uploading...', 'progress', 0.25 );
+                return;
+            }
         }
     };
 });
