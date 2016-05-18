@@ -14,6 +14,16 @@ class GeneratorController < ApplicationController
   	@container = Container.find(@page.container_id)
   	@pages = Page.where(container_id: @page.container_id)
   	@blocks = Block.where(page_id: params[:id])
+    @blocks.map { |block| 
+      block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+    }
+    @assets_prefix = "/templates/iutenligne/"
+
+    @f = Array.new
+    @root = "#{Rails.public_path}/templates/iutenligne/"
+    Dir["#{Rails.public_path}/templates/iutenligne/**/**"].each do |file|
+        @f.push("#{file}".gsub!(@root, "")) if File.file?("#{file}")
+      end
     render :layout => false
   end
 
@@ -23,6 +33,7 @@ class GeneratorController < ApplicationController
     @container = Container.find(@page.container_id)
     @pages = Page.where(container_id: @page.container_id)
     @blocks = Block.where(page_id: params[:id])
+    @assets_prefix = ""
     render :layout => false
   end
 
@@ -65,6 +76,7 @@ class GeneratorController < ApplicationController
 
     url = motherfucking_zipper(@container.url, @container.user.email, pages, files)
 
+    # url is used by Containers.jsx to allow the zip file to be downloaded
     render json: { :url => url }
   end
 
@@ -77,6 +89,14 @@ class GeneratorController < ApplicationController
   def gsub_email(content, username)
     if content.include? "#{username}/files/"
       content.gsub!("#{username}/files/", "files/")
+    end
+    return content
+  end
+
+
+  def add_slash(content, username)
+    if content.include? "#{username}/files/"
+      content.gsub!("#{username}/files/", "/#{username}/files/")
     end
     return content
   end
@@ -152,6 +172,12 @@ class GeneratorController < ApplicationController
       end
       files.each do |filename|
         zipfile.add(filename, relpath + '/' + filename)
+      end
+
+      railsroot = "#{Rails.public_path}/templates/iutenligne/"
+      Dir["#{Rails.public_path}/templates/iutenligne/**/**"].each do |file|
+        filename = file.gsub(railsroot, "")
+        zipfile.add(filename, file)
       end
     end
 

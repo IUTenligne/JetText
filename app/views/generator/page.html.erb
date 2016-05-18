@@ -2,10 +2,10 @@
     <head>
         <meta charset="utf-8">
         <title><%= @container.name.capitalize %></title>
-        <link href="/templates/iutenligne/assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/templates/iutenligne/assets/css/simple-sidebar.css" rel="stylesheet">
-        <link href="/templates/iutenligne/assets/css/template.css" rel="stylesheet">
-        <link href="/templates/iutenligne/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<%= @assets_prefix %>assets/css/simple-sidebar.css" rel="stylesheet">
+        <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
+        <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
@@ -13,7 +13,7 @@
         	<div id="sidebar-wrapper">
           		<div class="sidebar-nav">
           			<a href="http://www.iutenligne.net/resources.html">
-          				<img src="/templates/iutenligne/assets/img/iutenligne.png" width="200" border="0">
+          				<img src="<%= @assets_prefix %>assets/img/iutenligne.png" width="200" border="0">
           			</a>
 
           			<hr>
@@ -54,6 +54,8 @@
 					</ul>
           		</div>
           	</div>
+
+            <%= @f %>
 
           	<!-- icone bars-->  
           	<div id="icone-menu" class="none">
@@ -101,8 +103,8 @@
         	</div>
         </div>
 
-        <script src="/templates/iutenligne/assets/js/jquery.js"></script>
-		<script src="/templates/iutenligne/assets/js/bootstrap.min.js"></script>
+        <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
+		<script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
 	    <script type="text/javascript">
             $(document).ready(function() {
                 $("#menu-toggle").click(function(e) {
