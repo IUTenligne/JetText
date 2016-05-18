@@ -10,7 +10,7 @@ var Block = React.createClass({
     getInitialState: function() {
         return {
             editBlock: true,
-            actionBlock: false
+            tooltipState: false
         };
     },
 
@@ -59,15 +59,13 @@ var Block = React.createClass({
         this.setState({ editBlock: st });
     },
 
-    viewBlockAction: function(){
-        this.setState({ actionBlock: !this.state.actionBlock });
-    },
-    
-    falseBlockAction: function(){
-        this.setState({ actionBlock: false });
+    viewBlockAction: function() {
+        this.setState({ tooltipState: !this.state.tooltipState });
     },
 
-
+    handleTooltipState: function(st) {
+        this.setState({ tooltipState: st });
+    },
 
     _notificationSystem: null,
 
@@ -80,11 +78,12 @@ var Block = React.createClass({
                     <TextBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                        <button className="handle" onClick={this.falseBlockAction}></button>
+                        <button className="handle"></button>
                     </div>
-                    { this.state.actionBlock
-                        ? <Tooltip>
-                            <div className="block-actions">
+                    
+                    <Tooltip tooltipState={this.handleTooltipState}>
+                        { this.state.tooltipState
+                            ? <div className="block-actions">
                                 { this.state.editBlock
                                     ? <button className="text-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
                                     : <button className="text-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
@@ -94,9 +93,10 @@ var Block = React.createClass({
                                 
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
-                            </Tooltip>
-                        : null
-                    }
+                            : null
+                        }   
+                    </Tooltip>
+                    
                 </div>
             );
         } else if (block.type_id === 2) {
@@ -105,18 +105,19 @@ var Block = React.createClass({
                     <MediaBlock block={block} key={block.id} />
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                        <button className="handle" onClick={this.falseBlockAction}></button>
+                        <button className="handle"></button>
                     </div>
-                    { this.state.actionBlock
-                        ? <Tooltip>
-                            <div className="block-actions">
+
+                    <Tooltip tooltipState={this.handleTooltipState}>
+                        { this.state.tooltipState
+                            ? <div className="block-actions">
                                 <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
                                 
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
-                        </Tooltip>
-                        :null
-                    }
+                            : null
+                        }   
+                    </Tooltip>
                 </div>
             );
         } if (block.type_id === 3) {
@@ -125,11 +126,12 @@ var Block = React.createClass({
                     <NoteBlock block={block} key={block.id} containerId={this.props.containerId} editBlockAction={this.handleBlockEditState} editBlock={this.state.editBlock} />
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                        <button className="handle" onClick={this.falseBlockAction}></button>
+                        <button className="handle"></button>
                     </div>
-                    { this.state.actionBlock
-                        ? <Tooltip>
-                            <div className="block-actions">
+
+                    <Tooltip tooltipState={this.handleTooltipState}>
+                        { this.state.tooltipState
+                            ? <div className="block-actions">
                                 { this.state.editBlock
                                     ? <button className="note-block-edit" onClick={this.editBlock}><i className="fa fa-pencil"></i> Edit</button>
                                     : <button className="note-block-save" onClick={this.editBlock}><i className="fa fa-check"></i> Save</button>
@@ -139,9 +141,9 @@ var Block = React.createClass({
                                 
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
-                        </Tooltip>
-                        :null
-                    }
+                            : null
+                        }   
+                    </Tooltip>
                 </div>
             );
         } else {
