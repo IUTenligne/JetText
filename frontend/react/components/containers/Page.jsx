@@ -170,7 +170,7 @@ var Page = React.createClass({
         return (
             <div className="page"> 
                 <h2 className="header_page">
-                    <input ref="containername" type="text" value={this.state.pageName} placeholder="Page's name..." onChange={this.handlePageRename}/>
+                    <input className="capitalize" ref="containername" type="text" value={this.state.pageName} placeholder="Page's name..." onChange={this.handlePageRename}/>
                     { this.state.changePageName ? <button onClick={this.savePageName}><i className="fa fa-check"></i></button> : null }
                 </h2>
 

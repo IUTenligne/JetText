@@ -205,7 +205,7 @@ var Container = React.createClass({
                             ? <Loader />
                             : <div className="header">
                                 <h1>
-                                    <input ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
+                                    <input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
                                     { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                 </h1>
                             </div>

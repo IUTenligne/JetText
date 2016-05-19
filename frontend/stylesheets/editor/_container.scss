@@ -19,26 +19,22 @@
 	margin-left: 300px;
 	padding: 20px 36px;
 
-	.header {
+	div.header {
 		margin-bottom: 25px;
 
-		a, a:hover {
-			text-decoration: none;
+		h1 {
+			border-bottom: 1px solid $lightBlue;
+			text-transform: capitalize;
 
-			h1 {
-				color: $uiGrey;
+			input {
+				background: none !important;
+				border: none;
+				font-size: 36px;
 				padding-bottom: 10px;
-				border-bottom: 1px solid $lightBlue;
-				font-size: 26px;
-				text-transform: capitalize;
-
-				input {
-					background-color: transparent;
-					background-image: none;
-					border: none;
-				}
+				color: $uiGrey;
 			}
 		}
+
 	}
 
 	.content {

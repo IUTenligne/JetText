@@ -10,7 +10,7 @@ span.bold{
 	box-shadow: 0 2px 4px 2px rgba(0,0,0,0.15);
 	border-radius: 4px 4px 0px 0px;
 
-	/* MediaBlock TextBlock NoteBlock*/
+	/* global MediaBlock TextBlock NoteBlock*/
 	.block-inner {
 		.content {
 			.focus {
@@ -304,12 +304,14 @@ span.bold{
 				border-radius: 4px 0 0 0;
 				cursor: pointer;
 				text-align: center;
+				box-shadow: 0px 2px 4px rgba(0,0,0,0.50);
 				i{
 					font-size: 25px;
 					margin: 0 2px 0 2px;
 					width: 35px;
 					padding: 2px;
-					
+					color: $white;
+
 				}
 			}
 			.important{
@@ -414,7 +416,7 @@ span.bold{
   	font-family: FontAwesome;
 }
 .note-icon-remarque:before {
-	content: "\f0e5";
+	content: "\f075";
   	font-family: FontAwesome;
   	
 }
