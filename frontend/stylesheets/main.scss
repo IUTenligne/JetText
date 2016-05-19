@@ -2,6 +2,10 @@
 @import "misc";
 @import "vars";
 
+img{
+	max-width: 100%;
+}
+
 html, body {
 	@include container(100%);
 	margin: 0 !important;
