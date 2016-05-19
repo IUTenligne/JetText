@@ -297,28 +297,28 @@ var NoteBlock = React.createClass({
 
                     { this.state.noteStyles.map(function(style, i) {
                         return(
-                            <div key={i} className="note-style" onClick={that.applyStyle.bind(that, style)}>
+                            <div key={i} className={"note-style " + style} onClick={that.applyStyle.bind(that, style)}>
                                 <i className={"fa note-icon-" + style + " fa-fw"}></i>
                             </div>
                         );
                     })}
 
-                    { this.state.blockVirtualContent != ''
-                        ? <div 
-                                id={this.dynamicId(block.id)} 
-                                className={"block-content " + this.state.selectedStyle} 
-                                ref="editableblock" 
-                                dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
-                                onDoubleClick={this.unlockEditor}
-                            />
-                        : <div 
-                                id={this.dynamicId(block.id)} 
-                                className={"block-content " + this.state.selectedStyle } 
-                                ref="editableblock" 
-                                dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
-                                onDoubleClick={this.unlockEditor}
-                            />
-                    }
+                    <div className={"block-note block-content block-content-" + this.state.selectedStyle} >
+                        { this.state.blockVirtualContent != ''
+                            ? <div 
+                                    id={this.dynamicId(block.id)} 
+                                    ref="editableblock" 
+                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
+                                    onDoubleClick={this.unlockEditor}
+                                />
+                            : <div 
+                                    id={this.dynamicId(block.id)} 
+                                    ref="editableblock" 
+                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
+                                    onDoubleClick={this.unlockEditor}
+                                />
+                        }
+                    </div>
                 </div>
 
                 { this.state.glossaryModalState

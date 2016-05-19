@@ -1,6 +1,16 @@
 .cke {
 	margin-bottom: 10px;
 }
+
+.block-note {
+	padding-bottom: 10px !important;
+	.cke{
+		padding: 0 !important;
+		margin: 0;
+	}
+	
+}
+
 .cke_chrome {
 	border: 0px;
 	box-shadow: none;
@@ -35,3 +45,6 @@
 .cke_focus .cke_contents {
 	border: 1px solid $lightBlue !important;
 }
+
+
+
