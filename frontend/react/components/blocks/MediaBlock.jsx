@@ -174,15 +174,11 @@ var FileBrowser = React.createClass({
                     : null
                 }
 
-                { images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", images)}><i className="fa fa-image images"></i></div> : null }
+                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera videos fa-fw"></i></div> : null }
 
-                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o pdfs"></i></div> : null }
+                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music audios fa-fw"></i></div> : null }
 
-                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera videos"></i></div> : null }
-
-                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music audios"></i></div> : null }
-
-                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random miscs"></i></div> : null }
+                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
 
                 <div id="files-zone">
                     { this.state.showType
