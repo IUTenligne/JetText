@@ -234,7 +234,7 @@ var Containers = React.createClass({
                 </ul>
 
                 { this.state.viewCreate
-                    ?<Modal active={this.handleModalState}>
+                    ? <Modal active={this.handleModalState}>
                         <div className="add_new_container">
                             <div className="input-group input-group-lg">
                                 <span className="input-group-addon">
@@ -246,7 +246,7 @@ var Containers = React.createClass({
                             </div>
                         </div>
                     </Modal>
-                    :null
+                    : null
                 }
             </article>
         );

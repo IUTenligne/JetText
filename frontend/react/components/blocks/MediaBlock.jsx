@@ -91,25 +91,29 @@ var FileBrowser = React.createClass({
     },
 
     handleFileType: function(type, name) {
-        var t = type.split("/");
-        var n = name.split(".")[1];
+        if (type && name) {
+            var t = type.split("/");
+            var n = name.split(".")[1];
 
-        if ( t[0] === "application" ) {
-            if ( t[1] === "pdf" ) {
-                return "pdf";
-            } else if ( (t[1] === "force-download") && (n === "mp4") ) {
+            if ( t[0] === "application" ) {
+                if ( t[1] === "pdf" ) {
+                    return "pdf";
+                } else if ( (t[1] === "force-download") && (n === "mp4") ) {
+                    return "video";
+                } else {
+                    return "application";
+                }
+            } else if ( t[0] === "audio" ) {
+                return "audio";
+            } else if ( t[0] === "video" || ((t[1] === "force-download") && (n === "mp4")) ) {
                 return "video";
+            } else if ( t[0] === "image" ) {
+                return "image";
             } else {
-                return "application";
+                return "misc";
             }
-        } else if ( t[0] === "audio" ) {
-            return "audio";
-        } else if ( t[0] === "video" || ((t[1] === "force-download") && (n === "mp4")) ) {
-            return "video";
-        } else if ( t[0] === "image" ) {
-            return "image";
         } else {
-            return "misc";
+            return;
         }
     },
 
@@ -174,17 +178,22 @@ var FileBrowser = React.createClass({
                     : null
                 }
 
+                { images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", images)}><i className="fa fa-image images fa-fw"></i></div> : null }
+
+                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o pdfs fa-fw"></i></div> : null }
+
                 { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera videos fa-fw"></i></div> : null }
 
                 { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music audios fa-fw"></i></div> : null }
 
                 { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
 
+                <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
+
                 <div id="files-zone">
                     { this.state.showType
                         ? <div>
                             <h3>My {this.state.selectedType} files</h3>
-                            <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
                             <FileType files={this.state.selectedFiles} updateBlockContent={this.handleBlockUpdate} /> 
                         </div>
                         : null

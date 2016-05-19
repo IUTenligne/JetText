@@ -57,7 +57,11 @@ class UploadsController < ApplicationController
   end
 
   def search
-  	@uploads = Upload.where("uploads.file_file_name LIKE ?", "%#{params[:name]}%")
+  	if params[:name].empty?
+  		@uploads = Upload.select("id, file_file_name, file_content_type, url, file_updated_at").where(user_id: current_user.id)
+  	else
+  		@uploads = Upload.select("id, file_file_name, file_content_type, url, file_updated_at").where("uploads.file_file_name LIKE ?", "%#{params[:name]}%")
+  	end
   	render json: { uploads: @uploads }
   end
 

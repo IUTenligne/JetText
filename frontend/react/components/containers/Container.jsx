@@ -84,9 +84,12 @@ var Container = React.createClass({
                         success: function(data){
                             var pagesList = that.state.pages.filter((i, _) => i["id"] !== data.page);
                             that.setState({ pages: pagesList });
-
+                            console.log(pagesList[0]);
+                            return false;
                             if ((pagesList.length == 0) || parseInt(activePage) == parseInt(pageId)) {
                                 window.location.replace("/#/containers/"+this.state.container.id);
+                            } else {
+                                window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0]["id"]);
                             }
                         }
                     });
@@ -148,6 +151,31 @@ var Container = React.createClass({
         this.setState({ pages: pages });
     },
 
+    createPage: function() {
+        $.ajax({
+            type: "POST",
+            url: '/pages',
+            context: this,
+            data: { 
+                page: { 
+                    name: this.state.newPageValue, 
+                    content: '', 
+                    sequence: 0,
+                    level: 0, 
+                    container_id: this.state.container.id 
+                }
+            },
+            success: function(data) {
+                this.setState({ pages: this.state.pages.concat([data]) });
+                window.location = "/#/containers/"+this.state.container.id+"/"+data.id;
+            }
+        });
+    },
+
+    handlePageName: function(event) {
+        this.setState({ newPageValue: event.target.value });
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -205,6 +233,14 @@ var Container = React.createClass({
                                             changePageName={this.changePageName} 
                                         /> 
                                     : null 
+                                }
+
+                                { !this.props.routeParams.pageId && !this.state.activePage 
+                                    ? <div id="create_new_page">
+                                            <input type="text" value={this.state.newPageValue} placeholder="Page's name..." onChange={this.handlePageName}/>
+                                            { this.state.newPageValue ? <button onClick={this.createPage}><i className="fa fa-check"></i></button> : null }
+                                    </div>
+                                    : null
                                 }
                             </div>
                         }
