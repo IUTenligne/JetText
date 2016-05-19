@@ -145,13 +145,13 @@ var FileBrowser = React.createClass({
                     : null
                 }
 
-                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o fa-fw pdfs"></i></div> : null }
+                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o pdfs"></i></div> : null }
 
-                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera fa-fw videos"></i></div> : null }
+                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera videos"></i></div> : null }
 
-                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music fa-fw audios"></i></div> : null }
+                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music audios"></i></div> : null }
 
-                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random fa-fw miscs"></i></div> : null }
+                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random miscs"></i></div> : null }
 
                 <div id="files-zone">
                     { this.state.showType
@@ -335,10 +335,9 @@ var MediaBlock = React.createClass({
                                 <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
                             </div>
                         </div>
-
                     
 
-                        <div className="browseFiles" onClick={this.handleBrowseFiles}>
+                        <div className="browse-files" onClick={this.handleBrowseFiles}>
                             <i className="fa fa-folder-open"></i><br/>
                             Browse files
                         </div>
