@@ -39,10 +39,17 @@ var FileType = React.createClass({
 
                 <div id="file-browser-preview">
                     { this.state.filePreview != ''
-                        ? <object data={this.state.filePreview.url} width="100%" type={this.state.filePreview.file_content_type}><embed src={this.state.filePreview.url} type={this.state.filePreview.file_content_type}/></object>
+                        ? <div>
+                                <object 
+                                    data={this.state.filePreview.url} 
+                                    width="100%" 
+                                    type={this.state.filePreview.file_content_type}>
+                                        <embed src={this.state.filePreview.url} type={this.state.filePreview.file_content_type}/>
+                                </object>
+                                <button onClick={this.handleSelection.bind(this, this.state.filePreview)} className="btn btn-success"><i className="fa fa-check white"></i></button>
+                            </div>
                         : null
                     }
-                    <button onClick={this.handleSelection.bind(this, this.state.filePreview)} className="btn btn-success"><i className="fa fa-check white"></i></button>
                 </div>
             </div> 
         )
@@ -59,7 +66,8 @@ var FileBrowser = React.createClass({
             showType: false,
             selectedType: '',
             selectedFiles: [],
-            modalState: true
+            modalState: true,
+            searchedFile: ''
         };
     },
 
@@ -98,6 +106,8 @@ var FileBrowser = React.createClass({
             return "audio";
         } else if ( t[0] === "video" || ((t[1] === "force-download") && (n === "mp4")) ) {
             return "video";
+        } else if ( t[0] === "image" ) {
+            return "image";
         } else {
             return "misc";
         }
@@ -116,12 +126,21 @@ var FileBrowser = React.createClass({
         this.props.active(false);
     },
 
+    handleFileSearch: function(event) {
+        this.setState({ searchedFile: event.target.value });
+
+        this.serverRequest = $.get("/uploads/" + this.state.searchedFile, function(result){
+            this.setState({  })
+        }.bind(this));
+    },
+
     render: function() {
         var that = this;
 
         var pdfs = [],
             videos = [],
             audios = [],
+            images = [],
             miscs = [];
 
         this.state.browserList.map(function(file) {
@@ -133,6 +152,8 @@ var FileBrowser = React.createClass({
                 videos.push(file);
             } else if (type === "audio") {
                 audios.push(file);
+            } else if (type === "image") {
+                images.push(file);
             } else {
                 miscs.push(file);
             }
@@ -144,6 +165,8 @@ var FileBrowser = React.createClass({
                     ? <Loader />
                     : null
                 }
+
+                { images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", images)}><i className="fa fa-image images"></i></div> : null }
 
                 { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o pdfs"></i></div> : null }
 
@@ -157,6 +180,7 @@ var FileBrowser = React.createClass({
                     { this.state.showType
                         ? <div>
                             <h3>My {this.state.selectedType} files</h3>
+                            <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
                             <FileType files={this.state.selectedFiles} updateBlockContent={this.handleBlockUpdate} /> 
                         </div>
                         : null
@@ -234,11 +258,13 @@ var MediaBlock = React.createClass({
         });
     },
 
-    makeHtmlContent: function(data,type) {
+    makeHtmlContent: function(data, type) {
         if (type == "mp4") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
         } else if (type == "mp3"|| type == "mpeg") {
             return "<audio controls>\n\t<source src='"+data.url+"' type='audio/mpeg'>\n</audio>";
+        } else if (type == "jpg" || type == "jpeg" || type == "svg" || type == "gif" || type == "png") {
+            return "<img src='"+data.url+"'>";
         } else {
             return type;
         }
