@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :blocks do
       put "/set_content/:id" => "blocks#set_content", on: :collection
       put "/update_upload" => "blocks#update_upload", on: :collection
+      put "/update_classes" => "blocks#update_classes", on: :collection
       put :sort, on: :collection
     end
 
@@ -40,8 +41,8 @@ Rails.application.routes.draw do
 
     resources :generator
     get "/generator/overview/:id" => "generator#container"
-    get "/generator/overview/page/:id" => "generator#page"
-    get "/generator/page/:id" => "generator#page_generation"
+    get "/generator/overview/pages/:id" => "generator#page"
+    get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
   end
 

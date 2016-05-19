@@ -6,11 +6,11 @@ var enhanceWithClickOutside = require('react-click-outside');
 
 var Tooltip = React.createClass({
 	componentDidMount: function() {
-        this._notificationSystem = this.refs.notificationSystem;
+    this._notificationSystem = this.refs.notificationSystem;
   },
 
   handleClickOutside: function() {
-    this.setState({ actionBlock: false });
+    this.props.tooltipState(false);
   },
 
 	render: function(){

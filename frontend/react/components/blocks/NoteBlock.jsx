@@ -5,6 +5,7 @@ var Glossaries = require('../glossaries/Glossaries.jsx');
 var Term = require('../glossaries/term.jsx');
 var TermOverlay = require('../glossaries/termOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
+var Tooltip = require('../widgets/Tooltip.jsx');
 
 
 var NoteBlock = React.createClass({
@@ -27,7 +28,9 @@ var NoteBlock = React.createClass({
             focusPopup: false,
             containersGlossariesList: [],
             selectedStyle: '',
-            noteStyles: ["important", "quote"]
+            editBlock: true,
+            tooltipState: false,
+            noteStyles: ["important", "quote", "exemple", "definition", "methode", "remarque"]
         };
     },
 
@@ -65,15 +68,7 @@ var NoteBlock = React.createClass({
 
         /* Opens CKEditor if the block has no content */
         if ((this.props.block.content == '') || (this.props.block.content == null)) {
-            this.handleUnlockEditor();
-        }
-    },
-
-    componentWillReceiveProps: function(newProps) {
-        if (newProps.editBlock == false) {
             this.unlockEditor();
-        } else if (newProps.editBlock == true) {
-            this.saveBlock();
         }
     },
 
@@ -125,7 +120,8 @@ var NoteBlock = React.createClass({
                     blockName: data.name,
                     blockContent: data.content,
                     classes: data.classes,
-                    changeName: false
+                    changeName: false,
+                    editBlock: true
                 });
             }
         });
@@ -151,7 +147,7 @@ var NoteBlock = React.createClass({
             });
         });
 
-        this.setState({ focusPopup: false });
+        this.setState({ focusPopup: false, editBlock: false });
     },
 
     _highlightText: function(query, editor) {
@@ -232,10 +228,6 @@ var NoteBlock = React.createClass({
         this.setState({ glossaryModalState: st });
     },
 
-    handleUnlockEditor: function() {
-        this.props.editBlockAction(false);
-    },
-
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value,
@@ -244,7 +236,32 @@ var NoteBlock = React.createClass({
     },
 
     applyStyle: function(style) {
-        this.setState({ selectedStyle: style });
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/update_classes',
+            context: this,
+            data: { 
+                id: this.props.block.id,
+                classes: this.state.selectedStyle
+            },
+            success: function(data) {
+                this.setState({
+                    selectedStyle: style
+                });
+            }
+        });
+    },
+
+    viewBlockAction: function() {
+        this.setState({ tooltipState: !this.state.tooltipState });
+    },
+
+    handleTooltipState: function(st) {
+        this.setState({ tooltipState: st });
+    },
+
+    handleRemoveBlock: function() {
+        this.props.removeMe(this.props.block);
     },
 
 	render: function() {
@@ -271,7 +288,7 @@ var NoteBlock = React.createClass({
                     }
                     
                     <div className="block-title">
-                        <i className="fa fa-pencil" onClick={this.handleUnlockEditor}></i>
+                        <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
@@ -281,14 +298,26 @@ var NoteBlock = React.createClass({
                     { this.state.noteStyles.map(function(style, i) {
                         return(
                             <div key={i} className="note-style" onClick={that.applyStyle.bind(that, style)}>
-                                <i className={"fa note-icon-" + style}></i>
+                                <i className={"fa note-icon-" + style + " fa-fw"}></i>
                             </div>
                         );
                     })}
 
                     { this.state.blockVirtualContent != ''
-                        ? <div id={this.dynamicId(block.id)} className={"block-content " + this.state.selectedStyle + " " + block.classes} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.handleUnlockEditor}/>
-                        : <div id={this.dynamicId(block.id)} className={"block-content " + this.state.selectedStyle + " " + block.classes} ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.handleUnlockEditor}/>
+                        ? <div 
+                                id={this.dynamicId(block.id)} 
+                                className={"block-content " + this.state.selectedStyle} 
+                                ref="editableblock" 
+                                dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
+                                onDoubleClick={this.unlockEditor}
+                            />
+                        : <div 
+                                id={this.dynamicId(block.id)} 
+                                className={"block-content " + this.state.selectedStyle } 
+                                ref="editableblock" 
+                                dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
+                                onDoubleClick={this.unlockEditor}
+                            />
                     }
                 </div>
 
@@ -308,6 +337,25 @@ var NoteBlock = React.createClass({
                     </Modal>
                     : null 
                 }
+
+                <div className="action">
+                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <button className="handle"></button>
+                </div>
+
+                <Tooltip tooltipState={this.handleTooltipState}>
+                    { this.state.tooltipState
+                        ? <div className="block-actions">
+                            { this.state.editBlock
+                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Edit</button>
+                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                            }
+                            <br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                        </div>
+                        : null
+                    }   
+                </Tooltip>
 
                 <NotificationSystem ref="notificationSystem"/>
             </div>

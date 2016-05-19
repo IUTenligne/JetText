@@ -59,6 +59,7 @@ var FileBrowser = React.createClass({
             showType: false,
             selectedType: '',
             selectedFiles: [],
+            modalState: true
         };
     },
 
@@ -76,7 +77,9 @@ var FileBrowser = React.createClass({
     },
 
     handleModalState: function(st) {
-        this.props.active( st );
+        console.log(st);
+        this.setState({ modalState: st });
+        this.props.active(st);
     },
 
     handleFileType: function(type, name) {
