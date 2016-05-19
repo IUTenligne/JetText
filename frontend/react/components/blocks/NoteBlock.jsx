@@ -294,31 +294,36 @@ var NoteBlock = React.createClass({
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
+                    <center>
+                        { this.state.noteStyles.map(function(style, i) {
+                            return(
+                                
+                                    <div key={i} className={"note-style " + style} onClick={that.applyStyle.bind(that, style)}>
+                                        <i className={"fa note-icon-" + style + " fa-fw"}></i>
+                                    </div>
 
-                    { this.state.noteStyles.map(function(style, i) {
-                        return(
-                            <div key={i} className="note-style" onClick={that.applyStyle.bind(that, style)}>
-                                <i className={"fa note-icon-" + style + " fa-fw"}></i>
-                            </div>
-                        );
-                    })}
-
-                    { this.state.blockVirtualContent != ''
-                        ? <div 
-                                id={this.dynamicId(block.id)} 
-                                className={"block-content " + this.state.selectedStyle} 
-                                ref="editableblock" 
-                                dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
-                                onDoubleClick={this.unlockEditor}
-                            />
-                        : <div 
-                                id={this.dynamicId(block.id)} 
-                                className={"block-content " + this.state.selectedStyle } 
-                                ref="editableblock" 
-                                dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
-                                onDoubleClick={this.unlockEditor}
-                            />
-                    }
+                            );
+                        })}
+                    </center>
+                    <div className={"block-note block-content block-content-" + this.state.selectedStyle} >
+                        <div className={"block-note-title block-note-title-" + this.state.selectedStyle}>
+                            <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>
+                        </div>
+                        { this.state.blockVirtualContent != ''
+                            ? <div 
+                                    id={this.dynamicId(block.id)} 
+                                    ref="editableblock" 
+                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
+                                    onDoubleClick={this.unlockEditor}
+                                />
+                            : <div 
+                                    id={this.dynamicId(block.id)} 
+                                    ref="editableblock" 
+                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
+                                    onDoubleClick={this.unlockEditor}
+                                />
+                        }
+                    </div>
                 </div>
 
                 { this.state.glossaryModalState

@@ -301,42 +301,92 @@ div.block-note {
 			.note-style{
 				display: inline-block;
 				margin: 2px 2px 2px 10px;
+				border-radius: 4px 0 0 0;
+				cursor: pointer;
+				text-align: center;
 				i{
-					border: 1px solid $lightGrey;
 					font-size: 25px;
 					margin: 0 2px 0 2px;
 					width: 35px;
-					padding: 4px;
-					border-radius: 4px 0 0 0;
-					cursor: pointer;
+					padding: 2px;
+					
 				}
 			}
-			.block-content{
+			.important{
+				background-image:linear-gradient( $lightRed,rgb(186,67,38));
+			}
+			.quote{
+				background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
+			}
+			.exemple{
+				background-image:linear-gradient( $lightGreen,rgb(62,156,110));
+			}
+			.definition{
+				background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
+			}
+			.methode{
+				background-image:linear-gradient( $lightOrange,rgb(217,125,14));
+			}
+			.remarque{
+				background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+			}
+
+			.block-content {
 				border: 3px solid;
 				border-radius: 15px 0 0 0;
 				margin: 4px 10px 0px 10px;
+
+				.block-note-title {
+					background: $white;
+					margin: -37px 0 0 20px;
+					width: 150px;
+					padding: 0 0 10px 15px; 
+					font-size: 20px;
+					i{
+						padding-right: 30px ;
+						font-size: 25px;
+					}
+				}
 			}
-			.block-content.important {
-				border-color: red;
+			.block-content-important {
+				border-color: $lightRed;
+				.block-note-title-important:after{
+					content: "Important";
+				}
 			}
 
-			.block-content.quote {
-				border-color: $lightGrey;
+			.block-content-quote {
+				border-color: $lighTbGrey;
+				.block-note-title-quote:after{
+					content: "Quote";
+				}
 			}
 
-			.block-content.exemple {
-				border-color: green;
+			.block-content-exemple {
+				border-color: $lightGreen;
+				.block-note-title-exemple:after{
+					content: "Exemple";
+				}
 			}
 
-			.block-content.definition {
-				border-color: grey;
+			.block-content-definition {
+				border-color: $lighTbpurple;
+				.block-note-title-definition:after{
+					content: "Definition";
+				}
 			}
-			.block-content.methode {
+			.block-content-methode {
 				border-color:  $lightOrange;
+				.block-note-title-methode:after{
+					content: "Methode";
+				}
 			}
 
-			.block-content.remarque {
+			.block-content-remarque {
 				border-color:  $lighTbBlue;
+				.block-note-title-remarque:after{
+					content: "Remarque";
+				}
 			}
 		}
 	}
@@ -366,15 +416,9 @@ div.block-note {
 .note-icon-remarque:before {
 	content: "\f0e5";
   	font-family: FontAwesome;
+  	
 }
 
-.block-note {
-	.block-inner {
-		.content {
-			
-		}
-	}
-}
 
 /* dragula */
 .gu-mirror {
