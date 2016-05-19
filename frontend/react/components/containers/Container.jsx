@@ -84,12 +84,11 @@ var Container = React.createClass({
                         success: function(data){
                             var pagesList = that.state.pages.filter((i, _) => i["id"] !== data.page);
                             that.setState({ pages: pagesList });
-                            console.log(pagesList[0]);
-                            return false;
+
                             if ((pagesList.length == 0) || parseInt(activePage) == parseInt(pageId)) {
-                                window.location.replace("/#/containers/"+this.state.container.id);
+                                window.location.replace("/#/containers/" + this.state.container.id);
                             } else {
-                                window.location.replace("/#/containers/"+this.state.container.id+"/"+this.state.pages[0]["id"]);
+                                window.location.replace("/#/containers/" + this.state.container.id + "/" + pagesList[0]["id"]);
                             }
                         }
                     });
