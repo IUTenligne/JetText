@@ -84,12 +84,12 @@ var GlossaryItem = React.createClass({
                     <h3 id="appElement" onClick={this.showTerms}>
                          {glossary.name}
                     </h3>
+
                     <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} >
                         <i className="fa fa-trash-o" ></i>
                     </a>
         
                 { this.state.showTerms ? <GlossaryBox glossary={glossary.id} /> : null }
-
             </li>
         );
     }
@@ -159,12 +159,13 @@ var GlossariesBox = React.createClass({
         });
     },
 
-    _notificationSystem: null,
 
     handleModalState: function(st) {
         this.setState({ modalState: st });
         this.props.handleModalState(st);
     },
+
+    _notificationSystem: null,
 
     render: function(){
         var that = this;
@@ -176,8 +177,6 @@ var GlossariesBox = React.createClass({
                     : null
                 }
         		<div className="glossaries">
-                    <NotificationSystem ref="notificationSystem" />
-
                     <ul>
             			{ this.state.glossariesList.map(function(glossary) {
                             return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} key={glossary.id}/>);
@@ -192,6 +191,8 @@ var GlossariesBox = React.createClass({
                             <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new glossary..." />
         				</div>
         			</div>
+
+                    <NotificationSystem ref="notificationSystem" />
         		</div>
             </Modal>
     	);

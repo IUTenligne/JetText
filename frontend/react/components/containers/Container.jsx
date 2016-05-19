@@ -177,14 +177,13 @@ var Container = React.createClass({
                         { this.state.loading
                             ? <Loader />
                             : <div className="header">
-                                <a href={"/#/containers/"+container.id} key={container.id}>
-                                    <h1>
-                                        <input ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
-                                        { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
-                                    </h1>
-                                </a>
+                                <h1>
+                                    <input ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
+                                    { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
+                                </h1>
                             </div>
                         }
+
                         { this.state.loading
                             ? null
                             : <div className="content">
