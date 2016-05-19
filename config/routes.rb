@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
     resources :uploads do
       delete "/clear/:block_id" => "uploads#clear", on: :collection
+      get "/search/:name" => "uploads#search", on: :collection
     end
 
     resources :glossaries do

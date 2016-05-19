@@ -67,7 +67,8 @@ var FileBrowser = React.createClass({
             selectedType: '',
             selectedFiles: [],
             modalState: true,
-            searchedFile: ''
+            searchedFile: '',
+            browserList: []
         };
     },
 
@@ -85,7 +86,6 @@ var FileBrowser = React.createClass({
     },
 
     handleModalState: function(st) {
-        console.log(st);
         this.setState({ modalState: st });
         this.props.active(st);
     },
@@ -129,9 +129,14 @@ var FileBrowser = React.createClass({
     handleFileSearch: function(event) {
         this.setState({ searchedFile: event.target.value });
 
-        this.serverRequest = $.get("/uploads/" + this.state.searchedFile, function(result){
-            this.setState({  })
-        }.bind(this));
+        $.ajax({
+            type: "GET",
+            url: "/uploads/search/" + event.target.value,
+            context: this,
+            success: function(data) {
+                this.setState({ browserList: data });
+            }
+        });
     },
 
     render: function() {
@@ -143,21 +148,24 @@ var FileBrowser = React.createClass({
             images = [],
             miscs = [];
 
-        this.state.browserList.map(function(file) {
-            var type = that.handleFileType(file.file_content_type, file.file_file_name);
+        for (var i in this.state.browserList) {
+            var file = that.state.browserList[i];
+            if (file != '') {
+                var type = that.handleFileType(file.file_content_type, file.file_file_name);
 
-            if (type === "pdf") {
-                pdfs.push(file);
-            } else if (type === "video") {
-                videos.push(file);
-            } else if (type === "audio") {
-                audios.push(file);
-            } else if (type === "image") {
-                images.push(file);
-            } else {
-                miscs.push(file);
+                if (type === "pdf") {
+                    pdfs.push(file);
+                } else if (type === "video") {
+                    videos.push(file);
+                } else if (type === "audio") {
+                    audios.push(file);
+                } else if (type === "image") {
+                    images.push(file);
+                } else {
+                    miscs.push(file);
+                }
             }
-        });
+        }
 
         return (
             <Modal active={this.handleModalState} title={"My files"}>
