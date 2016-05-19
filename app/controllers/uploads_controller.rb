@@ -56,6 +56,11 @@ class UploadsController < ApplicationController
     render :nothing => true
   end
 
+  def search
+  	@uploads = Upload.where("uploads.file_file_name LIKE ?", "%#{params[:name]}%")
+  	render json: { uploads: @uploads }
+  end
+
 	private
 		def upload_params
 			params.require(:upload).permit(:name, :file, :url)
