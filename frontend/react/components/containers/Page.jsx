@@ -7,42 +7,6 @@ var GlossariesBox = require('../glossaries/GlossariesBox.jsx');
 var dragula = require('react-dragula');
 
 
-var GlossaryMenu = React.createClass({
-    getInitialState: function() {
-        return{
-            glossaries: [], 
-            popUp: false
-        }
-    },
-
-    showGlossaries: function(){
-        this.setState({
-            popUp: true
-        })
-    },
-
-    changeModalState: function(st) {
-        this.setState({ popUp: false });
-    },
-
-    render: function(){
-        var containerId = this.props.containerId;
-        return(
-            <div>
-                <a onClick={this.showGlossaries}>
-                    <i className="fa fa-book fa-fw" aria-hidden="true"></i><br/>
-                    Glossary
-                </a>
- 
-                <div>
-                    {this.state.popUp ? <GlossariesBox containerId={containerId} handleModalState={this.changeModalState} /> : null}
-                </div>
-            </div>
-        );
-    }
-});
-
-
 var Page = React.createClass({
     getInitialState: function() {
         return {
@@ -51,7 +15,8 @@ var Page = React.createClass({
             blocks: [],
             retractedBlocks: false,
             pageName: '',
-            changePageName: false
+            changePageName: false,
+            popUp: false
         };
     },
 
@@ -186,6 +151,18 @@ var Page = React.createClass({
         });
     },
 
+    showGlossaries: function() {
+        this.setState({
+            popUp: true
+        })
+    },
+
+    closeModal: function() {
+        this.setState({
+            popUp: false
+        })
+    },
+
     render: function() {
         var page = this.state.page;
         var that = this;
@@ -222,8 +199,14 @@ var Page = React.createClass({
                         })}
 
                         <div className="select-action glossary">
-                            <GlossaryMenu containerId={page.container_id}/>
+                            <a onClick={this.showGlossaries}>
+                                <i className="fa fa-book fa-fw" aria-hidden="true"></i><br/>
+                                Glossary
+                            </a>
                         </div>
+                    </div>
+                    <div>
+                        {this.state.popUp ? <GlossariesBox containerId={page.container_id}  handleModalState={this.closeModal}/> : null}
                     </div>
                 </ReactCSSTransitionGroup>      
             </div>
