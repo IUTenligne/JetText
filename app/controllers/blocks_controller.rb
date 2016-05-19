@@ -35,6 +35,12 @@ class BlocksController < ApplicationController
     render json: { name: @block.name, content: @block.content, classes: @block.classes }
   end
 
+  def update_classes
+    @block = Block.find(params[:id])
+    @block.update_attributes(:classes => params[:classes])
+    render json: { classes: @block.classes }
+  end
+
   def update_upload
     @block = Block.find(params[:id])
     @block.update_attributes(:content => params[:content], :upload_id => params[:upload_id])

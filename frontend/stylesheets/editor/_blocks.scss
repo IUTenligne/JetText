@@ -289,18 +289,61 @@ span.bold{
 	}
 }
 
-.block-note {
-	.block-inner {
-		.block-title {
-			i {
-				background-image:linear-gradient($lightRed,rgb(186,67,38));
+
+div.block-note {
+	div.block-inner {
+		div.content {
+			.block-title {
+				i {
+					background-image:linear-gradient( $lightRed,rgb(186,67,38));
+				}
+			}
+			.note-style{
+				display: inline-block;
+				margin: 2px 2px 2px 10px;
+				i{
+					border: 1px solid $lightGrey;
+					font-size: 25px;
+					margin: 0 2px 0 2px;
+					width: 35px;
+					padding: 4px;
+					border-radius: 4px 0 0 0;
+					cursor: pointer;
+				}
+			}
+			.block-content{
+				border: 3px solid;
+				border-radius: 15px 0 0 0;
+				margin: 4px 10px 0px 10px;
+			}
+			.block-content.important {
+				border-color: red;
+			}
+
+			.block-content.quote {
+				border-color: $lightGrey;
+			}
+
+			.block-content.exemple {
+				border-color: green;
+			}
+
+			.block-content.definition {
+				border-color: grey;
+			}
+			.block-content.methode {
+				border-color:  $lightOrange;
+			}
+
+			.block-content.remarque {
+				border-color:  $lighTbBlue;
 			}
 		}
 	}
 }
 
 .note-icon-important:before {
-	content: "\f000";
+	content: "\f12a";
   	font-family: FontAwesome;
 }
 
@@ -308,17 +351,27 @@ span.bold{
 	content: "\f10d";
   	font-family: FontAwesome;
 }
+.note-icon-exemple:before {
+	content: "\f0eb";
+  	font-family: FontAwesome;
+}
+.note-icon-definition:before {
+	content: "\f02e";
+  	font-family: FontAwesome;
+}
+.note-icon-methode:before {
+	content: "\f085";
+  	font-family: FontAwesome;
+}
+.note-icon-remarque:before {
+	content: "\f0e5";
+  	font-family: FontAwesome;
+}
 
 .block-note {
 	.block-inner {
 		.content {
-			.block-content.important {
-				border: 3px solid red;
-			}
-
-			.block-content.quote {
-				border: 3px solid blue;
-			}
+			
 		}
 	}
 }

@@ -1,6 +1,7 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Loader = require('../widgets/Loader.jsx');
+var Modal =require('../widgets/Modal.jsx');
 var NotificationSystem = require('react-notification-system');
 
 var style = {
@@ -140,7 +141,9 @@ var Containers = React.createClass({
     getInitialState: function() {
         return {
             containersList: [],
-            loading: true
+            loading: true,
+            viewCreate: false,
+            newContainerValue: ''
         };
     },
 
@@ -163,6 +166,42 @@ var Containers = React.createClass({
         this.setState({
             containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
         });
+    },
+
+    viewCreateContainers: function(){
+        this.setState({viewCreate: true });
+        
+    },
+
+    createContainer: function(){
+
+        $.ajax({
+            type: "POST",
+            url: "/containers",
+            context: this,
+            data: {
+                container: {
+                    name: this.state.newContainerValue,
+                    content: "",
+                    url: JSON.parse(currentUser).email
+                }
+            },
+            success: function(data){
+                console.log(data, this.state.containersList);
+                this.setState({
+                    viewCreate: false,
+                    containersList: this.state.containersList.concat([data]),
+                });
+                
+            }
+        });
+    },
+
+    handleModalState: function(st) {
+        this.setState({viewCreate: false });
+    },
+    handleChange: function(event) {
+        this.setState({newContainerValue: event.target.value});
     },
 
     _notificationSystem: null,
@@ -189,10 +228,26 @@ var Containers = React.createClass({
                             />
                         );
                     })}
-                    <li id="addContainer">
+                    <li id="addContainer" onClick={this.viewCreateContainers}>
                         <i className="fa fa-plus fa-fw "></i>
                     </li>
                 </ul>
+
+                { this.state.viewCreate
+                    ?<Modal active={this.handleModalState}>
+                        <div className="add_new_container">
+                            <div className="input-group input-group-lg">
+                                <span className="input-group-addon">
+                                    <i className="fa fa-plus fa-fw"></i>
+                                </span>
+                                <input type="text" id="new_container" className="form-control" autoComplet="off" onChange={this.handleChange} value={this.state.newContainerValue}  placeholder="Create new container..." />
+                                <br/>
+                                <input type="submit" value='Create' className="btn-success" onClick={this.createContainer}/>
+                            </div>
+                        </div>
+                    </Modal>
+                    :null
+                }
             </article>
         );
     }
