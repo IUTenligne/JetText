@@ -95,7 +95,6 @@
 	box-sizing: border-box;
 	display: inline-block;
 	text-align: center;
-	width: (100%/4);
 
 	i {
 		width: 80px;
@@ -122,6 +121,7 @@
 	i.audios {
 		background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
 	}
+	
 	i.miscs {
 		background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
 	}

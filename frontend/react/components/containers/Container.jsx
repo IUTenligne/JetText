@@ -7,6 +7,7 @@ var dragula = require('react-dragula');
 var Loader = require('../widgets/Loader.jsx');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var NotificationSystem = require('react-notification-system');
+var Modal = require('../widgets/Modal.jsx');
 
 
 var Container = React.createClass({
@@ -20,7 +21,8 @@ var Container = React.createClass({
             types: [],
             activePage: '',
             newPageValue: '',
-            loading: true
+            loading: true,
+            overview: false
         };
     },
 
@@ -175,11 +177,20 @@ var Container = React.createClass({
         this.setState({ newPageValue: event.target.value });
     },
 
+    handleModalState: function(st) {
+        this.setState({ overview: st });
+    },
+
     _notificationSystem: null,
 
     render: function() {
         var container = this.state.container;
         var pages = this.state.pages;
+        var modalStyle = {
+            width: "1500px !important",
+            height: "1500px important"
+        };
+
         try {
             return (
                 <div id="container">
@@ -205,6 +216,7 @@ var Container = React.createClass({
                             ? <Loader />
                             : <div className="header">
                                 <h1>
+                                    <button onClick={this.handleModalState}><i className="fa fa-eye"></i></button>
                                     <input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
                                     { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                 </h1>
@@ -245,6 +257,12 @@ var Container = React.createClass({
                         }
                     </div>
 
+                    { this.state.overview 
+                        ? <Modal active={this.handleModalState} style={modalStyle} title={"Overview"}> 
+                            <iframe src="/generator/overview/1" width="100%" height="500px"></iframe>
+                        </Modal> 
+                        : null 
+                    }
                 </div>
             );
         } catch(err) {

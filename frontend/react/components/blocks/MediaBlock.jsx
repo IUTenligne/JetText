@@ -171,7 +171,10 @@ var FileBrowser = React.createClass({
 
     handleFileSearch: function(event) {
         var that = this;
-        this.setState({ searchedFile: event.target.value });
+        this.setState({ 
+            searchedFile: event.target.value,
+            loading: true 
+        });
 
         if (event.target.value.length > 0) {
             $.ajax({
@@ -183,7 +186,8 @@ var FileBrowser = React.createClass({
                         browserList: data.uploads,
                         showType: false,
                         selectedFiles: '',
-                        selectedType: ''
+                        selectedType: '',
+                        loading: false
                     });
                     this.handleList(data.uploads);
                 }
@@ -198,7 +202,8 @@ var FileBrowser = React.createClass({
                         browserList: data.uploads,
                         showType: false,
                         selectedFiles: '',
-                        selectedType: ''
+                        selectedType: '',
+                        loading: false
                     });
                     this.handleList(data.uploads);
                 }
@@ -317,10 +322,12 @@ var MediaBlock = React.createClass({
     makeHtmlContent: function(data, type) {
         if (type == "mp4") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
-        } else if (type == "mp3"|| type == "mpeg") {
+        } else if (type == "mp3" || type == "mpeg") {
             return "<audio controls>\n\t<source src='"+data.url+"' type='audio/mpeg'>\n</audio>";
         } else if (type == "jpg" || type == "jpeg" || type == "svg" || type == "gif" || type == "png") {
             return "<img src='"+data.url+"'>";
+        } else if (type == "pdf") {
+            return "<object data='"+data.url+"' width='100%' height='300px' type='application/pdf'>\n\t<embed src='"+data.url+"' type='application/pdf'/>\n</object>";
         } else {
             return type;
         }

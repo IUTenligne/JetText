@@ -159,7 +159,6 @@ var GlossariesBox = React.createClass({
         });
     },
 
-
     handleModalState: function(st) {
         this.setState({ modalState: st });
         this.props.handleModalState(st);
