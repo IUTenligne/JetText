@@ -217,7 +217,7 @@ var FileBrowser = React.createClass({
         
 
         return (
-            <Modal active={this.handleModalState} title={"My files"}>
+            <Modal active={this.handleModalState} mystyle={""} title={"My files"}>
                 { this.state.loading 
                     ? <Loader />
                     : null

@@ -283,14 +283,14 @@ var TextBlock = React.createClass({
                 </div>
 
                 { this.state.glossaryModalState
-                    ? <Modal active={this.handleGlossaryModalState} title={"Create new definition"}>
+                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Create new definition"}>
                         <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
                     </Modal>
                     : null
                 }
 
                 { this.state.formulaModalState
-                    ? <Modal active={this.handleFormulaModalState} title={"Add a formula"}>
+                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Add a formula"}>
                         <div>
                             <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
