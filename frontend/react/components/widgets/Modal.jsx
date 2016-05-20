@@ -5,7 +5,7 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var Modal = React.createClass({
 	closeModal: function(){
 		this.props.active(false);
-  },
+  	},
 
 	render: function(){
 		return(

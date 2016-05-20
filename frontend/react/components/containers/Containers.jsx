@@ -170,7 +170,6 @@ var Containers = React.createClass({
 
     viewCreateContainers: function(){
         this.setState({viewCreate: true });
-        
     },
 
     createContainer: function(){
@@ -192,7 +191,7 @@ var Containers = React.createClass({
                     viewCreate: false,
                     containersList: this.state.containersList.concat([data]),
                 });
-                
+                window.location = "/#/containers/" + data.id;
             }
         });
     },
@@ -200,6 +199,7 @@ var Containers = React.createClass({
     handleModalState: function(st) {
         this.setState({viewCreate: false });
     },
+
     handleChange: function(event) {
         this.setState({newContainerValue: event.target.value});
     },
@@ -240,7 +240,16 @@ var Containers = React.createClass({
                                 <span className="input-group-addon">
                                     <i className="fa fa-plus fa-fw"></i>
                                 </span>
-                                <input type="text" id="new_container" className="form-control" autoComplet="off" onChange={this.handleChange} value={this.state.newContainerValue}  placeholder="Create new container..." />
+                                <input 
+                                    type="text"
+                                    ref="new_container" 
+                                    id="new_container" 
+                                    className="form-control" 
+                                    autoComplet="off" 
+                                    onChange={this.handleChange} 
+                                    value={this.state.newContainerValue}  
+                                    placeholder="Create new container..." 
+                                />
                                 <br/>
                                 <input type="submit" value='Create' className="btn-success" onClick={this.createContainer}/>
                             </div>
