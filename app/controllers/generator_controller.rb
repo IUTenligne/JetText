@@ -107,69 +107,73 @@ class GeneratorController < ApplicationController
 
 
   def recur_page_level(zip, pages, index, i, content, ul)
-    if zip == true
-      if pages[i].name
-        content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name.capitalize + "</a></li>\n"
-      else
-        content = content + "<li><a href=\"#{i}\">" + i + "</a></li>\n"
-      end
-    else
-      if index == true
-        if pages[i].name
-          content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name.capitalize + "</a></li>\n"
-        else
-          content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a></li>\n"
-        end
-      else
-        if pages[i].name
-          content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name.capitalize + "</a></li>\n"
-        else
-          content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
-        end
-      end
-    end
-
-    if pages[i+1].present?
-      if pages[i].level == pages[i+1].level
-        i = i + 1
-        ul = ul
-        recur_page_level(zip, pages, index, i, content, ul)
-      elsif pages[i+1].level == pages[i].level + 1
-        i = i + 1
-        ul = ul + 1
-        content = content + "<ul>"
-        recur_page_level(zip, pages, index, i , content, ul)
-      elsif pages[i+1].level == pages[i].level + 2
-        i = i + 1
-        ul = ul + 2
-        content = content + "<ul><ul>"
-        recur_page_level(zip, pages, index, i , content, ul)
-      elsif pages[i+1].level == pages[i].level + 3
-        i = i + 1
-        ul = ul + 3
-        content = content + "<ul><ul><ul>"
-        recur_page_level(zip, pages, index, i , content, ul)      
-      elsif pages[i+1].level == pages[i].level - 1
-        i = i + 1
-        ul = ul - 1
-        content = content + "</ul>"
-        recur_page_level(zip, pages, index, i , content, ul)
-      elsif pages[i+1].level == pages[i].level - 2
-        i = i + 1
-        ul = ul - 2
-        content = content + "</ul></ul>"
-        recur_page_level(zip, pages, index, i , content, ul)
-      elsif pages[i+1].level == pages[i].level - 3
-        i = i + 1
-        ul = ul - 3
-        content = content + "</ul></ul></ul>"
-        recur_page_level(zip, pages, index, i , content, ul)
-      end
-    else
-      ul.times do 
-        content = content + "</ul>"
-      end
+    if pages.empty? || pages.nil?
       return content
+    else
+      if zip == true
+        if pages[i].name
+          content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name.capitalize + "</a></li>\n"
+        else
+          content = content + "<li><a href=\"#{i}\">" + i + "</a></li>\n"
+        end
+      else
+        if index == true
+          if pages[i].name
+            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name.capitalize + "</a></li>\n"
+          else
+            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a></li>\n"
+          end
+        else
+          if pages[i].name
+            content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name.capitalize + "</a></li>\n"
+          else
+            content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
+          end
+        end
+      end
+
+      if pages[i+1].present?
+        if pages[i].level == pages[i+1].level
+          i = i + 1
+          ul = ul
+          recur_page_level(zip, pages, index, i, content, ul)
+        elsif pages[i+1].level == pages[i].level + 1
+          i = i + 1
+          ul = ul + 1
+          content = content + "<ul>"
+          recur_page_level(zip, pages, index, i , content, ul)
+        elsif pages[i+1].level == pages[i].level + 2
+          i = i + 1
+          ul = ul + 2
+          content = content + "<ul><ul>"
+          recur_page_level(zip, pages, index, i , content, ul)
+        elsif pages[i+1].level == pages[i].level + 3
+          i = i + 1
+          ul = ul + 3
+          content = content + "<ul><ul><ul>"
+          recur_page_level(zip, pages, index, i , content, ul)      
+        elsif pages[i+1].level == pages[i].level - 1
+          i = i + 1
+          ul = ul - 1
+          content = content + "</ul>"
+          recur_page_level(zip, pages, index, i , content, ul)
+        elsif pages[i+1].level == pages[i].level - 2
+          i = i + 1
+          ul = ul - 2
+          content = content + "</ul></ul>"
+          recur_page_level(zip, pages, index, i , content, ul)
+        elsif pages[i+1].level == pages[i].level - 3
+          i = i + 1
+          ul = ul - 3
+          content = content + "</ul></ul></ul>"
+          recur_page_level(zip, pages, index, i , content, ul)
+        end
+      else
+        ul.times do 
+          content = content + "</ul>"
+        end
+        return content
+      end
     end
   end
 
