@@ -161,7 +161,8 @@ span.bold{
 		margin-top: 4px;
 		border-bottom: none;
 		border-radius: 4px;
-		border: 1px solid $lightBlue;
+		border: 1px solid $lightGrey;
+		box-shadow: 2px 2px 4px rgba(0,0,0,0.50);
 
 		button {
 			width: 100%;
@@ -170,7 +171,11 @@ span.bold{
 			color: $black;
 			font-size: 17px;
 			text-align: left;
-			padding: 2px;
+			padding: 2px 5px 2px 5px;
+		}
+
+		button:hover {
+			cursor: pointer;
 		}
 	}
 	.block-actions:after {
@@ -181,7 +186,7 @@ span.bold{
 		border-top: 0;
 		border-left: 9px solid transparent;
 		border-right: 9px solid transparent;        
-		border-bottom: 9px solid $lightBlue;
+		border-bottom: 9px solid $lightGrey;
 	}
 	.block-actions:before {
 		position: absolute;

@@ -170,6 +170,7 @@ var FileBrowser = React.createClass({
     },
 
     handleFileSearch: function(event) {
+        var that = this;
         this.setState({ searchedFile: event.target.value });
 
         if (event.target.value.length > 0) {
@@ -178,7 +179,27 @@ var FileBrowser = React.createClass({
                 url: "/uploads/search/" + event.target.value,
                 context: this,
                 success: function(data) {
-                    this.setState({ browserList: data });
+                    this.setState({ 
+                        browserList: data.uploads,
+                        showType: false,
+                        selectedFiles: '',
+                        selectedType: ''
+                    });
+                    this.handleList(data.uploads);
+                }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "/uploads.json",
+                context: this,
+                success: function(data) {
+                    this.setState({ 
+                        browserList: data.uploads,
+                        showType: false,
+                        selectedFiles: '',
+                        selectedType: ''
+                    });
                     this.handleList(data.uploads);
                 }
             });
@@ -207,7 +228,10 @@ var FileBrowser = React.createClass({
 
                 { this.state.miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", this.state.miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
 
-                <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
+                <div>
+                    <br />
+                    <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
+                </div>
 
                 <div id="files-zone">
                     { this.state.showType
