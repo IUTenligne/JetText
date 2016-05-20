@@ -40,9 +40,15 @@ var NoteBlock = React.createClass({
         this.serverRequest = $.get("/containers_glossaries/" + this.props.containerId +  ".json", function(result){
             this.setState({
                 containersGlossariesList: result.containers_glossaries,
-                blockContent: this.props.block.content,
-                selectedStyle: this.props.block.classes
+                blockContent: this.props.block.content
             });
+            
+
+            if (this.props.block.classes != undefined || this.props.block.classes) {
+                this.setState({ selectedStyle: this.props.block.classes });
+            } else {
+                this.setState({ selectedStyle: "important" });
+            }
             
             if (result.containers_glossaries.length > 0) {
                 for (var i in result.containers_glossaries) {
