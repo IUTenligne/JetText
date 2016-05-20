@@ -183,6 +183,7 @@ class GeneratorController < ApplicationController
     relpath = "#{Rails.public_path}/#{path}"
     url = "#{path}/tmp/#{Time.now.to_i.to_s}_#{username}.zip"
 
+    Zip.continue_on_exists_proc = true
     Zip::File.open(zippath, Zip::File::CREATE) do |zipfile|
       pages.each do |filename|
         zipfile.add(filename, relpath + '/tmp/' + filename)
