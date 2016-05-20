@@ -172,31 +172,30 @@ var Menu = React.createClass({
                             >
                                 <div className="handle"></div>
 
-                                <div className="page">
-                                    <Link to={"/containers/"+that.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
-                                </div>
+                                <div className="menu-content">
+                                   
+                                    <Link className="page-link-menu" to={"/containers/"+that.props.container.id+"/"+page.id} >{page.name}</Link>
 
-                                <div 
-                                    onMouseOver={this.activeHover.bind(that, page)} 
-                                    onMouseOut={this.hoverFalse} 
-                                    className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "slide-menu" : "slide-menu hidden"}
-                                >
-                                    <div className="slide-menu-inner">
-                                        { page.level > levels.min
-                                            ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
-                                                <i className="fa fa-arrow-left"></i>
-                                            </button>
-                                            : null
-                                        }
+                                    <div className="option-page">
+           
+                                            { page.level > levels.min
+                                                ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
+                                                    <i className="fa fa-chevron-left fa-fw"></i>
+                                                </button>
+                                                : null
+                                            }
 
-                                        { page.level <= levels.max 
-                                            ? <button onClick={that.handleLevelClick.bind(that, page, "add")}>
-                                                <i className="fa fa-arrow-right"></i> 
-                                            </button> 
-                                            : null
-                                        }
-
-                                        <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)} ><i className="fa fa-remove"></i> </button> 
+                                            { page.level <= levels.max 
+                                                ? <button onClick={that.handleLevelClick.bind(that, page, "add")}>
+                                                    <i className="fa fa-chevron-right fa-fw"></i> 
+                                                </button> 
+                                                : null
+                                            }
+                                               <button className="page-delete"  onClick={this.deletePage.bind(that, this.state.activePage, page.id)} >
+                                                <i className="fa fa-remove"></i>
+                                            </button>  
+             
+                                        
                                     </div>
                                 </div>
                             </li>
