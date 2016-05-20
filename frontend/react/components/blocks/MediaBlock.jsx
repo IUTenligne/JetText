@@ -68,7 +68,12 @@ var FileBrowser = React.createClass({
             selectedFiles: [],
             modalState: true,
             searchedFile: '',
-            browserList: []
+            browserList: [],
+            pdfs: [],
+            images: [],
+            audios: [],
+            videos: [],
+            miscs: []
         };
     },
 
@@ -77,7 +82,9 @@ var FileBrowser = React.createClass({
             this.setState({
                 browserList: result.uploads,
                 loading: false
-            })
+            });
+
+            this.handleList(result.uploads);
         }.bind(this));
     },
 
@@ -117,6 +124,38 @@ var FileBrowser = React.createClass({
         }
     },
 
+    handleList: function(data) {
+        var pdfs = [],
+            videos = [],
+            audios = [],
+            images = [],
+            miscs = [];
+
+        for (var i in data) {
+            var type = this.handleFileType(data[i]["file_content_type"], data[i]["file_file_name"]);
+            
+            if (type === "pdf") {
+                pdfs.push(data[i]);
+            } else if (type === "video") {
+                videos.push(data[i]);
+            } else if (type === "audio") {
+                audios.push(data[i]);
+            } else if (type === "image") {
+                images.push(data[i]);
+            } else {
+                miscs.push(data[i]);
+            }
+        }
+
+        this.setState({
+            pdfs: pdfs,
+            videos: videos,
+            audios: audios,
+            images: images,
+            miscs: miscs
+        });
+    },
+
     handleTypeClick: function(type, files) {
         this.setState({ 
             showType: true,
@@ -131,45 +170,51 @@ var FileBrowser = React.createClass({
     },
 
     handleFileSearch: function(event) {
-        this.setState({ searchedFile: event.target.value });
-
-        $.ajax({
-            type: "GET",
-            url: "/uploads/search/" + event.target.value,
-            context: this,
-            success: function(data) {
-                this.setState({ browserList: data });
-            }
+        var that = this;
+        this.setState({ 
+            searchedFile: event.target.value,
+            loading: true 
         });
+
+        if (event.target.value.length > 0) {
+            $.ajax({
+                type: "GET",
+                url: "/uploads/search/" + event.target.value,
+                context: this,
+                success: function(data) {
+                    this.setState({ 
+                        browserList: data.uploads,
+                        showType: false,
+                        selectedFiles: '',
+                        selectedType: '',
+                        loading: false
+                    });
+                    this.handleList(data.uploads);
+                }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "/uploads.json",
+                context: this,
+                success: function(data) {
+                    this.setState({ 
+                        browserList: data.uploads,
+                        showType: false,
+                        selectedFiles: '',
+                        selectedType: '',
+                        loading: false
+                    });
+                    this.handleList(data.uploads);
+                }
+            });
+        }
     },
 
     render: function() {
         var that = this;
 
-        var pdfs = [],
-            videos = [],
-            audios = [],
-            images = [],
-            miscs = [];
-
-        for (var i in this.state.browserList) {
-            var file = that.state.browserList[i];
-            if (file != '') {
-                var type = that.handleFileType(file.file_content_type, file.file_file_name);
-
-                if (type === "pdf") {
-                    pdfs.push(file);
-                } else if (type === "video") {
-                    videos.push(file);
-                } else if (type === "audio") {
-                    audios.push(file);
-                } else if (type === "image") {
-                    images.push(file);
-                } else {
-                    miscs.push(file);
-                }
-            }
-        }
+        
 
         return (
             <Modal active={this.handleModalState} title={"My files"}>
@@ -178,17 +223,20 @@ var FileBrowser = React.createClass({
                     : null
                 }
 
-                { images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", images)}><i className="fa fa-image images fa-fw"></i></div> : null }
+                { this.state.images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", this.state.images)}><i className="fa fa-image images fa-fw"></i></div> : null }
 
-                { pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", pdfs)}><i className="fa fa-file-pdf-o pdfs fa-fw"></i></div> : null }
+                { this.state.pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", this.state.pdfs)}><i className="fa fa-file-pdf-o pdfs fa-fw"></i></div> : null }
 
-                { videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", videos)}><i className="fa fa-video-camera videos fa-fw"></i></div> : null }
+                { this.state.videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", this.state.videos)}><i className="fa fa-video-camera videos fa-fw"></i></div> : null }
 
-                { audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", audios)}><i className="fa fa-music audios fa-fw"></i></div> : null }
+                { this.state.audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", this.state.audios)}><i className="fa fa-music audios fa-fw"></i></div> : null }
 
-                { miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
+                { this.state.miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", this.state.miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
 
-                <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
+                <div>
+                    <br />
+                    <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
+                </div>
 
                 <div id="files-zone">
                     { this.state.showType
@@ -274,10 +322,12 @@ var MediaBlock = React.createClass({
     makeHtmlContent: function(data, type) {
         if (type == "mp4") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
-        } else if (type == "mp3"|| type == "mpeg") {
+        } else if (type == "mp3" || type == "mpeg") {
             return "<audio controls>\n\t<source src='"+data.url+"' type='audio/mpeg'>\n</audio>";
         } else if (type == "jpg" || type == "jpeg" || type == "svg" || type == "gif" || type == "png") {
             return "<img src='"+data.url+"'>";
+        } else if (type == "pdf") {
+            return "<object data='"+data.url+"' width='100%' height='300px' type='application/pdf'>\n\t<embed src='"+data.url+"' type='application/pdf'/>\n</object>";
         } else {
             return type;
         }

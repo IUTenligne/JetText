@@ -242,12 +242,10 @@ var NoteBlock = React.createClass({
             context: this,
             data: { 
                 id: this.props.block.id,
-                classes: this.state.selectedStyle
+                classes: style
             },
             success: function(data) {
-                this.setState({
-                    selectedStyle: style
-                });
+                this.setState({ selectedStyle: style });
             }
         });
     },
@@ -294,7 +292,8 @@ var NoteBlock = React.createClass({
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
-                    <center>
+
+                    <center className="block-note-types">
                         { this.state.noteStyles.map(function(style, i) {
                             return(
                                 
@@ -305,6 +304,7 @@ var NoteBlock = React.createClass({
                             );
                         })}
                     </center>
+
                     <div className={"block-note block-content block-content-" + this.state.selectedStyle} >
                         <div className={"block-note-title block-note-title-" + this.state.selectedStyle}>
                             <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>

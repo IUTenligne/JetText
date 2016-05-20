@@ -15,7 +15,7 @@ var Tooltip = React.createClass({
 
 	render: function(){
 		return(
-			<div >
+			<div>
 				{this.props.children}
 			</div>
 		);
