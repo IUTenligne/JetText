@@ -294,7 +294,6 @@ var MediaBlock = React.createClass({
     handleBlockChange: function(data) {
         var fileExt = data.file_file_name.split(".").slice(-1)[0];
         var content = this.makeHtmlContent(data, fileExt);
-        console.log(content);
 
         $.ajax({
             url: "/blocks/update_upload",
