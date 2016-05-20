@@ -186,10 +186,6 @@ var Container = React.createClass({
     render: function() {
         var container = this.state.container;
         var pages = this.state.pages;
-        var modalStyle = {
-            width: "1500px !important",
-            height: "1500px important"
-        };
 
         try {
             return (
@@ -258,8 +254,8 @@ var Container = React.createClass({
                     </div>
 
                     { this.state.overview 
-                        ? <Modal active={this.handleModalState} style={modalStyle} title={"Overview"}> 
-                            <iframe src={"/generator/overview/"+this.state.container.id} width="100%" height="500px"></iframe>
+                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Overview"}> 
+                            <iframe src={"/generator/overview/"+this.state.container.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
                         </Modal> 
                         : null 
                     }

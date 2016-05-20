@@ -170,7 +170,7 @@ var GlossariesBox = React.createClass({
         var that = this;
         var containerId= this.props.containerId;
     	return(
-            <Modal active={this.handleModalState} title={"My Glossaries"}>
+            <Modal active={this.handleModalState} mystyle={""} title={"My Glossaries"}>
                 { this.state.loading
                     ? <Loader />
                     : null
