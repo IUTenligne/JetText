@@ -216,7 +216,7 @@ var Container = React.createClass({
                             ? <Loader />
                             : <div className="header">
                                 <h1>
-                                    <button onClick={this.handleModalState}><i className="fa fa-eye"></i></button>
+                                    <button onClick={this.handleModalState}><i className="fa fa-eye "></i></button>
                                     <input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
                                     { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                 </h1>
@@ -259,7 +259,7 @@ var Container = React.createClass({
 
                     { this.state.overview 
                         ? <Modal active={this.handleModalState} style={modalStyle} title={"Overview"}> 
-                            <iframe src="/generator/overview/1" width="100%" height="500px"></iframe>
+                            <iframe src={"/generator/overview/"+this.state.container.id} width="100%" height="500px"></iframe>
                         </Modal> 
                         : null 
                     }
