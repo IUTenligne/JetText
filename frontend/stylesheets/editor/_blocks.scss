@@ -298,14 +298,20 @@ span.bold{
 					background-image:linear-gradient( $lightRed,rgb(186,67,38));
 				}
 			}
-			.note-style{
+
+			.block-note-types {
+				margin: 10px 0 15px 0;
+			}
+
+			.note-style {
 				display: inline-block;
 				margin: 2px 2px 2px 10px;
 				border-radius: 4px 0 0 0;
 				cursor: pointer;
 				text-align: center;
-				box-shadow: 0px 2px 4px rgba(0,0,0,0.50);
-				i{
+				box-shadow: 0px 2px 2px rgba(0,0,0,0.50);
+
+				i {
 					font-size: 25px;
 					margin: 0 2px 0 2px;
 					width: 35px;
@@ -314,80 +320,112 @@ span.bold{
 
 				}
 			}
+
 			.important{
-				background-image:linear-gradient( $lightRed,rgb(186,67,38));
+				background-image:linear-gradient($lightRed,rgb(186,67,38));
 			}
+
 			.quote{
-				background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
+				background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
 			}
+
 			.exemple{
-				background-image:linear-gradient( $lightGreen,rgb(62,156,110));
+				background-image:linear-gradient($lightGreen,rgb(62,156,110));
 			}
+
 			.definition{
-				background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
+				background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
 			}
+
 			.methode{
-				background-image:linear-gradient( $lightOrange,rgb(217,125,14));
+				background-image:linear-gradient($lightOrange,rgb(217,125,14));
 			}
+
 			.remarque{
-				background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+				background-image:linear-gradient($lighTbBlue,rgb(52,129,177));
 			}
 
 			.block-content {
-				border: 3px solid;
-				border-radius: 15px 0 0 0;
-				margin: 4px 10px 0px 10px;
+				border: 2px solid;
+				border-radius: 4px;
+				margin: 4px 10px 0px 5px;
 
 				.block-note-title {
 					background: $white;
-					margin: -28px 0 0 20px;
+					margin: -30px 0 0 0;
 					width: 160px;
-					padding: 0 0 10px 15px; 
+					padding: 0 0 10px 8px; 
 					font-size: 20px;
-					i{
+
+					i {
 						padding-right: 30px ;
 						font-size: 25px;
 					}
 				}
 			}
+
 			.block-content-important {
 				border-color: $lightRed;
+				.block-note-title-important i{
+					color: $lightRed;
+				}
 				.block-note-title-important:after{
 					content: "Important";
+					color: $lightRed;
 				}
 			}
 
 			.block-content-quote {
 				border-color: $lighTbGrey;
+				.block-note-title-quote i{
+					color: $lighTbGrey;
+				}
 				.block-note-title-quote:after{
 					content: "Quote";
+					color: $lighTbGrey;
 				}
 			}
 
 			.block-content-exemple {
 				border-color: $lightGreen;
+				.block-note-title-exemple i{
+					color: $lightGreen;
+				}
 				.block-note-title-exemple:after{
-					content: "Exemple";
+					content: "Example";
+					color: $lightGreen;
 				}
 			}
 
 			.block-content-definition {
 				border-color: $lighTbpurple;
+				.block-note-title-definition i{
+					color: $lighTbpurple;
+				}
 				.block-note-title-definition:after{
 					content: "Definition";
+					color: $lighTbpurple;
 				}
 			}
 			.block-content-methode {
-				border-color:  $lightOrange;
+				border-color: $lightOrange;
+				.block-note-title-methode i{
+					color: $lightOrange;
+				}
 				.block-note-title-methode:after{
-					content: "Methode";
+					content: "Method";
+					color: $lightOrange;
 				}
 			}
 
 			.block-content-remarque {
-				border-color:  $lighTbBlue;
+				border-color: $lighTbBlue;
+				.block-note-title-remarque i{
+					color: $lighTbBlue;
+				}
 				.block-note-title-remarque:after{
-					content: "Remarque";
+					content: "Note";
+					color: $lighTbBlue;
 				}
 			}
 		}
@@ -396,29 +434,28 @@ span.bold{
 
 .note-icon-important:before {
 	content: "\f12a";
-  	font-family: FontAwesome;
+  font-family: FontAwesome;
 }
 
 .note-icon-quote:before {
 	content: "\f10d";
-  	font-family: FontAwesome;
+  font-family: FontAwesome;
 }
 .note-icon-exemple:before {
 	content: "\f0eb";
-  	font-family: FontAwesome;
+  font-family: FontAwesome;
 }
 .note-icon-definition:before {
 	content: "\f02e";
-  	font-family: FontAwesome;
+  font-family: FontAwesome;
 }
 .note-icon-methode:before {
 	content: "\f085";
-  	font-family: FontAwesome;
+  font-family: FontAwesome;
 }
 .note-icon-remarque:before {
 	content: "\f075";
-  	font-family: FontAwesome;
-  	
+  font-family: FontAwesome;
 }
 
 
