@@ -61,7 +61,7 @@ var Menu = React.createClass({
             }
         });
 
-        event.target.value='';
+        event.target.value = '';
     },
 
     moveItems: function(drake, pages) {
@@ -160,13 +160,12 @@ var Menu = React.createClass({
         return (
             <div className="sidebar menu" role="navigation">
                 <h2 className="zone-header"><i className="fa fa-bars"></i> Menu</h2>
+
                 <ul className="side-menu" ref="dragulable">
                     { this.props.pages.map((page, i) => {
                         return (
                             <li 
                                 key={page.id} 
-                                onMouseOver={this.activeHover.bind(that, page)} 
-                                onMouseOut={this.hoverFalse} 
                                 data-pos={i} 
                                 data-id={page.id} 
                                 className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}
@@ -175,29 +174,36 @@ var Menu = React.createClass({
 
                                 <div className="page">
                                     <Link to={"/containers/"+that.props.container.id+"/"+page.id} className="page-link">{page.name}</Link>
-                                    <div className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "action-delete" : "action-delete hidden"}>
+                                </div>
+
+                                <div 
+                                    onMouseOver={this.activeHover.bind(that, page)} 
+                                    onMouseOut={this.hoverFalse} 
+                                    className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "slide-menu" : "slide-menu hidden"}
+                                >
+                                    <div className="slide-menu-inner">
+                                        { page.level > levels.min
+                                            ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
+                                                <i className="fa fa-arrow-left"></i>
+                                            </button>
+                                            : null
+                                        }
+
+                                        { page.level <= levels.max 
+                                            ? <button onClick={that.handleLevelClick.bind(that, page, "add")}>
+                                                <i className="fa fa-arrow-right"></i> 
+                                            </button> 
+                                            : null
+                                        }
+
                                         <button onClick={this.deletePage.bind(that, this.state.activePage, page.id)} ><i className="fa fa-remove"></i> </button> 
                                     </div>
-                                </div>
-                                
-                                <div className={(this.state.pageHover) && (this.state.hoveredPage === page.id) ? "menu-actions" : "menu-actions hidden"}>
-                                    { page.level > levels.min
-                                        ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
-                                            <i className="fa fa-arrow-left"></i>
-                                        </button>
-                                        : null
-                                    }
-                                    { page.level <= levels.max 
-                                        ? <button onClick={that.handleLevelClick.bind(that, page, "add")}>
-                                            <i className="fa fa-arrow-right"></i> 
-                                        </button> 
-                                        : null
-                                    }
                                 </div>
                             </li>
                         );
                     })}
                 </ul> 
+
                 <div id="add_new_page" className="input-group">
                     <span className="input-group-addon">
                         <i className="fa fa-plus fa-fw"></i>

@@ -44,6 +44,21 @@ div.sidebar.menu {
 				font-family: FontAwesome;
 				color: rgba($darkGrey, 0.9);
 			}
+
+			div.slide-menu{
+				width: 4% !important;
+				vertical-align: middle;
+				display: table-cell;
+				background: $lightGrey;
+				cursor: move;
+				text-align: center;
+			}
+			.slide-menu:before{
+				content: "\f142";
+				font-family: FontAwesome;
+				color: rgba($darkGrey, 0.9);
+			}
+
 			div.page{
 				width: 96% !important;
 				vertical-align: middle;
@@ -81,29 +96,6 @@ div.sidebar.menu {
 					display: none;
 				}
 			}
-			.menu-actions{
-				width: 96% !important;
-				button{
-					margin: 5px;
-					width: 45%;
-					background: none;
-					text-align: center;
-					border: none;
-					color: $white;
-					
-					i{
-						border-radius: 100px;
-						font-size: 15px;
-						background: $lightGrey;
-						padding: 6px;
-						margin: 0 3px 0 3px;
-					}
-				}
-			}
-			.menu-actions.hidden{
-				display: none;
-			}
-
 		}
 
 		li:hover,
