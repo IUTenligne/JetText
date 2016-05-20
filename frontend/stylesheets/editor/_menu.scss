@@ -28,63 +28,79 @@ div.sidebar.menu {
 			border-bottom-color: rgba($black,0.2);
 			border-top-color: rgba($white,0.05);
 			display: table;
+			height: 50px;
+			margin: 0  !important;
+			padding: 0 !important;
 
 
 			/* bouton drag */
 			div.handle{
-				min-width: 15px !important;
-				max-width: 15px !important;
+				min-width: 15px;
+				max-width: 15px;
+				height: 50px;
 				vertical-align: middle;
 				display: table-cell;
 				background: $lightGrey;
 				cursor: move;
 				text-align: center;
+				height: 50px;
 			}
 			.handle:before{
 				content: "\f142";
 				font-family: FontAwesome;
 				color: rgba($darkGrey, 0.9);
 			}
-
-			div.slide-menu{
-				min-width: 20px !important;
-				max-width: 20px !important;
-				vertical-align: middle;
-				display: table-cell;
-				background: red;
-				cursor: move;
-				text-align: center;
-			}
-			.slide-menu:before{
-				content: "\f142";
-				font-family: FontAwesome;
-				color: rgba($darkGrey, 0.9);
-			}
-
-			div.page{
-				min-width: 265px !important;
-				max-width: 265px !important;
-				vertical-align: middle;
-				display: table-cell;
-				display: table;
-
-				.page-link {
+			/* contenu menu */
+			div.menu-content{
+				min-width: 284px;
+				max-width: 284px;
+				margin: 0 !important;
+				padding: 0 !important;
+				height: 50px;
+				overflow: hidden;
+				
+				.page-link-menu {
 					color: white;
-					padding: 10px 0 10px 0px;
-					@include mixinPadding();
 					margin: 0;
+					padding: 0;
 					text-transform: capitalize;
 					white-space: nowrap;
-	  				overflow: hidden;
 					text-overflow: ellipsis;
-					min-width: 265px !important;
-					max-width: 265px !important;
-					float: left;
-					display: table-cell;
+					min-width: 284px !important;
+					max-width: 284px !important;
+					position: absolute;
+					height: 50px;
+					overflow:hidden;
+					line-height: 3;
+					padding-left: 5px; 
+				}	
+			
+				div.option-page{
+					min-width: 0px;
+					max-width: 0px;
+					overflow:hidden;
+					position: relative;
+					float: right;
+					height: 50px;
+					-moz-transition: 1s;
+					-webkit-transition: 1s;
+					transition: 1s;
+					background: $grey;
+					line-height: 3;
+
+					button{
+						background: none;
+						border: none;
+						padding: 0 5px 0 5px;
+						i{
+							font-size: 15px;
+						}
+					}
 				}
-				.page-link:hover {
-					background-color: transparent;
-				}
+			}
+			.menu-content:hover .option-page{
+				min-width: 110px;
+				max-width: 110px;
 			}
 		}
 
@@ -105,11 +121,11 @@ div.sidebar.menu {
 
 		$levelPadding: 8px;
 
-		.level-1 a.page-link:before,
-		.level-2 a.page-link:before,
-		.level-3 a.page-link:before,
-		.level-4 a.page-link:before,
-		.level-5 a.page-link:before {
+		.level-1 a.page-link-menu:before,
+		.level-2 a.page-link-menu:before,
+		.level-3 a.page-link-menu:before,
+		.level-4 a.page-link-menu:before,
+		.level-5 a.page-link-menu:before {
 			font-family: FontAwesome;
 			font-weight: 100;
 			font-size: 12px;
@@ -119,37 +135,28 @@ div.sidebar.menu {
 			text-decoration: inherit;
 			padding-right: $levelPadding !important;
 		}
-		.level-1.active a.page-link:before,
-		.level-2.active a.page-link:before,
-		.level-3.active a.page-link:before,
-		.level-4.active a.page-link:before,
-		.level-5.active a.page-link:before {
+		.level-1.active a.page-link-menu:before,
+		.level-2.active a.page-link-menu:before,
+		.level-3.active a.page-link-menu:before,
+		.level-4.active a.page-link-menu:before,
+		.level-5.active a.page-link-menu:before {
 			color: white;
 		}
 
-		.level-1 a.page-link:before {
+		.level-1 a.page-link-menu:before {
 			content: ".";
 		}
-		.level-2 a.page-link:before {
+		.level-2 a.page-link-menu:before {
 			content: ". .";
 		}
-		.level-3 a.page-link:before {
+		.level-3 a.page-link-menu:before {
 			content: ". . .";
 		}
-		.level-4 a.page-link:before {
+		.level-4 a.page-link-menu:before {
 			content: ". . . .";
 		}
-		.level-5 a.page-link:before {
+		.level-5 a.page-link-menu:before {
 			content: ". . . . .";
-		}
-
-		.level-0 a.page-link,
-		.level-1 a.page-link,
-		.level-2 a.page-link,
-		.level-3 a.page-link,
-		.level-4 a.page-link,
-		.level-5 a.page-link {
-		  padding-left: 15px !important;
 		}
 
 		.level-1,
