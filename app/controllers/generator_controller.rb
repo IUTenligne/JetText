@@ -107,7 +107,7 @@ class GeneratorController < ApplicationController
 
 
   def recur_page_level(zip, pages, index, i, content, ul)
-    if pages.empty? || pages.nil?
+    if pages.empty?
       return content
     else
       if zip == true

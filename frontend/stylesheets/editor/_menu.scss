@@ -134,6 +134,7 @@ div.sidebar.menu {
 			text-decoration: inherit;
 			padding-right: $levelPadding !important;
 		}
+
 		.level-1.active a.page-link-menu:before,
 		.level-2.active a.page-link-menu:before,
 		.level-3.active a.page-link-menu:before,
@@ -150,6 +151,7 @@ div.sidebar.menu {
 				padding-left: 16px; 
 			}
 		}
+
 		.level-2 .menu-content{
 			background: url("menu-tree-l2.png") no-repeat 2% 0%;
 			width: 32px;
@@ -158,6 +160,7 @@ div.sidebar.menu {
 				padding-left: 30px; 
 			}
 		}
+		
 		.level-3 .menu-content{
 			background: url("menu-tree-l3.png") no-repeat 2% 0%;
 			width: 48px;
@@ -167,7 +170,15 @@ div.sidebar.menu {
 			}
 		}
 
-		
+		.level-1.active .menu-content,
+		.level-2.active .menu-content,
+		.level-3.active .menu-content {
+		  filter: grayscale(100%); /* Current draft standard */
+	    -webkit-filter: grayscale(100%); /* New WebKit */
+	    -moz-filter: grayscale(100%);
+	    -ms-filter: grayscale(100%); 
+	    -o-filter: grayscale(100%);
+		}
 
 		.level-1,
 		.level-2,
