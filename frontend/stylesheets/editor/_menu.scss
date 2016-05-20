@@ -19,7 +19,7 @@ div.sidebar.menu {
 		background: $uiGrey;
 
 		li {
-			width: 100%;
+			width: 300px;
 			display: inline-block;
 			border-top: 1px solid rgba($black,0.025);
 			color: white;
@@ -32,7 +32,8 @@ div.sidebar.menu {
 
 			/* bouton drag */
 			div.handle{
-				width: 4% !important;
+				min-width: 15px !important;
+				max-width: 15px !important;
 				vertical-align: middle;
 				display: table-cell;
 				background: $lightGrey;
@@ -46,10 +47,11 @@ div.sidebar.menu {
 			}
 
 			div.slide-menu{
-				width: 4% !important;
+				min-width: 20px !important;
+				max-width: 20px !important;
 				vertical-align: middle;
 				display: table-cell;
-				background: $lightGrey;
+				background: red;
 				cursor: move;
 				text-align: center;
 			}
@@ -60,7 +62,8 @@ div.sidebar.menu {
 			}
 
 			div.page{
-				width: 96% !important;
+				min-width: 265px !important;
+				max-width: 265px !important;
 				vertical-align: middle;
 				display: table-cell;
 				display: table;
@@ -72,28 +75,15 @@ div.sidebar.menu {
 					margin: 0;
 					text-transform: capitalize;
 					white-space: nowrap;
-	  			overflow: hidden;
+	  				overflow: hidden;
 					text-overflow: ellipsis;
-					width: 92%;
+					min-width: 265px !important;
+					max-width: 265px !important;
 					float: left;
 					display: table-cell;
 				}
 				.page-link:hover {
 					background-color: transparent;
-				}
-				.action-delete{
-					width: 4%;
-					display: table-cell;
-					vertical-align: top;
-					button{
-						color: $white;
-						background: none;
-						border: none;
-						font-size: 15px;
-					}
-				}
-				.action-delete.hidden{
-					display: none;
 				}
 			}
 		}
