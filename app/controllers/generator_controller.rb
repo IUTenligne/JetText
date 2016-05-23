@@ -35,11 +35,14 @@ class GeneratorController < ApplicationController
   	@container = Container.find(@page.container_id)
   	@pages = Page.where(container_id: @page.container_id)
     @menu = recur_page_level(false, @pages, false, 0, "", 0)
+    @mathjax = false
   	@blocks = Block.where(page_id: params[:id])
     @blocks.map { |block| 
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+      @mathjax = true if block.type_id == 4
     }
     @assets_prefix = "/templates/iutenligne/"
+    @libs_prefix = "/assets/"
     @home_link = "/generator/overview/#{@container.id}"
     @org_link = "#"
     render :layout => false
@@ -54,8 +57,10 @@ class GeneratorController < ApplicationController
     @pages = Page.where(container_id: @page.container_id)
     @menu = recur_page_level(true, @pages, false, 0, "", 0)
     @blocks = Block.where(page_id: params[:id])
+    @mathjax = false
     @assets_prefix = ""
     @home_link = "index.html"
+    @libs_prefix = "libs/"
     @org_link = "http://www.iutenligne.net/resources.html"
     render :layout => false
   end
@@ -178,7 +183,7 @@ class GeneratorController < ApplicationController
   end
 
 
-  def motherfucking_zipper(path, username, pages, files)
+  def motherfucking_zipper(path, username, pages, files, mathjax)
     require 'rubygems'
     require 'zip'
 
@@ -201,6 +206,14 @@ class GeneratorController < ApplicationController
         filename = file.gsub(railsroot, "")
         zipfile.add(filename, file)
       end
+
+      if mathjax == true
+        libsroot = "#{Rails.public_path}/libs/mathjax/"
+        Dir["#{Rails.public_path}/libs/mathjax/**/**"].each do |file|
+          filename = file.gsub(libsroot, "")
+          zipfile.add("assets/libs/mathjax/#{filename}", file)
+        end
+      end
     end
 
     return url
@@ -215,6 +228,7 @@ class GeneratorController < ApplicationController
     @pages = Page.where(container_id: params[:id])
     @assets_prefix = ""
     @home_link = "#"
+    @lbis_prefix = ""
     @org_link = "http://www.iutenligne.net/resources.html"
     @menu = recur_page_level(true, @pages, true, 0, "", 0)
 
@@ -225,6 +239,7 @@ class GeneratorController < ApplicationController
     pages.push("index.html")
 
     files = Array.new()
+    @mathjax = false
     @home_link = "index.html"
 
     @menu = recur_page_level(true, @pages, false, 0, "", 0)
@@ -244,6 +259,11 @@ class GeneratorController < ApplicationController
           @upload = Upload.find(block.upload_id)
           files.push(gsub_email(@upload.url, @container.user.email))
         end
+
+        # include MathJax if any math block present
+        if block.type_id == 4
+          @mathjax = true
+        end
       }
 
       filename = index.to_s + "-" + page_name + ".html"
@@ -253,7 +273,7 @@ class GeneratorController < ApplicationController
       pages.push(filename)
     end
 
-    url = motherfucking_zipper(@container.url, @container.user.email, pages, files)
+    url = motherfucking_zipper(@container.url, @container.user.email, pages, files, @mathjax)
 
     # url is used by Containers.jsx to allow the zip file to be downloaded
     render json: { :url => url }
