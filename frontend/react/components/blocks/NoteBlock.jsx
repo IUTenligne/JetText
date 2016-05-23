@@ -43,7 +43,6 @@ var NoteBlock = React.createClass({
                 blockContent: this.props.block.content
             });
             
-
             if (this.props.block.classes != undefined || this.props.block.classes) {
                 this.setState({ selectedStyle: this.props.block.classes });
             } else {

@@ -2,6 +2,7 @@ var React = require('react');
 var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');
+var MathBlock = require('./MathBlock.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 var NotificationSystem = require('react-notification-system');
 
@@ -147,6 +148,19 @@ var Block = React.createClass({
             return (
                 <div className="block block-note" data-id={block.id}>
                     <NoteBlock 
+                        block={block} 
+                        key={block.id} 
+                        containerId={this.props.containerId} 
+                        removeMe={this.handleRemoveBlock}
+                    />
+                    
+                    <NotificationSystem ref="notificationSystem" />
+                </div>
+            );
+        } if (block.type_id === 4) {
+            return (
+                <div className="block block-math" data-id={block.id}>
+                    <MathBlock 
                         block={block} 
                         key={block.id} 
                         containerId={this.props.containerId} 

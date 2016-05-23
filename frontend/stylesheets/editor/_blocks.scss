@@ -83,7 +83,6 @@ span.bold{
 		}
 		
 		.block-content {
-
 			ul {
 				margin-top: 20px;
 
@@ -117,8 +116,8 @@ span.bold{
 			  	content: "";
 			  	position: absolute;
 			  	bottom: -7px;
-			  	top: - 10px;
-			 	left: 0px;
+			  	top: -10px;
+			 		left: 0px;
 			  	margin-left: 15px;  
 			  	border-top: 8px solid $uiGrey;
 			  	border-left: 8px solid transparent;
@@ -126,6 +125,7 @@ span.bold{
 			  	border-bottom: 0;
 			}
 		}
+
 		.block-content,
 		.cke {
 			padding: 10px 15px;
@@ -353,7 +353,7 @@ span.bold{
 			.block-content {
 				border: 2px solid;
 				border-radius: 4px;
-				margin: 4px 10px 0px 5px;
+				margin: 5px 10px 0px 10px;
 
 				.block-note-title {
 					background: $white;
@@ -363,7 +363,7 @@ span.bold{
 					font-size: 20px;
 
 					i {
-						padding-right: 30px ;
+						padding-right: 30px;
 						font-size: 25px;
 					}
 				}
@@ -476,3 +476,7 @@ span.bold{
 	} 
 } 
 /* */
+
+.matharea {
+	min-width: 100%;
+}

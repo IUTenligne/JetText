@@ -51,6 +51,10 @@ h2.header_page {
 			content: "\f10e";
     		font-family: FontAwesome;
 		}
+		.icon-math:before {
+			content: "\f12b";
+    		font-family: FontAwesome;
+		}
 	}
 
 	.select-action:hover { transform: scale(1.1); }
