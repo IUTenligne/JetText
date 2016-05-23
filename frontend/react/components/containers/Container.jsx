@@ -211,9 +211,8 @@ var Container = React.createClass({
                         { this.state.loading
                             ? <Loader />
                             : <div className="header">
-                                <h1>
-                                    <button onClick={this.handleModalState}><i className="fa fa-eye "></i></button>
-                                    <input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
+                                <div id="previewbutton"><button onClick={this.handleModalState}><i className="fa fa-eye"></i></button></div>
+                                <h1><input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
                                     { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                 </h1>
                             </div>
