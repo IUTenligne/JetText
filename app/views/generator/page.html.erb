@@ -114,18 +114,7 @@
                     $("#icone-menu").removeClass('block').addClass('none');
                 });
             });
-      </script>
-
-      <% if @mathjax == true %>
-          <script type="text/x-mathjax-config">
-              MathJax.Hub.Config({ 
-                  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']] }
-              });
-          </script>
-          <script type="text/javascript" src="<%= @libs_prefix %>mathjax/MathJax.js?config=TeX-AMS_HTML" data-no-turbolinks="true"></script>
-          <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathMenu.js" data-no-turbolinks="true"></script>
-          <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathZoom.js" data-no-turbolinks="true"></script>
-      <% end %>
+        </script>
 
 	</body>
 </html>

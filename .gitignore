@@ -19,7 +19,6 @@
 /bower_components
 /public/*
 /public/templates/assets
-!/public/libs
 !/public/templates/assets/img
 !/public/404.html
 !/public/422.html
