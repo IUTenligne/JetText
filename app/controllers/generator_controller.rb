@@ -228,7 +228,7 @@ class GeneratorController < ApplicationController
     @pages = Page.where(container_id: params[:id])
     @assets_prefix = ""
     @home_link = "#"
-    @lbis_prefix = ""
+    @libs_prefix = "assets/libs/"
     @org_link = "http://www.iutenligne.net/resources.html"
     @menu = recur_page_level(true, @pages, true, 0, "", 0)
 

@@ -102,6 +102,7 @@ div.sidebar.menu {
 					}
 				}
 			}
+			
 			.menu-content:hover .option-page{
 				min-width: 110px;
 				max-width: 110px;
@@ -170,16 +171,6 @@ div.sidebar.menu {
 			}
 		}
 
-		.level-1.active .menu-content,
-		.level-2.active .menu-content,
-		.level-3.active .menu-content {
-		  filter: grayscale(100%); /* Current draft standard */
-	    -webkit-filter: grayscale(100%); /* New WebKit */
-	    -moz-filter: grayscale(100%);
-	    -ms-filter: grayscale(100%); 
-	    -o-filter: grayscale(100%);
-		}
-
 		.level-1,
 		.level-2,
 		.level-3,
@@ -187,7 +178,6 @@ div.sidebar.menu {
 		.level-5 {
 			background: #383634;
 		} 
-
 	}
 
 	#add_new_page {

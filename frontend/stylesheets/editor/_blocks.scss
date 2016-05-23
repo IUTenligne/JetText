@@ -206,7 +206,17 @@ span.bold{
 	div.block-inner {
 		div.block-title {
 			i {
-				background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+				background-image:linear-gradient($lighTbBlue, rgb(52,129,177));
+			}
+		}
+	}
+}
+
+.block-math {
+	div.block-inner {
+		div.block-title {
+			i {
+				background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
 			}
 		}
 	}
@@ -216,7 +226,7 @@ span.bold{
 	.block-inner {
 		.block-title {
 			i {
-				background-image:linear-gradient( $lightOrange,rgb(217,125,14));
+				background-image:linear-gradient($lightOrange,rgb(217,125,14));
 			}
 		}
 		div.block-content{
@@ -232,7 +242,7 @@ span.bold{
 			  	width: 50%;
 			  	height: 70px;
 			  	display: table-cell;
-			  	border-right: 2px solid  $lightOrange;
+			  	border-right: 2px solid $lightOrange;
 				overflow: hidden;
 				text-align: center;
 
