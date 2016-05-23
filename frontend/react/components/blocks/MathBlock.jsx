@@ -7,14 +7,17 @@ var Tooltip = require('../widgets/Tooltip.jsx');
 
 var MathToolbox = React.createClass({
     addMath: function(fn) {
-        this.props.interact(fn);
+        this.props.interact("\\" + fn);
     },
 
     render: function() {
         return (
-            <ul>
-                <li><button onClick={this.addMath.bind(this, "ab")}>ab</button></li>
-                <li><button onClick={this.addMath.bind(this, "x")}>ab</button></li>
+            <ul className="mathtoolbar">
+                <li><button onClick={this.addMath.bind(this, ";")}>espace</button></li>
+                <li><button onClick={this.addMath.bind(this, "frac")}>frac</button></li>
+                <li><button onClick={this.addMath.bind(this, "sqrt{}")}>racine</button></li>
+                <li><button onClick={this.addMath.bind(this, "int_")}>∫</button></li>
+                <li><button onClick={this.addMath.bind(this, "infty")}>∞</button></li>
             </ul>
         );
     }
@@ -24,18 +27,51 @@ var MathToolbox = React.createClass({
 var MathBlock = React.createClass({
 	getInitialState: function() {
         return {
-            areaContent: '$$Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,$$',
-            value: '$$Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,$$'
+            areaContent: '',
+            value: '',
+            tooltipState: false
         }
     },
 
     componentDidMount: function (root) {
+        this.setState({
+            areaContent: this.props.block.content,
+            value: this.props.block.content
+        });
+
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
+    },
+
+    saveBlock: function() {
+        var block = this.props.block;
+        
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/' + block.id,
+            context: this,
+            data: { 
+                id: block.id,
+                name: '',
+                content: this.state.areaContent,
+                classes: ''
+            }
+        });
+
+        var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
+        if (editor) { editor.destroy(true); }
+    },
+
+    viewBlockAction: function() {
+        this.setState({ tooltipState: !this.state.tooltipState });
+    },
+
+    handleTooltipState: function(st) {
+        this.setState({ tooltipState: st });
     },
 
     handleInteraction: function(fn) {
         this.setState({
-            areaContent: fn
+            areaContent: this.refs.matharea.value + fn
         });
 
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
@@ -56,7 +92,7 @@ var MathBlock = React.createClass({
 
     createMarkup: function(data) {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
-        return {__html: data};
+        return {__html: "$$" + data + "$$"};
     },
 
     render: function() {
@@ -77,15 +113,29 @@ var MathBlock = React.createClass({
                         <textarea ref="matharea" type="text" value={this.state.areaContent} onChange={this.handleChange} rows="5" cols="50" />
 
                         <div
-                          className="content"
-                          id="output"
-                          ref="output"
-                          dangerouslySetInnerHTML={this.createMarkup(this.state.value)}
+                           className="content"
+                           id="output"
+                           ref="output"
+                           dangerouslySetInnerHTML={this.createMarkup(this.state.value)}
                         />
                     </div>
                 </div>
 
-                <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                <div className="action">
+                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <button className="handle"></button>
+                </div>
+
+                <Tooltip tooltipState={this.handleTooltipState}>
+                    { this.state.tooltipState
+                        ? <div className="block-actions">
+                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                            <br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                        </div>
+                        : null
+                    }   
+                </Tooltip>
                 
                 <NotificationSystem ref="notificationSystem"/>
             </div>
