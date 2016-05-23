@@ -13,8 +13,8 @@ var MathToolbox = React.createClass({
     render: function() {
         return (
             <ul>
-                <li><button onClick={this.addMath.bind(this, "ab")}>ab</button></li>
-                <li><button onClick={this.addMath.bind(this, "x")}>ab</button></li>
+                <li><button onClick={this.addMath.bind(this, "\\int_")}>∫</button></li>
+                <li><button onClick={this.addMath.bind(this, "\\infty")}>∞</button></li>
             </ul>
         );
     }
@@ -24,8 +24,9 @@ var MathToolbox = React.createClass({
 var MathBlock = React.createClass({
 	getInitialState: function() {
         return {
-            areaContent: '$$Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,$$',
-            value: '$$Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}dt\\,$$'
+            areaContent: '',
+            value: '',
+            tooltipState: false
         }
     },
 
@@ -33,9 +34,36 @@ var MathBlock = React.createClass({
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
     },
 
+    saveBlock: function() {
+        var block = this.props.block;
+        
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/'+block.id,
+            context: this,
+            data: { 
+                id: block.id,
+                name: '',
+                content: "$$"+this.state.areaContent+"$$",
+                classes: ''
+            }
+        });
+
+        var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
+        if (editor) { editor.destroy(true); }
+    },
+
+    viewBlockAction: function() {
+        this.setState({ tooltipState: !this.state.tooltipState });
+    },
+
+    handleTooltipState: function(st) {
+        this.setState({ tooltipState: st });
+    },
+
     handleInteraction: function(fn) {
         this.setState({
-            areaContent: fn
+            areaContent: this.refs.matharea.value + fn
         });
 
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
@@ -44,7 +72,7 @@ var MathBlock = React.createClass({
     handleChange: function(event) {
         this.setState({
             areaContent: event.target.value,
-            value: this.refs.matharea.value
+            value: "$$"+this.refs.matharea.value+"$$"
         });
 
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
@@ -85,7 +113,21 @@ var MathBlock = React.createClass({
                     </div>
                 </div>
 
-                <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                <div className="action">
+                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <button className="handle"></button>
+                </div>
+
+                <Tooltip tooltipState={this.handleTooltipState}>
+                    { this.state.tooltipState
+                        ? <div className="block-actions">
+                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                            <br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                        </div>
+                        : null
+                    }   
+                </Tooltip>
                 
                 <NotificationSystem ref="notificationSystem"/>
             </div>
