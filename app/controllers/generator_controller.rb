@@ -33,6 +33,7 @@ class GeneratorController < ApplicationController
 
   	@page = Page.find(params[:id])
   	@container = Container.find(@page.container_id)
+    @glossaries = ContainersGlossary.where(container_id: @container.id)
   	@pages = Page.where(container_id: @page.container_id)
     @menu = recur_page_level(false, @pages, false, 0, "", 0)
     @mathjax = false
@@ -40,6 +41,14 @@ class GeneratorController < ApplicationController
     @blocks.map { |block| 
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
       @mathjax = true if block.type_id == 4
+      unless @glossaries.nil?
+        @glossaries.map { |glossary| 
+          @terms = Term.where(glossary_id: glossary.glossary_id)
+          @terms.each do |term|
+            block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+          end
+        }
+      end
     }
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"

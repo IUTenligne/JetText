@@ -83,7 +83,7 @@
                                         <%= raw(block.content) if block.content %>
                                     <!-- note blocks -->
                                     <% elsif block.type_id == 3 %>
-                       					        <div class="<%= block.classes %>">
+                       					        <div class="block-<%= block.classes %>">
                                             <%= raw(block.content.capitalize) if block.content %>
                                         </div>
                                     <% elsif block.type_id == 4 %>

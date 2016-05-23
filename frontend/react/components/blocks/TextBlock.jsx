@@ -277,9 +277,23 @@ var TextBlock = React.createClass({
                     </div>
 
                     { this.state.blockVirtualContent != ''
-                        ? <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} onDoubleClick={this.unlockEditor}/>
-                        : <div id={this.dynamicId(block.id)} className="block-content" ref="editableblock" dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} onDoubleClick={this.unlockEditor}/>
+                        ? <div 
+                            id={this.dynamicId(block.id)} 
+                            className="block-content" 
+                            ref="editableblock" 
+                            dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
+                            onDoubleClick={this.unlockEditor}
+                        />
+                        : <div 
+                            id={this.dynamicId(block.id)} 
+                            className="block-content" 
+                            ref="editableblock" 
+                            dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
+                            onDoubleClick={this.unlockEditor}
+                        />
                     }
+
+                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button></div> }
                 </div>
 
                 { this.state.glossaryModalState

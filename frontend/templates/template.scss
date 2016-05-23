@@ -178,3 +178,29 @@ body {
 		}
 	}
 }
+
+.note-icon-important:before {
+	content: "\f12a";
+  font-family: FontAwesome;
+}
+
+.note-icon-quote:before {
+	content: "\f10d";
+  font-family: FontAwesome;
+}
+.note-icon-exemple:before {
+	content: "\f0eb";
+  font-family: FontAwesome;
+}
+.note-icon-definition:before {
+	content: "\f02e";
+  font-family: FontAwesome;
+}
+.note-icon-methode:before {
+	content: "\f085";
+  font-family: FontAwesome;
+}
+.note-icon-remarque:before {
+	content: "\f075";
+  font-family: FontAwesome;
+}
