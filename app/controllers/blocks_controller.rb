@@ -35,6 +35,18 @@ class BlocksController < ApplicationController
     render json: { name: @block.name, content: @block.content, classes: @block.classes }
   end
 
+  def export
+    @block = Block.find(params[:id])
+    @export = @block.dup
+    if Page.find(params[:page_id]).user == current_user
+      @export.page_id = params[:page_id]
+      @export.save
+      render json: { status: "ok" }
+    else
+      render json: { status: "error" }
+    end
+  end
+
   def update_classes
     @block = Block.find(params[:id])
     @block.update_attributes(:classes => params[:classes])

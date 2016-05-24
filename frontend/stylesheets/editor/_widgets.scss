@@ -68,6 +68,14 @@
 		#modal-body {
 			clear: both;
 			width: 100%;
+
+			.modal-in {
+				padding: 15px;
+
+				.selected-container-pages {
+					padding-left: 15px;
+				}
+			}
 		}
 	}
 }

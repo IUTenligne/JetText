@@ -4,6 +4,9 @@ var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');
 var MathBlock = require('./MathBlock.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
+var Modal = require('../widgets/Modal.jsx');
+var Loader = require('../widgets/Loader.jsx');
+var ContainersList = require('./ContainersList.jsx');
 var NotificationSystem = require('react-notification-system');
 
 
@@ -11,7 +14,10 @@ var Block = React.createClass({
     getInitialState: function() {
         return {
             editBlock: true,
-            tooltipState: false
+            tooltipState: false,
+            modalState: false,
+            loading: false,
+            containersList: []
         };
     },
 
@@ -101,6 +107,32 @@ var Block = React.createClass({
         this.setState({ tooltipState: st });
     },
 
+    exportBlock: function() {
+        this.setState({ 
+            modalState: true,
+            loading: true 
+        });
+
+        this.getContainers();
+    },
+
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+    },
+
+    closeModal: function() {
+        this.setState({ modalState: false });
+    },
+
+    getContainers: function() {
+        this.serverRequest = $.get("/containers.json", function(result) {
+            this.setState({
+                containersList: result.containers,
+                loading: false
+            });
+        }.bind(this));
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -135,13 +167,25 @@ var Block = React.createClass({
                     <Tooltip tooltipState={this.handleTooltipState}>
                         { this.state.tooltipState
                             ? <div className="block-actions">
+                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Export</button><br/>
                                 <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
-                                
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
                             : null
                         }   
                     </Tooltip>
+
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                                <div className="modal-in">
+                                    { this.state.loading 
+                                        ? <Loader />
+                                        : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
                 </div>
             );
         } if (block.type_id === 3) {

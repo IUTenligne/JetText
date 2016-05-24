@@ -3,6 +3,8 @@ var ReactDOM = require('react-dom');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 var Tooltip = require('../widgets/Tooltip.jsx');
+var Modal = require('../widgets/Modal.jsx');
+var ContainersList = require('./ContainersList.jsx');
 
 
 var MathToolbox = React.createClass({
@@ -29,7 +31,8 @@ var MathBlock = React.createClass({
         return {
             areaContent: '',
             value: '',
-            tooltipState: false
+            tooltipState: false,
+            modalState: false
         }
     },
 
@@ -60,6 +63,33 @@ var MathBlock = React.createClass({
         var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
     },
+
+    exportBlock: function() {
+        this.setState({ 
+            modalState: true,
+            loading: true 
+        });
+
+        this.getContainers();
+    },
+
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+    },
+
+    closeModal: function() {
+        this.setState({ modalState: false });
+    },
+
+    getContainers: function() {
+        this.serverRequest = $.get("/containers.json", function(result) {
+            this.setState({
+                containersList: result.containers,
+                loading: false
+            });
+        }.bind(this));
+    },
+
 
     viewBlockAction: function() {
         this.setState({ tooltipState: !this.state.tooltipState });
@@ -131,11 +161,25 @@ var MathBlock = React.createClass({
                         ? <div className="block-actions">
                             <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
                             <br/>
+                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Export</button>
+                            <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
                         </div>
                         : null
                     }   
                 </Tooltip>
+
+                { this.state.modalState
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                            <div className="modal-in">
+                                { this.state.loading 
+                                    ? <Loader />
+                                    : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                }
+                            </div>
+                        </Modal>
+                    : null
+                }
                 
                 <NotificationSystem ref="notificationSystem"/>
             </div>

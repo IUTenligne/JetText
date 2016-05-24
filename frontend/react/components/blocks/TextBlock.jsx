@@ -6,6 +6,7 @@ var Term = require('../glossaries/Term.jsx');
 var TermOverlay = require('../glossaries/TermOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
+var ContainersList = require('./ContainersList.jsx');
 
 
 var TextBlock = React.createClass({
@@ -28,7 +29,8 @@ var TextBlock = React.createClass({
             focusPopup: false,
             containersGlossariesList: [],
             editBlock: true,
-            tooltipState: false
+            tooltipState: false,
+            modalState: false,
         };
     },
 
@@ -247,6 +249,32 @@ var TextBlock = React.createClass({
         this.props.removeMe(this.props.block);
     },
 
+    exportBlock: function() {
+        this.setState({ 
+            modalState: true,
+            loading: true 
+        });
+
+        this.getContainers();
+    },
+
+    getContainers: function() {
+        this.serverRequest = $.get("/containers.json", function(result) {
+            this.setState({
+                containersList: result.containers,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    handleModalState: function(st) {
+        this.setState({ modalState: st });
+    },
+
+    closeModal: function() {
+        this.setState({ modalState: false });
+    },
+
 	render: function() {
 		var block = this.props.block;
         var myStyle = {
@@ -313,6 +341,18 @@ var TextBlock = React.createClass({
                     : null 
                 }
 
+                { this.state.modalState
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                            <div className="modal-in">
+                                { this.state.loading 
+                                    ? <Loader />
+                                    : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                }
+                            </div>
+                        </Modal>
+                    : null
+                }
+
                 <div className="action">
                     <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
                     <button className="handle"></button>
@@ -325,6 +365,8 @@ var TextBlock = React.createClass({
                                 ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Edit</button>
                                 : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
                             }
+                            <br/>
+                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Export</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
                         </div>

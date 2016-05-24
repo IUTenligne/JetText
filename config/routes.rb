@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       put "/set_content/:id" => "blocks#set_content", on: :collection
       put "/update_upload" => "blocks#update_upload", on: :collection
       put "/update_classes" => "blocks#update_classes", on: :collection
+      post "/export" => "blocks#export", on: :collection
       put :sort, on: :collection
     end
 
