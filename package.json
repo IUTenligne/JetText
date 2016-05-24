@@ -66,6 +66,7 @@
     "react-dom": "*",
     "react-dragula": "^1.1.15",
     "react-dropzone": "^3.4.0",
+    "react-mentions": "^0.4.4",
     "react-popup": "*",
     "requirejs": "^2.1.22"
   },

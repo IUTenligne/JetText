@@ -230,6 +230,7 @@ class GeneratorController < ApplicationController
 
 
   def save
+    require 'fileutils'
     # Generation method
     # Used by Containers.jsx to allow the users to generate and then download a zip of a container
 
@@ -242,6 +243,7 @@ class GeneratorController < ApplicationController
     @menu = recur_page_level(true, @pages, true, 0, "", 0)
 
     data = render_to_string(:action => :container_generation, :id => params[:id], :layout => false, :template => "generator/container.html.erb")
+    Dir.mkdir("#{Rails.public_path}/#{@container.url}/tmp") unless File.exists?("#{Rails.public_path}/#{@container.url}/tmp")
     File.open("#{Rails.public_path}/#{@container.url}/tmp/index.html", "w") { |f| f << data }
 
     pages = Array.new()

@@ -2,8 +2,8 @@ var React = require('react');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 var Glossaries = require('../glossaries/Glossaries.jsx');
-var Term = require('../glossaries/term.jsx');
-var TermOverlay = require('../glossaries/termOverlay.jsx');
+var Term = require('../glossaries/Term.jsx');
+var TermOverlay = require('../glossaries/TermOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 
