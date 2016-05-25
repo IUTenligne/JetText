@@ -41,7 +41,7 @@ class BlocksController < ApplicationController
     if Page.find(params[:page_id]).user == current_user
       @export.page_id = params[:page_id]
       @export.save
-      render json: { status: "ok" }
+      render json: { block: @export }
     else
       render json: { status: "error" }
     end

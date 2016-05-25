@@ -9,6 +9,14 @@ var ContainersList = React.createClass({
         };
     },
 
+    componentDidMount: function() {
+          
+    },
+
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+
     itemSelection: function(item) {
         this.setState({ 
             selectedItem: item,
@@ -32,8 +40,9 @@ var ContainersList = React.createClass({
                 id: this.props.block,
                 page_id: page
             },
-            success: function() {
+            success: function(data) {
                 this.props.closeModal();
+                this.props.addBlock(data.block);
             },
             error: function() {
                 this.props.closeModal();

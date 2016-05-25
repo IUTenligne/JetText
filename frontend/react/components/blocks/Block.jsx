@@ -36,8 +36,8 @@ var Block = React.createClass({
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Confirm delete',
-            message: 'Delete the block ?',
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous supprimer le bloc ?',
             level: 'success',
             position: 'tc',
             timeout: '10000',
@@ -69,8 +69,8 @@ var Block = React.createClass({
 
         // NotificationSystem popup
         this._notificationSystem.addNotification({
-            title: 'Confirm delete',
-            message: 'Delete the block ?',
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous supprimer le bloc ' +block.name+ '?',
             level: 'success',
             position: 'tc',
             timeout: '10000',
@@ -97,6 +97,10 @@ var Block = React.createClass({
 
     handleBlockEditState: function(st) {
         this.setState({ editBlock: st });
+    },
+
+    handleBlockAdd: function(data) {
+        this.props.addBlock(data);
     },
 
     viewBlockAction: function() {
@@ -137,7 +141,7 @@ var Block = React.createClass({
 
     render: function() {
         var block = this.props.item;
-
+        
         if (block.type_id === 1) {
             return (
                 <div className="block block-text" data-id={block.id}>
@@ -180,7 +184,12 @@ var Block = React.createClass({
                                 <div className="modal-in">
                                     { this.state.loading 
                                         ? <Loader />
-                                        : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                        : <ContainersList 
+                                                closeModal={this.closeModal} 
+                                                containers={this.state.containersList} 
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd} 
+                                            />
                                     }
                                 </div>
                             </Modal>

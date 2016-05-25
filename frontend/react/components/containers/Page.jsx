@@ -80,6 +80,16 @@ var Page = React.createClass({
         });
     },
 
+    handleBlockAdd: function(block) {
+        /* updates the blocks list after a block export or duplication */
+        console.log(block.page_id, this.props.page);
+        if (block.page_id == parseInt(this.props.page)) {
+            this.setState({
+                blocks: this.state.blocks.concat([block])
+            });
+        }
+    },
+
     moveItems: function(drake) {
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy(true);
@@ -182,7 +192,8 @@ var Page = React.createClass({
                                     key={block.id} 
                                     item={block} 
                                     containerId={page.container_id} 
-                                    removeBlock={that.handleBlockDeletion} 
+                                    removeBlock={that.handleBlockDeletion}
+                                    addBlock={that.handleBlockAdd} 
                                 />
                             );
                         })}
