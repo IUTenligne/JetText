@@ -1,7 +1,7 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Loader = require('../widgets/Loader.jsx');
-var Modal =require('../widgets/Modal.jsx');
+var Modal = require('../widgets/Modal.jsx');
 var NotificationSystem = require('react-notification-system');
 
 var style = {
@@ -16,7 +16,8 @@ var style = {
 var Result = React.createClass({
     getInitialState: function() {
         return {
-            option: false
+            option: false,
+            overview: false
         };
     },
     
@@ -29,8 +30,8 @@ var Result = React.createClass({
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Confirm delete',
-            message: 'Are you sure you want to delete the container?',
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous supprimer la ressource ' + this.props.item.name + ' ?',
             level: 'success',
             position: 'tr',
             timeout: '20000',
@@ -39,7 +40,7 @@ var Result = React.createClass({
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
-                        url: "/containers/"+that.props.item.id,
+                        url: "/containers/" + that.props.item.id,
                         context: that,
                         success: function(data) {
                             /* passes the container.id to the parent using removeContainer's props */
@@ -63,7 +64,7 @@ var Result = React.createClass({
         });
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Container successfully generated !',
+            title: 'Ressource générée !',
             level: 'success'
         });   
     },
@@ -72,6 +73,10 @@ var Result = React.createClass({
         this.setState({
             option: true
         });
+    },
+
+    handleModalState: function(st) {
+        this.setState({ overview: st });
     },
 
     _notificationSystem: null, 
@@ -95,12 +100,20 @@ var Result = React.createClass({
                     <ul className='sheet'>
                         <li></li>
                         <li className="option">
-                            <a className="btn" href={"/#/containers/"+result.id}>
+                            <a className="btn list-group-item" href={"/#/containers/"+result.id}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-square fa-stack-2x"></i>
                                     <i className="fa fa-pencil fa-stack-1x fa-inverse"></i> 
                                 </span>
-                                Edit
+                                Editer
+                            </a>
+
+                            <a className="btn list-group-item" onClick={this.handleModalState}>
+                                <span className="fa-stack fa-lg">
+                                    <i className="fa fa-square fa-stack-2x"></i>
+                                    <i className="fa fa-eye fa-stack-1x fa-inverse"></i> 
+                                </span>
+                                Aperçu
                             </a>
 
                             <a className="btn list-group-item" onClick={this.generateContainer}>
@@ -108,15 +121,15 @@ var Result = React.createClass({
                                     <i className="fa fa-square fa-stack-2x"></i>
                                     <i className="fa fa-download fa-stack-1x fa-inverse"></i> 
                                 </span>
-                                Download
+                                Telecharger
                             </a>
 
-                            <a className="btn" onClick={this.deleteContainer}>
+                            <a className="btn list-group-item" onClick={this.deleteContainer}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-trash-o fa-stack-1x "></i> 
                                     <i className="fa fa-ban fa-stack-2x"></i>
                                 </span>
-                                Delete
+                                Supprimer
                             </a>
                         </li>
                         <li></li>
@@ -129,6 +142,13 @@ var Result = React.createClass({
                         <li></li>
                     </ul>
                 </figure>
+
+                { this.state.overview 
+                    ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
+                        <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+                    </Modal> 
+                    : null 
+                }
 
                 <NotificationSystem ref="notificationSystem" style={style}/>
             </li> 
@@ -211,7 +231,7 @@ var Containers = React.createClass({
         var that = this;
         return (
             <article id="containers">
-                <h1 className="page-header">My containers <i class="fa fa-folder-open fa-fw "></i></h1>
+                <h1 className="page-header">Mes ressources <i class="fa fa-folder-open fa-fw "></i></h1>
 
                 <ul className="align">
                     { this.state.loading
@@ -234,7 +254,7 @@ var Containers = React.createClass({
                 </ul>
 
                 { this.state.viewCreate
-                    ? <Modal active={this.handleModalState} mystyle={""}>
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
                         <div className="add_new_container">
                             <div className="input-group input-group-lg">
                                 <span className="input-group-addon">
@@ -248,10 +268,10 @@ var Containers = React.createClass({
                                     autoComplet="off" 
                                     onChange={this.handleChange} 
                                     value={this.state.newContainerValue}  
-                                    placeholder="Create new container..." 
+                                    placeholder="Titre de la ressource..." 
                                 />
                                 <br/>
-                                <input type="submit" value='Create' className="btn-success" onClick={this.createContainer}/>
+                                <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
                             </div>
                         </div>
                     </Modal>

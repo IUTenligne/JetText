@@ -170,7 +170,7 @@ var Page = React.createClass({
         return (
             <div className="page"> 
                 <h2 className="header_page">
-                    <input className="capitalize" ref="containername" type="text" value={this.state.pageName} placeholder="Page's name..." onChange={this.handlePageRename}/>
+                    <input className="capitalize" ref="containername" type="text" value={this.state.pageName} placeholder="Titre de la page..." onChange={this.handlePageRename}/>
                     { this.state.changePageName ? <button onClick={this.savePageName}><i className="fa fa-check"></i></button> : null }
                 </h2>
 
@@ -201,7 +201,7 @@ var Page = React.createClass({
                         <div className="select-action glossary">
                             <a onClick={this.showGlossaries}>
                                 <i className="fa fa-book fa-fw" aria-hidden="true"></i><br/>
-                                Glossary
+                                Glossaires
                             </a>
                         </div>
                     </div>

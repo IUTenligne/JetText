@@ -128,15 +128,15 @@ var TermOverlay = React.createClass({
                     </select>
                 :  <div className="add_new_glossary">
                         <div className="input-group input-group-lg">
-                            <input type="text" id="new_glossary" value={this.state.newGlossaryValue}  onChange={this.handleChange.bind(this, "newGlossaryValue")} placeholder="Create new glossary..." />
+                            <input type="text" id="new_glossary" value={this.state.newGlossaryValue}  onChange={this.handleChange.bind(this, "newGlossaryValue")} placeholder="Créer un nouveau glossaire..." />
                         </div>
                     </div>
                 }
                 <br/>
                 <input type="text" value={this.state.term} onChange={this.handleChange.bind(this, "term")}  /><br/>
-    			<textarea  type="text" value={this.state.newDescriptionValue} onChange={this.handleChange.bind(this, "newDescriptionValue")} placeholder="Create new definition..." />
+    			<textarea  type="text" value={this.state.newDescriptionValue} onChange={this.handleChange.bind(this, "newDescriptionValue")} placeholder="Ajouter une définition..." />
                 { this.state.inputCreate 
-                    ? <input type="submit" value='Create' className="btn-success" onClick={this.createTerm}/>
+                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createTerm}/>
                     : null
                 }
                 

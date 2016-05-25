@@ -66,11 +66,13 @@ var Glossary = React.createClass({
         return(
             <div className="terms">
             <NotificationSystem ref="notificationSystem" />
+
                 <div className="row">
                     <div className="col-lg-12">
-                        <h1 className="page-header">My Terms in glossary {that.state.glossary.name}</h1>
+                        <h1 className="page-header">Termes du glossaire {that.state.glossary.name}</h1>
                     </div>
                 </div>
+
                 {terms.map(function(term){
                     return(
                         <li key={term.id}>
@@ -84,6 +86,7 @@ var Glossary = React.createClass({
                         </li>
                     )
                 })}
+                
                 <div className="add_new_term">
                     <TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
                 </div>

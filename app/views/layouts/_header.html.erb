@@ -5,8 +5,8 @@
 
 	<div id="top-menu" class="header-collapse">
 		<ul>
-			<li><%= link_to raw('<i class="fa fa-folder-open fa-fw "></i>'), "/#containers/", data: { no_turbolink: true } %></li>
-			<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), "/#glossaries/", data: { no_turbolink: true } %></li>
+			<li><%= link_to raw('<i class="fa fa-folder-open fa-fw "></i>'), "/#containers/", data: { no_turbolink: true }, title: "Mes ressources" %></li>
+			<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), "/#glossaries/", data: { no_turbolink: true }, title: "Mes glossaires" %></li>
 			<li><%= link_to raw('<i class="fa fa-user fa-fw "></i>'), '/#/' %></li>
 			<% if user_signed_in? %>
 			<% end %>

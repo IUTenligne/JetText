@@ -32,7 +32,7 @@ var NoteBlock = React.createClass({
             editBlock: true,
             tooltipState: false,
             modalState: false,
-            noteStyles: ["important", "quote", "exemple", "definition", "methode", "remarque"]
+            noteStyles: ["remarque", "important", "quote", "exemple", "definition", "methode"]
         };
     },
 
@@ -312,7 +312,7 @@ var NoteBlock = React.createClass({
                     { this.state.focusPopup
                         ? <div className="focus" style={myStyle}>
                             <a onClick={this.termOverlay}>
-                                <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
+                                <i className="fa fa-book fa-fw" title="Glossaire" aria-hidden="true"></i>
                             </a>
                         </div>
                         : null
@@ -321,7 +321,7 @@ var NoteBlock = React.createClass({
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
-                            <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
+                            <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
@@ -329,11 +329,9 @@ var NoteBlock = React.createClass({
                     <center className="block-note-types">
                         { this.state.noteStyles.map(function(style, i) {
                             return(
-                                
-                                    <div key={i} className={"note-style " + style} onClick={that.applyStyle.bind(that, style)}>
-                                        <i className={"fa note-icon-" + style + " fa-fw"}></i>
-                                    </div>
-
+                                <div key={i} className={"note-style " + style} onClick={that.applyStyle.bind(that, style)}>
+                                    <i className={"fa note-icon-" + style + " fa-fw"}></i>
+                                </div>
                             );
                         })}
                     </center>
@@ -360,14 +358,14 @@ var NoteBlock = React.createClass({
                 </div>
 
                 { this.state.glossaryModalState
-                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Create new definition"}>
+                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Créer une définition"}>
                         <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
                     </Modal>
                     : null
                 }
 
                 { this.state.formulaModalState
-                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Add a formula"}>
+                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>
                         <div>
                             <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
@@ -377,7 +375,7 @@ var NoteBlock = React.createClass({
                 }
 
                 { this.state.modalState
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                             <div className="modal-in">
                                 { this.state.loading 
                                     ? <Loader />
@@ -397,13 +395,13 @@ var NoteBlock = React.createClass({
                     { this.state.tooltipState
                         ? <div className="block-actions">
                             { this.state.editBlock
-                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Edit</button>
-                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Editer</button>
+                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
                             }
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Export</button>
+                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Exporter</button>
                             <br/>
-                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>
                         : null
                     }   

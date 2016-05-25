@@ -66,13 +66,13 @@ var Container = React.createClass({
         this.serverRequest.abort();
     },
 
-    deletePage: function(activePage, pageId){
+    deletePage: function(activePage, page){
         var that = this;
         // NotificationSystem popup
 
         this._notificationSystem.addNotification({
-            title: 'Confirm delete',
-            message: 'Delete the page ?',
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous supprimer la page ' + page.name + ' ?',
             level: 'success',
             position: 'tc',
             timeout: '10000',
@@ -81,13 +81,13 @@ var Container = React.createClass({
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
-                        url: "/pages/"+pageId,
+                        url: "/pages/" + page.id,
                         context: that,
                         success: function(data){
                             var pagesList = that.state.pages.filter((i, _) => i["id"] !== data.page);
                             that.setState({ pages: pagesList });
 
-                            if ((pagesList.length == 0) || parseInt(activePage) == parseInt(pageId)) {
+                            if ((pagesList.length == 0) || parseInt(activePage) == parseInt(page.id)) {
                                 window.location.replace("/#/containers/" + this.state.container.id);
                             } else {
                                 window.location.replace("/#/containers/" + this.state.container.id + "/" + pagesList[0]["id"]);
@@ -211,8 +211,10 @@ var Container = React.createClass({
                         { this.state.loading
                             ? <Loader />
                             : <div className="header">
-                                <div id="previewbutton"><button onClick={this.handleModalState}><i className="fa fa-eye"></i></button></div>
-                                <h1><input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Container's name..." onChange={this.handleContainerName}/>
+                                <div id="previewbutton">
+                                    <button onClick={this.handleModalState} title="Aperçu de la ressource"><i className="fa fa-eye"></i></button>
+                                </div>
+                                <h1><input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Titre de la ressource..." onChange={this.handleContainerName}/>
                                     { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                 </h1>
                             </div>
@@ -243,7 +245,7 @@ var Container = React.createClass({
 
                                 { !this.props.routeParams.pageId && !this.state.activePage 
                                     ? <div id="create_new_page">
-                                            <input type="text" value={this.state.newPageValue} placeholder="Page's name..." onChange={this.handlePageName}/>
+                                            <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName}/>
                                             { this.state.newPageValue ? <button onClick={this.createPage}><i className="fa fa-check"></i></button> : null }
                                     </div>
                                     : null
@@ -253,7 +255,7 @@ var Container = React.createClass({
                     </div>
 
                     { this.state.overview 
-                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Overview"}> 
+                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
                             <iframe src={"/generator/overview/"+this.state.container.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
                         </Modal> 
                         : null 

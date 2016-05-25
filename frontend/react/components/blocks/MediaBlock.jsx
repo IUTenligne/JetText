@@ -402,7 +402,7 @@ var MediaBlock = React.createClass({
                     <div className="block-title">
                         <i className="fa fa-file-text"></i>
                         <h3>
-                            <input ref="mediablockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
+                            <input ref="mediablockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlockName}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
@@ -414,9 +414,9 @@ var MediaBlock = React.createClass({
                             </div> 
                             <div className="viewDropzonebis">
                                <div className="textDropzone">
-                                     <i className="fa fa-file-text"></i>
-                                     <br/>
-                                     Add file
+                                    <i className="fa fa-file-text"></i>
+                                    <br/>
+                                    Déposer un fichier
                                  </div>
                             </div>   
                             <div className="zoneDropzone">
@@ -427,7 +427,7 @@ var MediaBlock = React.createClass({
 
                         <div className="browse-files" onClick={this.handleBrowseFiles}>
                             <i className="fa fa-folder-open"></i><br/>
-                            Browse files
+                            Parcourir mes fichiers
                         </div>
                         { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
                     </div>

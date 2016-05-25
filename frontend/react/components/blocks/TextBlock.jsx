@@ -290,7 +290,7 @@ var TextBlock = React.createClass({
                     { this.state.focusPopup
                         ? <div className="focus" style={myStyle}>
                             <a onClick={this.termOverlay}>
-                                <i className="fa fa-book fa-fw" title="Glossary" aria-hidden="true"></i>
+                                <i className="fa fa-book fa-fw" title="Glossaire" aria-hidden="true"></i>
                             </a>
                         </div>
                         : null
@@ -299,7 +299,7 @@ var TextBlock = React.createClass({
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
-                            <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Block name..." onChange={this.handleBlockName}/>
+                            <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
@@ -321,18 +321,18 @@ var TextBlock = React.createClass({
                         />
                     }
 
-                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button></div> }
+                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button></div> }
                 </div>
 
                 { this.state.glossaryModalState
-                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Create new definition"}>
+                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Créer une définition"}>
                         <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
                     </Modal>
                     : null
                 }
 
                 { this.state.formulaModalState
-                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Add a formula"}>
+                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter un formule"}>
                         <div>
                             <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
@@ -342,7 +342,7 @@ var TextBlock = React.createClass({
                 }
 
                 { this.state.modalState
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                             <div className="modal-in">
                                 { this.state.loading 
                                     ? <Loader />
@@ -362,13 +362,13 @@ var TextBlock = React.createClass({
                     { this.state.tooltipState
                         ? <div className="block-actions">
                             { this.state.editBlock
-                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Edit</button>
-                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Editer</button>
+                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
                             }
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Export</button>
+                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Exporter</button>
                             <br/>
-                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>
                         : null
                     }   

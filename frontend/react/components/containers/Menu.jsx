@@ -140,8 +140,8 @@ var Menu = React.createClass({
         });
     },
 
-    deletePage: function(activePage, pageId) {
-        this.props.pageDeletion(activePage, pageId);
+    deletePage: function(activePage, page) {
+        this.props.pageDeletion(activePage, page);
     },
 
     activeHover: function(page){
@@ -179,19 +179,19 @@ var Menu = React.createClass({
                                     <div className="option-page">
            
                                             { page.level > levels.min
-                                                ? <button onClick={that.handleLevelClick.bind(that, page, "remove")}>
+                                                ? <button onClick={that.handleLevelClick.bind(that, page, "remove")} title="Retirer un niveau">
                                                     <i className="fa fa-chevron-left fa-fw"></i>
                                                 </button>
                                                 : null
                                             }
 
                                             { page.level <= levels.max 
-                                                ? <button onClick={that.handleLevelClick.bind(that, page, "add")}>
+                                                ? <button onClick={that.handleLevelClick.bind(that, page, "add")} title="Ajouter un niveau">
                                                     <i className="fa fa-chevron-right fa-fw"></i> 
                                                 </button> 
                                                 : null
                                             }
-                                               <button className="page-delete"  onClick={this.deletePage.bind(that, this.state.activePage, page.id)} >
+                                               <button className="page-delete"  onClick={this.deletePage.bind(that, this.state.activePage, page)} title="Supprimer la page">
                                                 <i className="fa fa-remove"></i>
                                             </button>  
              
@@ -207,7 +207,7 @@ var Menu = React.createClass({
                     <span className="input-group-addon">
                         <i className="fa fa-plus fa-fw"></i>
                     </span>
-                    <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new page..." />
+                    <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Ajouter une page..." />
                 </div>
             </div>
         );

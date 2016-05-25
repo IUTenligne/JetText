@@ -167,8 +167,8 @@ var Block = React.createClass({
                     <Tooltip tooltipState={this.handleTooltipState}>
                         { this.state.tooltipState
                             ? <div className="block-actions">
-                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Export</button><br/>
-                                <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Exporter</button><br/>
+                                <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
                             : null
@@ -176,7 +176,7 @@ var Block = React.createClass({
                     </Tooltip>
 
                     { this.state.modalState
-                        ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                                 <div className="modal-in">
                                     { this.state.loading 
                                         ? <Loader />

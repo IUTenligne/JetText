@@ -162,7 +162,7 @@ span.bold{
 	.block-actions {
 		position: absolute;
 		background: $white;
-		width: 100px;
+		width: 130px;
 		right: 55px;
 		margin-top: 4px;
 		border-bottom: none;
@@ -208,7 +208,8 @@ span.bold{
 }
 
 /* spacial UI block */
-.block-text {
+.block-text,
+.block-texte {
 	div.block-inner {
 		div.block-title {
 			i {
@@ -218,7 +219,8 @@ span.bold{
 	}
 }
 
-.block-math {
+.block-math,
+.block-maths {
 	div.block-inner {
 		div.block-title {
 			i {
@@ -311,7 +313,8 @@ span.bold{
 }
 
 
-.block-note {
+.block-note,
+.block-remarque {
 	div.block-inner {
 		div.content {
 			.block-title {
@@ -402,7 +405,7 @@ span.bold{
 					color: $lighTbGrey;
 				}
 				.block-note-title-quote:after{
-					content: "Quote";
+					content: "Citation";
 					color: $lighTbGrey;
 				}
 			}
@@ -413,7 +416,7 @@ span.bold{
 					color: $lightGreen;
 				}
 				.block-note-title-exemple:after{
-					content: "Example";
+					content: "Exemple";
 					color: $lightGreen;
 				}
 			}
@@ -424,7 +427,7 @@ span.bold{
 					color: $lighTbpurple;
 				}
 				.block-note-title-definition:after{
-					content: "Definition";
+					content: "Définition";
 					color: $lighTbpurple;
 				}
 			}
@@ -434,7 +437,7 @@ span.bold{
 					color: $lightOrange;
 				}
 				.block-note-title-methode:after{
-					content: "Method";
+					content: "Méthode";
 					color: $lightOrange;
 				}
 			}
@@ -445,7 +448,7 @@ span.bold{
 					color: $lighTbBlue;
 				}
 				.block-note-title-remarque:after{
-					content: "Note";
+					content: "Remarque";
 					color: $lighTbBlue;
 				}
 			}
