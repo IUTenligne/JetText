@@ -81,8 +81,7 @@ var Page = React.createClass({
     },
 
     handleBlockAdd: function(block) {
-        /* updates the blocks list after a block export or duplication */
-        console.log(block.page_id, this.props.page);
+        /* updates the block list after a duplication on the same page */
         if (block.page_id == parseInt(this.props.page)) {
             this.setState({
                 blocks: this.state.blocks.concat([block])

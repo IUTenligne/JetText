@@ -230,6 +230,11 @@ var TextBlock = React.createClass({
         this.setState({ glossaryModalState: st });
     },
 
+    handleBlockAdd: function(data) {
+        /* updates the block list after a duplication on the same page */
+        this.props.addBlock(data);
+    },
+
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value,
@@ -346,7 +351,12 @@ var TextBlock = React.createClass({
                             <div className="modal-in">
                                 { this.state.loading 
                                     ? <Loader />
-                                    : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                    : <ContainersList 
+                                            closeModal={this.closeModal} 
+                                            containers={this.state.containersList} 
+                                            block={block.id} 
+                                            addBlock={this.handleBlockAdd} 
+                                        />
                                 }
                             </div>
                         </Modal>

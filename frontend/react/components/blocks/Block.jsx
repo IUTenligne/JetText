@@ -100,6 +100,7 @@ var Block = React.createClass({
     },
 
     handleBlockAdd: function(data) {
+        /* updates the block list after a duplication on the same page */
         this.props.addBlock(data);
     },
 
@@ -141,7 +142,7 @@ var Block = React.createClass({
 
     render: function() {
         var block = this.props.item;
-        
+
         if (block.type_id === 1) {
             return (
                 <div className="block block-text" data-id={block.id}>
@@ -150,6 +151,7 @@ var Block = React.createClass({
                         key={block.id} 
                         containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
+                        addBlock={this.handleBlockAdd} 
                     />
 
                     <NotificationSystem ref="notificationSystem" />
@@ -205,6 +207,7 @@ var Block = React.createClass({
                         key={block.id} 
                         containerId={this.props.containerId} 
                         removeMe={this.handleRemoveBlock}
+                        addBlock={this.handleBlockAdd} 
                     />
                     
                     <NotificationSystem ref="notificationSystem" />
@@ -218,6 +221,7 @@ var Block = React.createClass({
                         key={block.id} 
                         containerId={this.props.containerId} 
                         removeMe={this.handleRemoveBlock}
+                        addBlock={this.handleBlockAdd} 
                     />
                     
                     <NotificationSystem ref="notificationSystem" />

@@ -73,6 +73,11 @@ var MathBlock = React.createClass({
         this.getContainers();
     },
 
+    handleBlockAdd: function(data) {
+        /* updates the block list after a duplication on the same page */
+        this.props.addBlock(data);
+    },
+
     handleModalState: function(st) {
         this.setState({ modalState: st });
     },
@@ -174,7 +179,12 @@ var MathBlock = React.createClass({
                             <div className="modal-in">
                                 { this.state.loading 
                                     ? <Loader />
-                                    : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                    : <ContainersList 
+                                            closeModal={this.closeModal} 
+                                            containers={this.state.containersList} 
+                                            block={block.id} 
+                                            addBlock={this.handleBlockAdd} 
+                                        />
                                 }
                             </div>
                         </Modal>

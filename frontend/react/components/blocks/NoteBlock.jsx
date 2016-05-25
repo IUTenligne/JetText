@@ -182,6 +182,11 @@ var NoteBlock = React.createClass({
         this.setState({ formulaModalState: st });
     },
 
+    handleBlockAdd: function(data) {
+        /* updates the block list after a duplication on the same page */
+        this.props.addBlock(data);
+    },
+
     handleFormulaChange: function(event) {
         this.setState({ formulaString: event.target.value });
     },
@@ -379,7 +384,12 @@ var NoteBlock = React.createClass({
                             <div className="modal-in">
                                 { this.state.loading 
                                     ? <Loader />
-                                    : <ContainersList closeModal={this.closeModal} containers={this.state.containersList} block={block.id} />
+                                    : <ContainersList 
+                                            closeModal={this.closeModal} 
+                                            containers={this.state.containersList} 
+                                            block={block.id}
+                                            addBlock={this.handleBlockAdd}  
+                                        />
                                 }
                             </div>
                         </Modal>
