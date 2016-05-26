@@ -46,6 +46,7 @@ class GeneratorController < ApplicationController
     
     @menu = recur_page_level(false, @pages, false, 0, "", 0)
     @mathjax = false
+
   	@blocks = Block.where(page_id: params[:id])
     @blocks.map { |block| 
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
@@ -59,6 +60,11 @@ class GeneratorController < ApplicationController
         }
       end
     }
+
+    if @blocks.empty?
+      @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
+    end
+
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
     @home_link = "/generator/overview/#{@container.id}"
@@ -82,6 +88,11 @@ class GeneratorController < ApplicationController
 
     @menu = recur_page_level(true, @pages, false, 0, "", 0)
     @blocks = Block.where(page_id: params[:id])
+
+    if @blocks.empty?
+      @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
+    end
+
     @mathjax = false
     @assets_prefix = ""
     @home_link = "index.html"
@@ -292,6 +303,10 @@ class GeneratorController < ApplicationController
           @mathjax = true
         end
       }
+
+      if @blocks.nil?
+        @toc = Page.where(container_id: params[:id]).where("sequence > ?", @pages[index].sequence)
+      end
 
       unless index == 0
         @prev_link = "#{index-1}-#{gsub_name(@pages[index-1].name)}.html" unless @pages[index-1].nil?
