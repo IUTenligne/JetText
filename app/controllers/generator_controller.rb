@@ -7,6 +7,7 @@ class GeneratorController < ApplicationController
 
   	@container = Container.find(params[:id])
   	@pages = Page.where(container_id: params[:id])
+    @next_link = "pages/#{@pages.first.id}" unless @pages.first.nil?
     @menu = recur_page_level(false, @pages, true, 0, "", 0)
     @assets_prefix = "/templates/iutenligne/"
     @home_link = "/generator/overview/#{params[:id]}"
@@ -20,6 +21,7 @@ class GeneratorController < ApplicationController
 
     @container = Container.find(params[:id])
     @pages = Page.where(container_id: params[:id])
+    @next_link = "pages/#{@pages.first.id}.html" unless @pages.first.nil?
     @menu = recur_page_level(true, @pages, false, 0, "", 0)
     @assets_prefix = ""
     @home_link = "#"
@@ -35,6 +37,13 @@ class GeneratorController < ApplicationController
   	@container = Container.find(@page.container_id)
     @glossaries = ContainersGlossary.where(container_id: @container.id)
   	@pages = Page.where(container_id: @page.container_id)
+    
+    @prev_page = Page.where(container_id: @container.id).where("id < ?", params[:id]).last unless Page.where(container_id: @container.id).where("id < ?", params[:id]).last.nil?
+    @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
+
+    @next_page = Page.where(container_id: @container.id).where("id > ?", params[:id]).first unless Page.where(container_id: @container.id).where("id > ?", params[:id]).first.nil?
+    @next_link = "#{@next_page.id}" unless @next_page.nil?
+    
     @menu = recur_page_level(false, @pages, false, 0, "", 0)
     @mathjax = false
   	@blocks = Block.where(page_id: params[:id])
@@ -64,6 +73,13 @@ class GeneratorController < ApplicationController
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
     @pages = Page.where(container_id: @page.container_id)
+
+    @prev_page = Page.where(container_id: @container.id).where("id < ?", params[:id]).last unless Page.where(container_id: @container.id).where("id < ?", params[:id]).last.nil?
+    @prev_link = "#{@prev_page.id}.html" unless @prev_page.nil?
+
+    @next_page = Page.where(container_id: @container.id).where("id > ?", params[:id]).first unless Page.where(container_id: @container.id).where("id > ?", params[:id]).first.nil?
+    @next_link = "#{@next_page.id}.html" unless @next_page.nil?
+
     @menu = recur_page_level(true, @pages, false, 0, "", 0)
     @blocks = Block.where(page_id: params[:id])
     @mathjax = false
@@ -276,6 +292,13 @@ class GeneratorController < ApplicationController
           @mathjax = true
         end
       }
+
+      unless index == 0
+        @prev_link = "#{index-1}-#{gsub_name(@pages[index-1].name)}.html" unless @pages[index-1].nil?
+      else
+        @prev_link = "index.html"
+      end
+      @next_link = "#{index+1}-#{gsub_name(@pages[index+1].name)}.html" unless @pages[index+1].nil?
 
       filename = index.to_s + "-" + page_name + ".html"
       data = render_to_string(:action => :page_generation, :id => params[:id], :layout => false, :template => "generator/page.html.erb")
