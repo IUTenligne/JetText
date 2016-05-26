@@ -38,10 +38,10 @@ class GeneratorController < ApplicationController
     @glossaries = ContainersGlossary.where(container_id: @container.id)
   	@pages = Page.where(container_id: @page.container_id)
     
-    @prev_page = Page.where(container_id: @container.id).where("id < ?", params[:id]).last unless Page.where(container_id: @container.id).where("id < ?", params[:id]).last.nil?
+    @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
     @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
-    @next_page = Page.where(container_id: @container.id).where("id > ?", params[:id]).first unless Page.where(container_id: @container.id).where("id > ?", params[:id]).first.nil?
+    @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
     @next_link = "#{@next_page.id}" unless @next_page.nil?
     
     @menu = recur_page_level(false, @pages, false, 0, "", 0)
@@ -80,11 +80,11 @@ class GeneratorController < ApplicationController
     @container = Container.find(@page.container_id)
     @pages = Page.where(container_id: @page.container_id)
 
-    @prev_page = Page.where(container_id: @container.id).where("id < ?", params[:id]).last unless Page.where(container_id: @container.id).where("id < ?", params[:id]).last.nil?
-    @prev_link = "#{@prev_page.id}.html" unless @prev_page.nil?
+    @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
+    @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
-    @next_page = Page.where(container_id: @container.id).where("id > ?", params[:id]).first unless Page.where(container_id: @container.id).where("id > ?", params[:id]).first.nil?
-    @next_link = "#{@next_page.id}.html" unless @next_page.nil?
+    @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
+    @next_link = "#{@next_page.id}" unless @next_page.nil?
 
     @menu = recur_page_level(true, @pages, false, 0, "", 0)
     @blocks = Block.where(page_id: params[:id])
