@@ -222,6 +222,11 @@ span.bold{
 				background-image:linear-gradient($lighTbBlue, rgb(52,129,177));
 			}
 		}
+		div.block-title:hover {
+			i {
+				cursor: pointer;
+			}
+		}
 	}
 }
 
@@ -326,6 +331,11 @@ span.bold{
 			.block-title {
 				i {
 					background-image:linear-gradient( $lightRed,rgb(186,67,38));
+				}
+			}
+			div.block-title:hover {
+				i {
+					cursor: pointer;
 				}
 			}
 

@@ -51,13 +51,15 @@ class GeneratorController < ApplicationController
     @blocks.map { |block| 
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
       @mathjax = true if block.type_id == 4
-      unless @glossaries.nil?
-        @glossaries.map { |glossary| 
-          @terms = Term.where(glossary_id: glossary.glossary_id)
-          @terms.each do |term|
-            block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
-          end
-        }
+      if block.type_id != 2
+        unless @glossaries.nil?
+          @glossaries.map { |glossary| 
+            @terms = Term.where(glossary_id: glossary.glossary_id)
+            @terms.each do |term|
+              block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+            end
+          }
+        end
       end
     }
 
