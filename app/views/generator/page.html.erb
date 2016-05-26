@@ -3,7 +3,6 @@
         <meta charset="utf-8">
         <title><%= @container.name.capitalize %></title>
         <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<%= @assets_prefix %>assets/css/simple-sidebar.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
@@ -13,7 +12,7 @@
         	<div id="sidebar-wrapper">
           		<div class="sidebar-nav">
           			<a href="<%= @org_link %>" target="_blank">
-          				<img src="<%= @assets_prefix %>assets/img/iutenligne.png" width="200" border="0">
+          				<img src="<%= @assets_prefix %>assets/img/iutenligne.png"  border="0">
           			</a>
 
           			<hr>
@@ -97,12 +96,12 @@
                     <% end %>
 
                     <div class="row">
-                      <div class="col-lg-6">
+                      <div class="col-lg-6 btn-after">
                         <% if @prev_link && @prev_link != "" %>
                           <a href="<%= @prev_link %>">Précédent</a>
                         <% end %>
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-lg-6 btn-next">
                         <% if @next_link && @next_link != "" %>
                           <a href="<%= @next_link %>">Suite</a>
                         <% end %>
