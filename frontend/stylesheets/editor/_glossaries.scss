@@ -1,3 +1,63 @@
 @import "../vars";
-.block {
+article#glossary {
+	padding: 20px;
+
+	h1.page-header {
+		color: $darkGrey;
+		border: none;
 	}
+	ul.cotent-glossary{
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+		width: 100%;
+
+
+		li{
+			list-style-type: none;
+			width: calc(100%/4);
+			display: inline-block;
+		}
+		li.option {
+			list-style-type: none;
+
+			a {
+            	width: 100%;
+            	display: block;
+            	padding: 0;
+            	text-align: left;
+            	margin: 12px 0 5px 12px;
+            	cursor: pointer;
+            	color: $bookGrey;
+			}
+
+			.list-group-item {
+    			span, .fa {
+    				font-size: 14px;
+      			}
+    		}
+
+	        a:hover{
+	          	color: $lightBlue;
+	        }
+		}
+		li#addGlossary{
+			border: 2px dashed $lightBlue;
+			min-height: 180px !important;
+			width: 180px !important;
+			margin: 0 auto;
+			margin: 0;
+			padding: 0;
+			margin-top: 50px;
+			cursor: pointer;
+			background: rgba($lightGrey,0.4);
+
+			i{
+				color: black;
+				font-size: 40px;
+				margin-top: 70px;
+			}
+		}
+	}
+}
