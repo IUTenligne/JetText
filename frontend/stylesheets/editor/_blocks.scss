@@ -85,10 +85,16 @@ span.bold{
 		.block-content {
 			ul {
 				margin-top: 20px;
+				margin-left: 20px;
 
 				li {
 					margin-bottom: 15px;
 				}
+			}
+
+			blockquote {
+				border-left: 2px solid #F0F0F0;
+				padding-left: 15px;
 			}
 
 			/* glossary tooltip*/

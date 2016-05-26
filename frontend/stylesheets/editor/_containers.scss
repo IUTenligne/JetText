@@ -11,10 +11,16 @@ article#containers {
 
 	ul.align{
 		width: 100%;
+		margin: 0;
+		padding: 0;
 
 		li.container {
+			list-style-type: none;
+
 			figure.book{
 				ul.hardcover_front {
+					list-style-type: none;
+
 					div.coverDesign {
 						padding: 60px 3px 0 3px;
 						background: $lightGrey;
@@ -34,7 +40,11 @@ article#containers {
 				}
 
 				ul.sheet{
+					list-style-type: none;
+
 					li.option {
+						list-style-type: none;
+
 						a {
             	width: 100%;
             	display: block;

@@ -2,10 +2,6 @@ var React = require('react');
 import { Link } from 'react-router';
 
 var App = React.createClass({
-	componentDidMount: function() {
-
-	},
-
   	render: function() {
 	    return (
 	    	<div className="home">
@@ -26,18 +22,18 @@ module.exports = App;
 
 /*   
 *
-*  			   .------------.   .-----------.           
-*              |  Glossary  |-->|    term   |
-*			   '------------'   '-----------' 
-*					  ^
+*  			   			.------------.   .-----------.           
+*               |  Glossary  |-->|    term   |
+*			   				'------------'   '-----------' 
+*					  					^
 *                     |
 *  .-------.   .------------.   .-----------.  
 *  |  App  +-->| Containers |-->| Container |
 *  '-------'   '------------'   '-----+-----' 
 *                                     |
 *                                     v
-*  .--------.	.-----------.   .-----+-----. 
+*  .--------.		.-----------.   .-----+-----. 
 *  | Blocks |<--|  Pages    |<--|   Menu    |
-*  '--------'	'-----------'	'-----------'
+*  '--------'		'-----------'	  '-----------'
 *
 */
