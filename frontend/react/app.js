@@ -20,10 +20,10 @@ $(document).ready(function () {
 
 		    <Route path="glossaries" component={Glossaries}/>
 		    <Route path="glossaries/:id" component={Glossary}/>
-			<Route path="glossaries/:id/:termId" component={Glossary}/>
+				<Route path="glossaries/:id/:termId" component={Glossary}/>
 			
-			<Route path="terms/:id" component={Term}/>
-			<Route path="terms" component={Term}/>
+				<Route path="terms/:id" component={Term}/>
+				<Route path="terms" component={Term}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {

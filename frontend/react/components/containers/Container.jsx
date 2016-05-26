@@ -88,9 +88,9 @@ var Container = React.createClass({
                             that.setState({ pages: pagesList });
 
                             if ((pagesList.length == 0) || parseInt(activePage) == parseInt(page.id)) {
-                                window.location.replace("/#/containers/" + this.state.container.id);
+                                window.location = "/#/containers/" + this.state.container.id;
                             } else {
-                                window.location.replace("/#/containers/" + this.state.container.id + "/" + pagesList[0]["id"]);
+                                window.location = "/#/containers/" + this.state.container.id + "/" + pagesList[0]["id"];
                             }
                         }
                     });
