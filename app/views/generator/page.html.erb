@@ -95,6 +95,19 @@
               				</div> 
               			</div>
                     <% end %>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <% if @prev_link && @prev_link != "" %>
+                          <a href="<%= @prev_link %>">Précédent</a>
+                        <% end %>
+                      </div>
+                      <div class="col-lg-6">
+                        <% if @next_link && @next_link != "" %>
+                          <a href="<%= @next_link %>">Suite</a>
+                        <% end %>
+                      </div>
+                    </div>
 					<!-- / content --> 
 
             	</div>

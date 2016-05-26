@@ -10,9 +10,8 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'styles', items: [ 'Format' ] }
 	];
 
-	config.removeButtons = 'Underline,Subscript,Superscript';
-
 	config.format_tags = 'p;h1;h2;h3;pre';
+	config.tabSpaces = 4;
 
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
