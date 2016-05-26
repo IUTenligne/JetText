@@ -214,10 +214,8 @@ var FileBrowser = React.createClass({
     render: function() {
         var that = this;
 
-        
-
         return (
-            <Modal active={this.handleModalState} mystyle={""} title={"My files"}>
+            <Modal active={this.handleModalState} mystyle={""} title={"Mes fichiers"}>
                 { this.state.loading 
                     ? <Loader />
                     : null
@@ -235,7 +233,7 @@ var FileBrowser = React.createClass({
 
                 <div>
                     <br />
-                    <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Search a file..." onChange={this.handleFileSearch}/>
+                    <input ref="searchfile" type="text" value={this.state.searchedFile} placeholder="Rechercher..." onChange={this.handleFileSearch}/>
                 </div>
 
                 <div id="files-zone">
