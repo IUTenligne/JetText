@@ -242,7 +242,7 @@ var NoteBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value,
+            blockName: event.target.value.trim(),
             changeName: true
         });
     },
