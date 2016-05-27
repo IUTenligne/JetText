@@ -9,7 +9,20 @@ h2.header_page {
 		font-size: 20px;
 		margin-bottom: 25px;
 		font-weight: bold;
-		min-width: 100%;
+		min-width: 90%;
+	}
+	button {
+		width: 10%;
+		float: right;
+		background: none;
+		border: none;
+		i{
+			border-radius: 20px;
+			float: right;
+			font-size: 20px;
+			background: $white;
+			padding: 8px;
+		}
 	}
 }
 
