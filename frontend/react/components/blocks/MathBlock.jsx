@@ -47,12 +47,12 @@ var MathBlock = React.createClass({
 
     saveBlock: function() {
         var block = this.props.block;
-        
+
         $.ajax({
             type: "PUT",
             url: '/blocks/' + block.id,
             context: this,
-            data: { 
+            data: {
                 id: block.id,
                 name: '',
                 content: this.state.areaContent,
@@ -65,9 +65,9 @@ var MathBlock = React.createClass({
     },
 
     exportBlock: function() {
-        this.setState({ 
+        this.setState({
             modalState: true,
-            loading: true 
+            loading: true
         });
 
         this.getContainers();
@@ -168,31 +168,31 @@ var MathBlock = React.createClass({
                         ? <div className="block-actions">
                             <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Export</button>
+                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Alias</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
                         </div>
                         : null
-                    }   
+                    }
                 </Tooltip>
 
                 { this.state.modalState
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
                             <div className="modal-in">
-                                { this.state.loading 
+                                { this.state.loading
                                     ? <Loader />
-                                    : <ContainersList 
-                                            closeModal={this.closeModal} 
-                                            containers={this.state.containersList} 
-                                            block={block.id} 
-                                            addBlock={this.handleBlockAdd} 
+                                    : <ContainersList
+                                            closeModal={this.closeModal}
+                                            containers={this.state.containersList}
+                                            block={block.id}
+                                            addBlock={this.handleBlockAdd}
                                         />
                                 }
                             </div>
                         </Modal>
                     : null
                 }
-                
+
                 <NotificationSystem ref="notificationSystem"/>
             </div>
     	);

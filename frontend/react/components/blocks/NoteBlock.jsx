@@ -44,16 +44,16 @@ var NoteBlock = React.createClass({
                 containersGlossariesList: result.containers_glossaries,
                 blockContent: this.props.block.content
             });
-            
+
             if (this.props.block.classes != undefined || this.props.block.classes) {
                 this.setState({ selectedStyle: this.props.block.classes });
             } else {
                 this.setState({ selectedStyle: "important" });
             }
-            
+
             if (result.containers_glossaries.length > 0) {
                 for (var i in result.containers_glossaries) {
-                    /* blockVirtualContent is a copy of blockContent, used to display a list of glossary terms 
+                    /* blockVirtualContent is a copy of blockContent, used to display a list of glossary terms
                     and to not override the block's content by adding <a> links in the database.
                     Only used in the client-side to display a term description in a tooltip if a glossary is checked. */
 
@@ -70,7 +70,7 @@ var NoteBlock = React.createClass({
                 });
             }
         }.bind(this));
-        
+
         this._notificationSystem = this.refs.notificationSystem;
 
         /* Opens CKEditor if the block has no content */
@@ -91,15 +91,15 @@ var NoteBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
-        
+
         /* Saves the block's content if before leaving the page */
         var block = this.props.block;
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { 
-                id: block.id, 
+            data: {
+                id: block.id,
                 name: this.state.blockName,
                 content: this.state.blockContent,
                 classes: this.state.selectedStyle
@@ -111,12 +111,12 @@ var NoteBlock = React.createClass({
 
     saveBlock: function() {
         var block = this.props.block;
-        
+
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { 
+            data: {
                 id: block.id,
                 name: this.state.blockName,
                 content: this.state.blockContent,
@@ -163,7 +163,7 @@ var NoteBlock = React.createClass({
             var formula = extract.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
             var content = query.replace(/{{(.*?)}}/, '<span class="formula">' + formula + '</span>');
 
-            this.setState({ 
+            this.setState({
                 getEditor: editor,
                 formulaString: formula,
                 blockContent: content,
@@ -196,8 +196,8 @@ var NoteBlock = React.createClass({
         var newData = this.state.blockContent;
         editor.setData(newData);
 
-        this.setState({ 
-            formulaModalState: false, 
+        this.setState({
+            formulaModalState: false,
             blockContent: newData
         });
 
@@ -217,14 +217,14 @@ var NoteBlock = React.createClass({
     overTerm: function(event){
         event.preventDefault();
 
-        this.setState({ 
+        this.setState({
             selectedText: document.getSelection().toString(),
             left: event.pageX-40,
             top: event.pageY -50
         });
-        
+
         var txt = document.getSelection().toString();
-        
+
         if ( (!txt.match(/^\s$/)) && (txt.length > 0) ) {
             this.setState({ focusPopup: true });
         } else {
@@ -252,7 +252,7 @@ var NoteBlock = React.createClass({
             type: "PUT",
             url: '/blocks/update_classes',
             context: this,
-            data: { 
+            data: {
                 id: this.props.block.id,
                 classes: style
             },
@@ -275,9 +275,9 @@ var NoteBlock = React.createClass({
     },
 
     exportBlock: function() {
-        this.setState({ 
+        this.setState({
             modalState: true,
-            loading: true 
+            loading: true
         });
 
         this.getContainers();
@@ -322,7 +322,7 @@ var NoteBlock = React.createClass({
                         </div>
                         : null
                     }
-                    
+
                     <div className="block-title">
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
                         <h3>
@@ -346,16 +346,16 @@ var NoteBlock = React.createClass({
                             <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>
                         </div>
                         { this.state.blockVirtualContent != ''
-                            ? <div 
-                                    id={this.dynamicId(block.id)} 
-                                    ref="editableblock" 
-                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
+                            ? <div
+                                    id={this.dynamicId(block.id)}
+                                    ref="editableblock"
+                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)}
                                     onDoubleClick={this.unlockEditor}
                                 />
-                            : <div 
-                                    id={this.dynamicId(block.id)} 
-                                    ref="editableblock" 
-                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
+                            : <div
+                                    id={this.dynamicId(block.id)}
+                                    ref="editableblock"
+                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)}
                                     onDoubleClick={this.unlockEditor}
                                 />
                         }
@@ -376,19 +376,19 @@ var NoteBlock = React.createClass({
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
                         </div>
                     </Modal>
-                    : null 
+                    : null
                 }
 
                 { this.state.modalState
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                             <div className="modal-in">
-                                { this.state.loading 
+                                { this.state.loading
                                     ? <Loader />
-                                    : <ContainersList 
-                                            closeModal={this.closeModal} 
-                                            containers={this.state.containersList} 
+                                    : <ContainersList
+                                            closeModal={this.closeModal}
+                                            containers={this.state.containersList}
                                             block={block.id}
-                                            addBlock={this.handleBlockAdd}  
+                                            addBlock={this.handleBlockAdd}
                                         />
                                 }
                             </div>
@@ -409,12 +409,12 @@ var NoteBlock = React.createClass({
                                 : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
                             }
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Exporter</button>
+                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Alias</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>
                         : null
-                    }   
+                    }
                 </Tooltip>
 
                 <NotificationSystem ref="notificationSystem"/>

@@ -88,9 +88,9 @@ span.bold{
 				}
 			}
 		}
-		
+
 		.block-content {
-			ul {
+			ul,ol {
 				margin-top: 20px;
 				margin-left: 20px;
 
@@ -98,6 +98,34 @@ span.bold{
 					margin-bottom: 15px;
 				}
 			}
+      strong{
+        font-weight : bold;
+      }
+      em{
+        font-style : italic;
+      }
+      u{
+        text-decoration : underline;
+      }
+      s{
+        text-decoration : line-through;
+      }
+      table{
+        box-shadow: 2px 2px 2px rgba($black,0.25);
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        th{
+          background: $lightBlue;
+        }
+      }
+      table tr:nth-child(even) {
+          background: #eee;
+        }
+	    table tr:nth-child(odd) {
+        background:$white;
+      }
 
 			blockquote {
 				border-left: 2px solid #F0F0F0;
@@ -112,7 +140,7 @@ span.bold{
 
 			a[data]:hover:after {
 			 	content: attr(data);
-			 	position:absolute; 
+			 	position:absolute;
 			 	background: $uiGrey;
 			 	border-radius: 4px;
 			 	padding: 7px;
@@ -131,10 +159,10 @@ span.bold{
 			  	bottom: -7px;
 			  	top: -10px;
 			 		left: 0px;
-			  	margin-left: 15px;  
+			  	margin-left: 15px;
 			  	border-top: 8px solid $uiGrey;
 			  	border-left: 8px solid transparent;
-			  	border-right: 8px solid transparent;        
+			  	border-right: 8px solid transparent;
 			  	border-bottom: 0;
 			}
 		}
@@ -183,7 +211,7 @@ span.bold{
 	.action button.handle:hover {
 		cursor: move;
 	}
-	
+
 	.block-actions {
 		position: absolute;
 		background: $white;
@@ -217,7 +245,7 @@ span.bold{
 		top:0;
 		border-top: 0;
 		border-left: 9px solid transparent;
-		border-right: 9px solid transparent;        
+		border-right: 9px solid transparent;
 		border-bottom: 9px solid $lightGrey;
 	}
 	.block-actions:before {
@@ -228,7 +256,7 @@ span.bold{
 		z-index: 10;
 		border-top: 0;
 		border-left: 8px solid transparent;
-		border-right: 8px solid transparent;        
+		border-right: 8px solid transparent;
 		border-bottom: 8px solid $white;
 	}
 }
@@ -272,11 +300,11 @@ span.bold{
 			border: 2px dashed $lightOrange;
 			width: 95%;
 			display: table;
-			text-align: center;			  	
+			text-align: center;
 			border-radius: 4px;
 			margin: 0 auto;
 			margin-top: 5px;
-			
+
 			.dropzone {
 			  	width: 50%;
 			  	height: 70px;
@@ -335,7 +363,7 @@ span.bold{
 				display: table-cell;
 				cursor: pointer;
 				color: $textGrey;
-				
+
 				i {
 					font-size: 30px;
 					margin-bottom: 5px;
@@ -426,7 +454,7 @@ span.bold{
 					background: $white;
 					margin: -30px 0 0 0;
 					width: 160px;
-					padding: 0 0 10px 8px; 
+					padding: 0 0 10px 8px;
 					font-size: 20px;
 
 					i {
@@ -566,8 +594,8 @@ span.bold{
 	.block-content,
 	.block-actions {
 		display: none;
-	} 
-} 
+	}
+}
 /* */
 
 .matharea {
