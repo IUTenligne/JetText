@@ -47,7 +47,7 @@
 
 
 
-          			<ul class="nav-menu">
+          			<ul class="nav-menu" id="nav-menu">
                   <%= raw(@menu) %>
 					      </ul>
           		</div>
@@ -72,7 +72,7 @@
 			        <h2 class="page-title"><%= @page.name.capitalize %></h2>
 			        <!-- / title page --> 
 			        
-              
+
 			        <!-- content -->
                     <% @blocks.each do |block| %>
               			<div class="row">
@@ -143,6 +143,16 @@
                     $("#wrapper").toggleClass("toggled");
                     $("#icone-menu").removeClass('block').addClass('none');
                 });
+                var activePage = $('#nav-menu').find('.active');
+                
+                function findParentItem(el) {
+                  if (($(el).parent().is('ul')) && (!$(el).parent().hasClass('nav-menu'))) {
+                    $(el).parent().addClass('active-parent');
+                    findParentItem($(el).parent());
+                  }
+                }
+
+                findParentItem(activePage);
             });
       </script>
 
