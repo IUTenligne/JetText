@@ -247,7 +247,7 @@ var TextBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value.trim(),
+            blockName: event.target.value,
             changeName: true
         });
     },

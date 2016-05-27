@@ -101,6 +101,8 @@ var Container = React.createClass({
 
     dragPages: function(pageList) {
         /* updates this.state.pages from a drag and drop action into <Menu /> */
+        pageList[0]["level"] = 0;
+
         if (pageList.length == 0) {
             this.setState({
                 pages: pageList,

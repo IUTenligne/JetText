@@ -185,7 +185,7 @@ var Menu = React.createClass({
                                                 : null
                                             }
 
-                                            { page.level <= levels.max 
+                                            { (page.level <= levels.max) && (page != this.props.pages[0]) 
                                                 ? <button onClick={that.handleLevelClick.bind(that, page, "add")} title="Ajouter un niveau">
                                                     <i className="fa fa-chevron-right fa-fw"></i> 
                                                 </button> 

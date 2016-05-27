@@ -61,6 +61,7 @@ class PagesController < ApplicationController
     params[:sequence].each do |key, value|
       Page.find(value[:id]).update_attribute(:sequence, value[:sequence])
     end
+    Page.where(sequence: 0).take.update_attribute(:level, 0)
     render :nothing => true
   end
 
