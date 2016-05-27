@@ -21,11 +21,12 @@ $lighRmPurple:#AF89C8;
 $lightRmYellow: #F8AB1D;
 
 /********  typo ********/
+
 @font-face {
-	 font-family: 'Pacifico';
-	 src: url('../fonts/pacifico.ttf') format('truetype');
-	 font-weight: normal;
-	 font-style: normal;
+  font-family: 'Boogaloo-Regular';
+  src:url('../fonts/Boogaloo-Regular.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
 	 font-family: 'Lobster';
@@ -235,17 +236,17 @@ $menuWidth: 350px;
 			h1.container-title {
 				color: $blue;
 				font-size: 50px;
-				font-family: "Pacifico",Helvetica,Arial,sans-serif;
+				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 				background: $grey;
 				height: 100px !important;
 				margin:0;
-				padding: 15px 0 0 15px;
+				padding: 20px 0 0 20px;
 			}
 			/********  title page ********/
 			h2.page-title{
 				margin-left: 50px;
 				font-size: 35px;
-				font-family: "Lobster",Helvetica,Arial,sans-serif;
+				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 			}
 			.row{ 
 				margin:0;
@@ -301,6 +302,8 @@ $menuWidth: 350px;
 								color: $lightRmRed;
 							}
 							.block-note-title-important:after{
+								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+								font-size: 24px;
 								content: "Important";
 								color: $lightRmRed;
 							}
@@ -313,6 +316,8 @@ $menuWidth: 350px;
 								color: $lighRmGrey;
 							}
 							.block-note-title-quote:after{
+								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+								font-size: 24px;
 								content: "Citation";
 								color: $lighRmGrey;
 							}
@@ -325,6 +330,8 @@ $menuWidth: 350px;
 								color: $lightRmGreen;
 							}
 							.block-note-title-exemple:after{
+								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+								font-size: 24px;
 								content: "Exemple";
 								color: $lightRmGreen;
 							}
@@ -337,6 +344,8 @@ $menuWidth: 350px;
 								color: $lighRmPurple;
 							}
 							.block-note-title-definition:after{
+								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+								font-size: 24px;
 								content: "Définition";
 								color: $lighRmPurple;
 							}
@@ -348,6 +357,8 @@ $menuWidth: 350px;
 								color: $lightRmOrange;
 							}
 							.block-note-title-methode:after{
+								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+								font-size: 24px;
 								content: "Méthode";
 								color: $lightRmOrange;
 							}
@@ -360,6 +371,8 @@ $menuWidth: 350px;
 								color: $lighRmBlue;
 							}
 							.block-note-title-remarque:after{
+								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+								font-size: 24px;
 								content: "Remarque";
 								color: $lighRmBlue;
 							}
@@ -441,8 +454,7 @@ $menuWidth: 350px;
     }
 }
 @media(min-width:1540px) {
-
-   .none{
+  .none{
 		display: none;
 	}
 	.block{

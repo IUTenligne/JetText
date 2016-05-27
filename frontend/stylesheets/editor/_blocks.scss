@@ -414,6 +414,8 @@ span.bold{
 					color: $lightRed;
 				}
 				.block-note-title-important:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Important";
 					color: $lightRed;
 				}
@@ -425,6 +427,8 @@ span.bold{
 					color: $lighTbGrey;
 				}
 				.block-note-title-quote:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Citation";
 					color: $lighTbGrey;
 				}
@@ -436,6 +440,8 @@ span.bold{
 					color: $lightGreen;
 				}
 				.block-note-title-exemple:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Exemple";
 					color: $lightGreen;
 				}
@@ -447,6 +453,8 @@ span.bold{
 					color: $lighTbpurple;
 				}
 				.block-note-title-definition:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Définition";
 					color: $lighTbpurple;
 				}
@@ -457,6 +465,8 @@ span.bold{
 					color: $lightOrange;
 				}
 				.block-note-title-methode:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Méthode";
 					color: $lightOrange;
 				}
@@ -468,6 +478,8 @@ span.bold{
 					color: $lighTbBlue;
 				}
 				.block-note-title-remarque:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Remarque";
 					color: $lighTbBlue;
 				}
