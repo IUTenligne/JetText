@@ -6,16 +6,19 @@ $darkGrey: #5c5954;
 $white: #FFFFFF;
 $black: #000000;
 
-$green: #1ABC9C;
-$lightGreen: #1ccdaa;
-$darkGreen:rgb(168,206,0);
-
-
 
 $darkBlue: #293949;
 $blue: #2E4051;
 $lighBlue: #3598DB;
 $lighTbBlue: #62A7D1;
+
+$lightRmRed: #DC6D52;
+$lightRmGreen: #66C295;
+$lightRmOrange: #F3A342;
+$lighRmBlue: #62A7D1;
+$lighRmGrey:#818C94;
+$lighRmPurple:#AF89C8;
+$lightRmYellow: #F8AB1D;
 
 /********  typo ********/
 @font-face {
@@ -245,32 +248,124 @@ $menuWidth: 350px;
 				font-family: "Lobster",Helvetica,Arial,sans-serif;
 			}
 			.row{ 
-				padding: 15px;
 				margin:0;
+				padding: 0;
+				width: 100%;
 				.col-lg-12{
+					padding: 0;
+					h3{
+						padding-left: 30px; 
+					}
 					div.content{
-						margin-left: 20px;
+						margin-left: 40px;
+						padding: 15px;
 						font-size: 17px;
 						text-align: justify;
-						
 						overflow:hidden;
+						max-width: 1100px;
 
 						blockquote{
 							font-style : italic;
 						}
 
-						.quote {
-							border: 2px solid purple;
-						}
-
 						.important {
 							border: 2px solid red;
 						}
+						/********  block remarque overall ********/
+						.block{
+							border: 2px solid;
+							border-radius: 4px;
+							 
+
+							.block-note-title {
+								background: $white;
+								margin: -20px 0 0px 30px;
+								width: 160px;
+								padding: 0 0 30px 8px; 
+								font-size: 20px;
+								z-index: 2;
+								i {
+									padding-right: 30px;
+									font-size: 25px;
+								}
+							}
+							p{
+								padding:0 10px 0 15px;
+							}
+						}
+						/********  block single ********/
+						.block-important {
+							border-color: $lightRmRed;
+							box-shadow: 2px 2px 4px rgba($lightRmRed,0.4);
+							.block-note-title-important i{
+								color: $lightRmRed;
+							}
+							.block-note-title-important:after{
+								content: "Important";
+								color: $lightRmRed;
+							}
+						}
+
+						.block-quote {
+							border-color: $lighRmGrey;
+							box-shadow: 2px 2px 4px rgba($lighRmGrey,0.4);
+							.block-note-title-quote i{
+								color: $lighRmGrey;
+							}
+							.block-note-title-quote:after{
+								content: "Citation";
+								color: $lighRmGrey;
+							}
+						}
+
+						.block-exemple {
+							border-color: $lightRmGreen;
+							box-shadow: 2px 2px 4px rgba($lightRmGreen,0.4);
+							.block-note-title-exemple i{
+								color: $lightRmGreen;
+							}
+							.block-note-title-exemple:after{
+								content: "Exemple";
+								color: $lightRmGreen;
+							}
+						}
+
+						.block-definition {
+							border-color: $lighRmPurple;
+							box-shadow: 2px 2px 4px rgba($lighRmPurple,0.4);
+							.block-note-title-definition i{
+								color: $lighRmPurple;
+							}
+							.block-note-title-definition:after{
+								content: "Définition";
+								color: $lighRmPurple;
+							}
+						}
+						.block-methode {
+							border-color: $lightRmOrange;
+							box-shadow: 2px 2px 4px rgba($lightRmOrange,0.4);
+							.block-note-title-methode i{
+								color: $lightRmOrange;
+							}
+							.block-note-title-methode:after{
+								content: "Méthode";
+								color: $lightRmOrange;
+							}
+						}
+
+						.block-remarque {
+							border-color: $lighRmBlue;
+							box-shadow: 2px 2px 4px rgba($lighRmBlue,0.4);
+							.block-note-title-remarque i{
+								color: $lighRmBlue;
+							}
+							.block-note-title-remarque:after{
+								content: "Remarque";
+								color: $lighRmBlue;
+							}
+						}
 					}
-				}
-				
-				
-				
+				}	
 			}
 			/********  btn next and after ********/
 			.btn{
@@ -315,7 +410,7 @@ $menuWidth: 350px;
 }
 
 
-@media(min-width:768px) {
+@media(min-width:768px ) and (max-width: 1539px){
 	.none{
 		display: none;
 	}
@@ -330,6 +425,51 @@ $menuWidth: 350px;
         #page-content-wrapper {
             padding: 20px;
             position: relative;
+        }
+    }
+    #wrapper.toggled {
+        padding-left: 0;
+    }   
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+ 
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+@media(min-width:1540px) {
+
+   .none{
+		display: none;
+	}
+	.block{
+		display: block;
+	}
+    #wrapper {
+        padding-left: $menuWidth;
+        #sidebar-wrapper {
+            width: $menuWidth;
+
+        }
+        #page-content-wrapper {
+            padding: 20px;
+            position: relative;
+
+            .container-fluid {
+            	h2.page-title{
+            		width: 1190px;
+					margin-left: auto;
+    				margin-right: auto;
+            	}
+            	.row{
+            		width: 1190px;
+					margin-left: auto;
+    				margin-right: auto;
+            	}
+            }
         }
     }
     #wrapper.toggled {

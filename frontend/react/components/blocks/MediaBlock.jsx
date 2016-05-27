@@ -288,7 +288,8 @@ var MediaBlock = React.createClass({
         this.setState({ blockContent: '<i class="fa fa-spinner fa-pulse loader"></i>' });
 
         var fileName = $(this.refs.mediaFile.files[0])[0].name;
-        var fileExt = fileName.split(".").slice(-1)[0];
+        /* lowercase the ext to stick to the upload backend model */
+        var fileExt = fileName.split(".").slice(-1)[0].toLowerCase();
 
         var formData = new FormData();
         formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
@@ -361,7 +362,7 @@ var MediaBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value,
+            blockName: event.target.value.trim(),
             changeName: true
         });
     },

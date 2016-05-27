@@ -167,7 +167,7 @@ var Block = React.createClass({
 
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                        <button className="handle"></button>
+                        <button className="handle" title="Déplacer le bloc"></button>
                     </div>
 
                     <Tooltip tooltipState={this.handleTooltipState}>

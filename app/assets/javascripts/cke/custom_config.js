@@ -6,8 +6,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'insert', items: [ 'Table', 'HorizontalRule', 'SpecialChar' ] },
 		{ name: 'document', items: [ 'Source' ] },
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
-		{ name: 'styles', items: [ 'Format' ] }
+		{ name: 'paragraph', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
 	];
 
 	config.format_tags = 'p;h1;h2;h3;pre';
@@ -16,7 +15,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	// Custom plugins app/assets/javascripts/cke/plugins
-	config.extraPlugins = 'uploader,dynavar';
+	config.extraPlugins = 'uploader,dynavar,justify';
 
 	config.allowedContent = true; //keep special styles on re-edition
 };

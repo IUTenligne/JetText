@@ -83,7 +83,10 @@
                                         <%= raw(block.content) if block.content %>
                                     <!-- note blocks -->
                                     <% elsif block.type_id == 3 %>
-                       					        <div class="block-<%= block.classes %>">
+                       					        <div class="block-<%= block.classes %> block">
+                                            <div class="block-note-title block-note-title-<%= block.classes %>">
+                                                <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
+                                            </div>
                                             <%= raw(block.content.capitalize) if block.content %>
                                         </div>
                                     <% elsif block.type_id == 4 %>
@@ -95,8 +98,21 @@
               				</div> 
               			</div>
                     <% end %>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <% if @toc %>
+                          <ul>
+                            <% @toc.each do |toc| %>
+                              <li>
+                                <a href="<%= toc.id %>"><%= toc.name.capitalize %></a>
+                              </li>
+                            <% end %>
+                          </ul>
+                        <% end %>
+                      </div>
+                    </div>
 
-                    <div class="row btn">
+                    <div class="row">
                       <div class="col-lg-6 btn-after">
                         <% if @prev_link && @prev_link != "" %>
                           <a href="<%= @prev_link %>">

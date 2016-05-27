@@ -122,7 +122,7 @@ var Container = React.createClass({
 
     handleContainerName: function(event) {
         this.setState({
-            containerName: event.target.value,
+            containerName: event.target.value.trim(),
             changeContainerName: true
         });
     },
@@ -174,7 +174,7 @@ var Container = React.createClass({
     },
 
     handlePageName: function(event) {
-        this.setState({ newPageValue: event.target.value });
+        this.setState({ newPageValue: event.target.value.trim() });
     },
 
     handleModalState: function(st) {
