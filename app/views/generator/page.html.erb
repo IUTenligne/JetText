@@ -43,7 +43,7 @@
 						          <span class="sr-only">Navigation</span>
 					        </a>
 					       </li>
-					     </ul>
+					   </ul>
 
 
 
@@ -96,15 +96,27 @@
               			</div>
                     <% end %>
 
-                    <div class="row">
+                    <div class="row btn">
                       <div class="col-lg-6 btn-after">
                         <% if @prev_link && @prev_link != "" %>
-                          <a href="<%= @prev_link %>">Précédent</a>
+                          <a href="<%= @prev_link %>">
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-square fa-stack-2x"></i>
+                              <i class="fa fa-chevron-left fa-stack-1x fa-inverse"></i> 
+                            </span>
+                            Précédent<br>
+                          </a>
                         <% end %>
                       </div>
                       <div class="col-lg-6 btn-next">
                         <% if @next_link && @next_link != "" %>
-                          <a href="<%= @next_link %>">Suite</a>
+                          <a  href="<%= @next_link %>">
+                            Suite
+                            <span class="fa-stack fa-lg">
+                              <i class="fa fa-square fa-stack-2x"></i>
+                              <i class="fa fa-chevron-right fa-stack-1x fa-inverse"></i> 
+                            </span>
+                          </a> 
                         <% end %>
                       </div>
                     </div>
