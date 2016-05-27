@@ -6,50 +6,85 @@ article#glossary {
 		color: $darkGrey;
 		border: none;
 	}
-	ul.cotent-glossary{
+	ul.content-glossary{
 		width: 100%;
 		margin: 0;
 		padding: 0;
 		text-align: center;
 		width: 100%;
+		margin-top: 50px;
 
 
 		li{
 			list-style-type: none;
-			width: calc(100%/4);
 			display: inline-block;
+			vertical-align: middle;
 		}
-		li.option {
+		.list-group-term {
 			list-style-type: none;
+			background: $white;
+			min-height: 180px !important;
+			width: 160px !important;
+			box-shadow: 2px 2px 2px rgba($black,0.2);
+			.title-glossary{
+				width: 160px;
+				display: table;
+				margin-top: 10px;
+				h4{
+					background: $lightBlue;
+					width: 135px;
+					height: 20.8px;
+					display: table-cell;
+				}
+				#triangle{
+					width: 25px;
+					height: 20px;
+				}
+				#triangle::after{
+					width: 0;
+					height: 0;
+					border-top: 14px solid transparent;
+					border-right: 0;
+					border-bottom: 14px solid transparent;
+					border-left: 14px solid $lightBlue;
+					position: absolute;
+					margin-left: -12px;
 
-			a {
-            	width: 100%;
-            	display: block;
-            	padding: 0;
-            	text-align: left;
-            	margin: 12px 0 5px 12px;
-            	cursor: pointer;
-            	color: $bookGrey;
+				}
 			}
 
-			.list-group-item {
-    			span, .fa {
-    				font-size: 14px;
-      			}
-    		}
+			.option-glossary{
+				margin-top: 20px;
+				a {
+	            	width: 100%;
+	            	display: block;
+	            	padding: 0;
+	            	text-align: left;
+	            	margin: 12px 0 5px 12px;
+	            	cursor: pointer;
+	            	color: $bookGrey;
+				}
 
-	        a:hover{
-	          	color: $lightBlue;
-	        }
+				.list-group-item {
+	    			span, .fa {
+	    				font-size: 14px;
+	      			}
+	    		}
+
+		        a:hover{
+		          	color: $lightBlue;
+		        }
+			}
+
 		}
-		li#addGlossary{
+		#addGlossary{
 			border: 2px dashed $lightBlue;
 			min-height: 180px !important;
 			width: 180px !important;
 			margin: 0 auto;
 			margin: 0;
 			padding: 0;
-			margin-top: 50px;
+
 			cursor: pointer;
 			background: rgba($lightGrey,0.4);
 

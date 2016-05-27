@@ -355,9 +355,16 @@ span.bold{
 				  		color: $textGrey;
 					}
 				}
+        
 			}
 
-			.browse-files{
+      .browse-files:hover{
+        color: $grey;
+          i{
+            color: $grey;
+          }
+      }
+      .browse-files{
 				width: 50%;
 				vertical-align: middle;
 				display: table-cell;

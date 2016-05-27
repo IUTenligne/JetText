@@ -37,17 +37,17 @@ var Glossaries = React.createClass({
     		type: "POST",
     		url:'/glossaries',
     		context: this,
-    		data: { 
+    		data: {
                 glossary: {
                     name: this.state.newGlossaryValue
-                } 
+                }
             },
     		success: function(data){
     			this.setState({
                     newGlossaryValue: '',
                     glossariesList: this.state.glossariesList.concat([data]),
-                    viewCreate: false 
-                }); 
+                    viewCreate: false
+                });
     		}
     	})
          event.target.value = '';
@@ -103,21 +103,30 @@ var Glossaries = React.createClass({
 
                 <h1 className="page-header">Mes glossaires</h1>
 
-                <ul className="cotent-glossary">
+                <ul className="content-glossary">
         			{this.state.glossariesList.map(function(glossary){
         				return(
-                            <li key={glossary.id} className="option">
-                                <Link to={"/glossaries/"+glossary.id}>
-                                    {glossary.name}
-                                </Link>
-                                <br/>
-                                <a href="#" onClick={that.deleteGlossary.bind(that, glossary)} >
-                                    <span className="fa-stack fa-lg">
-                                        <i className="fa fa-trash-o fa-stack-1x "></i> 
-                                        <i className="fa fa-ban fa-stack-2x"></i>
-                                    </span>
-                                    Supprimer
-                                </a>                  
+                            <li key={glossary.id} className="list-group-term">
+																<div className="title-glossary">
+                                	<h4>{glossary.name}</h4>
+																	<div id="triangle"></div>
+																</div>
+																<div className="option-glossary">
+																	<a href={"/glossaries/"+glossary.id} onClick={that.deleteGlossary.bind(that, glossary)} >
+																		<span className="fa-stack fa-lg">
+																				<i className="fa fa-square fa-stack-2x"></i>
+																				<i className="fa fa-pencil fa-stack-1x fa-inverse"></i>
+																		</span>
+	                                    Editer
+	                                </a>
+	                                <a href="#" onClick={that.deleteGlossary.bind(that, glossary)} >
+	                                    <span className="fa-stack fa-lg">
+	                                        <i className="fa fa-trash-o fa-stack-1x "></i>
+	                                        <i className="fa fa-ban fa-stack-2x"></i>
+	                                    </span>
+	                                    Supprimer
+	                                </a>
+																</div>
                             </li>
         				);
         			})}
@@ -138,7 +147,7 @@ var Glossaries = React.createClass({
                     </Modal>
                     : null
                 }
-    			
+
     		</article>
     	);
     }
