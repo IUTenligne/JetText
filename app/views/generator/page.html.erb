@@ -169,6 +169,30 @@
                 }
 
                 findParentItem(activePage);
+
+                function findChildren(el){
+                  if ($(el).next().is("ul")){
+                    $(el).next().show();
+                  }
+                }
+                findChildren(activePage);
+
+                var uls = $('#nav-menu').find('ul').each(function() {
+                  if ( $(this).is(":visible") ) {
+                    $(this).prepend("<a href='#'>+</a>");
+                  } else {
+                    $(this).prepend("<a href='#'>-</a>");
+                  }
+                });
+
+
+                function findPageIcon(el) {
+                  if ($(el).next().is('ul')) {
+                    $(el).next().addClass('chevron');
+                  }
+                }
+
+
             });
       </script>
 
