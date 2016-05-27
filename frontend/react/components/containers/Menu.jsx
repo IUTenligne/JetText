@@ -170,7 +170,7 @@ var Menu = React.createClass({
                                 data-id={page.id} 
                                 className={page.id == this.props.activePage ? "level-"+page.level+" active" : "level-"+page.level}
                             >
-                                <div className="handle"></div>
+                                <div className="handle" title="Déplacer la page"></div>
 
                                 <div className="menu-content">
                                    

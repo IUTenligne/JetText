@@ -399,7 +399,7 @@ var MediaBlock = React.createClass({
             <div className="block-inner">
                 <div className="content" key={block.id}>
                     <div className="block-title">
-                        <i className="fa fa-file-text"></i>
+                        <i className="fa fa-image"></i>
                         <h3>
                             <input ref="mediablockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
                             { this.state.changeName ? <button onClick={this.saveBlockName}><i className="fa fa-check"></i></button> : null }
