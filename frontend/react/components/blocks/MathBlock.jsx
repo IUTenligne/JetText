@@ -143,6 +143,8 @@ var MathBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
+                        <i className="fa fa-cog fa-spin fa-3x fa-fw experiment"></i>
+                        <span>Bloc en cours de conception</span>
                         <MathToolbox interact={this.handleInteraction} />
 
                         <textarea ref="matharea" type="text" value={this.state.areaContent} onChange={this.handleChange} rows="5" cols="50" />
