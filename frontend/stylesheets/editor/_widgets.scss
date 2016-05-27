@@ -1,12 +1,13 @@
 /* Global UI modal box*/
 .modal {
 	clear: both !important;
-  	background: rgba(0,0,0,0.8) !important;
-  	position: fixed !important;
+  background: rgba(0,0,0,0.8) !important;
+  position: fixed !important;
 	height: 100% !important;
 	width: 100% !important;
 	top: 0 !important;
 	left: 0 !important;
+	z-index: 999 !important;
 
 	.modal-inner{
 		display: flex;
