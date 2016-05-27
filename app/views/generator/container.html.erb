@@ -3,7 +3,6 @@
         <meta charset="utf-8">
         <title><%= @container.name.capitalize %></title>
         <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<%= @assets_prefix %>assets/css/simple-sidebar.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     </head>
@@ -11,11 +10,12 @@
         <div id="wrapper">
         	<div id="sidebar-wrapper">
           		<div class="sidebar-nav">
-          			<a href="<% @org_link %>" target="_blank">
-          				<img src="<%= @assets_prefix %>assets/img/iutenligne.png" width="200" border="0">
-          			</a>
+                <div class="logo">
+            			<a href="<% @org_link %>" target="_blank">
+            				<img src="<%= @assets_prefix %>assets/img/iutenligne.png"  border="0">
+            			</a>
+                </div>
 
-          			<hr>
 
           			<ul class="nav-link">
           				<li>
@@ -44,7 +44,7 @@
 					    </li>
 					</ul>
 
-					<hr>
+
 
           <ul class="nav-menu">
           	<%= raw(@menu) %>
@@ -76,10 +76,10 @@
           			</div>
 
                 <div class="row">
-                      <div class="col-lg-6">
+                      <div class="col-lg-6 btn-after">
 
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-lg-6 btn-next">
                         <% if @next_link %>
                           <a href="<%= @next_link %>">Suite</a>
                         <% end %>

@@ -46,25 +46,24 @@ article#containers {
 						list-style-type: none;
 
 						a {
-            	width: 100%;
-            	display: block;
-            	padding: 0;
-            	text-align: left;
-            	margin: 12px 0 5px 12px;
-            	cursor: pointer;
-            	color: $bookGrey;
-        		}
+			            	width: 100%;
+			            	display: block;
+			            	padding: 0;
+			            	text-align: left;
+			            	margin: 12px 0 5px 12px;
+			            	cursor: pointer;
+			            	color: $bookGrey;
+        				}
 
-        		.list-group-item {
-        			span, .fa {
-        					font-size: 14px;
-          		}
-        		}
-          		
+        				.list-group-item {
+		        			span, .fa {
+		        				font-size: 14px;
+		          			}
+		        		}
 
-		        a:hover{
-		          	color: $lightBlue;
-		        }
+				        a:hover{
+				          	color: $lightBlue;
+				        }
 					}
 				}
 			}

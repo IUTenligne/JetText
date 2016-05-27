@@ -1,6 +1,7 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
+var Modal = require('../widgets/Modal.jsx');
 
 
 var Glossaries = React.createClass({
@@ -8,7 +9,8 @@ var Glossaries = React.createClass({
 	getInitialState: function() {
 	    return {
 	        newGlossaryValue: '',
-	        glossariesList: [] 
+	        glossariesList: [] ,
+            viewCreate: false,
 	    };
 	},
 
@@ -43,7 +45,8 @@ var Glossaries = React.createClass({
     		success: function(data){
     			this.setState({
                     newGlossaryValue: '',
-                    glossariesList: this.state.glossariesList.concat([data])
+                    glossariesList: this.state.glossariesList.concat([data]),
+                    viewCreate: false 
                 }); 
     		}
     	})
@@ -83,43 +86,68 @@ var Glossaries = React.createClass({
         });
     },
 
+    viewCreateGlossaries: function(){
+        this.setState({viewCreate: true });
+    },
+    handleModalState: function(st) {
+        this.setState({viewCreate: false });
+    },
+
     _notificationSystem: null,
 
     render: function(){
         var that = this;
     	return(
-    		<div className="glossary">
+    		<article id="glossary">
                 <NotificationSystem ref="notificationSystem" />
 
-                <div className="row">
-                    <div className="col-lg-12">
-                        <h1 className="page-header">Mes glossaires</h1>
-                    </div>
-                </div>
+                <h1 className="page-header">Mes glossaires</h1>
 
-    			{this.state.glossariesList.map(function(glossary){
-    				return(
-                        <li key={glossary.id} >
-                            <Link to={"/glossaries/"+glossary.id}>
-                                {glossary.name}
-                            </Link>
-                            <br/>
-                            <a href="#" onClick={that.deleteGlossary.bind(that, glossary)} >
-                                <i className="fa fa-trash-o" ></i>
-                            </a>
-                        </li>
-    				);
-    			})}
+                <ul className="cotent-glossary">
+        			{this.state.glossariesList.map(function(glossary){
+        				return(
+                            <li key={glossary.id} className="option">
+                                <Link to={"/glossaries/"+glossary.id}>
+                                    {glossary.name}
+                                </Link>
+                                <br/>
+                                <a href="#" onClick={that.deleteGlossary.bind(that, glossary)} >
+                                    <span className="fa-stack fa-lg">
+                                        <i className="fa fa-trash-o fa-stack-1x "></i> 
+                                        <i className="fa fa-ban fa-stack-2x"></i>
+                                    </span>
+                                    Supprimer
+                                </a>
 
-    			<div className="add_new_glossary">
-    				<div className="input-group input-group-lg">
-    					<span className="input-group-addon">
-                            <i className="fa fa-plus fa-fw"></i>
-                        </span>
-                        <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Créer un nouveau glossaire..." />
-    				</div>
-    			</div>
-    		</div>
+                                <a className="btn list-group-item" href={"/#/containers/"+glossary.id}>
+                                    <span className="fa-stack fa-lg">
+                                        <i className="fa fa-square fa-stack-2x"></i>
+                                        <i className="fa fa-pencil fa-stack-1x fa-inverse"></i> 
+                                    </span>
+                                    Editer
+                                </a>                      
+                            </li>
+        				);
+        			})}
+                    <li id="addGlossary" onClick={this.viewCreateGlossaries}>
+                        <i className="fa fa-plus fa-fw "></i>
+                    </li>
+                </ul>
+                { this.state.viewCreate
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
+                        <div className="add_new_glossary">
+                            <div className="input-group input-group-lg">
+                                <span className="input-group-addon">
+                                    <i className="fa fa-plus fa-fw"></i>
+                                </span>
+                                <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Créer un nouveau glossaire..." />
+                            </div>
+                        </div>
+                    </Modal>
+                    : null
+                }
+    			
+    		</article>
     	);
     }
 });
