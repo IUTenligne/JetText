@@ -59,7 +59,12 @@ class PagesController < ApplicationController
 
   def sort
     params[:sequence].each do |key, value|
-      Page.find(value[:id]).update_attribute(:sequence, value[:sequence])
+      @page = Page.find(value[:id])
+      @page.update_attribute(:sequence, value[:sequence])
+      @page.sequence = value[:sequence]
+      if @page.sequence == 0
+        @page.update_attribute(:level, 0)
+      end
     end
     render :nothing => true
   end

@@ -6,7 +6,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'insert', items: [ 'Table', 'HorizontalRule', 'SpecialChar' ] },
 		{ name: 'document', items: [ 'Source' ] },
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-		{ name: 'paragraph', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+		{ name: 'paragraph', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent' ] },
 	];
 
 	config.format_tags = 'p;h1;h2;h3;pre';
