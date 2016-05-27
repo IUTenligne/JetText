@@ -46,9 +46,10 @@ div.sidebar.menu {
 				text-align: center;
 			}
 			.handle:before {
-				content: "\f142";
+				content: "\f047";
 				font-family: FontAwesome;
 				color: rgba($darkGrey, 0.9);
+				font-size: 12px;
 			}
 			/* contenu menu */
 			div.menu-content {

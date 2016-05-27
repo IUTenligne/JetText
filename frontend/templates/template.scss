@@ -169,12 +169,18 @@ $menuWidth: 350px;
 					font-size: 16px;
 					
 					a{
-						color: $white;
+						color: rgba($white,0.25);
 						min-width: 100%;
 						text-decoration: none;
 					}
 				}
+				li.active{
+					a{
+						color: $white;
+					}
+				}
 				ul{
+					display: none;
 					background: $blue;
 					margin: 0px 0px 20px 0px;
 					padding-left: 25px;
@@ -194,6 +200,10 @@ $menuWidth: 350px;
 						border: none;
 						background: none;
 					}
+				}
+
+				ul.active-parent{
+					display: block;
 				}
 			}
         }
