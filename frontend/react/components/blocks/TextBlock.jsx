@@ -101,7 +101,7 @@ var TextBlock = React.createClass({
         this.serverRequest.abort();
     },
 
-    saveBlock: function() {
+    saveBlock: function(close) {
         var block = this.props.block;
         
         $.ajax({
@@ -114,17 +114,23 @@ var TextBlock = React.createClass({
                 content: this.state.blockContent
             },
             success: function(data) {
-                this.setState({
-                    blockName: data.name,
-                    blockContent: data.content,
-                    changeName: false,
-                    editBlock: true
-                });
+                if (close === true) {
+                    this.setState({
+                        blockName: data.name,
+                        blockContent: data.content,
+                        changeName: false,
+                        editBlock: true
+                    });
+                    var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
+                    if (editor) { editor.destroy(true); }
+                } else {
+                    this.setState({
+                        blockName: data.name,
+                        blockContent: data.content
+                    });
+                }
             }
         });
-
-        var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
-        if (editor) { editor.destroy(true); }
     },
 
     unlockEditor: function() {
@@ -150,6 +156,10 @@ var TextBlock = React.createClass({
         });
 
         this.setState({ focusPopup: false, editBlock: false });
+
+        setTimeout(function() {
+            that.saveBlock(false);
+        }, 2000);
     },
 
     _highlightText: function(query, editor) {
@@ -191,7 +201,7 @@ var TextBlock = React.createClass({
             blockContent: newData
         });
 
-        this.saveBlock();
+        this.saveBlock(true);
     },
 
     _notificationSystem: null,
@@ -305,7 +315,7 @@ var TextBlock = React.createClass({
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName ? <button onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
+                            { this.state.changeName ? <button onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
 
@@ -326,7 +336,7 @@ var TextBlock = React.createClass({
                         />
                     }
 
-                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button></div> }
+                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button></div> }
                 </div>
 
                 { this.state.glossaryModalState
@@ -365,7 +375,7 @@ var TextBlock = React.createClass({
 
                 <div className="action">
                     <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                    <button className="handle"></button>
+                    <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 
                 <Tooltip tooltipState={this.handleTooltipState}>
@@ -373,7 +383,7 @@ var TextBlock = React.createClass({
                         ? <div className="block-actions">
                             { this.state.editBlock
                                 ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Editer</button>
-                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
+                                : <button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button>
                             }
                             <br/>
                             <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Exporter</button>

@@ -3,6 +3,8 @@ class Upload < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :blocks
 
+  before_create :reencode_filename
+
   Paperclip.interpolates('user') do |attachment, style|
     attachment.instance.user.email.to_s
   end
@@ -23,9 +25,13 @@ class Upload < ActiveRecord::Base
     attachment.instance.valid_name
   end
 
+  Paperclip.interpolates :valid_ext do |attachment, style|
+    attachment.instance.valid_ext
+  end
+
   has_attached_file :file,
-    :url => ":user/files/:file_type/:month/:timestamp_:valid_name.:extension",
-  	:path => ":rails_root/public/:user/files/:file_type/:month/:timestamp_:valid_name.:extension",
+    :url => ":user/files/:file_type/:month/:timestamp_:valid_name:valid_ext",
+  	:path => ":rails_root/public/:user/files/:file_type/:month/:timestamp_:valid_name:valid_ext",
     :use_timestamp => false
 
   validates_attachment_content_type :file, 
@@ -65,8 +71,21 @@ class Upload < ActiveRecord::Base
   end
 
   def valid_name
-    return self.file_file_name.split('.')[0].gsub(/[^a-zA-Z_-]/, '').downcase
+    return File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z_-]/, '').downcase
   end
+
+  def valid_ext
+    return File.extname(file_file_name).downcase
+  end
+
+
+  private
+    # lowercase the ext
+    def reencode_filename
+      extension = File.extname(file_file_name).downcase
+      name = File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z_-]/, '').downcase
+      self.file.instance_write(:file_name, "#{name}#{extension}")
+    end
 
 end
 
