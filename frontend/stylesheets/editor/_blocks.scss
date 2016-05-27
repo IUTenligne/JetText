@@ -60,10 +60,10 @@ span.bold{
 					float: left;
 					padding: 0 15px;
 					margin: 0;
-					min-width: 70%;
+					min-width: 90%;
 
 					input {
-						min-width: 85%;
+						min-width: 90%;
 						float: left;
 						display: inline-block;
 						padding: 6px 12px;
@@ -75,8 +75,15 @@ span.bold{
 					}
 
 					button {
-						width: 15%;
-						float: left;
+						width: 10%;
+						float: right;
+						background: none;
+						border: none;
+						i{
+							border-radius: 20px;
+							float: right;
+							font-size: 15px;
+						}
 					}
 				}
 			}
@@ -350,7 +357,7 @@ span.bold{
 			.note-style {
 				display: inline-block;
 				margin: 2px 2px 2px 10px;
-				border-radius: 4px 0 0 0;
+				border-radius: 4px;
 				cursor: pointer;
 				text-align: center;
 				box-shadow: 0px 2px 2px rgba(0,0,0,0.50);
@@ -367,26 +374,32 @@ span.bold{
 
 			.important{
 				background-image:linear-gradient($lightRed,rgb(186,67,38));
+				box-shadow: 2px 2px 4px rgba($lightRed,0.8);
 			}
 
 			.quote{
 				background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
+				box-shadow: 2px 2px 4px rgba($lighTbGrey,0.8);
 			}
 
 			.exemple{
 				background-image:linear-gradient($lightGreen,rgb(62,156,110));
+				box-shadow: 2px 2px 4px rgba($lightGreen,0.8);
 			}
 
 			.definition{
 				background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
+				box-shadow: 2px 2px 4px rgba($lighTbpurple,0.8);
 			}
 
 			.methode{
 				background-image:linear-gradient($lightOrange,rgb(217,125,14));
+				box-shadow: 2px 2px 4px rgba($lightOrange,0.8);
 			}
 
 			.remarque{
 				background-image:linear-gradient($lighTbBlue,rgb(52,129,177));
+				box-shadow: 2px 2px 4px rgba($lighTbBlue,0.8);
 			}
 
 			.block-content {
@@ -414,6 +427,8 @@ span.bold{
 					color: $lightRed;
 				}
 				.block-note-title-important:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Important";
 					color: $lightRed;
 				}
@@ -425,6 +440,8 @@ span.bold{
 					color: $lighTbGrey;
 				}
 				.block-note-title-quote:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Citation";
 					color: $lighTbGrey;
 				}
@@ -436,6 +453,8 @@ span.bold{
 					color: $lightGreen;
 				}
 				.block-note-title-exemple:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Exemple";
 					color: $lightGreen;
 				}
@@ -447,6 +466,8 @@ span.bold{
 					color: $lighTbpurple;
 				}
 				.block-note-title-definition:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Définition";
 					color: $lighTbpurple;
 				}
@@ -457,6 +478,8 @@ span.bold{
 					color: $lightOrange;
 				}
 				.block-note-title-methode:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Méthode";
 					color: $lightOrange;
 				}
@@ -468,6 +491,8 @@ span.bold{
 					color: $lighTbBlue;
 				}
 				.block-note-title-remarque:after{
+					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+					font-size: 24px;
 					content: "Remarque";
 					color: $lighTbBlue;
 				}
