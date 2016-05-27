@@ -10,11 +10,12 @@
         <div id="wrapper">
         	<div id="sidebar-wrapper">
           		<div class="sidebar-nav">
-          			<a href="<% @org_link %>" target="_blank">
-          				<img src="<%= @assets_prefix %>assets/img/iutenligne.png"  border="0">
-          			</a>
+                <div class="logo">
+            			<a href="<% @org_link %>" target="_blank">
+            				<img src="<%= @assets_prefix %>assets/img/iutenligne.png"  border="0">
+            			</a>
+                </div>
 
-          			<hr>
 
           			<ul class="nav-link">
           				<li>
@@ -43,7 +44,7 @@
 					    </li>
 					</ul>
 
-					<hr>
+
 
           <ul class="nav-menu">
           	<%= raw(@menu) %>

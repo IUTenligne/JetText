@@ -1,12 +1,21 @@
 /******** color ********/
 
-$grey:#B3B3B3;
+$grey: #F0F1F6;
+$darkGrey: #5c5954;
+
 $white: #FFFFFF;
 $black: #000000;
-$greey:#d1d3d4;
-$darkGrey: #015B61;
-$blue: #4D8AC7;
-$lighTbBlue: #98BA00;
+
+$green: #1ABC9C;
+$lightGreen: #1ccdaa;
+$darkGreen:rgb(168,206,0);
+
+
+
+$darkBlue: #293949;
+$blue: #2E4051;
+$lighBlue: #3598DB;
+$lighTbBlue: #62A7D1;
 
 /********  typo ********/
 @font-face {
@@ -63,6 +72,7 @@ img{
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    background: $grey;
     #sidebar-wrapper {
         z-index: 1000;
         position: fixed;
@@ -71,7 +81,7 @@ img{
         height: 100%;
         margin-left: -30%;
         overflow-y: auto;
-        background: $grey;
+        background: $darkBlue;
         box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.3) inset;
         -webkit-transition: all 0.5s ease;
         -moz-transition: all 0.5s ease;
@@ -85,43 +95,41 @@ img{
             margin: 0;
             padding: 0;
             list-style: none;
-            a {
-            	img{
-            		padding-top: 5px;
-            		max-width: 250px;
-            	}
-			}
-			hr {
-				height: 1px;
-				width: 80%;
-			    background: $blue;
-			    background-image: -webkit-linear-gradient(left, #B7D0E9, $blue, #B7D0E9);
-			    background-image:    -moz-linear-gradient(left, #B7D0E9, $blue, #B7D0E9);
-			    background-image:     -ms-linear-gradient(left, #B7D0E9, $blue, #B7D0E9);
-			    background-image:      -o-linear-gradient(left, #B7D0E9, $blue, #B7D0E9);
-			}
+            .logo{
+            	background: #3598DB;
+            	height: 100px !important;
+            	a {
+	            	img{
+	            		padding-top: 5px;
+	            		max-width: 250px;
+	            	}
+				}
+            }
+            
 			ul.nav-link,ul.nav-menu {
 				list-style: none;
 				margin: 0;
 				padding: 0;
+				clear: both;
 			}
 			ul.nav-link {
 				width: 100%;
 				text-align: center;
+				margin: 15px 0 25px 0;
 				li {
 					text-align: center;
 					text-indent: 0px;
 					display: inline-block;
 					a {
 						display: inline !important;
-						background-image:linear-gradient( $lighTbBlue,rgb(168,206,0));
+						background-image:linear-gradient( $lighBlue,$lighTbBlue);
 						cursor: pointer;
 						box-shadow: 2px 2px 4px rgba(0,0,0,0.20);
 						border-radius: 4px;
-						-webkit-border-radius:4px;
-						-moz-border-radius:4px;
-						-ms-border-radius:4px;
-						-o-border-radius:4px;
+						-webkit-border-radius:3px;
+						-moz-border-radius:3px;
+						-ms-border-radius:3px;
+						-o-border-radius:3px;
 						text-align: center;
 						font-size: 15px;
 						margin: 5px;
@@ -129,23 +137,25 @@ img{
 							color: $white;
 						}
 						i:hover {
-							color: $lighTbBlue;
+							color: $black;
 						}
 					}
 				}
+				.btn-default{
+					border: none;
+				}
 			}
 			ul.nav-menu {
-				color: $darkGrey;
+				color: $black ;
 				text-align: left;
 				li{
 					list-style: none;
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					overflow:hidden;
-					border: 1px solid rgba($black,0.1);
-					padding: 3px 0 0 3px;
-					background-image:linear-gradient( $darkGrey,rgb(1,91,97));
+					padding-left: 20px;
 					margin-top: 5px;
+					font-size: 16px;
 					
 					a{
 						color: $white;
@@ -154,18 +164,15 @@ img{
 					}
 				}
 				ul{
-					background: rgb(57,89,104);
-					border-right: 1px solid rgba($black,0.1);
-					border-left: 1px solid rgba($black,0.1);
-					box-shadow: 2px 2px 4px rgba(0,0,0,0.20);
-					margin: 0px 10px 10px 0px;
-					border-radius: 0px 0px 4px 0px;
+					background: $blue;
+					margin: 0px 0px 20px 0px;
 					padding-left: 25px;
+
 					li{
 						border: none;
-						background: rgb(57,89,104);
-						border-radius: 0px 0px 4px 0px;
 						margin: 0;
+						background: none;
+						font-size: 13px;
 						a{
 
 						}
@@ -173,7 +180,7 @@ img{
 					ul{
 						box-shadow: none;
 						border: none;
-
+						background: none;
 					}
 				}
 			}
@@ -183,7 +190,7 @@ img{
 		width: 50px;
 		left: 0px;
 		a{
-			background: $darkGrey;
+			background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 			border-radius: 4px;
 			-webkit-border-radius:4px;
 			-moz-border-radius:4px;
@@ -197,20 +204,25 @@ img{
 			font-size: 30px;
 			}
 			i:hover {
-				color: $lighTbBlue;
+				color: $black;
 			}
 		}
 	}
     #page-content-wrapper {
         width: 100%;
         position: absolute;
-        padding: 15px;
+        padding: 0 !important;
+        
         .container-fluid {
+        	padding: 0;
 			h1.container-title {
 				color: $blue;
 				font-size: 50px;
-				border-bottom: 1px solid #eee;
 				font-family: "Pacifico",Helvetica,Arial,sans-serif;
+				background: $white;
+				height: 100px !important;
+				margin:0;
+				padding: 15px 0 0 15px;
 			}
 			h2.page-title{
 				margin-left: 50px;
@@ -218,6 +230,8 @@ img{
 				font-family: "Lobster",Helvetica,Arial,sans-serif;
 			}
 			.row{ 
+				padding: 15px;
+				margin:0;
 				.col-lg-12{
 					div.content{
 						margin-left: 20px;
@@ -257,7 +271,6 @@ img{
 
 #wrapper.toggled {
     padding-left: 30%;
-
 }
 #wrapper.toggled #sidebar-wrapper {
     width: 30%;
