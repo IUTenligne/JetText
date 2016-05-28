@@ -23,6 +23,7 @@ var TextBlock = React.createClass({
             termsList: [],
             glossaryModalState: false,
             formulaModalState: false,
+            helpModalState: false,
             formulaString: '',
             getEditor: '',
             selectedText: '',
@@ -264,6 +265,10 @@ var TextBlock = React.createClass({
         this.props.removeMe(this.props.block);
     },
 
+    handleHelpModalState: function() {
+        this.setState({ helpModalState: !this.state.helpModalState });
+    },
+
     exportBlock: function() {
         this.setState({
             modalState: true,
@@ -373,8 +378,23 @@ var TextBlock = React.createClass({
                     : null
                 }
 
+                { this.state.helpModalState
+                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Texte"}>
+                            <div>
+                                Activer le mode édition : 
+                                <ul>
+                                    <li>double cliquer sur le contenu du bloc,</li>
+                                    <li>ou cliquer sur l'icône <i className="fa fa-pencil"></i> dans l'entête du bloc,</li>
+                                    <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                            </div>
+                        </Modal>
+                    : null
+                }
+
                 <div className="action">
                     <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 
@@ -386,7 +406,7 @@ var TextBlock = React.createClass({
                                 : <button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button>
                             }
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Alias</button>
+                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>

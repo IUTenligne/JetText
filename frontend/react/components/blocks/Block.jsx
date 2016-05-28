@@ -173,7 +173,7 @@ var Block = React.createClass({
                     <Tooltip tooltipState={this.handleTooltipState}>
                         { this.state.tooltipState
                             ? <div className="block-actions">
-                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Alias</button><br/>
+                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button><br/>
                                 <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
