@@ -166,18 +166,18 @@ var MathBlock = React.createClass({
                 <Tooltip tooltipState={this.handleTooltipState}>
                     { this.state.tooltipState
                         ? <div className="block-actions">
-                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Alias</button>
+                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
-                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>
                         : null
                     }
                 </Tooltip>
 
                 { this.state.modalState
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                             <div className="modal-in">
                                 { this.state.loading
                                     ? <Loader />
