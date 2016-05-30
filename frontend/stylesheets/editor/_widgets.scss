@@ -126,6 +126,54 @@
 					color: $white;
 				}
 			}
+			/* css ajout des glossary in glossaries view*/
+			#glossaries {
+				ul#list-glossary {
+					padding: 5px;
+
+					li.name-glossary {
+						border-radius: 4px;
+						box-shadow: 2px 2px 4px rgba(0,0,0,0.30);
+						margin: 5px 0 5px 0;
+						display: table;
+						width: 100%;
+
+						.check{
+							width: 90%;
+							label{
+								display: table;
+								padding: 0 10px 10px 10px;
+								display: table-cell;
+								vertical-align: middle;
+
+								#IdCheckBox{
+									display: none;
+								}
+								i{
+									color: $green;
+									font-size: 25px;
+									
+									display: table-cell;
+									vertical-align: middle;
+								}
+								p{
+									display: table-cell;
+									vertical-align: middle;
+									padding-left: 10px;
+								}
+							}
+						}
+						
+						a {
+							float: right;
+							color: $lightBlue;
+							display: table-cell;
+							vertical-align: middle;
+							width: 10%;
+						}
+					}
+				}
+			}
 		}
 	}
 }
