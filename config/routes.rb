@@ -46,6 +46,8 @@ Rails.application.routes.draw do
     get "/generator/overview/pages/:id" => "generator#page"
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
+
+    resources :companies
   end
 
 end

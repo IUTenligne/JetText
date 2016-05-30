@@ -234,7 +234,7 @@ var Containers = React.createClass({
                 <h1 className="page-header">Mes ressources <i class="fa fa-folder-open fa-fw "></i></h1>
 
                 <ul className="align">
-                    { this.state.loading
+                    { this.state.loading
                         ? <Loader />
                         : null
                     }
@@ -253,7 +253,7 @@ var Containers = React.createClass({
                     </li>
                 </ul>
 
-                { this.state.viewCreate
+                { this.state.viewCreate
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
                         <div className="add_new_container">
                             <div className="input-group input-group-lg">

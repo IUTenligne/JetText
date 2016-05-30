@@ -36,6 +36,7 @@ class ContainersController < ApplicationController
     @container = Container.new(container_params)
     @container.user_id = current_user.id
     @container.url = current_user.email
+    @container.companies = Company.where(id: 1)
     if @container.save
       render json: {content: "", id: @container.id, name: @container.name}
     end
