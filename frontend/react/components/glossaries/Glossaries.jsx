@@ -117,15 +117,7 @@ var Glossaries = React.createClass({
                                         <i className="fa fa-ban fa-stack-2x"></i>
                                     </span>
                                     Supprimer
-                                </a>
-
-                                <a className="btn list-group-item" href={"/#/containers/"+glossary.id}>
-                                    <span className="fa-stack fa-lg">
-                                        <i className="fa fa-square fa-stack-2x"></i>
-                                        <i className="fa fa-pencil fa-stack-1x fa-inverse"></i> 
-                                    </span>
-                                    Editer
-                                </a>                      
+                                </a>                  
                             </li>
         				);
         			})}

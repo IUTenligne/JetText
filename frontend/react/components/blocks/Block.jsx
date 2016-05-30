@@ -113,9 +113,9 @@ var Block = React.createClass({
     },
 
     exportBlock: function() {
-        this.setState({ 
+        this.setState({
             modalState: true,
-            loading: true 
+            loading: true
         });
 
         this.getContainers();
@@ -146,12 +146,12 @@ var Block = React.createClass({
         if (block.type_id === 1) {
             return (
                 <div className="block block-text" data-id={block.id}>
-                    <TextBlock 
-                        block={block} 
-                        key={block.id} 
+                    <TextBlock
+                        block={block}
+                        key={block.id}
                         containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
-                        addBlock={this.handleBlockAdd} 
+                        addBlock={this.handleBlockAdd}
                     />
 
                     <NotificationSystem ref="notificationSystem" />
@@ -160,9 +160,9 @@ var Block = React.createClass({
         } else if (block.type_id === 2) {
             return (
                 <div className="block block-media" data-id={block.id}>
-                    <MediaBlock 
-                        block={block} 
-                        key={block.id} 
+                    <MediaBlock
+                        block={block}
+                        key={block.id}
                     />
 
                     <div className="action">
@@ -173,24 +173,24 @@ var Block = React.createClass({
                     <Tooltip tooltipState={this.handleTooltipState}>
                         { this.state.tooltipState
                             ? <div className="block-actions">
-                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Exporter</button><br/>
+                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button><br/>
                                 <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
                             : null
-                        }   
+                        }
                     </Tooltip>
 
                     { this.state.modalState
                         ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                                 <div className="modal-in">
-                                    { this.state.loading 
+                                    { this.state.loading
                                         ? <Loader />
-                                        : <ContainersList 
-                                                closeModal={this.closeModal} 
-                                                containers={this.state.containersList} 
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
                                                 block={block.id}
-                                                addBlock={this.handleBlockAdd} 
+                                                addBlock={this.handleBlockAdd}
                                             />
                                     }
                                 </div>
@@ -202,28 +202,28 @@ var Block = React.createClass({
         } if (block.type_id === 3) {
             return (
                 <div className="block block-note" data-id={block.id}>
-                    <NoteBlock 
-                        block={block} 
-                        key={block.id} 
-                        containerId={this.props.containerId} 
+                    <NoteBlock
+                        block={block}
+                        key={block.id}
+                        containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
-                        addBlock={this.handleBlockAdd} 
+                        addBlock={this.handleBlockAdd}
                     />
-                    
+
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
         } if (block.type_id === 4) {
             return (
                 <div className="block block-math" data-id={block.id}>
-                    <MathBlock 
-                        block={block} 
-                        key={block.id} 
-                        containerId={this.props.containerId} 
+                    <MathBlock
+                        block={block}
+                        key={block.id}
+                        containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
-                        addBlock={this.handleBlockAdd} 
+                        addBlock={this.handleBlockAdd}
                     />
-                    
+
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );

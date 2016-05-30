@@ -23,6 +23,7 @@ var TextBlock = React.createClass({
             termsList: [],
             glossaryModalState: false,
             formulaModalState: false,
+            helpModalState: false,
             formulaString: '',
             getEditor: '',
             selectedText: '',
@@ -42,10 +43,10 @@ var TextBlock = React.createClass({
                 containersGlossariesList: result.containers_glossaries,
                 blockContent: this.props.block.content
             });
-            
+
             if (result.containers_glossaries.length > 0) {
                 for (var i in result.containers_glossaries) {
-                    /* blockVirtualContent is a copy of blockContent, used to display a list of glossary terms 
+                    /* blockVirtualContent is a copy of blockContent, used to display a list of glossary terms
                     and to not override the block's content by adding <a> links in the database.
                     Only used in the client-side to display a term description in a tooltip if a glossary is checked. */
 
@@ -62,7 +63,7 @@ var TextBlock = React.createClass({
                 });
             }
         }.bind(this));
-        
+
         this._notificationSystem = this.refs.notificationSystem;
 
         /* Opens CKEditor if the block has no content */
@@ -83,17 +84,17 @@ var TextBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
-        
+
         /* Saves the block's content if before leaving the page */
         var block = this.props.block;
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { 
-                id: block.id, 
+            data: {
+                id: block.id,
                 name: this.state.blockName,
-                content: this.state.blockContent 
+                content: this.state.blockContent
             }
         });
 
@@ -103,12 +104,12 @@ var TextBlock = React.createClass({
 
     saveBlock: function(close) {
         var block = this.props.block;
-        
+
         $.ajax({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { 
+            data: {
                 id: block.id,
                 name: this.state.blockName,
                 content: this.state.blockContent
@@ -168,7 +169,7 @@ var TextBlock = React.createClass({
             var formula = extract.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
             var content = query.replace(/{{(.*?)}}/, '<span class="formula">' + formula + '</span>');
 
-            this.setState({ 
+            this.setState({
                 getEditor: editor,
                 formulaString: formula,
                 blockContent: content,
@@ -196,8 +197,8 @@ var TextBlock = React.createClass({
         var newData = this.state.blockContent;
         editor.setData(newData);
 
-        this.setState({ 
-            formulaModalState: false, 
+        this.setState({
+            formulaModalState: false,
             blockContent: newData
         });
 
@@ -217,14 +218,14 @@ var TextBlock = React.createClass({
     overTerm: function(event){
         event.preventDefault();
 
-        this.setState({ 
+        this.setState({
             selectedText: document.getSelection().toString(),
             left: event.pageX-40,
             top: event.pageY -50
         });
-        
+
         var txt = document.getSelection().toString();
-        
+
         if ( (!txt.match(/^\s$/)) && (txt.length > 0) ) {
             this.setState({ focusPopup: true });
         } else {
@@ -264,10 +265,14 @@ var TextBlock = React.createClass({
         this.props.removeMe(this.props.block);
     },
 
+    handleHelpModalState: function() {
+        this.setState({ helpModalState: !this.state.helpModalState });
+    },
+
     exportBlock: function() {
-        this.setState({ 
+        this.setState({
             modalState: true,
-            loading: true 
+            loading: true
         });
 
         this.getContainers();
@@ -310,7 +315,7 @@ var TextBlock = React.createClass({
                         </div>
                         : null
                     }
-                    
+
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
@@ -320,18 +325,18 @@ var TextBlock = React.createClass({
                     </div>
 
                     { this.state.blockVirtualContent != ''
-                        ? <div 
-                            id={this.dynamicId(block.id)} 
-                            className="block-content" 
-                            ref="editableblock" 
-                            dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)} 
+                        ? <div
+                            id={this.dynamicId(block.id)}
+                            className="block-content"
+                            ref="editableblock"
+                            dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)}
                             onDoubleClick={this.unlockEditor}
                         />
-                        : <div 
-                            id={this.dynamicId(block.id)} 
-                            className="block-content" 
-                            ref="editableblock" 
-                            dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} 
+                        : <div
+                            id={this.dynamicId(block.id)}
+                            className="block-content"
+                            ref="editableblock"
+                            dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)}
                             onDoubleClick={this.unlockEditor}
                         />
                     }
@@ -353,19 +358,19 @@ var TextBlock = React.createClass({
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
                         </div>
                     </Modal>
-                    : null 
+                    : null
                 }
 
                 { this.state.modalState
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                             <div className="modal-in">
-                                { this.state.loading 
+                                { this.state.loading
                                     ? <Loader />
-                                    : <ContainersList 
-                                            closeModal={this.closeModal} 
-                                            containers={this.state.containersList} 
-                                            block={block.id} 
-                                            addBlock={this.handleBlockAdd} 
+                                    : <ContainersList
+                                            closeModal={this.closeModal}
+                                            containers={this.state.containersList}
+                                            block={block.id}
+                                            addBlock={this.handleBlockAdd}
                                         />
                                 }
                             </div>
@@ -373,8 +378,23 @@ var TextBlock = React.createClass({
                     : null
                 }
 
+                { this.state.helpModalState
+                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Texte"}>
+                            <div>
+                                Activer le mode édition : 
+                                <ul>
+                                    <li>double cliquer sur le contenu du bloc,</li>
+                                    <li>ou cliquer sur l'icône <i className="fa fa-pencil"></i> dans l'entête du bloc,</li>
+                                    <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                            </div>
+                        </Modal>
+                    : null
+                }
+
                 <div className="action">
                     <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 
@@ -386,12 +406,12 @@ var TextBlock = React.createClass({
                                 : <button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button>
                             }
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-share-square-o"></i> Exporter</button>
+                            <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>
                         : null
-                    }   
+                    }
                 </Tooltip>
 
                 <NotificationSystem ref="notificationSystem"/>

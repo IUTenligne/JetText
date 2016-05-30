@@ -47,12 +47,12 @@ var MathBlock = React.createClass({
 
     saveBlock: function() {
         var block = this.props.block;
-        
+
         $.ajax({
             type: "PUT",
             url: '/blocks/' + block.id,
             context: this,
-            data: { 
+            data: {
                 id: block.id,
                 name: '',
                 content: this.state.areaContent,
@@ -65,9 +65,9 @@ var MathBlock = React.createClass({
     },
 
     exportBlock: function() {
-        this.setState({ 
+        this.setState({
             modalState: true,
-            loading: true 
+            loading: true
         });
 
         this.getContainers();
@@ -143,6 +143,8 @@ var MathBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
+                        <i className="fa fa-cog fa-spin fa-3x fa-fw experiment"></i>
+                        <span>Bloc en cours de conception</span>
                         <MathToolbox interact={this.handleInteraction} />
 
                         <textarea ref="matharea" type="text" value={this.state.areaContent} onChange={this.handleChange} rows="5" cols="50" />
@@ -164,33 +166,33 @@ var MathBlock = React.createClass({
                 <Tooltip tooltipState={this.handleTooltipState}>
                     { this.state.tooltipState
                         ? <div className="block-actions">
-                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Save</button>
+                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
                             <br/>
-                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-share-square-o"></i> Export</button>
+                            <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
-                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Delete</button><br/>
+                            <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                         </div>
                         : null
-                    }   
+                    }
                 </Tooltip>
 
                 { this.state.modalState
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Export block"}>
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
                             <div className="modal-in">
-                                { this.state.loading 
+                                { this.state.loading
                                     ? <Loader />
-                                    : <ContainersList 
-                                            closeModal={this.closeModal} 
-                                            containers={this.state.containersList} 
-                                            block={block.id} 
-                                            addBlock={this.handleBlockAdd} 
+                                    : <ContainersList
+                                            closeModal={this.closeModal}
+                                            containers={this.state.containersList}
+                                            block={block.id}
+                                            addBlock={this.handleBlockAdd}
                                         />
                                 }
                             </div>
                         </Modal>
                     : null
                 }
-                
+
                 <NotificationSystem ref="notificationSystem"/>
             </div>
     	);

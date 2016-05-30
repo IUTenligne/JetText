@@ -88,9 +88,9 @@ span.bold{
 				}
 			}
 		}
-		
+
 		.block-content {
-			ul {
+			ul,ol {
 				margin-top: 20px;
 				margin-left: 20px;
 
@@ -98,6 +98,34 @@ span.bold{
 					margin-bottom: 15px;
 				}
 			}
+      strong{
+        font-weight : bold;
+      }
+      em{
+        font-style : italic;
+      }
+      u{
+        text-decoration : underline;
+      }
+      s{
+        text-decoration : line-through;
+      }
+      table{
+        box-shadow: 2px 2px 2px rgba($black,0.25);
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        th{
+          background: $lightBlue;
+        }
+      }
+      table tr:nth-child(even) {
+          background: #eee;
+        }
+	    table tr:nth-child(odd) {
+        background:$white;
+      }
 
 			blockquote {
 				border-left: 2px solid #F0F0F0;
@@ -112,7 +140,7 @@ span.bold{
 
 			a[data]:hover:after {
 			 	content: attr(data);
-			 	position:absolute; 
+			 	position:absolute;
 			 	background: $uiGrey;
 			 	border-radius: 4px;
 			 	padding: 7px;
@@ -131,10 +159,10 @@ span.bold{
 			  	bottom: -7px;
 			  	top: -10px;
 			 		left: 0px;
-			  	margin-left: 15px;  
+			  	margin-left: 15px;
 			  	border-top: 8px solid $uiGrey;
 			  	border-left: 8px solid transparent;
-			  	border-right: 8px solid transparent;        
+			  	border-right: 8px solid transparent;
 			  	border-bottom: 0;
 			}
 		}
@@ -175,7 +203,15 @@ span.bold{
 			font-family: FontAwesome;
 		}
 	}
-	
+
+	.action i:hover {
+		cursor: pointer;
+	}
+
+	.action button.handle:hover {
+		cursor: move;
+	}
+
 	.block-actions {
 		position: absolute;
 		background: $white;
@@ -199,27 +235,28 @@ span.bold{
 
 		button:hover {
 			cursor: pointer;
+			color: $lightBlue;
 		}
 	}
 	.block-actions:after {
 		position: absolute;
-		right: 14px;
+		right: 24px;
 		margin-top: -9px;
 		top:0;
 		border-top: 0;
 		border-left: 9px solid transparent;
-		border-right: 9px solid transparent;        
+		border-right: 9px solid transparent;
 		border-bottom: 9px solid $lightGrey;
 	}
 	.block-actions:before {
 		position: absolute;
-		right: 15px;
+		right: 25px;
 		margin-top: -7px;
 		border-top: 0;
 		z-index: 10;
 		border-top: 0;
 		border-left: 8px solid transparent;
-		border-right: 8px solid transparent;        
+		border-right: 8px solid transparent;
 		border-bottom: 8px solid $white;
 	}
 }
@@ -263,11 +300,11 @@ span.bold{
 			border: 2px dashed $lightOrange;
 			width: 95%;
 			display: table;
-			text-align: center;			  	
+			text-align: center;
 			border-radius: 4px;
 			margin: 0 auto;
 			margin-top: 5px;
-			
+
 			.dropzone {
 			  	width: 50%;
 			  	height: 70px;
@@ -293,8 +330,10 @@ span.bold{
 				  		position: absolute;
 						text-align: center;
 						margin-top: 10px;
+						color: $textGrey;
 						i{
 							font-size: 30px;
+							color: $textGrey;
 							margin-bottom: 5px;
 						}
 					}
@@ -302,6 +341,7 @@ span.bold{
 				.zoneDropzone{
 					position: relative;
 					height: 70px;
+					color: $textGrey;
 
 					input[type=file] {
 						cursor: pointer;
@@ -312,6 +352,7 @@ span.bold{
 				  		right: 0;
 				  		position: absolute;
 				  		opacity: 0;
+				  		color: $textGrey;
 					}
 				}
 			}
@@ -321,10 +362,12 @@ span.bold{
 				vertical-align: middle;
 				display: table-cell;
 				cursor: pointer;
-				
+				color: $textGrey;
+
 				i {
 					font-size: 30px;
 					margin-bottom: 5px;
+					color: $textGrey;
 				}
 			}
 		}
@@ -411,7 +454,7 @@ span.bold{
 					background: $white;
 					margin: -30px 0 0 0;
 					width: 160px;
-					padding: 0 0 10px 8px; 
+					padding: 0 0 10px 8px;
 					font-size: 20px;
 
 					i {
@@ -527,6 +570,20 @@ span.bold{
   font-family: FontAwesome;
 }
 
+.block-save {
+	button {
+		padding: 10px 5px;
+		border: 1px solid $lightGrey;
+		border-radius: 4px;
+		background: none;
+		i {
+			color: $lightBlue;
+		}
+	}
+	button:hover {
+		cursor: pointer;
+	}
+}
 
 /* xla */
 .gu-mirror {
@@ -537,8 +594,8 @@ span.bold{
 	.block-content,
 	.block-actions {
 		display: none;
-	} 
-} 
+	}
+}
 /* */
 
 .matharea {
