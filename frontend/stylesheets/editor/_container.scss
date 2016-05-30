@@ -23,12 +23,10 @@
 		margin-bottom: 25px;
 		height: 50px;
 		width: 100%;
-		display: table;
 
 		#previewbutton {
 			width: 5%;
 			float: left;
-			display: table-cell;
 			button {
 				height: 45px;
 				width: 45px;
@@ -47,8 +45,6 @@
 
 		h1 {
 			width: 95%;
-			vertical-align: middle;
-			display: table-cell;
 			input {
 				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 				text-transform: capitalize;
