@@ -1,4 +1,5 @@
 @import "../vars";
+
 article#glossary {
 	padding: 20px;
 
@@ -56,7 +57,6 @@ article#glossary {
 			margin: 0 auto;
 			padding: 0;
 			margin-bottom: 10px;
-
 			cursor: pointer;
 			background: rgba($lightGrey,0.4);
 
@@ -67,4 +67,8 @@ article#glossary {
 			}
 		}
 	}
+}
+div#terms{
+	@import 'glossary';
+	padding: 20px;
 }
