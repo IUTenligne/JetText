@@ -5,8 +5,13 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    @containers = Company.find(params[:id]).containers
-    render json: { containers: @containers }
+  	@company = Company.find(params[:id])
+    @containers = @company.containers
+    @users = Array.new
+    @containers.each do |c|
+    	@users << c.user.firstname + " " + c.user.lastname
+    end
+    render json: { company: @company, containers: @containers, users: @users }
   end
 
   private

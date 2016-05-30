@@ -4,11 +4,11 @@ fr:
   new_container: "nouvelle ressource"
 
   #Connexion
-  logout: "déconnexion"
-  login: "connexion"
-  sign_in: "s'enregistrer"
-  password: "mot de passe"
-  remember_me: "se souvenir de moi"
+  logout: "Déconnexion"
+  login: "Connexion"
+  sign_in: "S'enregistrer"
+  password: "Mot de passe"
+  remember_me: "Se souvenir de moi"
   Log in: "Connexion"
   Sign up: "S'enregistrer"
   Forgot your password?: "Mot de passe oublié ?"

@@ -46,7 +46,9 @@ var Result = React.createClass({
 
     generateContainer: function(event) {
         /* allow a container to be generated and downloaded */
+        event.preventDefault();
         var that = this;
+
         $.ajax({
             type: "GET",
             url: '/generator/save/'+that.props.item.id,
@@ -54,7 +56,7 @@ var Result = React.createClass({
                 window.location = data.url
             }
         });
-        event.preventDefault();
+
         this._notificationSystem.addNotification({
             title: 'Ressource générée !',
             level: 'success'
@@ -78,18 +80,34 @@ var Result = React.createClass({
 
         return(
             <tr className="container">
-                <td>
-                    {result.name}
+                <td onClick={this.handleModalState} className="capitalize">
+                     <a href="javascript:;">{result.name}</a>
                 </td>
-
-                { this.state.overview 
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Aperçu"}> 
-                        <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
-                    </Modal> 
-                    : null 
-                }
-
                 <td>
+                    {this.props.user}
+                </td>
+                <td>
+                    {result.created_at.split("T")[0].split("-").reverse().join("/")}
+                </td>
+                <td>
+                    {result.updated_at.split("T")[0].split("-").reverse().join("/")}
+                </td>
+                <td>
+                    <a href="javascript:;" onClick={this.generateContainer}>Télécharger</a>
+                </td>
+                <td>
+                    <a href="javascript:;" onClick={this.handleModalState}>Visualiser</a>
+                </td>
+                <td>
+                    <a href={"/generator/overview/"+result.id} target="_blank">Pleine page</a>
+                </td>
+                <td>
+                    { this.state.overview 
+                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
+                            <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+                        </Modal> 
+                        : null
+                    }
                     <NotificationSystem ref="notificationSystem"/>
                 </td>
             </tr> 
@@ -101,7 +119,11 @@ var Result = React.createClass({
 var Containers = React.createClass({
     getInitialState: function() {
         return {
+            company: '',
             containersList: [],
+            usersList: [],
+            sorter: '',
+            icon: '',
             loading: true
         };
     },
@@ -109,7 +131,9 @@ var Containers = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/companies/1.json", function(result) {
             this.setState({
+                company: result.company,
                 containersList: result.containers,
+                usersList: result.users,
                 loading: false
             });
         }.bind(this));
@@ -121,17 +145,29 @@ var Containers = React.createClass({
     },
 
     handleModalState: function(st) {
-        this.setState({viewCreate: false });
+        this.setState({ viewCreate: false });
+    },
+
+    sort: function(elem) {
+        if ((this.state.icon === "down") || (this.state.icon === ""))
+            this.setState({ icon: "up" });
+        else
+            this.setState({ icon: "down" });
+
+        this.setState({
+            containersList: this.state.containersList.sort().reverse(),
+            sorter: elem
+        });
     },
 
     _notificationSystem: null,
 
     render: function() {
-        var results = this.state.containersList;
         var that = this;
+
         return (
-            <article id="containers">
-                <h1 className="page-header">Les ressources <i class="fa fa-folder-open fa-fw "></i></h1>
+            <article id="company">
+                <h1 className="page-header" key={this.state.company.id}>Les ressources {this.state.company.name} <i class="fa fa-folder-open fa-fw "></i></h1>
 
                 <ul className="align">
                     { this.state.loading
@@ -142,21 +178,39 @@ var Containers = React.createClass({
                     <table>
                         <thead>
                             <tr>
-                                <th>Ressource</th>
-                                <th>Auteur</th>
+                                <th onClick={this.sort.bind(this, "container")}>
+                                    Ressource {this.state.sorter === "container" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, "author")}>
+                                    Auteur {this.state.sorter === "author" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, "creation")}>
+                                    Création {this.state.sorter === "creation" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, "update")}>
+                                    Mise à jour {this.state.sorter === "update" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th>
+                                    Téléchargement
+                                </th>
+                                <th colspan="2">
+                                    Visualisation
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            { results.map(function(result){
+                            { this.state.containersList.map(function(result, index){
                                 return (
                                     <Result 
-                                        item={result} 
+                                        item={result}
+                                        user={that.state.usersList[index]} 
                                         key={result.id} 
                                     />
                                 );
                             })}
                         </tbody>
                     </table>
+
                 </ul>
             </article>
         );
