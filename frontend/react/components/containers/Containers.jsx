@@ -39,8 +39,8 @@ var Result = React.createClass({
                 label: 'yes',
                 callback: function() {
                     $.ajax({
-                        type: "DELETE",
-                        url: "/containers/" + that.props.item.id,
+                        type: "PUT",
+                        url: "/containers/delete/" + that.props.item.id,
                         context: that,
                         success: function(data) {
                             /* passes the container.id to the parent using removeContainer's props */
@@ -67,6 +67,32 @@ var Result = React.createClass({
             title: 'Ressource générée !',
             level: 'success'
         });   
+    },
+
+    validateContainer: function(event){
+        var that = this;
+        // NotificationSystem popup
+        event.preventDefault();
+        this._notificationSystem.addNotification({
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous envoyer la ressource ' + this.props.item.name + ' pour évaluation ?',
+            level: 'success',
+            position: 'tr',
+            timeout: '20000',
+            action: {
+                label: 'yes',
+                callback: function() {
+                    $.ajax({
+                        type: "PUT",
+                        url: "/containers/validate/" + that.props.item.id,
+                        context: that,
+                        success: function(data) {
+                            
+                        }
+                    });
+                }
+            }
+        });
     },
 
     optionContainer: function (){
@@ -114,6 +140,14 @@ var Result = React.createClass({
                                     <i className="fa fa-eye fa-stack-1x fa-inverse"></i> 
                                 </span>
                                 Aperçu
+                            </a>
+
+                            <a className="btn list-group-item" onClick={this.validateContainer}>
+                                <span className="fa-stack fa-lg">
+                                    <i className="fa fa-square fa-stack-2x"></i>
+                                    <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
+                                </span>
+                                Valider
                             </a>
 
                             <a className="btn list-group-item" onClick={this.generateContainer}>

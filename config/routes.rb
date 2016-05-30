@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
   authenticate :user do
-    resources :containers
+    resources :containers do
+      put "/validate/:id" => "containers#validate", on: :collection
+      put "/delete/:id" => "containers#delete", on: :collection
+      put "/delstroy/:id" => "containers#destroy", on: :collection
+    end
 
     resources :pages do
       put :sort, on: :collection

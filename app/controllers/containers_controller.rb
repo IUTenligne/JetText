@@ -11,24 +11,26 @@ class ContainersController < ApplicationController
   end
   
   def index
-    @containers = Container.select("id, name, content").all.where(:user_id => current_user.id)
+    @containers = Container.select("id, name, content").all.where(:user_id => current_user.id).where(:visible => 1)
     render json: { containers: @containers }
   end
 
   def show
-    @container = Container.select("id, name").find(params[:id])
+    @container = Container.select("id, name").find(params[:id]).where(:visible => 1)
     @pages = Page.select("id, name, sequence, level").where(container_id: params[:id])
     #sleep 3 #simulation long loading query
     render json: { status: { state: 0 }, container: @container, pages: @pages }
   end
 
-  def new
-    @container = Container.new
-  end
-
   def update
     @container = Container.find(params[:id])
     @container.update_attributes(:name => params[:name], :content => params[:content])
+    render json: { container: @container }
+  end
+
+  def validate
+    @container = Container.find(params[:id])
+    @container.update_attributes(:status => 1)
     render json: { container: @container }
   end
 
@@ -42,6 +44,12 @@ class ContainersController < ApplicationController
     end
   end
 
+  def delete
+    @container = Container.find(params[:id])
+    @container.update_attributes(visible: false)
+    render json: { status: "ok", container: @container.id }
+  end
+
   def destroy
     @container = Container.find(params[:id])
     if @container.destroy
@@ -51,7 +59,7 @@ class ContainersController < ApplicationController
 
   private
     def container_params
-      params.require(:container).permit(:name, :content, :url)
+      params.require(:container).permit(:name, :content, :url, :visible, :status)
     end
  
 end

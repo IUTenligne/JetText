@@ -96,10 +96,10 @@ var Result = React.createClass({
                     <a href="javascript:;" onClick={this.generateContainer}>Télécharger</a>
                 </td>
                 <td>
-                    <a href="javascript:;" onClick={this.handleModalState}>Visualiser</a>
+                    <a href="javascript:;" onClick={this.handleModalState}><i className="fa fa-eye"></i></a>
                 </td>
                 <td>
-                    <a href={"/generator/overview/"+result.id} target="_blank">Pleine page</a>
+                    <a href={"/generator/overview/"+result.id} target="_blank"><i className="fa fa-expand"></i></a>
                 </td>
                 <td>
                     { this.state.overview 
@@ -120,8 +120,9 @@ var Containers = React.createClass({
     getInitialState: function() {
         return {
             company: '',
-            containersList: [],
-            usersList: [],
+            incContainersList: [],
+            validatedContainersList: [],
+            incUsersList: [],
             sorter: '',
             icon: '',
             loading: true
@@ -132,8 +133,10 @@ var Containers = React.createClass({
         this.serverRequest = $.get("/companies/1.json", function(result) {
             this.setState({
                 company: result.company,
-                containersList: result.containers,
-                usersList: result.users,
+                incContainersList: result.inc_containers,
+                incUsersList: result.inc_users,
+                validatedContainersList: result.validated_containers,
+                validatedUsersList: result.validated_users,
                 loading: false
             });
         }.bind(this));
@@ -148,14 +151,14 @@ var Containers = React.createClass({
         this.setState({ viewCreate: false });
     },
 
-    sort: function(elem) {
+    sort: function(list, elem) {
         if ((this.state.icon === "down") || (this.state.icon === ""))
             this.setState({ icon: "up" });
         else
             this.setState({ icon: "down" });
 
         this.setState({
-            containersList: this.state.containersList.sort().reverse(),
+            containersList: list.sort().reverse(),
             sorter: elem
         });
     },
@@ -173,21 +176,23 @@ var Containers = React.createClass({
                     { this.state.loading
                         ? <Loader />
                         : null
-                    }
+                    }  
 
+                    <h2>Ressources validées :</h2>
+                    
                     <table>
                         <thead>
                             <tr>
-                                <th onClick={this.sort.bind(this, "container")}>
+                                <th onClick={this.sort.bind(this, this.state.validatedContainersList, "container")}>
                                     Ressource {this.state.sorter === "container" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, "author")}>
+                                <th onClick={this.sort.bind(this, this.state.validatedContainersList, "author")}>
                                     Auteur {this.state.sorter === "author" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, "creation")}>
+                                <th onClick={this.sort.bind(this, this.state.validatedContainersList, "creation")}>
                                     Création {this.state.sorter === "creation" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, "update")}>
+                                <th onClick={this.sort.bind(this, this.state.validatedContainersList, "update")}>
                                     Mise à jour {this.state.sorter === "update" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                                 <th>
@@ -199,11 +204,49 @@ var Containers = React.createClass({
                             </tr>
                         </thead>
                         <tbody>
-                            { this.state.containersList.map(function(result, index){
+                            { this.state.validatedContainersList.map(function(result, index){
                                 return (
                                     <Result 
                                         item={result}
-                                        user={that.state.usersList[index]} 
+                                        user={that.state.validatedUsersList[index]} 
+                                        key={result.id} 
+                                    />
+                                );
+                            })}
+                        </tbody>
+                    </table>
+
+                    <h2>Ressources en cours de conception :</h2>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th onClick={this.sort.bind(this, this.state.incContainersList, "inccontainer")}>
+                                    Ressource {this.state.sorter === "inccontainer" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, this.state.incContainersList, "incauthor")}>
+                                    Auteur {this.state.sorter === "incauthor" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, this.state.incContainersList, "inccreation")}>
+                                    Création {this.state.sorter === "inccreation" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, this.state.incContainersList, "incupdate")}>
+                                    Mise à jour {this.state.sorter === "incupdate" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th>
+                                    Téléchargement
+                                </th>
+                                <th colspan="2">
+                                    Visualisation
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { this.state.incContainersList.map(function(result, index){
+                                return (
+                                    <Result 
+                                        item={result}
+                                        user={that.state.incUsersList[index]} 
                                         key={result.id} 
                                     />
                                 );
