@@ -9,7 +9,7 @@ class Container < ActiveRecord::Base
   validates :content, 	:presence => false
   validates :user_id, 	:presence => true
 
-  before_save :default_values
+  before_create :default_values
   
   private
 	  def create_folder

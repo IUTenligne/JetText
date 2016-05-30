@@ -46,7 +46,7 @@ class ContainersController < ApplicationController
 
   def delete
     @container = Container.find(params[:id])
-    @container.update_attributes(visible: false)
+    @container.update_attributes(:visible => 0)
     render json: { status: "ok", container: @container.id }
   end
 
