@@ -81,7 +81,7 @@ var Result = React.createClass({
         return(
             <tr className="container">
                 <td onClick={this.handleModalState} className="capitalize">
-                     <a href="javascript:;">{result.name}</a>
+                    <a href="javascript:;">{ result.visible ? result.name : <span className="striked">{result.name}</span> }</a>
                 </td>
                 <td>
                     {this.props.user}
@@ -123,6 +123,9 @@ var Containers = React.createClass({
             incContainersList: [],
             validatedContainersList: [],
             incUsersList: [],
+            validatedUsersList: [],
+            deletedContainersList: [],
+            deletedUsersList: [],
             sorter: '',
             icon: '',
             loading: true
@@ -137,6 +140,8 @@ var Containers = React.createClass({
                 incUsersList: result.inc_users,
                 validatedContainersList: result.validated_containers,
                 validatedUsersList: result.validated_users,
+                deletedContainersList: result.deleted_containers,
+                deletedUsersList: result.deleted_users,
                 loading: false
             });
         }.bind(this));
@@ -179,7 +184,7 @@ var Containers = React.createClass({
                     }  
 
                     <h2>Ressources validées :</h2>
-                    
+
                     <table>
                         <thead>
                             <tr>
@@ -247,6 +252,44 @@ var Containers = React.createClass({
                                     <Result 
                                         item={result}
                                         user={that.state.incUsersList[index]} 
+                                        key={result.id} 
+                                    />
+                                );
+                            })}
+                        </tbody>
+                    </table>
+
+                    <h2>Ressources supprimées :</h2>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th onClick={this.sort.bind(this, this.state.deletedContainersList, "deletedcontainer")}>
+                                    Ressource {this.state.sorter === "deletedcontainer" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, this.state.deletedContainersList, "deletedauthor")}>
+                                    Auteur {this.state.sorter === "deletedauthor" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, this.state.deletedContainersList, "deletedcreation")}>
+                                    Création {this.state.sorter === "deletedcreation" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th onClick={this.sort.bind(this, this.state.deletedContainersList, "deletedupdate")}>
+                                    Mise à jour {this.state.sorter === "deletedupdate" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th>
+                                    Téléchargement
+                                </th>
+                                <th colspan="2">
+                                    Visualisation
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { this.state.deletedContainersList.map(function(result, index){
+                                return (
+                                    <Result 
+                                        item={result}
+                                        user={that.state.deletedUsersList[index]} 
                                         key={result.id} 
                                     />
                                 );

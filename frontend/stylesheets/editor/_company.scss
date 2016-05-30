@@ -37,6 +37,11 @@
 
 				a {
 					color: $lightBlue;
+
+					span.striked {
+						text-decoration: line-through;
+						color: $lightGrey;
+					}
 				}
 			}
 		}

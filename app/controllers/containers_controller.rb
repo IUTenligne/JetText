@@ -11,12 +11,12 @@ class ContainersController < ApplicationController
   end
   
   def index
-    @containers = Container.select("id, name, content").all.where(:user_id => current_user.id).where(:visible => 1)
+    @containers = Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1)
     render json: { containers: @containers }
   end
 
   def show
-    @container = Container.select("id, name").find(params[:id]).where(:visible => 1)
+    @container = Container.select("id, name").find(params[:id])
     @pages = Page.select("id, name, sequence, level").where(container_id: params[:id])
     #sleep 3 #simulation long loading query
     render json: { status: { state: 0 }, container: @container, pages: @pages }

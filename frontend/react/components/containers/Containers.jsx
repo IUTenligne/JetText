@@ -109,6 +109,7 @@ var Result = React.createClass({
 
     render: function() {
         var result = this.props.item;
+        console.log(result);
 
         return(
             <li className="container">
@@ -142,13 +143,22 @@ var Result = React.createClass({
                                 Aperçu
                             </a>
 
-                            <a className="btn list-group-item" onClick={this.validateContainer}>
-                                <span className="fa-stack fa-lg">
-                                    <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
-                                </span>
-                                Valider
-                            </a>
+                            { result.status
+                                ? <a className="btn list-group-item" onClick={this.validateContainer}>
+                                        <span className="fa-stack fa-lg">
+                                            <i className="fa fa-square fa-stack-2x"></i>
+                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
+                                        </span>
+                                        Actualiser
+                                    </a>
+                                : <a className="btn list-group-item" onClick={this.validateContainer}>
+                                        <span className="fa-stack fa-lg">
+                                            <i className="fa fa-square fa-stack-2x"></i>
+                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
+                                        </span>
+                                        Valider
+                                    </a>
+                            }
 
                             <a className="btn list-group-item" onClick={this.generateContainer}>
                                 <span className="fa-stack fa-lg">
@@ -158,13 +168,16 @@ var Result = React.createClass({
                                 Telecharger
                             </a>
 
-                            <a className="btn list-group-item" onClick={this.deleteContainer}>
-                                <span className="fa-stack fa-lg">
-                                    <i className="fa fa-trash-o fa-stack-1x "></i> 
-                                    <i className="fa fa-ban fa-stack-2x"></i>
-                                </span>
-                                Supprimer
-                            </a>
+                            { result.status
+                                ? null
+                                : <a className="btn list-group-item" onClick={this.deleteContainer}>
+                                        <span className="fa-stack fa-lg">
+                                            <i className="fa fa-trash-o fa-stack-1x "></i> 
+                                            <i className="fa fa-ban fa-stack-2x"></i>
+                                        </span>
+                                        Supprimer
+                                    </a>
+                            }
                         </li>
                         <li></li>
                         <li></li>
@@ -227,7 +240,6 @@ var Containers = React.createClass({
     },
 
     createContainer: function(){
-
         $.ajax({
             type: "POST",
             url: "/containers",
