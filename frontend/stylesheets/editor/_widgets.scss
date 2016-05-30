@@ -71,7 +71,15 @@
 			width: 100%;
 
 			.modal-in {
-				padding: 15px;
+				padding: 15px 10px;
+
+				ul {
+					margin-left: 25px;
+					margin-top: 10px;
+					li {
+
+					}
+				}
 
 				.selected-container-pages {
 					padding-left: 15px;

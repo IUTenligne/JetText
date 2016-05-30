@@ -4,6 +4,8 @@ class CreateContainers < ActiveRecord::Migration
       t.string :name
       t.text :content
       t.string :url, limit: 255
+      t.boolean :visible
+      t.boolean :status
       t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false

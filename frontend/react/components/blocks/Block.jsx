@@ -16,6 +16,7 @@ var Block = React.createClass({
             editBlock: true,
             tooltipState: false,
             modalState: false,
+            helpModalState: false,
             loading: false,
             containersList: []
         };
@@ -112,6 +113,10 @@ var Block = React.createClass({
         this.setState({ tooltipState: st });
     },
 
+    handleHelpModalState: function() {
+        this.setState({ helpModalState: !this.state.helpModalState });
+    },
+
     exportBlock: function() {
         this.setState({
             modalState: true,
@@ -165,8 +170,26 @@ var Block = React.createClass({
                         key={block.id}
                     />
 
+                    { this.state.helpModalState
+                        ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
+                                <div className="modal-in">
+                                    Déposer un nouveau fichier :
+                                    <ul>
+                                        <li>cliquez sur l'icône <i className="fa fa-file-text"></i> ou glissez directement votre fichier par dessus.</li>
+                                    </ul>
+                                    <br /><br />
+                                    Réemployer un fichier :
+                                    <ul>
+                                        <li>cliquez sur l'icône <i className="fa fa-folder-open"></i>.</li>
+                                    </ul>
+                                </div>
+                            </Modal>
+                        : null
+                    }
+
                     <div className="action">
                         <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                        <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
                         <button className="handle" title="Déplacer le bloc"></button>
                     </div>
 

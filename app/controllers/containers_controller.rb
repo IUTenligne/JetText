@@ -11,7 +11,7 @@ class ContainersController < ApplicationController
   end
   
   def index
-    @containers = Container.select("id, name, content").all.where(:user_id => current_user.id)
+    @containers = Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1)
     render json: { containers: @containers }
   end
 
@@ -22,13 +22,15 @@ class ContainersController < ApplicationController
     render json: { status: { state: 0 }, container: @container, pages: @pages }
   end
 
-  def new
-    @container = Container.new
-  end
-
   def update
     @container = Container.find(params[:id])
     @container.update_attributes(:name => params[:name], :content => params[:content])
+    render json: { container: @container }
+  end
+
+  def validate
+    @container = Container.find(params[:id])
+    @container.update_attributes(:status => 1)
     render json: { container: @container }
   end
 
@@ -36,9 +38,16 @@ class ContainersController < ApplicationController
     @container = Container.new(container_params)
     @container.user_id = current_user.id
     @container.url = current_user.email
+    @container.companies = Company.where(id: 1)
     if @container.save
       render json: {content: "", id: @container.id, name: @container.name}
     end
+  end
+
+  def delete
+    @container = Container.find(params[:id])
+    @container.update_attributes(:visible => 0)
+    render json: { status: "ok", container: @container.id }
   end
 
   def destroy
@@ -50,7 +59,7 @@ class ContainersController < ApplicationController
 
   private
     def container_params
-      params.require(:container).permit(:name, :content, :url)
+      params.require(:container).permit(:name, :content, :url, :visible, :status)
     end
  
 end
