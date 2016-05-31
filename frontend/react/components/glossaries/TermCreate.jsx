@@ -50,13 +50,14 @@ var TermCreate = React.createClass({
 
     render: function(){
     	return(
-			<form id="add">
+			<div id="add-term">
 				
 				<span className="input-group-addon">
                     <i className="fa fa-plus fa-fw"></i>
                 </span>
                 <input type="text" id="new_term" className="form-control" value={this.state.newTermValue}  onChange={this.handleChange.bind(this, "new_term")} autoComplet="off" placeholder="Créer un nouveau terme..." />
-			
+			     
+                 <br/>
 			
 				<span className="input-group-addon">
                     <i className="fa fa-plus fa-fw"></i>
@@ -67,7 +68,7 @@ var TermCreate = React.createClass({
                     ?<input type="submit" value='Créer' className="btn-success" onClick={this.createTerm}/>
                     : null
                 }
-    		</form>
+    		</div>
 
     	);
     }

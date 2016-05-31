@@ -67,22 +67,27 @@ var GlossaryBox = React.createClass({
     	return(
     		
             <div id="view-terms">
-    		    <NotificationSystem ref="notificationSystem" />
-                <ul>
-        			{terms.map(function(term){
-        				return(
-    						<li key={term.id}>
-    							{term.name} : {term.description}
-                                <a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
-                                    <i className="fa fa-trash-o"></i>
-                                </a>
-    						</li>
-        				)
-        			})}
-                </ul>
-				<div className="add_new_term">
-    				<TermCreate glossary={this.state.glossary.id} addTerm={this.handleTermAdd}/>
-    			</div>
+                <NotificationSystem ref="notificationSystem" />
+                <div id="border">
+                    <ul id="list-terms">
+            			{terms.map(function(term){
+            				return(
+        						<li key={term.id}>
+        							<p className="title">{term.name} :
+                                        <a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
+                                            <i className="fa fa-trash-o"></i>
+                                        </a>
+                                    </p>
+                                    <p className="desc">{term.description} </p>
+                                    
+        						</li>
+            				)
+            			})}
+                    </ul>
+    				<div className="add_new_term">
+        				<TermCreate glossary={this.state.glossary.id} addTerm={this.handleTermAdd}/>
+        			</div>
+                </div>
     		</div>
             
     	);
