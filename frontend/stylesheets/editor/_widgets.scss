@@ -70,6 +70,42 @@
 		#modal-body {
 			clear: both;
 			width: 100%;
+			span.input-group-addon{
+				font-size: 14px;
+				font-weight: normal;
+				line-height: 2.4;
+				text-align: center;
+				background-color: #eee;
+				border: 1px solid #ccc;
+				border-radius: 4px 0 0 4px;
+				white-space: nowrap;
+				vertical-align: middle;
+				float: left;
+				height: 34px;
+			}
+			input {
+				display: table-cell;
+				height: 34px;
+				padding: 6px 12px;
+				font-size: 14px;
+				line-height: 1.42857143;
+				color: #555;
+				background-color: #fff;
+				background-image: none;
+				border: 1px solid #ccc;
+				border-radius:0 4px 4px 0;
+				border-left: none; 
+				-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+				box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+				-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+				-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+				transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+				position: relative;
+				z-index: 2;
+				float: left;
+				margin-bottom: 15px;
+
+			}
 
 			.modal-in {
 				padding: 15px 10px;
@@ -114,42 +150,65 @@
 					li.name-glossary {
 						border-radius: 4px;
 						box-shadow: 2px 2px 4px rgba(0,0,0,0.30);
-						margin: 5px 0 5px 0;
-						display: table;
+						margin: 10px 0 10px 0;
 						width: 100%;
+						padding: 5px;
 
-						.check{
-							width: 90%;
-							label{
-								display: table;
-								padding: 0 10px 10px 10px;
+						div.viewGlossary{
+							width: 100%;
+							display: table;
+
+							div.check{
+								min-width: 90%;
+								max-width: 90%;
+								text-overflow: hidden;
 								display: table-cell;
 								vertical-align: middle;
 
-								#IdCheckBox{
-									display: none;
+								label{
+									display: table;
+									display: table-cell;
+									vertical-align: middle;
+
+									#IdCheckBox{
+										display: none;
+									}
+									i{
+										color: $green;
+										font-size: 25px;
+										display: table-cell;
+										vertical-align: middle;
+										padding: 0;
+									}
+									p{
+										display: table-cell;
+										vertical-align: middle;
+										padding-left: 7px;
+									}
 								}
+								i {
+									display: table-cell;
+									vertical-align: middle;
+									padding-left: 25px;
+									cursor: pointer;
+								}
+							}
+							
+							a.delete {
+								color: $lightBlue;
+								display: table-cell;
+								vertical-align: top;
+								width: 90%;
+								
 								i{
-									color: $green;
-									font-size: 25px;
-									
-									display: table-cell;
-									vertical-align: middle;
-								}
-								p{
-									display: table-cell;
-									vertical-align: middle;
-									padding-left: 10px;
+									float: right;
+									padding-right: 5px;
 								}
 							}
 						}
 						
-						a {
-							float: right;
-							color: $lightBlue;
-							display: table-cell;
-							vertical-align: middle;
-							width: 10%;
+						div#view-terms{
+							width: 100%;
 						}
 					}
 				}
@@ -313,39 +372,3 @@
 }
 
 /* imput d'ajout*/
-span.input-group-addon{
-	font-size: 14px;
-	font-weight: normal;
-	line-height: 2.4;
-	text-align: center;
-	background-color: #eee;
-	border: 1px solid #ccc;
-	border-radius: 4px 0 0 4px;
-	white-space: nowrap;
-	vertical-align: middle;
-	float: left;
-	height: 34px;
-}
-input {
-	display: table-cell;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius:0 4px 4px 0;
-	border-left: none; 
-	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	position: relative;
-	z-index: 2;
-	float: left;
-	margin-bottom: 15px;
-
-}
