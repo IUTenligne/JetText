@@ -159,7 +159,7 @@ var MathBlock = React.createClass({
                 </div>
 
                 <div className="action">
-                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 

@@ -188,8 +188,8 @@ var Block = React.createClass({
                     }
 
                     <div className="action">
-                        <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                        <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
+                        <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
+                        <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                         <button className="handle" title="Déplacer le bloc"></button>
                     </div>
 
