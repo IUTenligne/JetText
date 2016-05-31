@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   # Admin zone access
   authenticate :user, -> (u) { u.is_admin? } do
     resources :companies
+    resources :versions
     get "/versions/show_all/:id" => "versions#show_all"
   end
 
