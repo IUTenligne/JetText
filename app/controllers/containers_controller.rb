@@ -31,7 +31,7 @@ class ContainersController < ApplicationController
   def validate
     @container = Container.find(params[:id])
     @container.update_attributes(:status => 1)
-    render json: { container: @container }
+    render json: { containers: Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1) }
   end
 
   def create
