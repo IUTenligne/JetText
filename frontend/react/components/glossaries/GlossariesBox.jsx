@@ -73,22 +73,29 @@ var GlossaryItem = React.createClass({
         var glossary = this.props.glossary;
         
         return(
-            <li>
+            <li className="name-glossary">
                 <NotificationSystem ref="notificationSystem"/>
- 
-                    <input 
-                        type="checkbox" 
-                        checked={this.state.isChecked} 
-                        onChange={this.onChange}/>
-                       
-                    <h3 id="appElement" onClick={this.showTerms}>
-                         {glossary.name}
-                    </h3>
-
-                    <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} >
+                <div className="viewGlossary">
+                    <div className="check">
+                        <label for="IdCheckBox" className="capitalize">
+                            <input 
+                                type="checkbox" 
+                                checked={this.state.isChecked} 
+                                onChange={this.onChange}
+                                id="IdCheckBox"/>
+                            { this.state.isChecked ?
+                                <i className="fa fa-check-circle-o" aria-hidden="true"></i>
+                                : <i className="fa fa-circle-thin" aria-hidden="true"></i>
+                            }
+                            <p>{glossary.name}</p>
+                        </label> 
+                        <i className="fa fa-chevron-down" aria-hidden="true" onClick={this.showTerms}></i>
+                    </div>
+                    
+                    <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} className="delete">
                         <i className="fa fa-trash-o" ></i>
                     </a>
-        
+                </div>
                 { this.state.showTerms ? <GlossaryBox glossary={glossary.id} /> : null }
             </li>
         );
@@ -103,12 +110,19 @@ var GlossariesBox = React.createClass({
 	        newGlossaryValue: '',
 	        glossariesList: [],
             containersGlossaries: [],
-            modalState: true
+            modalState: true,
+            inputCreate: false
 	    };
 	},
 
-    handleChange: function(event) {
-        this.setState({newGlossaryValue: event.target.value});
+    handleChange: function(input,event) {
+        if(input == "newGlossaryValue"){
+            this.setState({
+                newGlossaryValue: event.target.value,
+                inputCreate: true
+            });
+        }
+        
     },
 
 	componentDidMount: function() {
@@ -175,8 +189,8 @@ var GlossariesBox = React.createClass({
                     ? <Loader />
                     : null
                 }
-        		<div className="glossaries">
-                    <ul>
+        		<div id="glossaries">
+                    <ul id="list-glossary">
             			{ this.state.glossariesList.map(function(glossary) {
                             return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} key={glossary.id}/>);
             			})}
@@ -187,9 +201,22 @@ var GlossariesBox = React.createClass({
         					<span className="input-group-addon">
                                 <i className="fa fa-plus fa-fw"></i>
                             </span>
-                            <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Create new glossary..." />
-        				</div>
+                            <input 
+                                type="text" 
+                                id="new_glossary" 
+                                className="form-control" 
+                                value={this.state.newGlossaryValue} 
+                                onChange={this.handleChange.bind(this,"newGlossaryValue")} 
+                                onKeyPress={this._handleKeyPress} 
+                                autoComplet="off" 
+                                placeholder="Create new glossary..." />
+        				    { this.state.inputCreate 
+                                ? <input type="submit" value='Créer' className="btn-success" onClick={this.createGlossary}/>
+                                : null
+                            }
+                        </div>
         			</div>
+
 
                     <NotificationSystem ref="notificationSystem" />
         		</div>

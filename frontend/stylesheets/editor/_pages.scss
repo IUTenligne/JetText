@@ -3,13 +3,14 @@
 /* title page*/
 h2.header_page {
 	text-transform: capitalize;
-	input{
+	.title-page{
 		background: none;
 		border: none;
 		font-size: 20px;
 		margin-bottom: 25px;
 		font-weight: bold;
 		min-width: 90%;
+		box-shadow: none;
 	}
 	button {
 		width: 10%;

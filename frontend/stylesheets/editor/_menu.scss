@@ -2,8 +2,7 @@
 
 div.sidebar.menu {
 	border-radius: 0;
-	overflow-x: hidden;
-	overflow-y: auto;
+	
 	max-height: 100%;
 	background: $uiGrey;
 	width: 100%;
@@ -17,6 +16,8 @@ div.sidebar.menu {
 
 	ul.side-menu {
 		background: $uiGrey;
+		
+		width: 100%;
 
 		li {
 			width: 300px;
@@ -100,9 +101,18 @@ div.sidebar.menu {
 							font-size: 16px;
 						}
 					}
+					button.page-delete{
+						i.fa-stack-2x{
+							font-size: 2em;
+							
+						}
+						i{
+							margin-top: -3px;
+						}
+					}
 					button:hover {
 						cursor: pointer;
-						i {
+						i{
 							color: $lightBlue;
 						}
 					}

@@ -216,7 +216,8 @@ var Container = React.createClass({
                                 <div id="previewbutton">
                                     <button onClick={this.handleModalState} title="Aperçu de la ressource"><i className="fa fa-eye"></i></button>
                                 </div>
-                                <h1><input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Titre de la ressource..." onChange={this.handleContainerName}/>
+                                <h1>
+                                    <input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Titre de la ressource..." onChange={this.handleContainerName}/>
                                     { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
                                 </h1>
                             </div>
@@ -247,8 +248,11 @@ var Container = React.createClass({
 
                                 { !this.props.routeParams.pageId && !this.state.activePage 
                                     ? <div id="create_new_page">
-                                            <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName}/>
-                                            { this.state.newPageValue ? <button onClick={this.createPage}><i className="fa fa-check"></i></button> : null }
+                                        <span className="input-group-addon">
+                                            <i className="fa fa-plus fa-fw"></i>
+                                        </span>
+                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName}/><br/>
+                                            { this.state.newPageValue ? <button onClick={this.createPage} className="btn-success"><i className="fa fa-check"></i></button> : null }
                                     </div>
                                     : null
                                 }

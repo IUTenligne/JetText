@@ -2,12 +2,15 @@ var React = require('react');
 var TermCreate = require('./TermCreate.jsx');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var NotificationSystem = require('react-notification-system');
+var Modal = require('../widgets/Modal.jsx');
+
 
 var Glossary = React.createClass({
     getInitialState: function() {
         return {
             glossary: '',
-            termsList: []
+            termsList: [],
+            viewCreate: false
         };
     },
 
@@ -28,6 +31,7 @@ var Glossary = React.createClass({
     handleTermAdd: function(term){
         this.setState({
             termsList: this.state.termsList.concat([term]),
+            viewCreate: false
         })
     },
 
@@ -57,6 +61,12 @@ var Glossary = React.createClass({
             }
         });
     },
+    viewCreateTerm: function(){
+        this.setState({viewCreate: true });
+    },
+    handleModalState: function(st) {
+        this.setState({viewCreate: false });
+    },
 
     _notificationSystem: null,
 
@@ -64,32 +74,39 @@ var Glossary = React.createClass({
         var terms = this.state.termsList;
         var that = this;
         return(
-            <div className="terms">
+            <div id="terms">
             <NotificationSystem ref="notificationSystem" />
-
-                <div className="row">
-                    <div className="col-lg-12">
-                        <h1 className="page-header">Termes du glossaire {that.state.glossary.name}</h1>
-                    </div>
+                <h1 className="page-header">Termes du glossaire {that.state.glossary.name}</h1>
+                <div onClick={this.viewCreateTerm} id="btn-add-term">
+                    <i className="fa fa-plus fa-fw" title="Ajouter un term" aria-hidden="true"></i>
+                    <span className="sr-only">Ajouter un term</span>
                 </div>
 
-                {terms.map(function(term){
-                    return(
-                        <li key={term.id}>
-                            <Link to={"/terms/"+term.id}>
-                                {term.name}
-                            </Link>
-                            <br/>
-                            <a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
-                                <i className="fa fa-trash-o"></i>
-                            </a>
-                        </li>
-                    )
-                })}
+                <ul id="list-term">
+                    {terms.map(function(term){
+                        return(
+                            <li key={term.id}>
+                                <Link to={"/terms/"+term.id} className="name-term capitalize">
+                                    {term.name} :
+                                </Link>
+                                <a href="#" onClick={that.deleteTerm.bind(that, term.id)} className="trash">
+                                    <i className="fa fa-trash-o"></i>
+                                </a>
+                                <br/>
+                                <p className="description-term capitalize">{term.description}</p>
+                            </li>
+                        )
+                    })}
+                </ul>
                 
-                <div className="add_new_term">
-                    <TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
-                </div>
+                { this.state.viewCreate
+                    ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
+                        <div id="add_new_term">
+                            <TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
+                        </div>
+                    </Modal>
+                    : null
+                }
             </div>
         );
     }

@@ -98,34 +98,35 @@ span.bold{
 					margin-bottom: 15px;
 				}
 			}
-      strong{
-        font-weight : bold;
-      }
-      em{
-        font-style : italic;
-      }
-      u{
-        text-decoration : underline;
-      }
-      s{
-        text-decoration : line-through;
-      }
-      table{
-        box-shadow: 2px 2px 2px rgba($black,0.25);
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 10px;
-        th{
-          background: $lightBlue;
-        }
-      }
-      table tr:nth-child(even) {
-          background: #eee;
-        }
-	    table tr:nth-child(odd) {
-        background:$white;
-      }
+      		strong{
+        		font-weight : bold;
+      		}
+		     em{
+		        font-style : italic;
+		     }
+      		u{
+        		text-decoration : underline;
+      		}
+      		s{
+        		text-decoration : line-through;
+      		}
+      		table{
+		        box-shadow: 2px 2px 2px rgba($black,0.25);
+		        text-align: center;
+		        margin-left: auto;
+		        margin-right: auto;
+		        margin-bottom: 10px;
+		        
+	        	th{
+	          		background: $lightBlue;
+	        	}
+      		}
+		    table tr:nth-child(even) {
+		         background: #eee;
+		    }
+			table tr:nth-child(odd) {
+		        background:$white;
+		    }
 
 			blockquote {
 				border-left: 2px solid #F0F0F0;
@@ -364,9 +365,16 @@ span.bold{
 				  		color: $textGrey;
 					}
 				}
+        
 			}
 
-			.browse-files{
+      .browse-files:hover{
+        color: $grey;
+          i{
+            color: $grey;
+          }
+      }
+      .browse-files{
 				width: 50%;
 				vertical-align: middle;
 				display: table-cell;

@@ -66,7 +66,7 @@ var GlossaryBox = React.createClass({
         var that = this;
     	return(
     		
-            <div className="terms">
+            <div id="view-terms">
     		    <NotificationSystem ref="notificationSystem" />
                 <ul>
         			{terms.map(function(term){

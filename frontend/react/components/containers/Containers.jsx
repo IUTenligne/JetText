@@ -218,7 +218,8 @@ var Containers = React.createClass({
             containersList: [],
             loading: true,
             viewCreate: false,
-            newContainerValue: ''
+            newContainerValue: '',
+            inputCreate: false
         };
     },
 
@@ -280,8 +281,18 @@ var Containers = React.createClass({
         this.setState({viewCreate: false });
     },
 
-    handleChange: function(event) {
-        this.setState({newContainerValue: event.target.value});
+    handleChange: function(myparam, event) {
+        if (myparam == "newContainerValue") {
+            this.setState({
+                newContainerValue: event.target.value,
+                inputCreate: true
+            })
+        }    
+    },
+    _handleKeyPress: function(event) {
+        if (event.key === 'Enter') {
+            this.createContainer(event);
+        }
     },
 
     _notificationSystem: null,
@@ -316,24 +327,26 @@ var Containers = React.createClass({
 
                 { this.state.viewCreate
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
-                        <div className="add_new_container">
-                            <div className="input-group input-group-lg">
-                                <span className="input-group-addon">
-                                    <i className="fa fa-plus fa-fw"></i>
-                                </span>
-                                <input 
-                                    type="text"
-                                    ref="new_container" 
-                                    id="new_container" 
-                                    className="form-control" 
-                                    autoComplet="off" 
-                                    onChange={this.handleChange} 
-                                    value={this.state.newContainerValue}  
-                                    placeholder="Titre de la ressource..." 
-                                />
-                                <br/>
-                                <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
-                            </div>
+                        <div id="add_new_container">
+                            <span className="input-group-addon">
+                                <i className="fa fa-plus fa-fw"></i>
+                            </span>
+                            <input 
+                                type="text"
+                                ref="new_container" 
+                                id="new_container" 
+                                className="form-control" 
+                                autoComplet="off" 
+                                onKeyPress={this._handleKeyPress} 
+                                onChange={this.handleChange.bind(this, "newContainerValue")} 
+                                value={this.state.newContainerValue}  
+                                placeholder="Titre de la ressource..." 
+                            />
+                            <br/>
+                            { this.state.inputCreate 
+                                ?<input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                : null
+                            }
                         </div>
                     </Modal>
                     : null
