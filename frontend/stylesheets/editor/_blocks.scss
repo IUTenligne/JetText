@@ -179,8 +179,16 @@ span.bold{
 		/* overall block btn save bis*/
 		.block-save {
 			padding: 0px 15px;
-			border-radius: 50px;
-
+			.text-block-save{
+				border-radius: 20px;
+				width: 30px;
+				height: 30px;
+				i{
+					font-size: 20px;
+					display: table-cell;
+					vertical-align: middle;
+				}
+			}
 		}
 	}
 

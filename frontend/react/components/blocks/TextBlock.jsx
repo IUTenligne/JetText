@@ -341,7 +341,7 @@ var TextBlock = React.createClass({
                         />
                     }
 
-                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button></div> }
+                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button></div> }
                 </div>
 
                 { this.state.glossaryModalState
