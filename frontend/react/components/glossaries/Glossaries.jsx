@@ -15,8 +15,6 @@ var Glossaries = React.createClass({
 	    };
 	},
 
-
-
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossaries.json", function(result){
 	      	this.setState({
@@ -31,7 +29,7 @@ var Glossaries = React.createClass({
     },
 
     createGlossary: function(event) {
-         event.preventDefault();
+        event.preventDefault();
     	$.ajax({
     		type: "POST",
     		url:'/glossaries',
@@ -137,7 +135,7 @@ var Glossaries = React.createClass({
                                 </span>
                                 <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange.bind(this, "newGlossaryValue")} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Créer un nouveau glossaire..." />
                                 { this.state.inputCreate 
-                                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createTerm}/>
+                                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createGlossary}/>
                                     : null
                                 }
                             </div>
