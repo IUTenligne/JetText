@@ -92,7 +92,6 @@ var Glossaries = React.createClass({
     },
 
     handleChange: function(myparam, event) {
-        console.log(event);
         if (myparam == "newGlossaryValue") {
             this.setState({
                 newGlossaryValue: event.target.value,
@@ -133,7 +132,16 @@ var Glossaries = React.createClass({
                                 <span className="input-group-addon">
                                     <i className="fa fa-plus fa-fw"></i>
                                 </span>
-                                <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange.bind(this, "newGlossaryValue")} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Créer un nouveau glossaire..." />
+                                <input 
+                                    type="text" 
+                                    id="new_glossary" 
+                                    className="form-control" 
+                                    value={this.state.newGlossaryValue} 
+                                    onChange={this.handleChange.bind(this, "newGlossaryValue")} 
+                                    onKeyPress={this._handleKeyPress} 
+                                    autoComplet="off" 
+                                    placeholder="Créer un nouveau glossaire..." />
+                                    
                                 { this.state.inputCreate 
                                     ? <input type="submit" value='Créer' className="btn-success" onClick={this.createGlossary}/>
                                     : null

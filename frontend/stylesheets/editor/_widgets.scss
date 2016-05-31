@@ -169,6 +169,25 @@
 					}
 				}
 			}
+			/* css ajout de ressources in containers view*/
+			#add_new_container{
+				padding-top: 15px;
+				margin-right: 7%;
+				margin-left: 7%;
+				span{
+					width: 10%;
+				}
+				input{
+					width: 90%;
+				}
+
+				.btn-success{
+					width: 150px;
+					float: right;
+					color: $white;
+				}
+
+			}
 		}
 	}
 }
@@ -284,7 +303,7 @@
 }
 
 /* imput d'ajout*/
-span {
+span.input-group-addon{
 	font-size: 14px;
 	font-weight: normal;
 	line-height: 2.4;
