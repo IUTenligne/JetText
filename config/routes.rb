@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   authenticate :user do
     resources :containers do
       put "/validate/:id" => "containers#validate", on: :collection
+      post "/send_update/:id" => "containers#send_update", on: :collection
       put "/delete/:id" => "containers#delete", on: :collection
       put "/delstroy/:id" => "containers#destroy", on: :collection
     end
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
   # Admin zone access
   authenticate :user, -> (u) { u.is_admin? } do
     resources :companies
+    get "/versions/show_all/:id" => "versions#show_all"
   end
 
 end

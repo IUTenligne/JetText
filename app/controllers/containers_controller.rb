@@ -29,8 +29,19 @@ class ContainersController < ApplicationController
   end
 
   def validate
+    # The user pushes the container to admin valdiation
     @container = Container.find(params[:id])
     @container.update_attributes(:status => 1)
+    @version = Version.new(container_id: @container.id)
+    @version.save
+    render json: { containers: Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1) }
+  end
+
+  def send_update
+    # The user pushes a new version (update) of the container to admin validation
+    @container = Container.find(params[:id])
+    @version = Version.new(container_id: @container.id)
+    @version.save
     render json: { containers: Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1) }
   end
 
@@ -46,7 +57,9 @@ class ContainersController < ApplicationController
 
   def delete
     @container = Container.find(params[:id])
-    @container.update_attributes(:visible => 0)
+    if @container.status == false
+      @container.update_attributes(:visible => 0)
+    end
     render json: { status: "ok", container: @container.id }
   end
 

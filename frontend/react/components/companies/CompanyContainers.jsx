@@ -2,6 +2,7 @@ var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
 var Loader = require('../widgets/Loader.jsx');
 var Modal = require('../widgets/Modal.jsx');
+var ContainerPanel = require('./ContainerPanel.jsx');
 var NotificationSystem = require('react-notification-system');
 
 
@@ -9,7 +10,8 @@ var Result = React.createClass({
     getInitialState: function() {
         return {
             option: false,
-            overview: false
+            overview: false,
+            infos: false
         };
     },
     
@@ -73,6 +75,10 @@ var Result = React.createClass({
         this.setState({ overview: st });
     },
 
+    handleInfosModalState: function(st) {
+        this.setState({ infos: st });
+    },
+
     _notificationSystem: null, 
 
     render: function() {
@@ -93,6 +99,9 @@ var Result = React.createClass({
                     {result.updated_at.split("T")[0].split("-").reverse().join("/")}
                 </td>
                 <td>
+                    <a href="javascript:;" onClick={this.handleInfosModalState}><i className="fa fa-user"></i></a>
+                </td>
+                <td>
                     <a href="javascript:;" onClick={this.generateContainer}>Télécharger</a>
                 </td>
                 <td>
@@ -102,6 +111,14 @@ var Result = React.createClass({
                     <a href={"/generator/overview/"+result.id} target="_blank"><i className="fa fa-expand"></i></a>
                 </td>
                 <td>
+                    { this.state.infos 
+                        ? <Modal active={this.handleInfosModalState} mystyle={"view"} title={"Informations"}> 
+                            <div className="modal-in">
+                                <ContainerPanel container={this.props.item} author={this.props.user} />
+                            </div>
+                        </Modal> 
+                        : null
+                    }
                     { this.state.overview 
                         ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
                             <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
@@ -201,6 +218,9 @@ var Containers = React.createClass({
                                     Mise à jour {this.state.sorter === "update" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                                 <th>
+                                    Informations
+                                </th>
+                                <th>
                                     Téléchargement
                                 </th>
                                 <th colspan="2">
@@ -239,6 +259,9 @@ var Containers = React.createClass({
                                     Mise à jour {this.state.sorter === "incupdate" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                                 <th>
+                                    Informations
+                                </th>
+                                <th>
                                     Téléchargement
                                 </th>
                                 <th colspan="2">
@@ -275,6 +298,9 @@ var Containers = React.createClass({
                                 </th>
                                 <th onClick={this.sort.bind(this, this.state.deletedContainersList, "deletedupdate")}>
                                     Mise à jour {this.state.sorter === "deletedupdate" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                </th>
+                                <th>
+                                    Informations
                                 </th>
                                 <th>
                                     Téléchargement

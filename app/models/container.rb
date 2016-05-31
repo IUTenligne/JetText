@@ -3,6 +3,7 @@ class Container < ActiveRecord::Base
   has_many :pages, :dependent => :destroy
   has_many :uploads
   has_many :glossaries, :through => :containers_glossary
+  has_many :versions
   has_and_belongs_to_many :companies, :through => :companies_container
 
   validates :name,		:presence => true, length: { maximum: 250 }

@@ -95,6 +95,14 @@ var Result = React.createClass({
         });
     },
 
+    updateContainer: function(event){
+        var that = this;
+        $.ajax({
+            type: "POST",
+            url: "/containers/send_update/" + that.props.item.id
+        });
+    },
+
     optionContainer: function (){
         this.setState({
             option: true
@@ -144,7 +152,7 @@ var Result = React.createClass({
                             </a>
 
                             { result.status
-                                ? <a className="btn list-group-item" onClick={this.validateContainer}>
+                                ? <a className="btn list-group-item" onClick={this.updateContainer}>
                                         <span className="fa-stack fa-lg">
                                             <i className="fa fa-square fa-stack-2x"></i>
                                             <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
