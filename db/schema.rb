@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531100023) do
+ActiveRecord::Schema.define(version: 20160530151746) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20160531100023) do
     t.integer  "page_id",    limit: 4
     t.integer  "type_id",    limit: 4
     t.integer  "upload_id",  limit: 4
+    t.integer  "version_id", limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -30,16 +31,7 @@ ActiveRecord::Schema.define(version: 20160531100023) do
   add_index "blocks", ["type_id"], name: "index_blocks_on_type_id", using: :btree
   add_index "blocks", ["upload_id"], name: "index_blocks_on_upload_id", using: :btree
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id", using: :btree
-
-  create_table "blocks_versions", id: false, force: :cascade do |t|
-    t.integer  "block_id",   limit: 4, null: false
-    t.integer  "version_id", limit: 4, null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "blocks_versions", ["block_id", "version_id"], name: "index_blocks_versions_on_block_id_and_version_id", using: :btree
-  add_index "blocks_versions", ["version_id", "block_id"], name: "index_blocks_versions_on_version_id_and_block_id", using: :btree
+  add_index "blocks", ["version_id"], name: "index_blocks_on_version_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string "name", limit: 255
@@ -178,6 +170,7 @@ ActiveRecord::Schema.define(version: 20160531100023) do
   add_foreign_key "blocks", "types"
   add_foreign_key "blocks", "uploads"
   add_foreign_key "blocks", "users"
+  add_foreign_key "blocks", "versions"
   add_foreign_key "containers", "users"
   add_foreign_key "formulas", "users"
   add_foreign_key "glossaries", "users"

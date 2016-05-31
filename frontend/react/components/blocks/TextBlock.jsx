@@ -31,7 +31,7 @@ var TextBlock = React.createClass({
             containersGlossariesList: [],
             editBlock: true,
             tooltipState: false,
-            modalState: false,
+            modalState: false
         };
     },
 
