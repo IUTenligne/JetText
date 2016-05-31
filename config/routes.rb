@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :companies
     resources :versions
     get "/versions/show_all/:id" => "versions#show_all"
+    get "/versions/diffs/:id/:page_id" => "versions#diffs"
   end
 
 end

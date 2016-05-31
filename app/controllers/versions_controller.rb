@@ -15,26 +15,29 @@ class VersionsController < ApplicationController
     @pages = Page.where(container_id: @latest.container_id)
     @contents = Array.new
 
-    @pages.each do |page|
-      @blocks = Array.new
+    render json: { version: @version, pages: @pages }
+  end 
 
-      @version_blocks = Block.where(version_id: @version.id).where(page_id: page.id)
-      @latest_blocks = Block.where(version_id: @latest.id).where(page_id: page.id)
+  def diffs
+    @version = Version.find(params[:id])
+    @latest = Version.where(container_id: @version.container_id).last
+    @blocks = Block.where(page_id: params[:page_id])
+    @contents = Array.new
 
-      @latest_blocks.each_with_index do |block, index|
-        @diff = Block.new(id: index)
-        if @version_blocks[index] && @version_blocks[index].content
-          @diff.content = Diffy::Diff.new(@version_blocks[index].content, block.content).to_s(:html)
-        else
-          @diff.content = Diffy::Diff.new("", block.content).to_s(:html)
-        end
-        @blocks.push(@diff)
+    @version_blocks = Block.where(version_id: @version.id).where(page_id: params[:page_id])
+    @latest_blocks = Block.where(version_id: @latest.id).where(page_id: params[:page_id])
+
+    @latest_blocks.each_with_index do |block, index|
+      @diff = Block.new(id: index)
+      if @version_blocks[index] && @version_blocks[index].content
+        @diff.content = Diffy::Diff.new(@version_blocks[index].content, block.content).to_s(:html)
+      else
+        @diff.content = Diffy::Diff.new("", block.content).to_s(:html)
       end
-
-      @contents.push([page, @blocks])
+      @contents.push(@diff)
     end
 
-    render json: { version: @version, contents: @contents }
-  end 
+    render json: { contents: @contents }
+  end
 
 end

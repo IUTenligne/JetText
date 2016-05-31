@@ -8,6 +8,7 @@ var ContainerPanel = React.createClass({
         return {
             versions: [],
             selectedVersion: '',
+            pages: [],
             diffs: []
         };
     },
@@ -34,13 +35,30 @@ var ContainerPanel = React.createClass({
 
     checkVersion: function(version, event) {
         event.preventDefault();
+        
+        this.setState({ diffs: [] });
+       
         $.ajax({
             method: "GET",
             url: "/versions/" + version.id + ".json",
             context: this,
             success: function(data) {
                 this.setState({
-                    selectedVersion: version.updated_at,
+                    selectedVersion: version,
+                    pages: data.pages
+                });
+            }
+        });
+    },
+
+    showDiffs: function(pageId, event) {
+        event.preventDefault();
+        $.ajax({
+            method: "GET",
+            url: "/versions/diffs/" + this.state.selectedVersion.id + "/" + pageId + ".json",
+            context: this,
+            success: function(data) {
+                this.setState({
                     diffs: data.contents
                 });
             }
@@ -53,7 +71,6 @@ var ContainerPanel = React.createClass({
 
     render: function() {
         var that = this;
-        console.log(this.state.overviewed);
     	return (
     		<div>
     			<h2>{this.props.container.name}</h2>
@@ -76,18 +93,25 @@ var ContainerPanel = React.createClass({
 
                 {this.state.selectedVersion
                     ? <div className="versions-overview">
-                            {this.state.diffs != []
+                            {this.state.pages != []
                                 ? <div>
-                                        {this.state.diffs.map(function(diff) {
-                                            diff.map(function(block) {
-                                                console.log(block);
-                                                return ( 
-                                                
-                                                    <div>bla</div>
-                                                );
-                                            })
-                                            
+                                        {this.state.pages.map(function(page) {
+                                            return ( 
+                                                <div key={page.id} className="capitalize" onClick={that.showDiffs.bind(that, page.id)}>{page.name}</div>
+                                            );
                                         })}
+
+                                        {this.state.diffs != []
+                                            ? <div>
+                                                    {this.state.diffs.map(function(diff) {
+                                                        console.log(diff.content);
+                                                        return ( 
+                                                            <div key={diff.id} dangerouslySetInnerHTML={that.createMarkup(diff.content)} />
+                                                        );
+                                                    })}
+                                                </div>
+                                            : null
+                                        }
                                     </div>
                                 : null
                             }
