@@ -1,0 +1,50 @@
+@import "../vars";
+
+#company {
+	padding: 20px 36px;
+
+	h1 {
+		margin-bottom: 20px;
+	}
+
+	h2 {
+		text-align: left;
+		margin-top: 20px;
+		margin-bottom: 15px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	table {
+		width: 100%;
+		background-color: white;
+		padding: 10px;
+		color: #222;
+		border: 0;
+		margin-bottom: 40px;
+
+		tr {
+			border-bottom: 1px solid #e9e9e9;
+			text-align: left;
+
+			th {
+				font-weight: bold;
+				padding: 8px 10px;
+			}
+
+			td {
+				padding: 8px 10px;
+
+				a {
+					color: $lightBlue;
+
+					span.striked {
+						text-decoration: line-through;
+						color: $lightGrey;
+					}
+				}
+			}
+		}
+	}	
+
+}

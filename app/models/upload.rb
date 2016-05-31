@@ -46,7 +46,7 @@ class Upload < ActiveRecord::Base
       "audio/mp3",
       "audio/mpeg"
 		],
-		:message => 'seuls les fichiers PDF, MP3, PNG, JPG et MP4 sont autorisés.'
+		:message => 'Seuls les fichiers PDF, MP3, PNG, JPG et MP4 sont autorisés.'
 
   def file_type
     ext = self.file_file_name.split('.')[-1]
@@ -67,7 +67,7 @@ class Upload < ActiveRecord::Base
   end
 
   def timestamp
-    return Time.now.to_i
+    return Time.now.strftime("%Y%m%d%H%M").to_i
   end
 
   def valid_name

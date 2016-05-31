@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510132949) do
+ActiveRecord::Schema.define(version: 20160530151746) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -31,10 +31,24 @@ ActiveRecord::Schema.define(version: 20160510132949) do
   add_index "blocks", ["upload_id"], name: "index_blocks_on_upload_id", using: :btree
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id", using: :btree
 
+  create_table "companies", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
+  create_table "companies_containers", id: false, force: :cascade do |t|
+    t.integer "company_id",   limit: 4, null: false
+    t.integer "container_id", limit: 4, null: false
+  end
+
+  add_index "companies_containers", ["company_id", "container_id"], name: "index_companies_containers_on_company_id_and_container_id", using: :btree
+  add_index "companies_containers", ["container_id", "company_id"], name: "index_companies_containers_on_container_id_and_company_id", using: :btree
+
   create_table "containers", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.text     "content",    limit: 65535
     t.string   "url",        limit: 255
+    t.boolean  "visible"
+    t.boolean  "status"
     t.integer  "user_id",    limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
@@ -88,6 +102,10 @@ ActiveRecord::Schema.define(version: 20160510132949) do
   add_index "pages", ["container_id"], name: "index_pages_on_container_id", using: :btree
   add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
   create_table "terms", force: :cascade do |t|
     t.string  "name",        limit: 255
     t.text    "description", limit: 65535
@@ -133,7 +151,10 @@ ActiveRecord::Schema.define(version: 20160510132949) do
     t.string   "provider",               limit: 255, default: "email", null: false
     t.string   "uid",                    limit: 255, default: "",      null: false
     t.string   "authentication_token",   limit: 255
+    t.integer  "role_id",                limit: 4
   end
+
+  add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
   add_foreign_key "blocks", "pages"
   add_foreign_key "blocks", "types"
@@ -146,4 +167,5 @@ ActiveRecord::Schema.define(version: 20160510132949) do
   add_foreign_key "pages", "users"
   add_foreign_key "terms", "glossaries"
   add_foreign_key "uploads", "users"
+  add_foreign_key "users", "roles"
 end

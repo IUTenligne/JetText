@@ -205,6 +205,15 @@ span.bold{
 		}
 	}
 
+	.action i {
+		margin-left: 10px;
+	}
+
+	.action button {
+		margin-left: 0;
+		padding-left: 0;
+	}
+
 	.action i:hover {
 		cursor: pointer;
 	}
@@ -241,7 +250,7 @@ span.bold{
 	}
 	.block-actions:after {
 		position: absolute;
-		right: 24px;
+		right: 45px;
 		margin-top: -9px;
 		top:0;
 		border-top: 0;
@@ -251,7 +260,7 @@ span.bold{
 	}
 	.block-actions:before {
 		position: absolute;
-		right: 25px;
+		right: 46px;
 		margin-top: -7px;
 		border-top: 0;
 		z-index: 10;

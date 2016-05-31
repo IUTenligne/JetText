@@ -8,6 +8,8 @@ var Container = require('./components/containers/Container.jsx');
 var Glossaries = require('./components/glossaries/Glossaries.jsx');
 var Glossary = require('./components/glossaries/Glossary.jsx');
 var Term = require('./components/glossaries/Term.jsx');
+var CompanyContainers = require('./components/companies/CompanyContainers.jsx');
+
 
 $(document).ready(function () {
 	if (document.getElementById('appcontainer')) {
@@ -24,6 +26,8 @@ $(document).ready(function () {
 			
 				<Route path="terms/:id" component={Term}/>
 				<Route path="terms" component={Term}/>
+
+				<Route path="company" component={CompanyContainers}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {

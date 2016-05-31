@@ -23,6 +23,7 @@ var NoteBlock = React.createClass({
             termsList: [],
             glossaryModalState: false,
             formulaModalState: false,
+            helpModalState: false,
             formulaString: '',
             getEditor: '',
             selectedText: '',
@@ -274,6 +275,10 @@ var NoteBlock = React.createClass({
         this.props.removeMe(this.props.block);
     },
 
+    handleHelpModalState: function() {
+        this.setState({ helpModalState: !this.state.helpModalState });
+    },
+
     exportBlock: function() {
         this.setState({
             modalState: true,
@@ -359,6 +364,8 @@ var NoteBlock = React.createClass({
                                     onDoubleClick={this.unlockEditor}
                                 />
                         }
+
+                        { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button></div> }
                     </div>
                 </div>
 
@@ -396,8 +403,23 @@ var NoteBlock = React.createClass({
                     : null
                 }
 
+                { this.state.helpModalState
+                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Remarque"}>
+                            <div className="modal-in">
+                                Activer le mode édition : 
+                                <ul>
+                                    <li>double cliquer sur le contenu du bloc,</li>
+                                    <li>ou cliquer sur l'icône <i className="fa fa-quote-right"></i> dans l'entête du bloc,</li>
+                                    <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                            </div>
+                        </Modal>
+                    : null
+                }
+
                 <div className="action">
                     <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 
