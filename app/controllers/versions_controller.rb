@@ -29,22 +29,16 @@ class VersionsController < ApplicationController
     @version = Version.find(params[:id])
     @latest = Version.where(container_id: @version.container_id).last
     @blocks = Block.where(page_id: params[:page_id])
-    @contents = Array.new
 
     @version_blocks = Block.where(version_id: @version.id).where(page_id: params[:page_id])
+    @v_content = ""
+    @version_blocks.map{ |b| @v_content = @v_content + b.content }
+
     @latest_blocks = Block.where(version_id: @latest.id).where(page_id: params[:page_id])
+    @l_content = ""
+    @latest_blocks.map{ |b| @l_content = @l_content + b.content }
 
-    @latest_blocks.each_with_index do |block, index|
-      @diff = Block.new(id: index)
-      if @version_blocks[index] && @version_blocks[index].content
-        @diff.content = Diffy::Diff.new(@version_blocks[index].content, block.content).to_s(:html)
-      else
-        @diff.content = Diffy::Diff.new("", block.content).to_s(:html)
-      end
-      @contents.push(@diff)
-    end
-
-    render json: { contents: @contents }
+    @contents = Diffy::Diff.new(@v_content, @l_content).to_s(:html)
   end
 
 end

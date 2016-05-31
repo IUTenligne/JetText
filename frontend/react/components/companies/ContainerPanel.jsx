@@ -100,16 +100,16 @@ var ContainerPanel = React.createClass({
                                 ? <div>
                                         {this.state.pages.map(function(page) {
                                             return ( 
-                                                <div key={page.id} className="capitalize" onClick={that.showDiffs.bind(that, page.id)}>{page.name}</div>
+                                                <a key={page.id} className="capitalize" href={"/versions/diffs/"+that.state.selectedVersion.id+"/"+page.id} target="_blank">{page.name}</a>
                                             );
                                         })}
 
                                         {this.state.diffs != []
                                             ? <div>
                                                     {this.state.diffs.map(function(diff) {
-                                                        console.log(diff.content);
+                                                        console.log(diff);
                                                         return ( 
-                                                            <div key={diff.id} dangerouslySetInnerHTML={that.createMarkup(diff.content)} />
+                                                            <div>{diff} </div>
                                                         );
                                                     })}
                                                 </div>

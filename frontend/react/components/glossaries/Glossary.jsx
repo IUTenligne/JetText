@@ -61,9 +61,11 @@ var Glossary = React.createClass({
             }
         });
     },
+
     viewCreateTerm: function(){
         this.setState({viewCreate: true });
     },
+    
     handleModalState: function(st) {
         this.setState({viewCreate: false });
     },
