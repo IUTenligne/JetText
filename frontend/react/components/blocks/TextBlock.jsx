@@ -320,7 +320,7 @@ var TextBlock = React.createClass({
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName ? <button onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
+                            { this.state.changeName ? <button title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
 
@@ -341,7 +341,7 @@ var TextBlock = React.createClass({
                         />
                     }
 
-                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button></div> }
+                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button></div> }
                 </div>
 
                 { this.state.glossaryModalState
@@ -352,7 +352,7 @@ var TextBlock = React.createClass({
                 }
 
                 { this.state.formulaModalState
-                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter un formule"}>
+                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>
                         <div>
                             <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
@@ -393,8 +393,8 @@ var TextBlock = React.createClass({
                 }
 
                 <div className="action">
-                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                    <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
+                    <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 

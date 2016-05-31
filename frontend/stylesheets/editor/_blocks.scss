@@ -103,7 +103,7 @@ span.bold{
       		}
 		     em{
 		        font-style : italic;
-		     }
+		    }
       		u{
         		text-decoration : underline;
       		}
@@ -176,9 +176,11 @@ span.bold{
 				margin: 10px 0 10px 0;
 			}
 		}
-
+		/* overall block btn save bis*/
 		.block-save {
 			padding: 0px 15px;
+			border-radius: 50px;
+
 		}
 	}
 
