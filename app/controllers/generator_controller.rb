@@ -35,6 +35,7 @@ class GeneratorController < ApplicationController
 
   	@page = Page.find(params[:id])
   	@container = Container.find(@page.container_id)
+    @version = Version.where(container_id: @container.id).last
     @glossaries = ContainersGlossary.where(container_id: @container.id)
   	@pages = Page.where(container_id: @page.container_id)
     
@@ -47,7 +48,7 @@ class GeneratorController < ApplicationController
     @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
     @mathjax = false
 
-  	@blocks = Block.where(page_id: params[:id])
+  	@blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
     @blocks.map { |block| 
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
       @mathjax = true if block.type_id == 4
@@ -80,6 +81,7 @@ class GeneratorController < ApplicationController
 
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
+    @version = Version.where(container_id: @container.id).last
     @pages = Page.where(container_id: @page.container_id)
 
     @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
@@ -89,7 +91,7 @@ class GeneratorController < ApplicationController
     @next_link = "#{@next_page.id}" unless @next_page.nil?
 
     @menu = recur_page_level(true, @pages, false, 0, "", 0, @page)
-    @blocks = Block.where(page_id: params[:id])
+    @blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
 
     if @blocks.empty?
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
@@ -280,6 +282,7 @@ class GeneratorController < ApplicationController
     # Used by Containers.jsx to allow the users to generate and then download a zip of a container
 
     @container = Container.find(params[:id])
+    @version = Version.where(container_id: @container.id).last
     @pages = Page.where(container_id: params[:id])
     @assets_prefix = ""
     @home_link = "#"
@@ -303,7 +306,7 @@ class GeneratorController < ApplicationController
       @menu = recur_page_level(true, @pages, false, 0, "", 0, @page)
       page_name = gsub_name(page.name) if page.name
 
-      @blocks = Block.where(page_id: page.id)
+      @blocks = Block.where(page_id: page.id).where(version_id: @version.id)
       @blocks.map { |block| 
         block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
         
