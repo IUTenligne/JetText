@@ -7,6 +7,7 @@ var ContainerPanel = React.createClass({
     getInitialState: function() {
         return {
             versions: [],
+            words: null,
             selectedVersion: '',
             pages: [],
             diffs: []
@@ -16,7 +17,8 @@ var ContainerPanel = React.createClass({
     componentDidMount: function() {
     	this.serverRequest = $.get("/versions/show_all/" + this.props.container.id + ".json", function(result) {
             this.setState({
-                versions: result.versions
+                versions: result.versions,
+                words: result.words
             });
         }.bind(this));
     },
@@ -78,6 +80,7 @@ var ContainerPanel = React.createClass({
                     <li>Auteur : {this.props.author}</li>
                     <li>Date de création : {this.formatDate(this.props.container.created_at)}, {this.formatTime(this.props.container.created_at)}</li>
                     <li>Date de mise à jour : {this.formatDate(this.props.container.updated_at)}, {this.formatTime(this.props.container.updated_at)}</li>
+                    <li>Nombre de mots : {this.state.words}</li>
                 </ul>
 
                 <h3>Versions :</h3>

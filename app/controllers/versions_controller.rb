@@ -5,7 +5,14 @@ class VersionsController < ApplicationController
 
   def show_all
     @versions = Version.where(container_id: params[:id]).order('updated_at DESC')
-    render json: { versions: @versions }
+    @blocks = Block.where(version_id: @versions.last.id)
+
+    words = 0
+    @blocks.map{ |b| 
+      words = words + b.content.scan(/\w+/).size 
+    }
+
+    render json: { versions: @versions, words: words }
   end  
 
   def show
