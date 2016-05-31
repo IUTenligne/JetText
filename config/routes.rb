@@ -51,6 +51,10 @@ Rails.application.routes.draw do
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
 
+  end
+
+  # Admin zone access
+  authenticate :user, -> (u) { u.is_admin? } do
     resources :companies
   end
 

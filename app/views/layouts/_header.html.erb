@@ -9,6 +9,9 @@
 			<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), "/#glossaries/", data: { no_turbolink: true }, title: "Mes glossaires" %></li>
 			<li><%= link_to raw('<i class="fa fa-user fa-fw "></i>'), '/#/' %></li>
 			<li><%= link_to raw('<i class="fa fa-cogs fa-fw "></i>'), '/#/' %></li>
+			<% if current_user.is_admin? %>
+				<li><%= link_to raw('<i class="fa fa-power-off fa-fw "></i>'), '/#/company', title: "Admin équipe" %></li>
+			<% end %>
 			<li><%= link_to raw('<i class="fa fa-power-off fa-fw "></i>'), '/#/' %></li>
 			<% if user_signed_in? %>
 			<% end %>

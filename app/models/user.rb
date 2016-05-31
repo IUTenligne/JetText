@@ -4,7 +4,20 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :containers, dependent: :destroy       
+  has_many :containers, dependent: :destroy   
+  has_one :role    
+
+  before_create :default_role
+
+  def is_admin?
+    admin = Role.where(name: "admin").take
+    self.role_id == admin.id
+  end
+
+  private
+    def default_role
+      self.role_id ||= 1
+    end
 end
 
 # == Schema Information

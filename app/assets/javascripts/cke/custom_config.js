@@ -17,6 +17,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// Custom plugins app/assets/javascripts/cke/plugins
 	//config.extraPlugins = 'uploader,dynavar,justify';
 	config.extraPlugins = 'justify';
-
+ 	
 	config.allowedContent = true; //keep special styles on re-edition
 };

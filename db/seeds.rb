@@ -8,3 +8,11 @@ Type.create!([
 Company.create!([ 
 	{name: "IUTenLigne"}
 ])
+
+Role.create!([ 
+	{name: "Pending"},
+	{name: "Auteur"},
+	{name: "Expert"},
+	{name: "Staff"},
+	{name: "Admin"}
+])

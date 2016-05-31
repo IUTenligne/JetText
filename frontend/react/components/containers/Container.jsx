@@ -27,7 +27,7 @@ var Container = React.createClass({
     },
 
     componentDidMount: function() {
-        this.serverRequest = $.get("/containers/"+this.props.params.id+".json", function (result) {
+        this.serverRequest = $.get("/containers/" + this.props.params.id + ".json", function (result) {
             if (result.pages && result.pages[0]) {
                 this.setState({
                     status: result.status,
