@@ -16,7 +16,8 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.select("id, name, sequence, level, container_id, user_id").find(params[:id])
-    @blocks = Block.select("id, name, content, classes, type_id, upload_id").where(page_id: @page.id)
+    @version = Version.where(container_id: @page.container.id).last
+    @blocks = Block.select("id, name, content, classes, type_id, upload_id").where(page_id: @page.id).where(version_id: @version.id)
     if @page.present?
       render json: { status: { state: 0 }, container: @page.container.name, page: @page, blocks: @blocks }
     else

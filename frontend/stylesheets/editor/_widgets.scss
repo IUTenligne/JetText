@@ -110,6 +110,16 @@
 			.modal-in {
 				padding: 15px 10px;
 
+				h2 {
+					margin-top: 0;
+				}
+
+				h3 {
+					font-size: 18px;
+					font-weight: bold;
+					margin-top: 30px;
+				}
+
 				ul {
 					margin-left: 25px;
 					margin-top: 10px;
@@ -120,6 +130,16 @@
 
 				.selected-container-pages {
 					padding-left: 15px;
+				}
+
+				.del {
+					background-color: #FFECEC;
+					padding: 3px;
+				}
+
+				.ins {
+					background-color: #EAFFEA;
+					padding: 3px;
 				}
 			}
 			/* css ajout des glossary in glossaries view*/

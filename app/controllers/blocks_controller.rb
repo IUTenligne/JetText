@@ -11,7 +11,9 @@ class BlocksController < ApplicationController
   end
 
 	def index
-		@blocks = Block.where(page_id: params[:id])
+    @page = Page.find(params[:id])
+    @version = Version.where(container_id: @page.container.id).last
+		@blocks = Block.where(page_id: @page.id).where(version_id: @version.id)
 		respond_to do |format|
       format.json { render json: { blocks: @blocks } }
     end
@@ -19,6 +21,7 @@ class BlocksController < ApplicationController
 
   def create
   	@block = Block.new(block_params)
+    @block.version_id = Version.where(container_id: @block.page.container.id).last.id
   	@block.user_id = current_user.id
     if @block.page_id.present?
     	if @block.save

@@ -87,11 +87,19 @@ var Result = React.createClass({
                         url: "/containers/validate/" + that.props.item.id,
                         context: that,
                         success: function(data) {
-                            
+                            that.props.validateContainer(data.containers)
                         }
                     });
                 }
             }
+        });
+    },
+
+    updateContainer: function(event){
+        var that = this;
+        $.ajax({
+            type: "POST",
+            url: "/containers/send_update/" + that.props.item.id
         });
     },
 
@@ -144,7 +152,7 @@ var Result = React.createClass({
                             </a>
 
                             { result.status
-                                ? <a className="btn list-group-item" onClick={this.validateContainer}>
+                                ? <a className="btn list-group-item" onClick={this.updateContainer}>
                                         <span className="fa-stack fa-lg">
                                             <i className="fa fa-square fa-stack-2x"></i>
                                             <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
@@ -236,6 +244,12 @@ var Containers = React.createClass({
         });
     },
 
+    handleContainerValidation: function(containersList) {
+        this.setState({
+            containersList: containersList
+        });
+    },
+
     viewCreateContainers: function(){
         this.setState({viewCreate: true });
     },
@@ -302,6 +316,7 @@ var Containers = React.createClass({
                                 item={result} 
                                 key={result.id} 
                                 removeContainer={that.handleContainerDeletion} 
+                                validateContainer={that.handleContainerValidation}
                             />
                         );
                     })}

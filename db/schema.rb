@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20160530151746) do
     t.integer  "page_id",    limit: 4
     t.integer  "type_id",    limit: 4
     t.integer  "upload_id",  limit: 4
+    t.integer  "version_id", limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160530151746) do
   add_index "blocks", ["type_id"], name: "index_blocks_on_type_id", using: :btree
   add_index "blocks", ["upload_id"], name: "index_blocks_on_upload_id", using: :btree
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id", using: :btree
+  add_index "blocks", ["version_id"], name: "index_blocks_on_version_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string "name", limit: 255
@@ -156,10 +158,19 @@ ActiveRecord::Schema.define(version: 20160530151746) do
 
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
+  create_table "versions", force: :cascade do |t|
+    t.integer  "container_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "versions", ["container_id"], name: "index_versions_on_container_id", using: :btree
+
   add_foreign_key "blocks", "pages"
   add_foreign_key "blocks", "types"
   add_foreign_key "blocks", "uploads"
   add_foreign_key "blocks", "users"
+  add_foreign_key "blocks", "versions"
   add_foreign_key "containers", "users"
   add_foreign_key "formulas", "users"
   add_foreign_key "glossaries", "users"
@@ -168,4 +179,5 @@ ActiveRecord::Schema.define(version: 20160530151746) do
   add_foreign_key "terms", "glossaries"
   add_foreign_key "uploads", "users"
   add_foreign_key "users", "roles"
+  add_foreign_key "versions", "containers"
 end
