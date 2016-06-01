@@ -119,6 +119,7 @@ var TextBlock = React.createClass({
                     this.setState({
                         blockName: data.name,
                         blockContent: data.content,
+                        blockVirtualContent: this.regexTerm(this.state.termsList, data.content),
                         changeName: false,
                         editBlock: true
                     });
@@ -127,7 +128,8 @@ var TextBlock = React.createClass({
                 } else {
                     this.setState({
                         blockName: data.name,
-                        blockContent: data.content
+                        blockContent: data.content,
+                        blockVirtualContent: this.regexTerm(this.state.termsList, data.content)
                     });
                 }
             }
@@ -157,10 +159,6 @@ var TextBlock = React.createClass({
         });
 
         this.setState({ focusPopup: false, editBlock: false });
-
-        setTimeout(function() {
-            that.saveBlock(false);
-        }, 2000);
     },
 
     _highlightText: function(query, editor) {

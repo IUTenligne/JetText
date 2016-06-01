@@ -27,9 +27,15 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
+
 # Custom gems
+
 gem 'devise'
 gem 'rubyzip'
 gem 'nokogiri'
+#file upload
 gem 'paperclip'
+#text diffs 
 gem 'diffy'
+#cron jobs
+gem 'whenever', :require => false
