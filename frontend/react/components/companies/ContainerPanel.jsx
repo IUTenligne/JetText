@@ -100,7 +100,7 @@ var ContainerPanel = React.createClass({
                                 ? <div>
                                         {this.state.pages.map(function(page) {
                                             return ( 
-                                                <a key={page.id} className="capitalize" href={"/versions/diffs/"+that.state.selectedVersion.id+"/"+page.id} target="_blank">{page.name}</a>
+                                                <a key={page.id} className="capitalize" href={"/generator/diffs/"+that.state.selectedVersion.id+"/"+page.id} target="_blank">{page.name}</a>
                                             );
                                         })}
 

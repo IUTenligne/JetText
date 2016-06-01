@@ -25,20 +25,4 @@ class VersionsController < ApplicationController
     render json: { version: @version, pages: @pages }
   end 
 
-  def diffs
-    @version = Version.find(params[:id])
-    @latest = Version.where(container_id: @version.container_id).last
-    @blocks = Block.where(page_id: params[:page_id])
-
-    @version_blocks = Block.where(version_id: @version.id).where(page_id: params[:page_id])
-    @v_content = ""
-    @version_blocks.map{ |b| @v_content = @v_content + b.content }
-
-    @latest_blocks = Block.where(version_id: @latest.id).where(page_id: params[:page_id])
-    @l_content = ""
-    @latest_blocks.map{ |b| @l_content = @l_content + b.content }
-
-    @contents = Diffy::Diff.new(@v_content, @l_content).to_s(:html)
-  end
-
 end

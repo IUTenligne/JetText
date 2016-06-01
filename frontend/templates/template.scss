@@ -72,6 +72,22 @@ $menuWidth: 350px;
   font-family: FontAwesome;
 }
 
+.unchanged {
+	list-style-type: none;
+}
+
+.del {
+  background-color: #FFECEC;
+  padding: 3px;
+  list-style-type: none;
+}
+
+.ins {
+  background-color: #EAFFEA;
+  padding: 3px;
+  list-style-type: none;
+}
+
 /********  overall mobil and window ********/
 #wrapper {
     padding-left: 0;
