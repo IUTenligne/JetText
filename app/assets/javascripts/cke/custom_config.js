@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Custom plugins app/assets/javascripts/cke/plugins
 	//config.extraPlugins = 'uploader,dynavar,justify';
-	config.extraPlugins = 'pastefromword,justify';
+	config.extraPlugins = 'pastefromword,justify,glossary';
 
 	config.allowedContent = 'a[!href]; ul; li; ol; strong; em; table; tbody; thead; tfoot; th; tr; td;'; //keep special styles on re-edition
 };
