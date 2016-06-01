@@ -179,8 +179,24 @@ span.bold{
 		/* overall block btn save bis*/
 		.block-save {
 			padding: 0px 15px;
-			border-radius: 50px;
+			.text-block-save{
+				border-radius: 20px;
+				width: 35px;
+				height: 35px;
+				padding: 0;
+				border: none;
+				background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+				box-shadow: 2px 2px 4px rgba($lighTbBlue,0.20);
 
+				i{
+					font-size: 20px;
+					color: $white;
+				}
+			}
+			.note{
+				background-image:linear-gradient( $lightRed,rgb(186,67,38));
+				box-shadow: 2px 2px 4px rgba($lightRed,0.20);
+			}
 		}
 	}
 
@@ -371,9 +387,9 @@ span.bold{
 			}
 
       .browse-files:hover{
-        color: $grey;
+        color: $lightBlue;
           i{
-            color: $grey;
+            color: $lightBlue;
           }
       }
       .browse-files{

@@ -8,19 +8,112 @@ var ContainersList = require('./ContainersList.jsx');
 
 
 var MathToolbox = React.createClass({
+    getInitialState: function() {
+        return {
+            aVoir: false,
+            arrow: false,
+            letter: false
+        }
+    },
     addMath: function(fn) {
         this.props.interact("\\" + fn);
+    },
+    activeSymbol: function (){
+        this.setState({
+            symbol: true,
+            arrow: false,
+            letter: false
+        })
+    },
+    activeArrow: function (){
+        this.setState({
+            symbol: false,
+            arrow: true,
+            letter: false
+        })
+    },
+    activeLetter: function (){
+        this.setState({
+            symbol: false,
+            arrow: false,
+            letter: true
+        })
     },
 
     render: function() {
         return (
-            <ul className="mathtoolbar">
-                <li><button onClick={this.addMath.bind(this, ";")}>espace</button></li>
-                <li><button onClick={this.addMath.bind(this, "frac")}>frac</button></li>
-                <li><button onClick={this.addMath.bind(this, "sqrt{}")}>racine</button></li>
-                <li><button onClick={this.addMath.bind(this, "int_")}>∫</button></li>
-                <li><button onClick={this.addMath.bind(this, "infty")}>∞</button></li>
-            </ul>
+            <div>
+                <button onClick={this.activeSymbol}>Symbols</button>
+                <button onClick={this.activeArrow}>Arrows</button>
+                <button onClick={this.activeLetter}>Greek Letters</button>
+
+                {this.state.symbol
+                    ? <ul className="mathtoolbar">
+                        <li><button onClick={this.addMath.bind(this, " +")}>+</button></li>
+                        <li><button onClick={this.addMath.bind(this, "times")}>x</button></li>
+                        <li><button onClick={this.addMath.bind(this, " -")}>-</button></li>
+                        <li><button onClick={this.addMath.bind(this, "div")}>division</button></li>
+                        <li><button onClick={this.addMath.bind(this, "pm")}>plus ou moin</button></li>
+                        <li><button onClick={this.addMath.bind(this, "ast")}>etoile</button></li>
+                    </ul>
+                    :null
+                }
+                
+                
+                {this.state.arrow
+                    ? <ul className="mathtoolbar">
+                        <li><button onClick={this.addMath.bind(this, ";")}>espace</button></li>
+                        <li><button onClick={this.addMath.bind(this, "frac")}>frac</button></li>
+                        <li><button onClick={this.addMath.bind(this, "sqrt{}")}>racine</button></li>
+                        <li><button onClick={this.addMath.bind(this, "int_")}>∫</button></li>
+                        <li><button onClick={this.addMath.bind(this, "infty")}>∞</button></li>
+                    </ul>
+                    :null
+                }
+                {this.state.letter
+                    ? <ul className="mathtoolbar">
+                        <li><button onClick={this.addMath.bind(this, "alpha")}>alpha</button></li>
+                        <li><button onClick={this.addMath.bind(this, "delta")}>delta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "eta")}>eta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "kappa")}>kappa</button></li>
+                        <li><button onClick={this.addMath.bind(this, "xi")}>xi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "phi")}>phi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "omega")}>omega</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Delta")}>Delta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Gamma")}>Gamma</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Psi")}>Psi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "vartheta ")}>vartheta </button></li>
+                        <li><button onClick={this.addMath.bind(this, "varsigma")}>varsigma</button></li>
+                        <li><button onClick={this.addMath.bind(this, "beta")}>beta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "epsilon")}>epsilon</button></li>
+                        <li><button onClick={this.addMath.bind(this, "theta")}>theta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "lambda")}>lambda</button></li>
+                        <li><button onClick={this.addMath.bind(this, "pi")}>pi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "tau")}>tau</button></li>
+                        <li><button onClick={this.addMath.bind(this, "chi")}>chi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Omega")}>Omega</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Pi")}>Pi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Lambda")}>Lambda</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Xi")}>Xi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "varrho")}>varrho</button></li>
+                        <li><button onClick={this.addMath.bind(this, "gamma")}>gamma</button></li>
+                        <li><button onClick={this.addMath.bind(this, "zeta")}>zeta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "iota")}>iota</button></li>
+                        <li><button onClick={this.addMath.bind(this, "mu")}>mu</button></li>
+                        <li><button onClick={this.addMath.bind(this, "rho")}>rho</button></li>
+                        <li><button onClick={this.addMath.bind(this, "upsilon")}>upsilon</button></li>
+                        <li><button onClick={this.addMath.bind(this, "psi")}>psi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Theta")}>Theta</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Phi")}>Phi</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Sigma")}>Sigma</button></li>
+                        <li><button onClick={this.addMath.bind(this, "Upsilon")}>Upsilon</button></li>
+                        <li><button onClick={this.addMath.bind(this, "varphi")}>varphi</button></li>
+                    </ul>
+                    :null
+                }
+                
+            </div>
+            
         );
     }
 });

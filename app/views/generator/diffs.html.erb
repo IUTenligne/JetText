@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Diffs : <%= @container.name.capitalize %></title>
+        <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
+    </head>
+    <body>
+       	<div id="page-content-wrapper">
+        			<h1 class="container-title">
+                <%= @container.name.capitalize %> 
+              </h1>
+
+              <div class="content">
+                <%= raw(CGI.unescapeHTML(@contents)) %>
+              </div>
+        </div>
+
+        <% if @mathjax == true %>
+            <script type="text/x-mathjax-config">
+                MathJax.Hub.Config({ 
+                    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']] }
+                });
+            </script>
+            <script type="text/javascript" src="<%= @libs_prefix %>mathjax/MathJax.js?config=TeX-AMS_HTML" data-no-turbolinks="true"></script>
+            <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathMenu.js" data-no-turbolinks="true"></script>
+            <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathZoom.js" data-no-turbolinks="true"></script>
+        <% end %>
+	  </body>
+</html>
