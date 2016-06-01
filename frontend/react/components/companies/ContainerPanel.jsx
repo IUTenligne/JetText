@@ -88,39 +88,11 @@ var ContainerPanel = React.createClass({
                     {this.state.versions.map(function(version) {
                         return(
                             <li key={version.id}>
-                                <a href="#" onClick={that.checkVersion.bind(that, version)}>{that.formatDate(version.created_at)}, {that.formatTime(version.created_at)}</a>
+                                <a href={"/generator/diffs/" + version.id} target="_blank">{that.formatDate(version.created_at)}, {that.formatTime(version.created_at)}</a>
                             </li>
                         );
                     })}
                 </ul>
-
-                {this.state.selectedVersion
-                    ? <div className="versions-overview">
-                            {this.state.pages != []
-                                ? <div>
-                                        {this.state.pages.map(function(page) {
-                                            return ( 
-                                                <a key={page.id} className="capitalize" href={"/generator/diffs/"+that.state.selectedVersion.id+"/"+page.id} target="_blank">{page.name}</a>
-                                            );
-                                        })}
-
-                                        {this.state.diffs != []
-                                            ? <div>
-                                                    {this.state.diffs.map(function(diff) {
-                                                        console.log(diff);
-                                                        return ( 
-                                                            <div>{diff} </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            : null
-                                        }
-                                    </div>
-                                : null
-                            }
-                        </div>
-                    : null
-                }
     		</div>
     	);
     }

@@ -51,7 +51,7 @@ Rails.application.routes.draw do
     get "/generator/overview/pages/:id" => "generator#page"
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
-    get "/generator/diffs/:id/:page_id" => "generator#diffs"
+    get "/generator/diffs/:id" => "generator#diffs"
   end
 
   # Admin zone access

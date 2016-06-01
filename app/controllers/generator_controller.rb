@@ -108,67 +108,66 @@ class GeneratorController < ApplicationController
 
   def diffs
     # Diffs overview
-
     @version = Version.find(params[:id])
     @latest = Version.where(container_id: @version.container_id).last
-
-    @version_blocks = Block.where(version_id: @version.id).where(page_id: params[:page_id])
-    @v_content = ""
-
-    @latest_blocks = Block.where(version_id: @latest.id).where(page_id: params[:page_id])
-    @l_content = ""
-
-    @page = Page.find(params[:page_id])
-    @container = Container.find(@page.container_id)
+    @container = Container.find(@version.container_id)
+    @pages = Page.where(container_id: @container.id)
     @glossaries = ContainersGlossary.where(container_id: @container.id)
-    @pages = Page.where(container_id: @page.container_id)
-    
-    @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
-    @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
-    @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
-    @next_link = "#{@next_page.id}" unless @next_page.nil?
-    
-    @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
-    @mathjax = false
+    @contents = ""
+   
+    @pages.map{ |page| 
+      @contents = @contents + "<h2>" + page.name + "</h2>"
 
-    @version_blocks.map { |block| 
-      block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
-      @mathjax = true if block.type_id == 4
-      if block.type_id != 2
-        unless @glossaries.nil?
-          @glossaries.map { |glossary| 
-            @terms = Term.where(glossary_id: glossary.glossary_id)
-            @terms.each do |term|
-              block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
-            end
-          }
+      @version_blocks = Block.where(version_id: @version.id).where(page_id: page.id)
+      @latest_blocks = Block.where(version_id: @latest.id).where(page_id: page.id)
+      
+      @prev_page = Page.where(container_id: @container.id).where("sequence < ?", page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", page.sequence).last.nil?
+      @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
+
+      @next_page = Page.where(container_id: @container.id).where("sequence > ?", page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", page.sequence).first.nil?
+      @next_link = "#{@next_page.id}" unless @next_page.nil?
+      
+      @menu = recur_page_level(false, @pages, false, 0, "", 0, page)
+      @mathjax = false
+
+      @v_content = ""
+      @l_content = ""
+
+      @version_blocks.map { |block| 
+        block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+        @mathjax = true if block.type_id == 4
+        if block.type_id != 2
+          unless @glossaries.nil?
+            @glossaries.map { |glossary| 
+              @terms = Term.where(glossary_id: glossary.glossary_id)
+              @terms.each do |term|
+                block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+              end
+            }
+          end
         end
-      end
-      @v_content = @v_content + block.content
-    }
+        @v_content = @v_content + block.content
+      }
 
-    @latest_blocks.map { |block| 
-      block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
-      @mathjax = true if block.type_id == 4
-      if block.type_id != 2
-        unless @glossaries.nil?
-          @glossaries.map { |glossary| 
-            @terms = Term.where(glossary_id: glossary.glossary_id)
-            @terms.each do |term|
-              block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
-            end
-          }
+      @latest_blocks.map { |block| 
+        block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+        @mathjax = true if block.type_id == 4
+        if block.type_id != 2
+          unless @glossaries.nil?
+            @glossaries.map { |glossary| 
+              @terms = Term.where(glossary_id: glossary.glossary_id)
+              @terms.each do |term|
+                block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+              end
+            }
+          end
         end
-      end
-      @l_content = @l_content + block.content
+        @l_content = @l_content + block.content
+      }
+
+      @contents = @contents + Diffy::Diff.new(@v_content, @l_content).to_s(:html)
     }
-
-    @contents = Diffy::Diff.new(@v_content, @l_content).to_s(:html)
-
-    if @latest_blocks.empty?
-      @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
-    end
 
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
