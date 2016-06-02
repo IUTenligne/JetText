@@ -33,5 +33,12 @@ class ApplicationController < ActionController::Base
       raise JetText::NotAllowed.new
     end
   end
+
+  def require_admin
+    #requires that the user is validated (user.validated == true)
+    unless current_user.is_admin?
+      raise JetText::NotAllowed.new
+    end
+  end
 	
 end

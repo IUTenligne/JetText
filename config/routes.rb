@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :companies
     get "/users" => "users#index"
     put "/users/validate/:id" => "users#validate"
+    put "/users/update_role/:id" => "users#update_role"
     resources :versions
     get "/versions/show_all/:id" => "versions#show_all"
   end

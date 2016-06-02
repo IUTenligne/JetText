@@ -8,6 +8,7 @@ var NotificationSystem = require('react-notification-system');
 var UserInfo = React.createClass({
     getInitialState: function() {
         return {
+            unlock: true
         };
     },
     
@@ -30,6 +31,29 @@ var UserInfo = React.createClass({
             context: this,
             success: function(data){
                 this.props.updateUsersStatus(data.usersdata);
+            }
+        });
+    },
+
+    unlock: function() {
+        this.setState({
+            unlock: !this.state.unlock
+        })
+    },
+
+    changeRole: function(event) {
+        $.ajax({
+            type: "PUT",
+            url: "/users/update_role/" + this.props.user.id,
+            context: this,
+            data: {
+                role_id: event.target.value
+            },
+            success: function(data){
+                this.props.updateUsersStatus(data.usersdata);
+                this.setState({
+                    unlock: true
+                })
             }
         });
     },  
@@ -57,6 +81,17 @@ var UserInfo = React.createClass({
                     <button onClick={this.validateUser}><i className="fa fa-check"></i></button>
                 </td>
                 <td>
+                    <a href="javascript:;" onClick={this.unlock}>
+                        <i className={this.state.unlock ? "fa fa-lock" : "fa fa-unlock"}></i>
+                    </a>
+                    <select value="0" onChange={this.changeRole} disabled={this.state.unlock}>
+                        <option disabled="true" value="0">-- rôle --</option>
+                        { this.props.roles.map(function(role){
+                            return (<option key={role.id} value={role.id}>{role.role}</option>);
+                        })}
+                    </select>
+                </td>
+                <td>
                     <NotificationSystem ref="notificationSystem"/>
                 </td>
             </tr> 
@@ -69,6 +104,7 @@ var UsersPanel = React.createClass({
     getInitialState: function() {
         return {
             users: [],
+            roles: [],
             validatedUsersList: [],
             pendingUsersList: [],
             sorter: '',
@@ -81,6 +117,7 @@ var UsersPanel = React.createClass({
         this.serverRequest = $.get("/users.json", function(result) {
             this.setState({
                 users: result.users,
+                roles: result.roles,
                 validatedUsersList: result.validated_users,
                 pendingUsersList: result.pending_users,
                 loading: false
@@ -151,6 +188,9 @@ var UsersPanel = React.createClass({
                                 <th>
                                     Bloquer
                                 </th>
+                                <th>
+                                    Attributer rôle
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -158,6 +198,7 @@ var UsersPanel = React.createClass({
                                 return (
                                     <UserInfo 
                                         user={result}
+                                        roles={that.state.roles}
                                         key={result.id}
                                         updateUsersStatus={that.updateUsersList} 
                                     />
@@ -186,6 +227,9 @@ var UsersPanel = React.createClass({
                                 <th>
                                     Valider
                                 </th>
+                                <th>
+                                    Attributer rôle
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,6 +237,7 @@ var UsersPanel = React.createClass({
                                 return (
                                     <UserInfo 
                                         user={result} 
+                                        roles={that.state.roles}
                                         key={result.id}
                                         updateUsersStatus={that.updateUsersList} 
                                     />

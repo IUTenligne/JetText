@@ -24,4 +24,19 @@ class User < ActiveRecord::Base
       self.validated = false
       self.role_id ||= 1
     end
+
+    def self.users_list
+      return User.all
+        .select("
+          users.id, 
+          users.firstname, 
+          users.lastname, 
+          users.email, 
+          users.created_at, 
+          users.role_id
+          ")
+        .joins(:role)
+        .select("roles.role")
+        .where("role NOT LIKE 'admin'")
+    end
 end
