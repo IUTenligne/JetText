@@ -191,7 +191,7 @@ var Containers = React.createClass({
         var that = this;
 
         return (
-            <article id="company">
+            <article className="admin-panel">
                 <h1 className="page-header" key={this.state.company.id}>Les ressources {this.state.company.name} <i class="fa fa-folder-open fa-fw "></i></h1>
 
                 <ul className="align">

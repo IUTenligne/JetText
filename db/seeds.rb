@@ -10,9 +10,9 @@ Company.create!([
 ])
 
 Role.create!([ 
-	{name: "Pending"},
-	{name: "Auteur"},
-	{name: "Expert"},
-	{name: "Staff"},
-	{name: "Admin"}
+	{role: "Pending"},
+	{role: "Auteur"},
+	{role: "Expert"},
+	{role: "Staff"},
+	{role: "Admin"}
 ])

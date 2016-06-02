@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20160530151746) do
   add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "role", limit: 255
   end
 
   create_table "terms", force: :cascade do |t|

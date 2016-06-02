@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :containers, dependent: :destroy   
-  has_one :role    
+  belongs_to :role    
 
   before_create :default_values
 
   def is_admin?
-    admin = Role.where(name: "admin").take
+    admin = Role.where(role: "admin").take
     self.role_id == admin.id
   end
 
