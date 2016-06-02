@@ -15,6 +15,10 @@ class UsersController < ApplicationController
   def validate
   	@user = User.find(params[:id])
   	@user.update_attributes(validated: !@user.validated)
+
+    # Send validation email
+    UserMailer.validation_message(@user).deliver if @user.validated === true
+
   	@users = User.users_list
     @validated_users = @users.where(validated: true)
     @pending_users = @users.where(validated: false)

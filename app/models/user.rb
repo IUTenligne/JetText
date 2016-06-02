@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   belongs_to :role    
 
   before_create :default_values
+  after_create :welcome_message
 
   def is_admin?
     admin = Role.where(role: "admin").take
@@ -17,6 +18,14 @@ class User < ActiveRecord::Base
   def is_validated?
     return true if self.validated == true
     return false
+  end
+
+  def welcome_message
+    UserMailer.welcome_message(self).deliver
+  end
+
+  def self.validation_message
+    UserMailer.validation_message(self).deliver
   end
 
   private

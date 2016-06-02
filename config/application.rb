@@ -34,5 +34,16 @@ module JetText
 
     config.action_view.embed_authenticity_token_in_remote_forms = true
     config.serve_static_files = true
+
+    # Mailer
+    config.action_mailer.default_url_options = { :host => ""   }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "",
+      :port => 25,
+      :domain => "",
+      :openssl_verify_mode => 'none'
+    }
+    
   end
 end
