@@ -2,6 +2,7 @@ class ContainersController < ApplicationController
 
   before_action :authenticate_user!
   before_filter :require_permission, only: [:show, :update, :destroy, :generate]
+  before_filter :require_validation
   respond_to :html, :json
 
   def require_permission
@@ -9,7 +10,7 @@ class ContainersController < ApplicationController
       raise JetText::NotAllowed.new 
     end
   end
-  
+
   def index
     @containers = Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1)
     render json: { containers: @containers }

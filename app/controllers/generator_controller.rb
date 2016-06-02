@@ -1,6 +1,7 @@
 class GeneratorController < ApplicationController
 
   before_action :authenticate_user!
+  before_filter :require_validation
   
   def container
     # Container overview method
@@ -67,7 +68,7 @@ class GeneratorController < ApplicationController
     if @blocks.empty?
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
     end
-
+    
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
     @home_link = "/generator/overview/#{@container.id}"
@@ -110,9 +111,8 @@ class GeneratorController < ApplicationController
     # Diffs overview
     @version = Version.find(params[:id])
     @latest = Version.where(container_id: @version.container_id).last
-    @container = Container.find(@version.container_id)
-    @pages = Page.where(container_id: @container.id)
-    @glossaries = ContainersGlossary.where(container_id: @container.id)
+    @pages = Page.where(container_id: @version.container_id)
+    @glossaries = ContainersGlossary.where(container_id: @version.container_id)
 
     @contents = ""
    
@@ -122,10 +122,10 @@ class GeneratorController < ApplicationController
       @version_blocks = Block.where(version_id: @version.id).where(page_id: page.id)
       @latest_blocks = Block.where(version_id: @latest.id).where(page_id: page.id)
       
-      @prev_page = Page.where(container_id: @container.id).where("sequence < ?", page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", page.sequence).last.nil?
+      @prev_page = Page.where(container_id: @version.container_id).where("sequence < ?", page.sequence).last unless Page.where(container_id: @version.container_id).where("sequence < ?", page.sequence).last.nil?
       @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
-      @next_page = Page.where(container_id: @container.id).where("sequence > ?", page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", page.sequence).first.nil?
+      @next_page = Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first unless Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first.nil?
       @next_link = "#{@next_page.id}" unless @next_page.nil?
       
       @menu = recur_page_level(false, @pages, false, 0, "", 0, page)
@@ -135,7 +135,7 @@ class GeneratorController < ApplicationController
       @l_content = ""
 
       @version_blocks.map { |block| 
-        block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+        block.content = add_slash(block.content, @version.container.user.email) unless block.content.nil?
         @mathjax = true if block.type_id == 4
         if block.type_id != 2
           unless @glossaries.nil?
@@ -151,7 +151,7 @@ class GeneratorController < ApplicationController
       }
 
       @latest_blocks.map { |block| 
-        block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+        block.content = add_slash(block.content, @version.container.user.email) unless block.content.nil?
         @mathjax = true if block.type_id == 4
         if block.type_id != 2
           unless @glossaries.nil?
@@ -166,12 +166,18 @@ class GeneratorController < ApplicationController
         @l_content = @l_content + block.content
       }
 
-      @contents = @contents + Diffy::Diff.new(@v_content, @l_content).to_s(:html)
+      @diffy = Diffy::Diff.new(@v_content, @l_content)
+      if @diffy.diff.empty?
+        @contents = @contents + '<ul><li class="unchanged">' + @l_content + '</li></ul>'
+      else
+        @contents = @contents + @diffy.to_s(:html)
+      end
     }
 
+    @mathjax = true
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
-    @home_link = "/generator/overview/#{@container.id}"
+    @home_link = "/generator/overview/#{@version.container_id}"
     @org_link = "#"
     render :layout => false
   end

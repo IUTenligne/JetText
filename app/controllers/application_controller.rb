@@ -26,5 +26,12 @@ class ApplicationController < ActionController::Base
   def rescue_jettext_actions(type, status_code, message=false)
     render json: { status: { state: "error", message: message } }
   end
+
+  def require_validation
+    #requires that the user is validated (user.validated == true)
+    unless current_user.is_validated?
+      raise JetText::NotAllowed.new
+    end
+  end
 	
 end

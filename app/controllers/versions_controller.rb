@@ -1,6 +1,7 @@
 class VersionsController < ApplicationController
 
   before_action :authenticate_user!
+  before_filter :require_validation
   respond_to :html, :json
 
   def show_all

@@ -2,6 +2,7 @@ class PagesController < ApplicationController
 
   before_action :authenticate_user!
   before_filter :require_permission, only: [:show, :update, :destroy, :update_level]
+  before_filter :require_validation
   respond_to :json
 
   def require_permission

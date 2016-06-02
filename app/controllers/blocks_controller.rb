@@ -2,6 +2,7 @@ class BlocksController < ApplicationController
 
 	before_action :authenticate_user!
   before_filter :require_permission, only: [:update, :destroy, :set_content]
+  before_filter :require_validation
   respond_to :html, :json
 
   def require_permission
