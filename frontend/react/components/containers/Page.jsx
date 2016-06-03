@@ -5,6 +5,7 @@ var Block = require('../blocks/Block.jsx');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var GlossariesBox = require('../glossaries/GlossariesBox.jsx');
 var dragula = require('react-dragula');
+var Timeline = require('../widgets/Timeline.jsx');
 
 
 var Page = React.createClass({
@@ -218,7 +219,9 @@ var Page = React.createClass({
                     <div>
                         {this.state.popUp ? <GlossariesBox containerId={page.container_id}  handleModalState={this.closeModal}/> : null}
                     </div>
-                </ReactCSSTransitionGroup>      
+                </ReactCSSTransitionGroup>
+
+                <Timeline blocks={this.state.blocks} />    
             </div>
         );
     }
