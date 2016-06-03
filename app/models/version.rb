@@ -36,6 +36,9 @@ class Version < ActiveRecord::Base
 		        new_block.save!
 		      }
 		    }
+
+		    # Send update email
+   			UserMailer.container_update_message(container).deliver
 		  }
 		end
 end

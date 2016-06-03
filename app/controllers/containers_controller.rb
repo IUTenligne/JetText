@@ -48,6 +48,9 @@ class ContainersController < ApplicationController
       end
     end
 
+    # Send update email
+    UserMailer.container_update_message(@container).deliver
+
     render json: { containers: Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1) }
   end
 
@@ -68,6 +71,9 @@ class ContainersController < ApplicationController
         @new_block.save
       end
     end
+
+    # Send update email
+    UserMailer.container_update_message(@container).deliver
     
     render json: { containers: Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1) }
   end
