@@ -2,7 +2,7 @@ CKEDITOR.dialog.add('glossaryDialog', function(editor) {
 
     
     return {
-        title: 'Ajouter un term',
+        title: 'Ajouter un terme',
         minWidth: 400,
         minHeight: 200,
         contents: [
