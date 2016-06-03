@@ -88,7 +88,7 @@
                                             <div class="block-note-title block-note-title-<%= block.classes %>">
                                                 <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
                                             </div>
-                                            <%= raw(block.content.capitalize) if block.content %>
+                                            <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
                                         </div>
                                     <% elsif block.type_id == 4 %>
                                         <%= raw("$$" + block.content + "$$") if block.content %>
