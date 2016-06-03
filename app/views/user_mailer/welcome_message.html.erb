@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Bienvenue dans JetText, <%= @user.firstname.capitalize %>.</h1>
+    <p>
+      Vous recevez un email de confirmation à l'adresse <strong><%= @user.email %></strong> lorsque votre compte sera validé.
+    </p>
+    <p>
+      <br>
+    </p>
+    <p>
+      Cordialement,<br>
+      L'équipe d'<a href="http://iutenligne.net/">IUTenLigne</a>
+    </p>
+  </body>
+</html>
