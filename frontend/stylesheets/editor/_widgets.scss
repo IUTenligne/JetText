@@ -121,10 +121,30 @@
 				}
 
 				ul {
-					margin-left: 25px;
-					margin-top: 10px;
+					margin: 10px 0 10px 10px;
 					li {
-
+						margin-bottom: 10px;
+						font-size: 20px;
+						box-shadow: 2px 2px 4px rgba(0,0,0,0.30);
+						border-radius: 4px;
+						padding: 7px;
+						cursor: pointer;
+						ul.selected-container-pages{
+							border-left: 7px solid rgba($grey,0.8);
+							li{
+								box-shadow: none;
+								margin: 0;
+							}
+    						li:before{
+    							content: "\f016";
+    							font-family: FontAwesome;
+    						}
+    					}
+					}
+					li:before{
+						content: "\f115";
+    					font-family: FontAwesome;
+    					padding-right: 10px;
 					}
 				}
 
