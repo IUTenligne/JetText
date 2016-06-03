@@ -297,9 +297,13 @@ $elements: 15;
 
 
 
-.timeline {
-  margin-left: 3em;
+#timeline {
   width: 150px;
   transition: opacity 0.2s ease-in;
-  
+  position: fixed;
+  right: 0px;
+  z-index: 1000 !important;
+  height: 200px;
+  top: 50%;
+  text-align: right
 }

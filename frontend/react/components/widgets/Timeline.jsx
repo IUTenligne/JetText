@@ -59,11 +59,11 @@ var Timeline = React.createClass({
 		var lastBlock = this.getLast(blocks);
 
 		return(
-			<div className="timeline">
+			<div id="timeline">
 				<div class="timeline-container">
 					<div class="topic-timeline">
 						{firstBlock
-							? <a title={firstBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, firstBlock.id)} class="widget-link start-link">Bloc {firstBlock.id}</a>
+							? <a title={firstBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, firstBlock.id)} class="widget-link start-link">Bloc 1</a>
 							: null
 						}
 						<div class="timeline-scrollarea">
@@ -78,7 +78,7 @@ var Timeline = React.createClass({
 							<div class="timeline-padding"></div>
 						</div>
 						{ lastBlock
-							? <a title={lastBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, lastBlock.id)} class="widget-link last-link">Bloc {lastBlock.id}</a>
+							? <a title={lastBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, lastBlock.id)} class="widget-link last-link">Bloc {blocks.length}</a>
 							: null
 						}
 					</div>

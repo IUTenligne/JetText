@@ -3,5 +3,9 @@
 		<%= render :partial => 'devise/sessions/new' %>
 	</div>
 <% else %>
-	<div id="appcontainer" class="outlet"></div>
+	<% if current_user.is_validated? %>
+		<div id="appcontainer" class="outlet"></div>
+	<% else %>
+		<h2>Oups !</h2>
+	<% end %>
 <% end %>
