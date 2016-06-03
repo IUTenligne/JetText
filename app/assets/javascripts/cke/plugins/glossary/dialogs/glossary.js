@@ -2,7 +2,7 @@ CKEDITOR.dialog.add('glossaryDialog', function(editor) {
 
     
     return {
-        title: 'Ajouter un term',
+        title: 'Ajouter un terme',
         minWidth: 400,
         minHeight: 200,
         contents: [
@@ -29,14 +29,14 @@ CKEDITOR.dialog.add('glossaryDialog', function(editor) {
                                 }
                             });
                         },
-		                label: 'glossaire',
+		                label: 'Glossaire',
 		                validate: CKEDITOR.dialog.validate.notEmpty( "Cannot be empty." )
                     },
 
                     {
                         type: 'text',
 		                id: 'name',
-		                label: 'name',
+		                label: 'Terme',
                         onShow:  function(){
                             var name = editor.getSelection().getSelectedText().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
                             this.setValue( name );
@@ -48,7 +48,7 @@ CKEDITOR.dialog.add('glossaryDialog', function(editor) {
                     {
                         type: 'text',
                         id: 'definition',
-                        label: 'définition',
+                        label: 'Définition',
                         validate: CKEDITOR.dialog.validate.notEmpty( "Cannot be empty." )
                     }
                 ]

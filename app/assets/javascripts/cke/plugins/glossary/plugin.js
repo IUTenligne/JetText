@@ -3,13 +3,13 @@ CKEDITOR.plugins.add('glossary', {
 	init: function(editor) {
 		var plugin_path = '/assets/cke/plugins/glossary/';
 
-		editor.addCommand('startVariables', new CKEDITOR.dialogCommand('glossaryDialog'));
+		editor.addCommand('startGlossary', new CKEDITOR.dialogCommand('glossaryDialog'));
 
-		editor.ui.addButton( 'Variables', {
-			label: 'Variables',
-			command: 'startVariables',
+		editor.ui.addButton( 'Glossary', {
+			label: 'Glossaires',
+			command: 'startGlossary',
 			toolbar: 'insert',
-			icon: plugin_path + 'icons/variable.png'
+			icon: plugin_path + 'icons/glossary.png'
 		});
 
 		CKEDITOR.dialog.add('glossaryDialog', plugin_path + 'dialogs/glossary.js');
