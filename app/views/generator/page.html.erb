@@ -93,7 +93,7 @@
                                     <% elsif block.type_id == 4 %>
                                         <%= raw("$$" + block.content + "$$") if block.content %>
                                     <% else %>
-                                        <%= raw(block.content) if block.content %>
+                                        <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
                                     <% end %>
                                 </div>
               				</div> 
