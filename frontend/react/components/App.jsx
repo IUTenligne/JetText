@@ -5,7 +5,7 @@ var App = React.createClass({
   	render: function() {
 	    return (
 	    	<div className="home">
-		    	<h1>Welcome <span className="capitalize">{JSON.parse(currentUser).firstname}</span> !</h1>
+		    	<h1>Bonjour <span className="capitalize">{JSON.parse(currentUser).firstname}</span> !</h1>
 
 		    	<div id="homeBtn">
 		    		<a id="btntest" ref="btntest" href={"/#/containers/"} className="btn-success">Mes ressources</a>

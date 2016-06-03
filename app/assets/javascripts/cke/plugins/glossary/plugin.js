@@ -6,10 +6,12 @@ CKEDITOR.plugins.add('glossary', {
 		editor.addCommand('startGlossary', new CKEDITOR.dialogCommand('glossaryDialog'));
 
 		editor.ui.addButton( 'Glossary', {
-			label: 'Glossary',
+
+			label: 'Glossaires',
 			command: 'startGlossary',
 			toolbar: 'insert',
-			icon: plugin_path + 'icons/terme.png'
+			icon: plugin_path + 'icons/glossary.png'
+
 		});
 
 		CKEDITOR.dialog.add('glossaryDialog', plugin_path + 'dialogs/glossary.js');
