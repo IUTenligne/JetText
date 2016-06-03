@@ -2,6 +2,7 @@
 CKEDITOR.editorConfig = function( config ) {
 	config.toolbar = [
 		{ name: 'clipboard', items: [ 'Undo', 'Redo' ] },
+
 		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
 		{ name: 'insert', items: [ 'Table', 'HorizontalRule', 'SpecialChar' ] },
 		{ name: 'document', items: [ 'Source' ] },

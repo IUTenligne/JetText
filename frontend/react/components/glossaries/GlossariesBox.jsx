@@ -192,7 +192,7 @@ var GlossariesBox = React.createClass({
         		<div id="glossaries">
                     <ul id="list-glossary">
             			{ this.state.glossariesList.map(function(glossary) {
-                            return(<GlossaryItem glossary={glossary} containerId={containerId} containersGlossaries={that.state.containersGlossaries} key={glossary.id}/>);
+                            return(<GlossaryItem glossary={glossary} containerId={containerId} removeGlossary={that.handleGlossaryDeletion} containersGlossaries={that.state.containersGlossaries} key={glossary.id}/>);
             			})}
                     </ul>
 
