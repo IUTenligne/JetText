@@ -5,12 +5,14 @@ var Block = require('../blocks/Block.jsx');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var GlossariesBox = require('../glossaries/GlossariesBox.jsx');
 var dragula = require('react-dragula');
+var Toolbar = require('../widgets/Toolbar.jsx');
 var Timeline = require('../widgets/Timeline.jsx');
 
 
 var Page = React.createClass({
     getInitialState: function() {
         return {
+            container: '',
             status: 0,
             page: '',
             blocks: [],
@@ -22,6 +24,7 @@ var Page = React.createClass({
     },
 
     componentDidMount: function() {
+        this.setState({ container: this.props.container });
         this.serverRequest = $.get("/pages/"+this.props.page+".json", function (result) {
             this.setState({
                 status: result.status,
@@ -178,7 +181,13 @@ var Page = React.createClass({
         var that = this;
         
         return (
-            <div className="page"> 
+            <div className="page">
+                <ReactCSSTransitionGroup transitionName="toolbar-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
+                    <Toolbar container={this.props.container}>
+                        <Timeline blocks={this.state.blocks} page={this.state.page} /> 
+                    </Toolbar>
+                </ReactCSSTransitionGroup> 
+
                 <h2 className="header_page">
                     <input className="capitalize title-page" ref="containername" type="text" value={this.state.pageName} placeholder="Titre de la page..." onChange={this.handlePageRename}/>
                     { this.state.changePageName ? <button onClick={this.savePageName}><i className="fa fa-check"></i></button> : null }
@@ -219,9 +228,7 @@ var Page = React.createClass({
                     <div>
                         {this.state.popUp ? <GlossariesBox containerId={page.container_id}  handleModalState={this.closeModal}/> : null}
                     </div>
-                </ReactCSSTransitionGroup>
-
-                <Timeline blocks={this.state.blocks} />    
+                </ReactCSSTransitionGroup>  
             </div>
         );
     }

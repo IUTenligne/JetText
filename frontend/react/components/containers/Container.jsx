@@ -21,8 +21,7 @@ var Container = React.createClass({
             types: [],
             activePage: '',
             newPageValue: '',
-            loading: true,
-            overview: false
+            loading: true
         };
     },
 
@@ -122,29 +121,6 @@ var Container = React.createClass({
         });
     },
 
-    handleContainerName: function(event) {
-        this.setState({
-            containerName: event.target.value,
-            changeContainerName: true
-        });
-    },
-
-    saveContainerName: function() {
-        $.ajax({
-            type: "PUT",
-            url: '/containers/'+this.state.container.id,
-            context: this,
-            data: { 
-                name: this.state.containerName
-            },
-            success: function(data) {
-                this.setState({
-                    changeContainerName: false
-                });
-            }
-        });
-    },
-
     changePageName: function(pageName, pageId) {
         var pages = this.state.pages;
         for (var i in pages) {
@@ -179,10 +155,6 @@ var Container = React.createClass({
         this.setState({ newPageValue: event.target.value });
     },
 
-    handleModalState: function(st) {
-        this.setState({ overview: st });
-    },
-
     _notificationSystem: null,
 
     render: function() {
@@ -211,24 +183,12 @@ var Container = React.createClass({
 
                     <div id="container-wrapper">
                         { this.state.loading
-                            ? <Loader />
-                            : <div className="header">
-                                <div id="previewbutton">
-                                    <button onClick={this.handleModalState} title="Aperçu de la ressource"><i className="fa fa-eye"></i></button>
-                                </div>
-                                <h1>
-                                    <input className="capitalize" ref="containername" type="text" value={this.state.containerName} placeholder="Titre de la ressource..." onChange={this.handleContainerName}/>
-                                    { this.state.changeContainerName ? <button onClick={this.saveContainerName}><i className="fa fa-check"></i></button> : null }
-                                </h1>
-                            </div>
-                        }
-
-                        { this.state.loading
                             ? null
                             : <div className="content">
                                 { this.props.routeParams.pageId 
                                     ? <Page 
                                             key={this.props.routeParams.pageId} 
+                                            container={this.state.container}
                                             page={this.props.routeParams.pageId} 
                                             types={this.state.types}
                                             changePageName={this.changePageName}
@@ -239,6 +199,7 @@ var Container = React.createClass({
                                 { !this.props.routeParams.pageId && this.state.activePage 
                                     ? <Page 
                                             key={this.state.activePage.id} 
+                                            container={this.state.container}
                                             page={this.state.activePage.id} 
                                             types={this.state.types}
                                             changePageName={this.changePageName} 
@@ -259,13 +220,6 @@ var Container = React.createClass({
                             </div>
                         }
                     </div>
-
-                    { this.state.overview 
-                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
-                            <iframe src={"/generator/overview/"+this.state.container.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
-                        </Modal> 
-                        : null 
-                    }
                 </div>
             );
         } catch(err) {
