@@ -183,7 +183,7 @@ var Page = React.createClass({
         return (
             <div className="page">
                 <ReactCSSTransitionGroup transitionName="toolbar-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
-                    <Toolbar container={this.props.container}>
+                    <Toolbar container={this.props.container} page={this.state.page}>
                         <Timeline blocks={this.state.blocks} page={this.state.page} /> 
                     </Toolbar>
                 </ReactCSSTransitionGroup> 

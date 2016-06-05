@@ -40,13 +40,11 @@ var Toolbar = React.createClass({
     });
   },
 
-
 	handleModalState: function(st) {
     this.setState({ overview: st });
   },
 
 	render: function(){
-		console.log(this.props);
 		return(
 			<div id="toolbar">
 				<div id="previewbutton">
@@ -60,7 +58,7 @@ var Toolbar = React.createClass({
         </div>
         { this.state.overview 
 	          ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
-	            <iframe src={"/generator/overview/"+this.props.container.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+	            <iframe src={"/generator/overview/pages/"+this.props.page.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
 	          </Modal> 
 	          : null 
           }

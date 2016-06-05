@@ -371,25 +371,18 @@ $elements: 15;
   }
 
   #timeline {
-    width: 200px;
+    width: 90px;
     float: right;
     z-index: 1000 !important;
-    background: red;
     height: 35px;
     display: inline-block;
     text-align: right;
 
     .timeline-container {
-      .topic-timeline {
-        a {
-          display: none;
-        }
-
+      .blocks-timeline {
         .timeline-progress { 
-          height: 22px;
           position: relative;
           background: white;
-          border: 1px solid #C2EBFF;
           text-align: center;
 
           .timeline-progress-content {
@@ -399,17 +392,32 @@ $elements: 15;
             top:0; 
             bottom:0;
             left:0; 
-            height: 20px; 
+            height: 35px;
             color: $lightBlue;
 
             .timeline-progress-content-inner {
               clear: both;
               position: absolute;
               text-align: center;
-              width: 80px;
-              line-height: 22px;
+              width: 90px;
+              line-height: 35px;
             }
           }
+        }
+
+        .timeline-progress:hover {
+          cursor: pointer;
+        }
+
+        .timeline-menu {
+          display: none;
+          a {
+            
+          }
+        }
+
+        .timeline-menu.timeline-menu-active {
+          display: block;
         }
       }
     }

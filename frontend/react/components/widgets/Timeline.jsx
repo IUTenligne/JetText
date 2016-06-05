@@ -5,23 +5,25 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var Timeline = React.createClass({
 	getInitialState: function() {
-		if (this.props.blocks[0]) {
-			var b = this.props.blocks[0];
-			var i = 1
-		} else {
-			var b = null;
-			var i = null;
-		}
 	  return {
 	    blocks: [],
 	    currentPos: null,
-	    currentBlock: b,
-	    currentBlockId: i
+	    currentBlock: null,
+	    currentBlockId: null,
+	    menuActive: false
 	  };
 	},
 
 	componentDidMount: function() {
-	  this.setState({ blocks: this.props.blocks });
+	  this.setState({ 
+	  	blocks: this.props.blocks,
+	  });
+	  if (this.props.blocks[0]) {
+			this.setState({ 
+	  		currentBlock: this.props.blocks[0],
+	  		currentBlockId: 1
+	  	});
+		}
 	  window.addEventListener('scroll', this.handleScroll);
 	},
 
@@ -74,33 +76,39 @@ var Timeline = React.createClass({
 		window.scrollTo(0, block);
 	},
 
+	toggleMenu: function() {
+		this.setState({ menuActive: !this.state.menuActive });
+	},
+
 	render: function(){
 		var blocks = this.props.blocks;
 		var total = this.props.blocks.length;
 		var firstBlock = this.getFirst(blocks);
 		var lastBlock = this.getLast(blocks);
 
-		var progress = {
+		const progress = {
 			width: this.state.currentPos + "%"
 		};
 
 		return(
 			<div id="timeline">
 				<div className="timeline-container">
-					<div className="topic-timeline">
-						{ firstBlock
-							? <a title={firstBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, firstBlock.id)} className="widget-link start-link">Bloc 1</a>
-							: null
-						}
-						<div className="timeline-progress">
+					<div className="blocks-timeline">
+						<div className="timeline-progress" onClick={this.toggleMenu}>
 							<div className="timeline-progress-content" style={progress}>
 								<div className="timeline-progress-content-inner">{ this.state.currentBlock ? this.state.currentBlockId + "/" + total : null }</div>
 							</div>
 						</div>
-						{ lastBlock
-							? <a title={lastBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, lastBlock.id)} className="widget-link last-link">Bloc {blocks.length}</a>
-							: null
-						}
+						<div className={this.state.menuActive ? "timeline-menu timeline-menu-active" : "timeline-menu"}>
+							{ firstBlock
+								? <a title={firstBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, firstBlock.id)} className="widget-link start-link">Bloc 1</a>
+								: null
+							}
+							{ lastBlock
+								? <a title={lastBlock.id} href="javascript:;" onClick={this.handleClick.bind(this, lastBlock.id)} className="widget-link last-link">Bloc {blocks.length}</a>
+								: null
+							}
+						</div>
 					</div>
 				</div>
 			</div>
