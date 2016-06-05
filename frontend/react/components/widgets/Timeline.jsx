@@ -8,9 +8,13 @@ var Timeline = React.createClass({
 	  return {
 	    blocks: [],
 	    currentPos: null,
+	    dragged: false,
 	    currentBlock: null,
 	    currentBlockId: null,
-	    menuActive: false
+	    menuActive: false,
+	    divHeight: 130,
+	    topPx: 60,
+	    scrollPos: 0
 	  };
 	},
 
@@ -24,6 +28,35 @@ var Timeline = React.createClass({
 	  		currentBlockId: 1
 	  	});
 		}
+
+		var that = this;
+		$(this.refs.timelinehandle).draggable({ 
+			containment: "parent",
+			axis: "y",
+			drag: function(event, ui) { 
+        var offsetElem = that.refs.timelinehandle.offsetTop;
+        var body = document.body,
+		    		html = document.documentElement,
+						height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ),
+						offset = html.offsetHeight,
+						maxScroll = Math.floor( height - offset ),
+						currentPos = Math.floor( scroll / maxScroll * 100 ),
+						toPos = Math.floor( maxScroll * offsetElem / 100 );
+
+        that.setState({
+        	dragged: true,
+        	scrollPos: toPos,
+        	currentPos: currentPos
+        });
+
+        window.scrollTo(0, that.state.scrollPos);
+			}
+		});
+
+		this.setState({
+			dragged: false
+		});
+
 	  window.addEventListener('scroll', this.handleScroll);
 	},
 
@@ -49,10 +82,11 @@ var Timeline = React.createClass({
     var scroll = window.pageYOffset,
         body = document.body,
     		html = document.documentElement,
-				height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight),
+				height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ),
 				offset = html.offsetHeight,
-				maxScroll = Math.floor(height - offset),
-				currentPos = Math.floor( scroll / maxScroll * 100 );
+				maxScroll = Math.floor( height - offset ),
+				currentPos = Math.floor( scroll / maxScroll * 100 ),
+				toScrollPos = Math.floor( maxScroll * currentPos / 100 );
 
 		for ( var i in this.props.blocks ) {
 			if (currentPos > 99) {
@@ -67,7 +101,9 @@ var Timeline = React.createClass({
 				});
 			} 
 		}
-    this.setState({ currentPos: currentPos });
+		
+		if (this.state.dragged === false)
+    	this.setState({ currentPos: currentPos });
 	},
 
 	handleClick: function(blockId, event) {
@@ -90,6 +126,19 @@ var Timeline = React.createClass({
 			width: this.state.currentPos + "%"
 		};
 
+		const style = {
+			height: this.state.divHeight + "px",
+			top: this.state.topPx + "px"
+		};
+
+		const height = {
+			height: this.state.divHeight + "px"
+		};
+
+		const scrollHandleTopPos = {
+			top: this.state.currentPos + "px"
+		};
+
 		return(
 			<div id="timeline">
 				<div className="timeline-container">
@@ -109,6 +158,14 @@ var Timeline = React.createClass({
 								: null
 							}
 						</div>
+					</div>
+				</div>
+
+				<div id="vertical-timeline" style={style}>
+					<div className="v-timeline-scrollarea" style={height}>
+						<div className="v-timeline-padding" rel="timelinescrollbefore"></div>
+						<div id="v-timeline-handle" ref="timelinehandle" style={scrollHandleTopPos}></div>
+						<div className="v-timeline-padding" rel="timelinescrollafter"></div>
 					</div>
 				</div>
 			</div>

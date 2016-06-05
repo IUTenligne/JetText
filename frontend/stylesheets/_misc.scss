@@ -421,6 +421,25 @@ $elements: 15;
         }
       }
     }
+
+    #vertical-timeline {
+      width: 25px;
+      float: right;
+      position: fixed;
+      right: 15px;
+      border-left: 1px solid $lightBlue;
+
+      .v-timeline-scrollarea {
+
+        #v-timeline-handle {
+          height: 30px;
+          border-radius: 20px;
+          width: 4px;
+          background-color: $lightBlue;
+          cursor: pointer;
+        } 
+      } 
+    }
   }
 }
 
