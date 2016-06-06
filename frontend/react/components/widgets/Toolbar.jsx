@@ -6,8 +6,9 @@ var Toolbar = React.createClass({
 	getInitialState: function() {
     return {
     	containersName: '',
-    	changeContainersName: true,
-      overview: false
+    	changeContainersName: false,
+      overview: false,
+      menu: false
     };
   },
 
@@ -15,6 +16,10 @@ var Toolbar = React.createClass({
     this.setState({
       containersName: this.props.container.name
     });  	
+  },
+
+  toggleMenu: function() {
+    this.setState({ menu: !this.state.menu });
   },
 
   handleContainersName: function(event) {
@@ -45,16 +50,25 @@ var Toolbar = React.createClass({
   },
 
 	render: function(){
+    const style = {
+      display: "none"
+    };
+
 		return(
 			<div id="toolbar">
-				<div id="previewbutton">
-          <button onClick={this.handleModalState} title="Aperçu de la ressource"><i className="fa fa-eye"></i></button>
-        </div>
         <div className="header">
-          <h1>
-            <input className="capitalize" ref="containername" type="text" value={this.state.containersName} placeholder="Titre de la ressource..." onChange={this.handleContainersName}/>
-            { this.state.changeContainersName ? <button onClick={this.saveContainersName}><i className="fa fa-check"></i></button> : null }
-          </h1>
+          <h1 className="capitalize" onClick={this.toggleMenu}>{this.state.containersName}</h1>
+          <div id="container-toolbar-menu" style={this.state.menu ? null : style}>
+            <ul>
+              <li>
+                <a href="javascript:;" onClick={this.handleModalState} title="Aperçu de la ressource">Aperçu de la ressource</a>
+              </li>
+              <li>
+                <input className="capitalize" ref="containername" type="text" value={this.state.containersName} placeholder="Titre de la ressource..." onChange={this.handleContainersName}/>
+                { this.state.changeContainersName ? <button onClick={this.saveContainersName}><i className="fa fa-check"></i></button> : null }
+              </li>
+            </ul>
+          </div>
         </div>
         { this.state.overview 
 	          ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 

@@ -144,7 +144,7 @@ var Page = React.createClass({
 
     handlePageRename: function(event) {
         this.setState({ 
-            pageName: event.target.value.trim(),
+            pageName: event.target.value,
             changePageName: true 
         });
     },

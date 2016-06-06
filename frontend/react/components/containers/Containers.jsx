@@ -117,7 +117,6 @@ var Result = React.createClass({
 
     render: function() {
         var result = this.props.item;
-        console.log(result);
 
         return(
             <li className="container">

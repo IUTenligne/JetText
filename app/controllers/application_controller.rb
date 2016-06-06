@@ -11,12 +11,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from JetText::NotLoggedIn do |e|
     raise e if Rails.env.test?
-    rescue_jettext_actions(:not_logged_in, 403, t(:not_logged_in))
+    render json: { status: { state: "error", message: "Not logged in" } }
   end
 
   rescue_from JetText::NotAllowed do |e|
     raise e if Rails.env.test?
-    rescue_jettext_actions(:not_logged_in, 403, t(:not_allowed))
+    render json: { status: { state: "error", message: "Not allowed" } }
   end
 
   def ensure_logged_in
