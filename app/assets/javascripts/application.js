@@ -9,8 +9,6 @@
 //= require jquery_ujs
 //= require turbolinks
 
-//= require jquery-ui.min
-
 //= require cke/cke_fix.js
 //= require ckeditor/ckeditor.js
 //= require ckeditor/lang/fr.js
