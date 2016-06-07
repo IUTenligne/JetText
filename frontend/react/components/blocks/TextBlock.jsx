@@ -17,9 +17,6 @@ var TextBlock = React.createClass({
             blockContent: '',
             blockVirtualContent: '',
             loading: false,
-            myStyle: '',
-            left: '',
-            top: '',
             termsList: [],
             glossaryModalState: false,
             formulaModalState: false,
@@ -27,11 +24,10 @@ var TextBlock = React.createClass({
             formulaString: '',
             getEditor: '',
             selectedText: '',
-            focusPopup: false,
             containersGlossariesList: [],
             editBlock: true,
             tooltipState: false,
-            modalState: false,
+            modalState: false
         };
     },
 
@@ -119,6 +115,7 @@ var TextBlock = React.createClass({
                     this.setState({
                         blockName: data.name,
                         blockContent: data.content,
+                        blockVirtualContent: this.regexTerm(this.state.termsList, data.content),
                         changeName: false,
                         editBlock: true
                     });
@@ -127,7 +124,8 @@ var TextBlock = React.createClass({
                 } else {
                     this.setState({
                         blockName: data.name,
-                        blockContent: data.content
+                        blockContent: data.content,
+                        blockVirtualContent: this.regexTerm(this.state.termsList, data.content)
                     });
                 }
             }
@@ -157,10 +155,6 @@ var TextBlock = React.createClass({
         });
 
         this.setState({ focusPopup: false, editBlock: false });
-
-        setTimeout(function() {
-            that.saveBlock(false);
-        }, 2000);
     },
 
     _highlightText: function(query, editor) {
@@ -215,32 +209,6 @@ var TextBlock = React.createClass({
         return {__html: data};
     },
 
-    overTerm: function(event){
-        event.preventDefault();
-
-        this.setState({
-            selectedText: document.getSelection().toString(),
-            left: event.pageX-40,
-            top: event.pageY -50
-        });
-
-        var txt = document.getSelection().toString();
-
-        if ( (!txt.match(/^\s$/)) && (txt.length > 0) ) {
-            this.setState({ focusPopup: true });
-        } else {
-            this.setState({ focusPopup: false });
-        }
-    },
-
-    termOverlay: function(){
-        this.setState({ glossaryModalState: true });
-    },
-
-    handleGlossaryModalState: function(st){
-        this.setState({ glossaryModalState: st });
-    },
-
     handleBlockAdd: function(data) {
         /* updates the block list after a duplication on the same page */
         this.props.addBlock(data);
@@ -258,7 +226,9 @@ var TextBlock = React.createClass({
     },
 
     handleTooltipState: function(st) {
-        this.setState({ tooltipState: st });
+        this.setState({ 
+           tooltipState: st
+        });
     },
 
     handleRemoveBlock: function() {
@@ -297,30 +267,16 @@ var TextBlock = React.createClass({
 
 	render: function() {
 		var block = this.props.block;
-        var myStyle = {
-            left: this.state.left + "px",
-            top: this.state.top + "px",
-            position: "absolute",
-            clear: "both"
-        };
 
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id} onMouseUp={this.overTerm}>
-                    { this.state.focusPopup
-                        ? <div className="focus" style={myStyle}>
-                            <a onClick={this.termOverlay}>
-                                <i className="fa fa-book fa-fw" title="Glossaire" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                        : null
-                    }
 
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName ? <button onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
+                            { this.state.changeName ? <button title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
 
@@ -341,18 +297,12 @@ var TextBlock = React.createClass({
                         />
                     }
 
-                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i> Enregistrer</button></div> }
+                    { this.state.editBlock ? null : <div className="block-save"><button className="text-block-save" title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button></div> }
                 </div>
 
-                { this.state.glossaryModalState
-                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Créer une définition"}>
-                        <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
-                    </Modal>
-                    : null
-                }
 
                 { this.state.formulaModalState
-                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter un formule"}>
+                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>
                         <div>
                             <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
@@ -393,8 +343,8 @@ var TextBlock = React.createClass({
                 }
 
                 <div className="action">
-                    <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                    <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
+                    <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc"></button>
                 </div>
 
@@ -413,6 +363,8 @@ var TextBlock = React.createClass({
                         : null
                     }
                 </Tooltip>
+
+                
 
                 <NotificationSystem ref="notificationSystem"/>
             </div>

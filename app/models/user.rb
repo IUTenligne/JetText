@@ -4,29 +4,48 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :containers, dependent: :destroy       
-end
+  has_many :containers, dependent: :destroy   
+  belongs_to :role    
 
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :integer          not null, primary key
-#  email                  :string(255)      default(""), not null
-#  encrypted_password     :string(255)      default(""), not null
-#  firstname              :string(255)      default(""), not null
-#  lastname               :string(255)      default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :integer
-#  last_sign_in_ip        :integer
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  provider               :string(255)      default("email"), not null
-#  uid                    :string(255)      default(""), not null
-#  authentication_token   :string(255)
-#
+  before_create :default_values
+  after_create :welcome_message
+
+  def is_admin?
+    admin = Role.where(role: "admin").take
+    self.role_id == admin.id
+  end
+
+  def is_validated?
+    return true if self.validated == true
+    return false
+  end
+
+  def welcome_message
+    UserMailer.welcome_message(self).deliver
+  end
+
+  def self.validation_message
+    UserMailer.validation_message(self).deliver
+  end
+
+  private
+    def default_values
+      self.validated = false
+      self.role_id ||= 1
+    end
+
+    def self.users_list
+      return User.all
+        .select("
+          users.id, 
+          users.firstname, 
+          users.lastname, 
+          users.email, 
+          users.created_at, 
+          users.role_id
+          ")
+        .joins(:role)
+        .select("roles.role")
+        .where("role NOT LIKE 'admin'")
+    end
+end

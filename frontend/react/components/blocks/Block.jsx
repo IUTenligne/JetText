@@ -150,7 +150,7 @@ var Block = React.createClass({
 
         if (block.type_id === 1) {
             return (
-                <div className="block block-text" data-id={block.id}>
+                <div className="block block-text" id={"block-"+block.id} data-id={block.id}>
                     <TextBlock
                         block={block}
                         key={block.id}
@@ -164,7 +164,7 @@ var Block = React.createClass({
             );
         } else if (block.type_id === 2) {
             return (
-                <div className="block block-media" data-id={block.id}>
+                <div className="block block-media" id={"block-"+block.id} data-id={block.id}>
                     <MediaBlock
                         block={block}
                         key={block.id}
@@ -188,8 +188,8 @@ var Block = React.createClass({
                     }
 
                     <div className="action">
-                        <i className="fa fa-cog" onClick={this.viewBlockAction} ></i>
-                        <i className="fa fa-question-circle" onClick={this.handleHelpModalState} ></i>
+                        <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
+                        <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                         <button className="handle" title="Déplacer le bloc"></button>
                     </div>
 
@@ -224,7 +224,7 @@ var Block = React.createClass({
             );
         } if (block.type_id === 3) {
             return (
-                <div className="block block-note" data-id={block.id}>
+                <div className="block block-note" id={"block-"+block.id} data-id={block.id}>
                     <NoteBlock
                         block={block}
                         key={block.id}
@@ -238,7 +238,7 @@ var Block = React.createClass({
             );
         } if (block.type_id === 4) {
             return (
-                <div className="block block-math" data-id={block.id}>
+                <div className="block block-math" id={"block-"+block.id} data-id={block.id}>
                     <MathBlock
                         block={block}
                         key={block.id}

@@ -1,5 +1,7 @@
 class CompaniesController < ApplicationController
 
+  before_filter :require_validation
+
   def index
     
   end

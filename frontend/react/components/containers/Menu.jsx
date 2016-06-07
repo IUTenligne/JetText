@@ -191,8 +191,11 @@ var Menu = React.createClass({
                                                 </button> 
                                                 : null
                                             }
-                                               <button className="page-delete"  onClick={this.deletePage.bind(that, this.state.activePage, page)} title="Supprimer la page">
-                                                <i className="fa fa-remove"></i>
+                                            <button className="page-delete"  onClick={this.deletePage.bind(that, this.state.activePage, page)} title="Supprimer la page">
+                                                <span className="fa-stack fa-lg">
+                                                    <i className="fa fa-trash-o fa-stack-1x"></i> 
+                                                    <i className="fa fa-ban fa-stack-2x"></i>
+                                                </span>
                                             </button>  
              
                                         

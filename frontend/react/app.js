@@ -9,6 +9,7 @@ var Glossaries = require('./components/glossaries/Glossaries.jsx');
 var Glossary = require('./components/glossaries/Glossary.jsx');
 var Term = require('./components/glossaries/Term.jsx');
 var CompanyContainers = require('./components/companies/CompanyContainers.jsx');
+var UsersPanel = require('./components/admin/UsersPanel.jsx');
 
 
 $(document).ready(function () {
@@ -28,6 +29,7 @@ $(document).ready(function () {
 				<Route path="terms" component={Term}/>
 
 				<Route path="company" component={CompanyContainers}/>
+				<Route path="admin" component={UsersPanel}/>
 		  </Router>
 		), document.getElementById('appcontainer'));
 	} else if (document.getElementById('testcontainer')) {

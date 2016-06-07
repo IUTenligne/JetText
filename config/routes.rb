@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   authenticate :user do
     resources :containers do
       put "/validate/:id" => "containers#validate", on: :collection
+      post "/send_update/:id" => "containers#send_update", on: :collection
       put "/delete/:id" => "containers#delete", on: :collection
       put "/delstroy/:id" => "containers#destroy", on: :collection
     end
@@ -50,8 +51,17 @@ Rails.application.routes.draw do
     get "/generator/overview/pages/:id" => "generator#page"
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
+    get "/generator/diffs/:id" => "generator#diffs"
+  end
 
+  # Admin zone access
+  authenticate :user, -> (u) { u.is_admin? } do
     resources :companies
+    get "/users" => "users#index"
+    put "/users/validate/:id" => "users#validate"
+    put "/users/update_role/:id" => "users#update_role"
+    resources :versions
+    get "/versions/show_all/:id" => "versions#show_all"
   end
 
 end

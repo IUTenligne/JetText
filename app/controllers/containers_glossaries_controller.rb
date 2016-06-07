@@ -1,6 +1,7 @@
 class ContainersGlossariesController < ApplicationController
 
   before_filter :require_permission, only: [:create]
+  before_filter :require_validation
 
   def require_permission
     if current_user != Container.find(params["container_id"]).user || current_user.nil?

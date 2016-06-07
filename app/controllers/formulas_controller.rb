@@ -1,6 +1,7 @@
 class FormulasController < ApplicationController
 
 	before_action :authenticate_user!
+	before_filter :require_validation
   respond_to :json
 
 	def index

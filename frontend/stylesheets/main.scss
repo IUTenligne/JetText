@@ -40,6 +40,27 @@ html, body {
 			min-height: 100%;
 			@import "login";
 
+			.home {
+				padding: 30px;
+
+				h1 {
+					font-weight: bold;
+					font-size: 20px;
+					margin-bottom: 30px;
+				}
+			
+				.info-box {
+				  background: #C2EBFF;
+				  padding: 15px 20px;
+
+				  h2 {
+				    font-weight: bold;
+				    font-size: 16px;
+				    margin-bottom: 15px;
+				  }
+				}
+			}
+
 			.outlet {
 				@import 'editor';
 				padding: 0;

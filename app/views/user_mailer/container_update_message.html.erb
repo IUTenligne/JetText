@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>JetText : mise à jour de ressource</h1>
+    <p>
+      La ressource : <%= @container.name %> a reçue une mise à jour.<br>
+      Auteur : <%= "#{@container.user.firstname} #{@container.user.lastname}" %> - <a href="mailto:<%= @container.user.email %>"><%= @container.user.email %></a>
+    </p>
+    <p>
+      <br>
+    </p>
+    <p>
+      <ul>
+        <li>Consulter : <a href='<%= "http://jettext.iutenligne.net/generator/overview/#{@container.id}" %>'><%= "http://jettext.iutenligne.net/generator/overview/#{@container.id}" %></a></li>
+        <li>Panneau admin : <a href="http://jettext.iutenligne.net/#/company">http://jettext.iutenligne.net/#/company</a></li>
+    </p>
+    <p>
+      <br>
+    </p>
+    <p>
+      Cordialement,<br>
+      L'équipe d'<a href="http://iutenligne.net/">IUTenLigne</a>
+    </p>
+  </body>
+</html>

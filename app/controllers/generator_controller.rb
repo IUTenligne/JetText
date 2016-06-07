@@ -1,6 +1,7 @@
 class GeneratorController < ApplicationController
 
   before_action :authenticate_user!
+  before_filter :require_validation
   
   def container
     # Container overview method
@@ -35,6 +36,7 @@ class GeneratorController < ApplicationController
 
   	@page = Page.find(params[:id])
   	@container = Container.find(@page.container_id)
+    @version = Version.where(container_id: @container.id).last
     @glossaries = ContainersGlossary.where(container_id: @container.id)
   	@pages = Page.where(container_id: @page.container_id)
     
@@ -47,7 +49,7 @@ class GeneratorController < ApplicationController
     @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
     @mathjax = false
 
-  	@blocks = Block.where(page_id: params[:id])
+  	@blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
     @blocks.map { |block| 
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
       @mathjax = true if block.type_id == 4
@@ -66,7 +68,7 @@ class GeneratorController < ApplicationController
     if @blocks.empty?
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
     end
-
+    
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
     @home_link = "/generator/overview/#{@container.id}"
@@ -80,6 +82,7 @@ class GeneratorController < ApplicationController
 
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
+    @version = Version.where(container_id: @container.id).last
     @pages = Page.where(container_id: @page.container_id)
 
     @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
@@ -89,7 +92,7 @@ class GeneratorController < ApplicationController
     @next_link = "#{@next_page.id}" unless @next_page.nil?
 
     @menu = recur_page_level(true, @pages, false, 0, "", 0, @page)
-    @blocks = Block.where(page_id: params[:id])
+    @blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
 
     if @blocks.empty?
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
@@ -100,6 +103,82 @@ class GeneratorController < ApplicationController
     @home_link = "index.html"
     @libs_prefix = "libs/"
     @org_link = "http://www.iutenligne.net/resources.html"
+    render :layout => false
+  end
+
+
+  def diffs
+    # Diffs overview
+    @version = Version.find(params[:id])
+    @latest = Version.where(container_id: @version.container_id).last
+    @pages = Page.where(container_id: @version.container_id)
+    @glossaries = ContainersGlossary.where(container_id: @version.container_id)
+
+    @contents = ""
+   
+    @pages.map{ |page| 
+      @contents = @contents + "<h2>" + page.name + "</h2>"
+
+      @version_blocks = Block.where(version_id: @version.id).where(page_id: page.id)
+      @latest_blocks = Block.where(version_id: @latest.id).where(page_id: page.id)
+      
+      @prev_page = Page.where(container_id: @version.container_id).where("sequence < ?", page.sequence).last unless Page.where(container_id: @version.container_id).where("sequence < ?", page.sequence).last.nil?
+      @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
+
+      @next_page = Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first unless Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first.nil?
+      @next_link = "#{@next_page.id}" unless @next_page.nil?
+      
+      @menu = recur_page_level(false, @pages, false, 0, "", 0, page)
+      @mathjax = false
+
+      @v_content = ""
+      @l_content = ""
+
+      @version_blocks.map { |block| 
+        block.content = add_slash(block.content, @version.container.user.email) unless block.content.nil?
+        @mathjax = true if block.type_id == 4
+        if block.type_id != 2
+          unless @glossaries.nil?
+            @glossaries.map { |glossary| 
+              @terms = Term.where(glossary_id: glossary.glossary_id)
+              @terms.each do |term|
+                block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+              end
+            }
+          end
+        end
+        @v_content = @v_content + block.content
+      }
+
+      @latest_blocks.map { |block| 
+        block.content = add_slash(block.content, @version.container.user.email) unless block.content.nil?
+        @mathjax = true if block.type_id == 4
+        if block.type_id != 2
+          unless @glossaries.nil?
+            @glossaries.map { |glossary| 
+              @terms = Term.where(glossary_id: glossary.glossary_id)
+              @terms.each do |term|
+                block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+              end
+            }
+          end
+        end
+        @l_content = @l_content + block.content
+      }
+
+      @diffy = Diffy::Diff.new(@v_content, @l_content)
+      if @diffy.diff.empty?
+        @contents = @contents + '<ul><li class="unchanged">' + @l_content + '</li></ul>'
+      else
+        @contents = @contents + @diffy.to_s(:html)
+      end
+    }
+
+    @mathjax = true
+    @assets_prefix = "/templates/iutenligne/"
+    @libs_prefix = "/assets/"
+    @home_link = "/generator/overview/#{@version.container_id}"
+    @org_link = "#"
     render :layout => false
   end
 
@@ -280,6 +359,7 @@ class GeneratorController < ApplicationController
     # Used by Containers.jsx to allow the users to generate and then download a zip of a container
 
     @container = Container.find(params[:id])
+    @version = Version.where(container_id: @container.id).last
     @pages = Page.where(container_id: params[:id])
     @assets_prefix = ""
     @home_link = "#"
@@ -303,7 +383,7 @@ class GeneratorController < ApplicationController
       @menu = recur_page_level(true, @pages, false, 0, "", 0, @page)
       page_name = gsub_name(page.name) if page.name
 
-      @blocks = Block.where(page_id: page.id)
+      @blocks = Block.where(page_id: page.id).where(version_id: @version.id)
       @blocks.map { |block| 
         block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
         

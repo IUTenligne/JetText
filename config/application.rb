@@ -27,12 +27,23 @@ module JetText
     config.assets.paths << Rails.root.join('bower_components')
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.paths << Rails.root.join('node_modules')
-    config.assets.precompile += %w( .svg .eot .woff .ttf)
+    config.assets.precompile += %w(.svg .eot .woff .ttf)
 
     # Load lib modules
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.action_view.embed_authenticity_token_in_remote_forms = true
     config.serve_static_files = true
+
+    # Mailer
+    config.action_mailer.default_url_options = { :host => ""   }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "",
+      :port => 25,
+      :domain => "",
+      :openssl_verify_mode => 'none'
+    }
+    
   end
 end

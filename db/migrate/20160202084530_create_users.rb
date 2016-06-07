@@ -18,6 +18,7 @@ class CreateUsers < ActiveRecord::Migration
         t.string   "provider",               limit: 255, default: "email", null: false
         t.string   "uid",                    limit: 255, default: "",      null: false
         t.string   "authentication_token",   limit: 255
+        t.boolean  "validated",              default: false
     end
   end
 end

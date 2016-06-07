@@ -87,11 +87,19 @@ var Result = React.createClass({
                         url: "/containers/validate/" + that.props.item.id,
                         context: that,
                         success: function(data) {
-                            
+                            that.props.validateContainer(data.containers)
                         }
                     });
                 }
             }
+        });
+    },
+
+    updateContainer: function(event){
+        var that = this;
+        $.ajax({
+            type: "POST",
+            url: "/containers/send_update/" + that.props.item.id
         });
     },
 
@@ -109,7 +117,6 @@ var Result = React.createClass({
 
     render: function() {
         var result = this.props.item;
-        console.log(result);
 
         return(
             <li className="container">
@@ -144,7 +151,7 @@ var Result = React.createClass({
                             </a>
 
                             { result.status
-                                ? <a className="btn list-group-item" onClick={this.validateContainer}>
+                                ? <a className="btn list-group-item" onClick={this.updateContainer}>
                                         <span className="fa-stack fa-lg">
                                             <i className="fa fa-square fa-stack-2x"></i>
                                             <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
@@ -210,7 +217,8 @@ var Containers = React.createClass({
             containersList: [],
             loading: true,
             viewCreate: false,
-            newContainerValue: ''
+            newContainerValue: '',
+            inputCreate: false
         };
     },
 
@@ -232,6 +240,12 @@ var Containers = React.createClass({
         /* updates the containers list with the containerId returned by the prop this.props.deleteContainer of the child <Result /> */
         this.setState({
             containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
+        });
+    },
+
+    handleContainerValidation: function(containersList) {
+        this.setState({
+            containersList: containersList
         });
     },
 
@@ -266,8 +280,18 @@ var Containers = React.createClass({
         this.setState({viewCreate: false });
     },
 
-    handleChange: function(event) {
-        this.setState({newContainerValue: event.target.value});
+    handleChange: function(myparam, event) {
+        if (myparam == "newContainerValue") {
+            this.setState({
+                newContainerValue: event.target.value,
+                inputCreate: true
+            })
+        }    
+    },
+    _handleKeyPress: function(event) {
+        if (event.key === 'Enter') {
+            this.createContainer(event);
+        }
     },
 
     _notificationSystem: null,
@@ -291,6 +315,7 @@ var Containers = React.createClass({
                                 item={result} 
                                 key={result.id} 
                                 removeContainer={that.handleContainerDeletion} 
+                                validateContainer={that.handleContainerValidation}
                             />
                         );
                     })}
@@ -301,24 +326,26 @@ var Containers = React.createClass({
 
                 { this.state.viewCreate
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
-                        <div className="add_new_container">
-                            <div className="input-group input-group-lg">
-                                <span className="input-group-addon">
-                                    <i className="fa fa-plus fa-fw"></i>
-                                </span>
-                                <input 
-                                    type="text"
-                                    ref="new_container" 
-                                    id="new_container" 
-                                    className="form-control" 
-                                    autoComplet="off" 
-                                    onChange={this.handleChange} 
-                                    value={this.state.newContainerValue}  
-                                    placeholder="Titre de la ressource..." 
-                                />
-                                <br/>
-                                <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
-                            </div>
+                        <div id="add_new_container">
+                            <span className="input-group-addon">
+                                <i className="fa fa-plus fa-fw"></i>
+                            </span>
+                            <input 
+                                type="text"
+                                ref="new_container" 
+                                id="new_container" 
+                                className="form-control" 
+                                autoComplet="off" 
+                                onKeyPress={this._handleKeyPress} 
+                                onChange={this.handleChange.bind(this, "newContainerValue")} 
+                                value={this.state.newContainerValue}  
+                                placeholder="Titre de la ressource..." 
+                            />
+                            <br/>
+                            { this.state.inputCreate 
+                                ?<input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                : null
+                            }
                         </div>
                     </Modal>
                     : null
