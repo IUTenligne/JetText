@@ -1,0 +1,57 @@
+@import "../vars";
+@import "../login";
+
+h1 {
+	color: $darkGrey;
+	border: none;
+}
+
+#btn-add-term {
+	float: right;
+	text-align: center;
+	color: $white;
+	box-shadow: 2px 2px 4px rgba(0,0,0,0.20);
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+	background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+	border-radius: 40px;
+	margin-top: -10px;
+	width: 50px;
+	height: 50px;
+
+	i {
+		font-size: 35px;
+		padding-top: 8px;
+	}
+}
+
+ul#list-term {
+	margin: 55px 0 0 10px;
+
+	li {
+		margin-bottom: 10px;
+		list-style: none;
+		border-radius: 4px;
+		box-shadow: 2px 2px 4px rgba(0,0,0,0.30);
+		padding: 10px;
+
+		.name-term{
+			font-weight: bold;
+			font-size: 18px;
+			color: $darkGrey;;
+		}
+		.description-term{
+			margin: 10px 0 5px 15px;
+		}
+		.trash{
+			float: right;
+			font-size: 18px;
+			color: $lighTbBlue;
+		}
+	}
+
+
+    li:nth-child(odd) {
+        border: 0.5px solid $lightGrey;
+    }
+}

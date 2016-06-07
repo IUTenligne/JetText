@@ -11,12 +11,11 @@ var Glossaries = React.createClass({
 	        newGlossaryValue: '',
 	        glossariesList: [] ,
             viewCreate: false,
+            inputCreate: false
 	    };
 	},
 
-    handleChange: function(event) {
-        this.setState({newGlossaryValue: event.target.value});
-    },
+
 
 	componentDidMount: function() {
 	    this.serverRequest = $.get("/glossaries.json", function(result){
@@ -89,14 +88,25 @@ var Glossaries = React.createClass({
     viewCreateGlossaries: function(){
         this.setState({viewCreate: true });
     },
+
     handleModalState: function(st) {
         this.setState({viewCreate: false });
+    },
+
+    handleChange: function(myparam, event) {
+        console.log(event);
+        if (myparam == "newGlossaryValue") {
+            this.setState({
+                newGlossaryValue: event.target.value,
+                inputCreate: true
+            })
+        }    
     },
 
     _notificationSystem: null,
 
     render: function(){
-        var that = this;
+    var that = this;
     	return(
     		<article id="glossary">
                 <NotificationSystem ref="notificationSystem" />
@@ -106,28 +116,12 @@ var Glossaries = React.createClass({
                 <ul className="content-glossary">
         			{this.state.glossariesList.map(function(glossary){
         				return(
-                            <li key={glossary.id} className="list-group-term">
-																<div className="title-glossary">
-                                	<h4>{glossary.name}</h4>
-																	<div id="triangle"></div>
-																</div>
-																<div className="option-glossary">
-																	<a href={"/glossaries/"+glossary.id} onClick={that.deleteGlossary.bind(that, glossary)} >
-																		<span className="fa-stack fa-lg">
-																				<i className="fa fa-square fa-stack-2x"></i>
-																				<i className="fa fa-pencil fa-stack-1x fa-inverse"></i>
-																		</span>
-	                                    Editer
-	                                </a>
-	                                <a href="#" onClick={that.deleteGlossary.bind(that, glossary)} >
-	                                    <span className="fa-stack fa-lg">
-	                                        <i className="fa fa-trash-o fa-stack-1x "></i>
-	                                        <i className="fa fa-ban fa-stack-2x"></i>
-	                                    </span>
-	                                    Supprimer
-	                                </a>
-																</div>
-                            </li>
+                            <a href={"/#/glossaries/"+glossary.id}>
+                                <li key={glossary.id} className="list-group-glossary">
+                                    <h4 className="capitalize">{glossary.name}</h4>
+                                    <div className="triangle"></div>
+                                </li>
+                            </a>
         				);
         			})}
                     <li id="addGlossary" onClick={this.viewCreateGlossaries}>
@@ -141,7 +135,11 @@ var Glossaries = React.createClass({
                                 <span className="input-group-addon">
                                     <i className="fa fa-plus fa-fw"></i>
                                 </span>
-                                <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Créer un nouveau glossaire..." />
+                                <input type="text" id="new_glossary" className="form-control" value={this.state.newGlossaryValue} onChange={this.handleChange.bind(this, "newGlossaryValue")} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Créer un nouveau glossaire..." />
+                                { this.state.inputCreate 
+                                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createTerm}/>
+                                    : null
+                                }
                             </div>
                         </div>
                     </Modal>

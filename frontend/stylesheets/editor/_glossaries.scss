@@ -1,4 +1,5 @@
 @import "../vars";
+
 article#glossary {
 	padding: 20px;
 
@@ -20,60 +21,32 @@ article#glossary {
 			display: inline-block;
 			vertical-align: middle;
 		}
-		.list-group-term {
+		.list-group-glossary {
 			list-style-type: none;
+			margin: 0 20px 10px 20px ;
 			background: $white;
-			min-height: 180px !important;
 			width: 160px !important;
+			min-height: 180px !important;
 			box-shadow: 2px 2px 2px rgba($black,0.2);
-			.title-glossary{
-				width: 160px;
-				display: table;
-				margin-top: 10px;
-				h4{
-					background: $lightBlue;
-					width: 135px;
-					height: 20.8px;
-					display: table-cell;
-				}
-				#triangle{
-					width: 25px;
-					height: 20px;
-				}
-				#triangle::after{
-					width: 0;
-					height: 0;
-					border-top: 14px solid transparent;
-					border-right: 0;
-					border-bottom: 14px solid transparent;
-					border-left: 14px solid $lightBlue;
-					position: absolute;
-					margin-left: -12px;
+			z-index: 1;
 
-				}
-			}
-
-			.option-glossary{
+			h4 {
+				background: $lightBlue;
+				width: 145px;
+				height: 25px;
+				margin-left: -20px;
 				margin-top: 20px;
-				a {
-	            	width: 100%;
-	            	display: block;
-	            	padding: 0;
-	            	text-align: left;
-	            	margin: 12px 0 5px 12px;
-	            	cursor: pointer;
-	            	color: $bookGrey;
-				}
-
-				.list-group-item {
-	    			span, .fa {
-	    				font-size: 14px;
-	      			}
-	    		}
-
-		        a:hover{
-		          	color: $lightBlue;
-		        }
+				box-shadow: 3px 1px 3px rgba($black,0.3);
+				line-height: 1.5;
+				color: $black;
+			}
+			.triangle{
+				width: 0;
+				height: 0;
+				margin: 0px 0 0 -20px;
+				border-width: 5px 10px;
+				border-style: solid;
+				border-color: rgb(0,145,200) rgb(0,145,200) transparent transparent;
 			}
 
 		}
@@ -82,9 +55,8 @@ article#glossary {
 			min-height: 180px !important;
 			width: 180px !important;
 			margin: 0 auto;
-			margin: 0;
 			padding: 0;
-
+			margin-bottom: 10px;
 			cursor: pointer;
 			background: rgba($lightGrey,0.4);
 
@@ -95,4 +67,8 @@ article#glossary {
 			}
 		}
 	}
+}
+div#terms{
+	@import 'glossary';
+	padding: 20px;
 }
