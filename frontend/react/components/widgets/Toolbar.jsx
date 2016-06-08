@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Modal = require('../widgets/Modal.jsx');
+var enhanceWithClickOutside = require('react-click-outside');
+
 
 var Toolbar = React.createClass({
 	getInitialState: function() {
@@ -20,6 +22,10 @@ var Toolbar = React.createClass({
 
   toggleMenu: function() {
     this.setState({ menu: !this.state.menu });
+  },
+
+  handleClickOutside: function() {
+    this.setState({ menu: false });
   },
 
   handleContainersName: function(event) {
@@ -46,7 +52,9 @@ var Toolbar = React.createClass({
   },
 
 	handleModalState: function(st) {
-    this.setState({ overview: st });
+    this.setState({ 
+      overview: st
+    });
   },
 
 	render: function(){
@@ -82,4 +90,4 @@ var Toolbar = React.createClass({
 	}
 });
 
-module.exports = Toolbar;
+module.exports = enhanceWithClickOutside(Toolbar);
