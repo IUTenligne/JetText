@@ -8,13 +8,13 @@
 		padding: 0 !important;
 		margin: 0;
 	}
-	
 }
 
 .cke_chrome {
 	border: 0px;
 	box-shadow: none;
 }
+
 .cke_top {
 	background: transparent;
 	padding: 7px 7px 0 7px;
@@ -24,24 +24,29 @@
 	border-left: 1px solid $lightGrey;
 	border-bottom: 0px;
 }
+
 .cke_bottom {
 	background: transparent;
 	border: 0;
 	box-shadow: none;
 	color: $grey;
 }
+
 .cke_toolgroup {
 	border: 0px;
 }
+
 .cke_toolgroup, .cke_combo_button {
 	box-shadow: none;
-
-	background-image: none !important;
-	background: $white !important;
+	margin-left: 5px;
+	background-image:linear-gradient(#f0edeb, #ded9d5);
+	box-shadow: 2px 2px 4px rgba(#ded9d5,0.7);
 }
+
 .cke_contents {
 	border: 1px solid $lightGrey;
 }
+
 .cke_focus .cke_contents {
 	border: 1px solid $lightBlue !important;
 }

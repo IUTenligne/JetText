@@ -313,6 +313,14 @@ span.bold{
 				background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
 			}
 		}
+		div.block-content{
+			#mathToolbar{
+				button{
+					width: 100px;
+					padding: 5px;
+				}
+			}
+		}
 	}
 }
 
@@ -385,13 +393,13 @@ span.bold{
         
 			}
 
-      .browse-files:hover{
-        color: $lightBlue;
-          i{
-            color: $lightBlue;
-          }
-      }
-      .browse-files{
+      	.browse-files:hover{
+        	color: $lightBlue;
+          	i{
+            	color: $lightBlue;
+          	}
+      	}
+       	.browse-files{
 				width: 50%;
 				vertical-align: middle;
 				display: table-cell;
