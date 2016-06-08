@@ -58,10 +58,10 @@ var ContainersList = React.createClass({
             <ul>
                 { containers.map(function(container) {
                     return(
-                        <li key={container.id} onClick={that.itemSelection.bind(that, container.id)}>{container.name}
+                        <li key={container.id} onClick={that.itemSelection.bind(that, container.id)} className="capitalize">{container.name}
 
                             { that.state.selectedItem === container.id
-                                ? <ul className="selected-container-pages">
+                                ? <ul className="selected-container-pages capitalize">
                                     { that.state.pages.map(function(page) {
                                         return(
                                             <li key={page.id} onClick={that.exportItem.bind(that, page.id)}>{page.name}</li>

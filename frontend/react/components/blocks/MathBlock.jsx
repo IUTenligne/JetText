@@ -42,13 +42,13 @@ var MathToolbox = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div id="mathToolbar">
                 <button onClick={this.activeSymbol}>Symbols</button>
                 <button onClick={this.activeArrow}>Arrows</button>
                 <button onClick={this.activeLetter}>Greek Letters</button>
 
                 {this.state.symbol
-                    ? <ul className="mathtoolbar">
+                    ? <ul className=" ">
                         <li><button onClick={this.addMath.bind(this, " +")}>+</button></li>
                         <li><button onClick={this.addMath.bind(this, "times")}>x</button></li>
                         <li><button onClick={this.addMath.bind(this, " -")}>-</button></li>
@@ -61,7 +61,7 @@ var MathToolbox = React.createClass({
                 
                 
                 {this.state.arrow
-                    ? <ul className="mathtoolbar">
+                    ? <ul className=" ">
                         <li><button onClick={this.addMath.bind(this, ";")}>espace</button></li>
                         <li><button onClick={this.addMath.bind(this, "frac")}>frac</button></li>
                         <li><button onClick={this.addMath.bind(this, "sqrt{}")}>racine</button></li>
@@ -71,7 +71,7 @@ var MathToolbox = React.createClass({
                     :null
                 }
                 {this.state.letter
-                    ? <ul className="mathtoolbar">
+                    ? <ul className=" ">
                         <li><button onClick={this.addMath.bind(this, "alpha")}>alpha</button></li>
                         <li><button onClick={this.addMath.bind(this, "delta")}>delta</button></li>
                         <li><button onClick={this.addMath.bind(this, "eta")}>eta</button></li>
