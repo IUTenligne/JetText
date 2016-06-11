@@ -75,14 +75,17 @@ span.bold{
 					}
 
 					button {
+            padding-top: 5px;
 						width: 10%;
 						float: right;
 						background: none;
 						border: none;
+            cursor: pointer;
 						i{
-							border-radius: 20px;
-							float: right;
-							font-size: 15px;
+              border-radius: 20px;
+        			float: right;
+        			font-size: 15px;
+        			padding: 0px 6px;
 						}
 					}
 				}
@@ -116,7 +119,7 @@ span.bold{
 		        margin-left: auto;
 		        margin-right: auto;
 		        margin-bottom: 10px;
-		        
+
 	        	th{
 	          		background: $lightBlue;
 	        	}
@@ -133,7 +136,7 @@ span.bold{
 				padding-left: 15px;
 			}
 
-			/* glossary tooltip*/
+			/* glossary tooltip */
 			a {
 				position: relative;
 				color: $lightBlue;
@@ -141,7 +144,7 @@ span.bold{
 
 			a[data]:hover:after {
 			 	content: attr(data);
-			 	position:absolute;
+			 	position: absolute;
 			 	background: $uiGrey;
 			 	border-radius: 4px;
 			 	padding: 7px;
@@ -149,9 +152,8 @@ span.bold{
 			 	color: white;
 			 	bottom: 28px;
 			 	left: 0px;
-			 	word-wrap: break-word ;
+			 	word-wrap: break-word;
 			 	width: 300px;
-			 	text-align: center;
 			}
 
 			a[data]:hover:before {
@@ -234,10 +236,12 @@ span.bold{
 
 	.action i:hover {
 		cursor: pointer;
+    color: $lightBlue;
 	}
 
 	.action button.handle:hover {
 		cursor: move;
+    color: $lightBlue;
 	}
 
 	.block-actions {
@@ -391,7 +395,7 @@ span.bold{
 				  		color: $textGrey;
 					}
 				}
-        
+
 			}
 
       	.browse-files:hover{
