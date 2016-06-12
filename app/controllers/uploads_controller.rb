@@ -24,7 +24,7 @@ class UploadsController < ApplicationController
   end
 
   def index
-  	@uploads = Upload.select("id, file_file_name, file_content_type, url, file_updated_at").where(user_id: current_user.id)
+  	@uploads = Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at").where(user_id: current_user.id)
   	render json: { uploads: @uploads }
   end
 

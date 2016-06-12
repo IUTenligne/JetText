@@ -4,7 +4,7 @@ class CreateUploads < ActiveRecord::Migration
 
     t.string :name    
     t.attachment :file
-    t.string :type    
+    t.string :filetype    
     t.string :url   
     t.references :user, index: true, foreign_key: true
     end

@@ -4,6 +4,7 @@ class Upload < ActiveRecord::Base
   has_and_belongs_to_many :blocks
 
   before_create :reencode_filename
+  before_create :set_type
 
   Paperclip.interpolates('user') do |attachment, style|
     attachment.instance.user.email.to_s
@@ -78,6 +79,21 @@ class Upload < ActiveRecord::Base
     return File.extname(file_file_name).downcase
   end
 
+  def types_hash
+    types = {
+      "mp4" => "video",
+      "flv" => "video",
+      "avi" => "video",
+      "pdf" => "pdf",
+      "png" => "image",
+      "jpg" => "image",
+      "jpeg" => "image",
+      "gif" => "image",
+      "svg" => "image",
+      "mp3" => "audio",
+      "mpeg" => "audio"
+    }
+  end
 
   private
     # lowercase the ext
@@ -85,6 +101,10 @@ class Upload < ActiveRecord::Base
       extension = File.extname(file_file_name).downcase
       name = File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z_-]/, '').downcase
       self.file.instance_write(:file_name, "#{name}#{extension}")
+    end
+
+    def set_type
+      self.filetype ||= self.file_content_type.mb_chars.normalize(:kd).split('/')[-1]
     end
 
 end
