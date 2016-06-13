@@ -43,10 +43,13 @@ h2.header_page {
 		text-align: center;
 		color: $white;
 		height: 80px;
-		border-radius: 4px;
 		cursor: pointer;
-		box-shadow: 2px 2px 4px rgba(0,0,0,0.20);
+		box-shadow: 2px 2px 4px rgba(0,0,0,0.50);
 		transition: all .2s ease-in-out;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color .25s;
 
 		i {
 			font-size: 35px;
@@ -80,17 +83,21 @@ h2.header_page {
 	.text,
 	.texte {
 		background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+    box-shadow: 0px 5px #26648b, 0 3px 5px rgba(0,0,0,.3);
 	}
 	.media{
 		background-image:linear-gradient( $lightOrange,rgb(217,125,14));
+    box-shadow: 0px 5px #9e5b0b, 0 3px 5px rgba(0,0,0,.3);
 	}
 	.note,
 	.remarque {
 		background-image:linear-gradient( $lightRed,rgb(186,67,38));
+    box-shadow: 0px 5px #932d14, 0 3px 5px rgba(0,0,0,.3);
 	}
 	.glossary,
 	.glossaires {
 		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
+    box-shadow: 0px 5px #2c7f57, 0 3px 5px rgba(0,0,0,.3);
 		a{
 			color: $white;
 		}
@@ -98,6 +105,7 @@ h2.header_page {
 	.math,
 	.maths {
 		background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
+    box-shadow: 0px 5px #5f2d81, 0 3px 5px rgba(0,0,0,.3);
 	}
 }
 

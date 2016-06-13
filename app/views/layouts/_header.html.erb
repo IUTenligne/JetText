@@ -6,9 +6,10 @@
 	<div id="top-menu" class="header-collapse">
 		<ul>
 			<% if user_signed_in? %>
-				<li><%= link_to raw('<i class="fa fa-folder-open fa-fw "></i>'), "/#containers/", data: { no_turbolink: true }, title: "Mes ressources" %></li>
-				<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), "/#glossaries/", data: { no_turbolink: true }, title: "Mes glossaires" %></li>
+				<li><%= link_to raw('<i class="fa fa-folder-open fa-fw "></i>'), "/#/containers/", data: { no_turbolink: true }, title: "Mes ressources" %></li>
+				<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), "/#/glossaries/", data: { no_turbolink: true }, title: "Mes glossaires" %></li>
 				<li><%= link_to raw('<i class="fa fa-user fa-fw "></i>'), '/#/' %></li>
+				<li><%= link_to raw('<i class="fa fa-files-o fa-fw "></i>'), '/#/files' %></li>
 				<li><%= link_to(raw('<i class="fa fa-sign-out"></i>'), destroy_user_session_path, :method => :delete) %></li>
 				<% if current_user.is_admin? %>
 					<li><%= link_to raw('<i class="fa fa-university fa-fw admin-links"></i>'), '/#/company', title: "Admin équipe" %></li>

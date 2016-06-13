@@ -10,6 +10,7 @@ var Glossary = require('./components/glossaries/Glossary.jsx');
 var Term = require('./components/glossaries/Term.jsx');
 var CompanyContainers = require('./components/companies/CompanyContainers.jsx');
 var UsersPanel = require('./components/admin/UsersPanel.jsx');
+var UsersFiles = require('./components/user/UsersFiles.jsx');
 
 
 $(document).ready(function () {
@@ -20,6 +21,8 @@ $(document).ready(function () {
 		    <Route path="containers" component={Containers}/>
 		    <Route path="containers/:id" component={Container}/>
 		    <Route path="containers/:id/:pageId" component={Container}/>
+
+		    <Route path="files" component={UsersFiles}/>
 
 		    <Route path="glossaries" component={Glossaries}/>
 		    <Route path="glossaries/:id" component={Glossary}/>

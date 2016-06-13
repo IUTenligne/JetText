@@ -113,7 +113,7 @@
                       </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row btn">
                       <div class="col-lg-6 btn-after">
                         <% if @prev_link && @prev_link != "" %>
                           <a href="<%= @prev_link %>">
@@ -178,21 +178,13 @@
                 findChildren(activePage);
 
                 var uls = $('#nav-menu').find('ul').each(function() {
+                  console.log($(this));
                   if ( $(this).is(":visible") ) {
-                    $(this).prepend("<a href='#'>+</a>");
+                    $(this).prev().addClass("moins");
                   } else {
-                    $(this).prepend("<a href='#'>-</a>");
+                    $(this).prev().addClass("plus");;
                   }
                 });
-
-
-                function findPageIcon(el) {
-                  if ($(el).next().is('ul')) {
-                    $(el).next().addClass('chevron');
-                  }
-                }
-
-
             });
       </script>
 

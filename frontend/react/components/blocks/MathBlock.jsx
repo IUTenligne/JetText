@@ -10,7 +10,6 @@ var ContainersList = require('./ContainersList.jsx');
 var MathToolbox = React.createClass({
     getInitialState: function() {
         return {
-            aVoir: false,
             arrow: false,
             letter: false
         }
@@ -122,6 +121,8 @@ var MathToolbox = React.createClass({
 var MathBlock = React.createClass({
 	getInitialState: function() {
         return {
+            changeName: false,
+            blockName: '',
             areaContent: '',
             value: '',
             tooltipState: false,
@@ -131,6 +132,7 @@ var MathBlock = React.createClass({
 
     componentDidMount: function (root) {
         this.setState({
+            blockName: this.props.block.name,
             areaContent: this.props.block.content,
             value: this.props.block.content
         });
@@ -147,9 +149,12 @@ var MathBlock = React.createClass({
             context: this,
             data: {
                 id: block.id,
-                name: '',
+                name: this.state.blockName,
                 content: this.state.areaContent,
                 classes: ''
+            },
+            success: function() {
+                this.setState({ changeName: false })
             }
         });
 
@@ -188,7 +193,6 @@ var MathBlock = React.createClass({
         }.bind(this));
     },
 
-
     viewBlockAction: function() {
         this.setState({ tooltipState: !this.state.tooltipState });
     },
@@ -218,6 +222,13 @@ var MathBlock = React.createClass({
         this.props.removeMe(this.props.block);
     },
 
+    handleBlockName: function(event) {
+        this.setState({
+            blockName: event.target.value,
+            changeName: true
+        });
+    },
+
     createMarkup: function(data) {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
         return {__html: "$$" + data + "$$"};
@@ -232,12 +243,13 @@ var MathBlock = React.createClass({
                 <div className="content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-superscript"></i>
-                        <h3></h3>
+                        <h3>
+                            <input type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
+                            { this.state.changeName ? <button title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
+                        </h3>
                     </div>
 
                     <div className="block-content">
-                        <i className="fa fa-cog fa-spin fa-3x fa-fw experiment"></i>
-                        <span>Bloc en cours de conception</span>
                         <MathToolbox interact={this.handleInteraction} />
 
                         <textarea ref="matharea" type="text" value={this.state.areaContent} onChange={this.handleChange} rows="5" cols="50" />
