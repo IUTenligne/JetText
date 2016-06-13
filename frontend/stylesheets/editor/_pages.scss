@@ -22,7 +22,7 @@ h2.header_page {
 			float: right;
 			font-size: 20px;
 			background: $white;
-			padding: 8px;
+			padding: 7px;
 		}
 	}
 }
@@ -101,7 +101,7 @@ h2.header_page {
 		a{
 			color: $white;
 		}
-	}	
+	}
 	.math,
 	.maths {
 		background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
@@ -109,7 +109,7 @@ h2.header_page {
 	}
 }
 
-
+/* toolbar: title container and timeline*/
 #toolbar {
   clear: both;
   width: auto;
@@ -124,11 +124,12 @@ h2.header_page {
   box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
   display: inline-block;
   float: left;
+	z-index: 10;
 
   #previewbutton {
     width: 5%;
     float: left;
-  
+
     button {
       height: 45px;
       width: 45px;
@@ -185,7 +186,7 @@ h2.header_page {
       z-index: 0 !important;
       border-radius: 0 0 6px 6px;
       box-shadow: 0 3px 2px rgba(0,0,0,0.25);
-      color: $lightGrey
+      color: $lightGrey;
     }
 
     h1:hover::before {
@@ -206,6 +207,21 @@ h2.header_page {
           a {
             color: $lightBlue;
           }
+					button {
+						width: 15%;
+						float: right;
+						background: none;
+						border: none;
+						color: $white;
+						cursor: pointer;
+						i{
+							border-radius: 20px;
+							float: right;
+							font-size: 15px;
+							background: $lightRed;
+							padding: 3px;
+						}
+					}
         }
         li::before {
           content: "■";
@@ -232,7 +248,7 @@ h2.header_page {
 
     .timeline-container {
       .blocks-timeline {
-        .timeline-progress { 
+        .timeline-progress {
           position: relative;
           background: white;
           text-align: center;
@@ -241,9 +257,9 @@ h2.header_page {
             position: absolute;
             background: #C2EBFF;
             text-align: center;
-            top:0; 
+            top:0;
             bottom:0;
-            left:0; 
+            left:0;
             height: 35px;
             color: $lightBlue;
 
@@ -264,7 +280,7 @@ h2.header_page {
         .timeline-menu {
           display: none;
           a {
-            
+
           }
         }
 
@@ -312,4 +328,3 @@ h2.header_page {
   margin-top: -40px;
   transition: 500ms;
 }
-
