@@ -61,7 +61,7 @@
 	opacity: 0.8 !important;
 }
 
-.cke_editor_text_block_61_dialog{
+.cke_reset_all{
 	display: flex !important;
 	z-index: 999 !important;
 	vertical-align: center !important;
@@ -107,9 +107,9 @@
 					color: $lightBlue;
 				}
 				.cke_dialog_close_button::before{
-					content: "\f001";
-		      font-family: FontAwesome;
-		      font-size: 15px;
+					content: "\f00d";
+		      		font-family: FontAwesome;
+		      		font-size: 20px;
 					color: black;
 					cursor: pointer;
 				}
@@ -138,6 +138,7 @@
 									display: table;
 									display: block;
 									clear: both;
+
 									label {
 										width: 20%;
 										vertical-align: middle;
@@ -218,33 +219,14 @@
 							.cke_resizer_ltr{
 								display: none;
 							}
+
 							table.cke_dialog_footer_buttons{
-								.cke_dialog_ui_button_cancel, .cke_dialog_ui_button_ok{
-									border-radius: 20px;
-						      width: 32px;
-									height: 23px;
-									border: none !important;
-									box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
-									span{
-										opacity: 0;
-										padding: 3px;
-									}
-								}
 								.cke_dialog_ui_button_ok{
 									background-image: linear-gradient($lightBlue, #00a0db);
+									border: none !important;
 								}
-								.cke_dialog_ui_button_cancel::before, .cke_dialog_ui_button_ok::before{
-							      font-family: FontAwesome;
-							      font-size: 15px;
-										color: $white;
-										cursor: pointer;
-										padding: 4px 0 0 8px;
-								}
-								.cke_dialog_ui_button_cancel::before{
-									content: "\f001";
-								}
-								.cke_dialog_ui_button_ok::before{
-									content: "\f002";
+								.cke_dialog_ui_button_ok:hover{
+									background-image: linear-gradient(#3ecbff, #0091c8);
 								}
 							}
 						}
