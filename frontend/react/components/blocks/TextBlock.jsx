@@ -69,7 +69,6 @@ var TextBlock = React.createClass({
     },
 
     regexTerm: function(termsList, content){
-        console.log(termsList, "ok");
         for ( var i in termsList ) {
             var regex = new RegExp(termsList[i]["name"], "gi");
             if ( content.match(regex) ) {
@@ -112,7 +111,6 @@ var TextBlock = React.createClass({
                 content: this.state.blockContent
             },
             success: function(data) {
-                console.log(data.content);
                 if (close === true) {
                     this.setState({
                         blockName: data.name,

@@ -291,3 +291,153 @@ $elements: 15;
   background-color: #EAFFEA;
   padding: 3px;
 }
+
+
+
+#toolbar {
+  clear: both;
+  width: auto;
+  position: fixed;
+  top: 0%;
+  right: 0px;
+  left: 0px;
+  margin-left: 344px;
+  text-align: left;
+  height: 35px;
+  background: $white;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+  display: inline-block;
+  float: left;
+
+  #previewbutton {
+      width: 5%;
+      float: left;
+    
+      button {
+        height: 45px;
+        width: 45px;
+        background-image: linear-gradient($lightBlue, #00a0db);
+        color: white;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 2px 2px 4px rgba($lightBlue,0.20);
+        border: 0;
+
+        i {
+          font-size: 20px;
+        }
+      }
+    }
+
+
+  div.header {
+    width: 40%;
+    height: 35px;
+    float: left;
+    display: inline-block;
+
+    h1 {
+      padding-left: 10px;
+      margin-top: 0;
+      padding-top: 0;
+      height: 35px;
+
+      input {
+        font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+        text-transform: capitalize;
+        background: none !important;
+        border: none;
+        font-size: 30px;
+        color: $uiGrey;
+        width: 80%;
+        box-shadow: none !important;
+        padding: 0;
+        margin: 0;
+        height: 35px;
+      }
+      button {
+        width: 9%;
+        background: none;
+        border: none;
+        i{
+          border-radius: 20px;
+          float: right;
+          font-size: 20px;
+          background: $white;
+          padding: 8px;
+        }
+      }
+    }
+  }
+
+  #timeline {
+    width: 90px;
+    float: right;
+    z-index: 1000 !important;
+    height: 35px;
+    display: inline-block;
+    text-align: right;
+
+    .timeline-container {
+      .blocks-timeline {
+        .timeline-progress { 
+          position: relative;
+          background: white;
+          text-align: center;
+
+          .timeline-progress-content {
+            position: absolute;
+            background: #C2EBFF;
+            text-align: center;
+            top:0; 
+            bottom:0;
+            left:0; 
+            height: 35px;
+            color: $lightBlue;
+
+            .timeline-progress-content-inner {
+              clear: both;
+              position: absolute;
+              text-align: center;
+              width: 90px;
+              line-height: 35px;
+            }
+          }
+        }
+
+        .timeline-progress:hover {
+          cursor: pointer;
+        }
+
+        .timeline-menu {
+          display: none;
+          a {
+            
+          }
+        }
+
+        .timeline-menu.timeline-menu-active {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.toolbar-transition-appear {
+  margin-left: -400px;
+}
+
+.toolbar-transition-appear.toolbar-transition-appear-active {
+  margin-left: 0px;
+  transition: 500ms;
+}
+
+.toolbar-transition-leave {
+  margin-left: 0px;
+}
+
+.toolbar-transition-leave.toolbar-transition-leave-active {
+  margin-left: -400px;
+  transition: 500ms;
+}
