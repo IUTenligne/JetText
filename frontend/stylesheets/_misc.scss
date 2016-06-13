@@ -102,8 +102,8 @@
 
 .gu-transit {
   opacity: 0.8;
-  border: 2px $lightBlue dashed !important;
   color: $white !important;
+  background: #94E2FF !important;
 } 
 /* */
 
@@ -247,7 +247,7 @@
 .blocks.retracted .block .block-inner .block-content,
 .blocks.retracted .block .block-inner .block-actions,
 .blocks.retracted .block .block-actions {
-  display: none;
+  display: none !important;
 }
 
 .capitalize{

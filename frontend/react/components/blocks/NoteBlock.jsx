@@ -32,6 +32,7 @@ var NoteBlock = React.createClass({
             selectedStyle: '',
             editBlock: true,
             tooltipState: false,
+            tooltipMovesState: false,
             modalState: false,
             noteStyles: ["remarque", "important", "quote", "exemple", "definition", "methode"]
         };
@@ -297,11 +298,25 @@ var NoteBlock = React.createClass({
     },
 
     viewBlockAction: function() {
-        this.setState({ tooltipState: !this.state.tooltipState });
+        this.setState({ 
+            tooltipState: !this.state.tooltipState,
+            tooltipMovesState: false
+        });
+    },
+
+    viewBlockMoves: function() {
+        this.setState({ 
+            tooltipState: false,
+            tooltipMovesState: !this.state.tooltipMovesState
+        });
     },
 
     handleTooltipState: function(st) {
         this.setState({ tooltipState: st });
+    },
+
+    handleTooltipMovesState: function(st) {
+        this.setState({ tooltipMovesState: st });
     },
 
     handleRemoveBlock: function() {
@@ -336,6 +351,14 @@ var NoteBlock = React.createClass({
 
     closeModal: function() {
         this.setState({ modalState: false });
+    },
+
+    moveUpBlock: function() {
+        this.props.moveBlock(this.props.item, "up");
+    },
+
+    moveDownBlock: function() {
+        this.props.moveBlock(this.props.item, "down");
     },
 
 	render: function() {
@@ -453,7 +476,7 @@ var NoteBlock = React.createClass({
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
-                    <button className="handle" title="Déplacer le bloc"></button>
+                    <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
                 </div>
 
                 <Tooltip tooltipState={this.handleTooltipState}>
@@ -467,6 +490,17 @@ var NoteBlock = React.createClass({
                             <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
+                        </div>
+                        : null
+                    }
+                </Tooltip>
+
+                <Tooltip tooltipState={this.handleTooltipMovesState}>
+                    { this.state.tooltipMovesState
+                        ? <div className="block-actions block-moves">
+                            <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
+                            <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
+                            <NotificationSystem ref="notificationSystem" />
                         </div>
                         : null
                     }

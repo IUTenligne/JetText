@@ -137,6 +137,49 @@ var Page = React.createClass({
         });
     },
 
+    handleBlockMove: function(block, way) {
+        var blocks = this.refs.dragableblocks.children;
+        var updated_sequence = [];
+        $(blocks).each(function(i) {
+            updated_sequence.push({ id: $(this).data('id'), sequence: i });
+        });
+
+        var target_pos = updated_sequence.map(function(e) { return e.id; }).indexOf(block.id);
+
+        if (way === "up") {
+            if ((target_pos-1) >= 0) {
+                var target = updated_sequence[target_pos-1]["id"];
+                updated_sequence[target_pos-1]["id"] = updated_sequence[target_pos]["id"];
+                updated_sequence[target_pos]["id"] = target;
+            }
+        } else if (way === "down") {
+            if ((target_pos+1) >= 0) {
+                var target = updated_sequence[target_pos+1]["id"];
+                updated_sequence[target_pos+1]["id"] = updated_sequence[target_pos]["id"];
+                updated_sequence[target_pos]["id"] = target;
+            }
+        }
+
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/sort',
+            context: this,
+            data: { sequence: updated_sequence },
+            success: function(data) {
+                var sortedBlocks = [];
+                for (var i in updated_sequence) {
+                    var o = updated_sequence[i];
+                    var block = $.grep(this.state.blocks, function(e){
+                        if (e.id == o.id) return e;
+                    });
+                    sortedBlocks.push(block[0]);
+                }
+
+                this.setState({ blocks: sortedBlocks });
+            }
+        });
+    },
+
     handleDragAction: function(blockList) {
         /* sent by its Block.jsx child */
         this.setState({ blocks: blockList });
@@ -203,6 +246,7 @@ var Page = React.createClass({
                                     containerId={page.container_id} 
                                     removeBlock={that.handleBlockDeletion}
                                     addBlock={that.handleBlockAdd} 
+                                    moveBlock={that.handleBlockMove}
                                 />
                             );
                         })}

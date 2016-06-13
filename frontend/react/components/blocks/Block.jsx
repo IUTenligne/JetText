@@ -15,6 +15,7 @@ var Block = React.createClass({
         return {
             editBlock: true,
             tooltipState: false,
+            tooltipMovesState: false,
             modalState: false,
             helpModalState: false,
             loading: false,
@@ -106,11 +107,25 @@ var Block = React.createClass({
     },
 
     viewBlockAction: function() {
-        this.setState({ tooltipState: !this.state.tooltipState });
+        this.setState({ 
+            tooltipState: !this.state.tooltipState,
+            tooltipMovesState: false
+        });
+    },
+
+    viewBlockMoves: function() {
+        this.setState({ 
+            tooltipState: false,
+            tooltipMovesState: !this.state.tooltipMovesState
+        });
     },
 
     handleTooltipState: function(st) {
         this.setState({ tooltipState: st });
+    },
+
+    handleTooltipMovesState: function(st) {
+        this.setState({ tooltipMovesState: st });
     },
 
     handleHelpModalState: function() {
@@ -143,6 +158,19 @@ var Block = React.createClass({
         }.bind(this));
     },
 
+    moveUpBlock: function() {
+        this.props.moveBlock(this.props.item, "up");
+    },
+
+    moveDownBlock: function() {
+        this.props.moveBlock(this.props.item, "down");
+    },
+
+    handleBlockMove: function(block, way) {
+        console.log(block, way),
+        this.props.moveBlock(this.props.item, way);
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -157,6 +185,7 @@ var Block = React.createClass({
                         containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        moveBlock={this.handleBlockMove}
                     />
 
                     <NotificationSystem ref="notificationSystem" />
@@ -190,7 +219,7 @@ var Block = React.createClass({
                     <div className="action">
                         <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                         <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
-                        <button className="handle" title="Déplacer le bloc"></button>
+                        <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
                     </div>
 
                     <Tooltip tooltipState={this.handleTooltipState}>
@@ -198,6 +227,17 @@ var Block = React.createClass({
                             ? <div className="block-actions">
                                 <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button><br/>
                                 <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
+                                <NotificationSystem ref="notificationSystem" />
+                            </div>
+                            : null
+                        }
+                    </Tooltip>
+
+                    <Tooltip tooltipState={this.handleTooltipMovesState}>
+                        { this.state.tooltipMovesState
+                            ? <div className="block-actions block-moves">
+                                <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
+                                <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
                             : null
@@ -231,6 +271,7 @@ var Block = React.createClass({
                         containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        moveBlock={this.handleBlockMove}
                     />
 
                     <NotificationSystem ref="notificationSystem" />
@@ -245,6 +286,7 @@ var Block = React.createClass({
                         containerId={this.props.containerId}
                         removeMe={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        moveBlock={this.handleBlockMove}
                     />
 
                     <NotificationSystem ref="notificationSystem" />
