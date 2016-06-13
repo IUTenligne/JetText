@@ -27,6 +27,7 @@ var Container = React.createClass({
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers/" + this.props.params.id + ".json", function (result) {
+            console.log(result.status.state);
             if (result.pages && result.pages[0]) {
                 this.setState({
                     status: result.status,
@@ -43,12 +44,14 @@ var Container = React.createClass({
                     containerName: result.container.name,
                     loading: false
                 });
-            } else {
+            } else if (result.container != undefined) {
                 this.setState({
                     containerName: result.container.name,
                     status: result.status,
                     loading: false
                 });
+            } else if (result.container === undefined) {
+                window.location = "/#/containers";
             }
         }.bind(this));
 

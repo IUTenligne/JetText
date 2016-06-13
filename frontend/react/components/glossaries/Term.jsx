@@ -24,7 +24,6 @@ var Term = React.createClass({
 
     render: function(){
         var term = this.state.TermValue;
-        console.log(term);
         return(
             <div className="term">
                 <h2>{term.name}</h2>

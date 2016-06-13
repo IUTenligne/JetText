@@ -6,6 +6,15 @@
 	<% if current_user.is_validated? %>
 		<div id="appcontainer" class="outlet"></div>
 	<% else %>
-		<h2>Oups !</h2>
+		<div class="home">
+		  <h1>Bonjour <span class="capitalize"><%= current_user.firstname %></span> !</h1>
+
+			<div class="content">
+				<div class="info-box">
+					<h2>Votre compte est en attente de validation.</h2>
+					<p>Vous serez averti par email lorsqu'il sera activé.</p>
+				</div>
+			</div>
+		</div>
 	<% end %>
 <% end %>
