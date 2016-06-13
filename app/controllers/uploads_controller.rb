@@ -70,6 +70,7 @@ class UploadsController < ApplicationController
 		def upload_params
 			params.require(:upload).permit(:name, :file, :url)
 		end
+    
 end	
 
 # == Schema Information

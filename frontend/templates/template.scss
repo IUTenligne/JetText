@@ -1,14 +1,14 @@
 /******** color ********/
 
-$grey: #F0F1F6;
-$darkGrey: #5c5954;
+$grey: #626A75;
+$darkGrey: #32373D;
 
 $white: #FFFFFF;
 $black: #000000;
 
 
-$darkBlue: #293949;
-$blue: #2E4051;
+$darkBlue: #32373D;
+$blue: #00AEEF;
 $lighBlue: #3598DB;
 $lighTbBlue: #62A7D1;
 
@@ -106,7 +106,7 @@ $menuWidth: 350px;
         height: 100%;
         margin-left: -$menuWidth;
         overflow-y: auto;
-        background: $darkBlue;
+        background: $darkGrey;
         box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.3) inset;
         -webkit-transition: all 0.5s ease;
         -moz-transition: all 0.5s ease;
@@ -174,53 +174,79 @@ $menuWidth: 350px;
 			}
 			/********  menu navigation container ********/
 			ul.nav-menu {
-				color: $black ;
 				text-align: left;
+				padding-top: 25px;
+
 				li{
 					list-style: none;
 					white-space: nowrap;
 					text-overflow: ellipsis;
 					overflow:hidden;
-					padding-left: 20px;
 					margin-top: 5px;
 					font-size: 16px;
-					
+					background-image:linear-gradient( #7e8793, $grey);
+					padding: 7px 0 7px 20px;
+
 					a{
-						color: rgba($white,0.25);
+						color: $white ;
 						min-width: 100%;
 						text-decoration: none;
+						overflow: hidden;
 					}
 				}
 				li.active{
+					background: $blue;
 					a{
 						color: $white;
 					}
 				}
 				ul{
 					display: none;
-					background: $blue;
+					background: $white;
 					margin: 0px 0px 20px 0px;
-					padding-left: 25px;
-					box-shadow: -1px 2px 10px 3px rgba(0, 0, 0, 0.3) inset;
-
+					padding: 0;
+					
 					li{
 						border: none;
 						margin: 0;
 						background: none;
-						font-size: 13px;
+						font-size: 14px;
+						padding: 4px 0 4px 40px;
 						a{
-
+							color: #AEABB4;
 						}
 					}
 					ul{
-						box-shadow: none;
-						border: none;
-						background: none;
+						li{
+							padding-left: 60px;
+						}
+						ul{
+							li{
+								padding-left: 80px;
+							}
+						}
 					}
 				}
 
-				ul.active-parent{
+				ul.active-parent {
 					display: block;
+				}
+
+				li.plus, li.moins {
+					a::after {
+						font-family: FontAwesome;
+		      			font-size: 20px;
+					}
+				}
+				li.plus{
+					a::after{
+						content: "\f055";
+					}
+				}
+				li.moins{
+					a::after{
+						content: "\f056";
+					}
 				}
 			}
         }
@@ -260,10 +286,10 @@ $menuWidth: 350px;
         	padding: 0;
         	/********  title container ********/
 			h1.container-title {
-				color: $blue;
+				color: $darkGrey;
 				font-size: 50px;
 				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-				background: $grey;
+				background: rgba(#AEABB4,0.3);
 				height: 100px !important;
 				margin:0;
 				padding: 20px 0 0 20px;
@@ -285,6 +311,7 @@ $menuWidth: 350px;
 					}
 					div.content{
 						margin-left: 40px;
+						margin-right: 40px;
 						padding: 15px;
 						font-size: 17px;
 						text-align: justify;
@@ -382,7 +409,7 @@ $menuWidth: 350px;
 							.block-note-title-methode i{
 								color: $lightRmOrange;
 							}
-							.block-note-title-methode:after{
+							.block-note-title-methode:after {
 								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 								font-size: 24px;
 								content: "Méthode";
@@ -396,7 +423,7 @@ $menuWidth: 350px;
 							.block-note-title-remarque i{
 								color: $lighRmBlue;
 							}
-							.block-note-title-remarque:after{
+							.block-note-title-remarque:after {
 								font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 								font-size: 24px;
 								content: "Remarque";
@@ -407,13 +434,15 @@ $menuWidth: 350px;
 				}	
 			}
 			/********  btn next and after ********/
-			.btn{
+			.btn {
 				width: 100%;
-				.btn-after, .btn-next{
+				margin-top: 20px;
+
+				.btn-after, .btn-next {
 					color: $black;
 					display: inline-block;
-					width: 50%;
-					a{
+					min-width: 50%;
+					a {
 						cursor: pointer;
 						width: 90px;
 						display: inline-block;
@@ -421,15 +450,15 @@ $menuWidth: 350px;
 						text-decoration: none;
 						display: inline-block;
 					}
-					a:hover{
+					a:hover {
 						color: $blue;
 					}
 					
 				}
-				.btn-next{
+				.btn-next {
 					text-align: right;
 				}
-				.btn-after{
+				.btn-after {
 					text-align: left;
 				}
 			}
@@ -479,6 +508,8 @@ $menuWidth: 350px;
         margin-right: 0;
     }
 }
+
+
 @media(min-width:1540px) {
   .none{
 		display: none;
