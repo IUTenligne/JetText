@@ -23,7 +23,7 @@ var FileInfo = React.createClass({
 
     handleFileWrapper: function() {
         if (this.props.file.filetype === "image") {
-            return { __html: '<img src="'+ this.props.file.url +'" height="30">' };
+            return { __html: '<img src="'+ this.props.file.url +'" height="28">' };
         } else if (this.props.file.filetype === "audio") {
             return { __html: '<i class="fa fa-music"></i>' };
         } else if (this.props.file.filetype === "video") {
@@ -36,8 +36,8 @@ var FileInfo = React.createClass({
             return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px    ">' };
         } else if (this.props.file.filetype === "audio") {
             return { __html: '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>' };
-        } else if (this.props.file.filetype === "audio") {
-            return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="video/mpeg">\n</video>' };
+        } else if (this.props.file.filetype === "video") {
+            return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>' };
         }
     },
 
@@ -71,7 +71,7 @@ var FileInfo = React.createClass({
                 <td>
                     <NotificationSystem ref="notificationSystem"/>
                     { this.state.modalPreview
-                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu"}>
+                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu " + file.file_file_name}>
                                 <div className="modal-in">
                                     <center>
                                         <div dangerouslySetInnerHTML={this.handleFilePreview()} />
@@ -141,15 +141,15 @@ var UsersFiles = React.createClass({
                     <table>
                         <thead>
                             <tr>
-                                <th onClick={this.sort.bind(this, this.state.files, "validated")} width="auto" />
-                                <th onClick={this.sort.bind(this, this.state.files, "validated")} width="50%">
-                                    Nom {this.state.sorter === "validated" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th onClick={this.sort.bind(this, this.state.files, "name")} width="auto" />
+                                <th onClick={this.sort.bind(this, this.state.files, "name")} width="50%">
+                                    Nom {this.state.sorter === "name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th width="20%">
-                                    Type
+                                <th onClick={this.sort.bind(this, this.state.files, "type")} width="20%">
+                                    Type {this.state.sorter === "type" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th width="20%">
-                                    Date
+                                <th onClick={this.sort.bind(this, this.state.files, "date")} width="20%">
+                                    Date {this.state.sorter === "date" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                             </tr>
                         </thead>

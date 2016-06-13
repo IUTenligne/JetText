@@ -44,21 +44,28 @@ class Upload < ActiveRecord::Base
       "image/jpg",
       "image/jpeg",
       "image/gif",
+      "image/svg+xml",
+      "image/svg",
       "audio/mp3",
       "audio/mpeg"
 		],
 		:message => 'Seuls les fichiers PDF, MP3, PNG, JPG et MP4 sont autorisés.'
 
   def file_type
-    ext = self.file_file_name.split('.')[-1]
+    ext = self.file_file_name.split('.')[-1].downcase
     type = self.file_content_type.mb_chars.normalize(:kd).split('/')
 
     # forces directory's name if the mime-type's bug force-download is encounterd
     if type[0] === "application" && type[1] === "force-download" && !self.types_hash.fetch(ext.to_sym).nil?
-      return ext
+      if type[1] === "force-download" && (ext === "mp4" || ext === "avi" || ext === "flv")
+        self.file_content_type = "video/#{ext}"
+      elsif type[1] === "force-download" && ext === "mp3"
+        self.file_content_type = "audio/#{ext}"
+      end
+      return self.types_hash.fetch(ext.to_sym)
     end
 
-    return ext
+    return self.types_hash.fetch(ext.to_sym)
   end
 
   def month
@@ -89,7 +96,8 @@ class Upload < ActiveRecord::Base
       gif: "image",
       svg: "image",
       mp3: "audio",
-      mpeg: "audio"
+      mpeg: "audio",
+      svg: "image"
     }
     return types
   end
@@ -104,8 +112,7 @@ class Upload < ActiveRecord::Base
     end
 
     def set_type
-      ext = self.file_type
-      self.filetype ||= self.types_hash.fetch(ext.to_sym)
+      self.filetype ||= self.file_type
     end
 
 end
