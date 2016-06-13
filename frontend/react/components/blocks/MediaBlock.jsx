@@ -319,12 +319,12 @@ var MediaBlock = React.createClass({
     },
 
     makeHtmlContent: function(data, type) {
-        if (type == "mp4") {
+        if (type == "video") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
-        } else if (type == "mp3" || type == "mpeg") {
-            return "<audio controls>\n\t<source src='"+data.url+"' type='audio/mpeg'>\n</audio>";
-        } else if (type == "jpg" || type == "jpeg" || type == "svg" || type == "gif" || type == "png") {
-            return "<img src='"+data.url+"'>";
+        } else if (type == "audio") {
+            return '<audio controls>\n\t<source src="'+data.url+'" type="'+data.file_content_type+'">\n</audio>';
+        } else if (type == "image") {
+            return '<img src="'+data.url+'">';
         } else if (type == "pdf") {
             return "<object data='"+data.url+"' width='100%' height='300px' type='application/pdf'>\n\t<embed src='"+data.url+"' type='application/pdf'/>\n</object>";
         } else {
@@ -341,8 +341,7 @@ var MediaBlock = React.createClass({
     },
 
     handleBlockChange: function(data) {
-        var fileExt = data.file_file_name.split(".").slice(-1)[0];
-        var content = this.makeHtmlContent(data, fileExt);
+        var content = this.makeHtmlContent(data, data.filetype);
 
         $.ajax({
             url: "/blocks/update_upload",

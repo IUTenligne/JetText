@@ -28,6 +28,8 @@ var FileInfo = React.createClass({
             return { __html: '<i class="fa fa-music"></i>' };
         } else if (this.props.file.filetype === "video") {
             return { __html: '<i class="fa fa-camera"></i>' };
+        } else if (this.props.file.filetype === "pdf") {
+            return { __html: '<i class="fa fa-file-pdf-o"></i>' };
         }
     },
 
@@ -41,6 +43,8 @@ var FileInfo = React.createClass({
             return { __html: '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>' };
         } else if (this.props.file.filetype === "video") {
             return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>' };
+        } else if (this.props.file.filetype === "pdf") {
+           return { __html: '<object data="'+ this.props.file.url +'" width="100%" height="300px" type="application/pdf">\n\t<embed src="'+ this.props.file.url +'" type="application/pdf"/>\n</object>' };
         }
     },
 
