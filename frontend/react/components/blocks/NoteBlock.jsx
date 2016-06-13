@@ -147,16 +147,49 @@ var NoteBlock = React.createClass({
 
         editor.setData(this.state.blockContent);
 
+        var saveDraft;
+
         editor.on('change', function( evt ) {
+            /* Clears the timeout function on change to avoid multiple PUT requests */
+            clearTimeout(saveDraft);
+
             var content = that._highlightText(evt.editor.getData(), editor);
             that.setState({
                 blockContent: content,
                 blockVirtualContent: that.regexTerm(that.state.termsList, content)
             });
+
+            /* Automatically saves the block content after change */
+            saveDraft = setTimeout(function(){
+                that.saveDraft();
+            }, 3000);
         });
 
         this.setState({ focusPopup: false, editBlock: false });
     },
+
+    saveDraft: function() {
+        var block = this.props.block;
+
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/'+block.id,
+            context: this,
+            data: {
+                id: block.id,
+                name: this.state.blockName,
+                content: this.state.blockContent,
+                classes: this.state.selectedStyle
+            },
+            success: function(data) {
+                this.setState({
+                    blockName: data.name,
+                    blockContent: data.content
+                });
+            }
+        });
+    },
+
 
     _highlightText: function(query, editor) {
         if ( query.match(/{{(.*?)}}/) ) {

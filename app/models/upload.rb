@@ -54,13 +54,11 @@ class Upload < ActiveRecord::Base
     type = self.file_content_type.mb_chars.normalize(:kd).split('/')
 
     # forces directory's name if the mime-type's bug force-download is encounterd
-    if type[0] === "application" && type[1] === "force-download" && ext === "mp4"
-      return "video"
-    elsif type[0] === "application" && type[1] === "pdf"
-      return "pdf"
-    else
-      return type[0].to_s
+    if type[0] === "application" && type[1] === "force-download" && !self.types_hash.fetch(ext.to_sym).nil?
+      return ext
     end
+
+    return ext
   end
 
   def month
@@ -81,30 +79,33 @@ class Upload < ActiveRecord::Base
 
   def types_hash
     types = {
-      "mp4" => "video",
-      "flv" => "video",
-      "avi" => "video",
-      "pdf" => "pdf",
-      "png" => "image",
-      "jpg" => "image",
-      "jpeg" => "image",
-      "gif" => "image",
-      "svg" => "image",
-      "mp3" => "audio",
-      "mpeg" => "audio"
+      mp4: "video",
+      flv: "video",
+      avi: "video",
+      pdf: "pdf",
+      png: "image",
+      jpg: "image",
+      jpeg: "image",
+      gif: "image",
+      svg: "image",
+      mp3: "audio",
+      mpeg: "audio"
     }
+    return types
   end
 
   private
-    # lowercase the ext
+
     def reencode_filename
+      # lowercase the ext
       extension = File.extname(file_file_name).downcase
       name = File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z_-]/, '').downcase
       self.file.instance_write(:file_name, "#{name}#{extension}")
     end
 
     def set_type
-      self.filetype ||= self.file_content_type.mb_chars.normalize(:kd).split('/')[-1]
+      ext = self.file_type
+      self.filetype ||= self.types_hash.fetch(ext.to_sym)
     end
 
 end

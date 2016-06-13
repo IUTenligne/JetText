@@ -56,6 +56,16 @@
 			}
 		}
 
+		tr.file {
+			td.file-overview {
+				padding: 2px 5px 0 5px;
+				vertical-align: middle;
+			}
+			td.file-name:hover {
+				cursor: pointer;
+			}
+		}
+
 		tr:nth-child(even) {
 			background-color: #EFEFEF;
 		}

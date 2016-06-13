@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20160530151746) do
     t.string   "file_content_type", limit: 255
     t.integer  "file_file_size",    limit: 4
     t.datetime "file_updated_at"
-    t.string   "type",              limit: 255
+    t.string   "filetype",          limit: 255
     t.string   "url",               limit: 255
     t.integer  "user_id",           limit: 4
   end

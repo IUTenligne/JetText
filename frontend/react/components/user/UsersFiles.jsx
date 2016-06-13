@@ -8,6 +8,8 @@ var NotificationSystem = require('react-notification-system');
 var FileInfo = React.createClass({
     getInitialState: function() {
         return {
+            overview: false,
+            modalPreview: false
         };
     },
     
@@ -19,6 +21,34 @@ var FileInfo = React.createClass({
         this.setState({ infos: st });
     },
 
+    handleFileWrapper: function() {
+        if (this.props.file.filetype === "image") {
+            return { __html: '<img src="'+ this.props.file.url +'" height="30">' };
+        } else if (this.props.file.filetype === "audio") {
+            return { __html: '<i class="fa fa-music"></i>' };
+        } else if (this.props.file.filetype === "video") {
+            return { __html: '<i class="fa fa-camera"></i>' };
+        }
+    },
+
+    handleFilePreview: function() {
+        if (this.props.file.filetype === "image") {
+            return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px    ">' };
+        } else if (this.props.file.filetype === "audio") {
+            return { __html: '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>' };
+        } else if (this.props.file.filetype === "audio") {
+            return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="video/mpeg">\n</video>' };
+        }
+    },
+
+    toggleOverview: function(st) {
+        this.setState({ overview: st });
+    },
+
+    showPreview: function(st) {
+        this.setState({ modalPreview: !this.state.modalPreview });
+    },
+
     _notificationSystem: null, 
 
     render: function() {
@@ -26,17 +56,30 @@ var FileInfo = React.createClass({
 
         return(
             <tr className="file">
-                <td>
+                <td className="file-overview">
+                    <div dangerouslySetInnerHTML={this.handleFileWrapper()} /> 
+                </td>
+                <td className="file-name" onClick={this.showPreview.bind(this, true)} >
                     {file.file_file_name}
                 </td>
                 <td>
-                    {file.file_content_type}
+                    {file.filetype}
                 </td>
                 <td>
-                    {file.type}
+                    {file.file_updated_at.split("T")[0].split("-").reverse().join("/")}
                 </td>
                 <td>
                     <NotificationSystem ref="notificationSystem"/>
+                    { this.state.modalPreview
+                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu"}>
+                                <div className="modal-in">
+                                    <center>
+                                        <div dangerouslySetInnerHTML={this.handleFilePreview()} />
+                                    </center>
+                                </div>
+                            </Modal>
+                        : null
+                    }
                 </td>
             </tr> 
         );
@@ -98,11 +141,15 @@ var UsersFiles = React.createClass({
                     <table>
                         <thead>
                             <tr>
-                                <th onClick={this.sort.bind(this, this.state.files, "validated")}>
-                                    Fichier {this.state.sorter === "validated" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th onClick={this.sort.bind(this, this.state.files, "validated")} width="auto" />
+                                <th onClick={this.sort.bind(this, this.state.files, "validated")} width="50%">
+                                    Nom {this.state.sorter === "validated" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, this.state.files, "validated")}>
-                                    Type {this.state.sorter === "validated" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th width="20%">
+                                    Type
+                                </th>
+                                <th width="20%">
+                                    Date
                                 </th>
                             </tr>
                         </thead>

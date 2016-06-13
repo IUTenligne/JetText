@@ -161,7 +161,7 @@ var TextBlock = React.createClass({
             /* Automatically saves the block content after change */
             saveDraft = setTimeout(function(){
                 that.saveDraft();
-            }, 2000);
+            }, 3000);
         });
 
         this.setState({ focusPopup: false, editBlock: false });
