@@ -19,6 +19,8 @@ class CreateUsers < ActiveRecord::Migration
         t.string   "uid",                    limit: 255, default: "",      null: false
         t.string   "authentication_token",   limit: 255
         t.boolean  "validated",              default: false
+
+        t.references :role, index: true, foreign_key: true
     end
   end
 end

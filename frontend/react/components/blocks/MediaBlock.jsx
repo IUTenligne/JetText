@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
 var Loader = require('../widgets/Loader.jsx');
@@ -258,11 +259,20 @@ var MediaBlock = React.createClass({
             blockContent: '',
             browserList: [],
             modalState: false,
-            changeName: false
+            changeName: false,
+            mediaAlt: '',
+            mediaWidth: ''
         };
     },
 
     componentDidMount: function() {
+        this.serverRequest = $.get("/uploads/"+ this.props.block.upload_id +".json", function(result) {
+            this.setState({
+                mediaAlt: result.alt,
+                mediaWidth: result.width
+            });
+        }.bind(this));
+
         this.setState({ 
             blockName: this.props.block.name,
             blockContent: this.props.block.content
@@ -310,7 +320,10 @@ var MediaBlock = React.createClass({
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
                     type: "PUT",
-                    data: { content: content, upload_id: data.id }
+                    data: { 
+                        content: content,
+                        upload_id: data.id
+                    }
                 });
 
                 this.setState({ blockContent: content });
@@ -324,7 +337,10 @@ var MediaBlock = React.createClass({
         } else if (type == "audio") {
             return '<audio controls>\n\t<source src="'+data.url+'" type="'+data.file_content_type+'">\n</audio>';
         } else if (type == "image") {
-            return '<img src="'+data.url+'">';
+            if (this.state.mediaWidth != '')
+                return '<img src="'+data.url+'" style="max-width:'+this.state.mediaWidth+'px">';
+            else
+                return '<img src="'+data.url+'">';
         } else if (type == "pdf") {
             return "<object data='"+data.url+"' width='100%' height='300px' type='application/pdf'>\n\t<embed src='"+data.url+"' type='application/pdf'/>\n</object>";
         } else {
@@ -384,6 +400,50 @@ var MediaBlock = React.createClass({
         });
     },
 
+    handleMediaAlt: function(event) {
+        var that = this;
+        var saveChanges;
+        clearTimeout(saveChanges);
+
+        this.setState({
+            mediaAlt: event.target.value
+        });
+
+        saveChanges = setTimeout(function(){
+            that.saveChanges();
+        }, Constants.DRAFT_TIMER);
+    },
+
+    handleMediaWidth: function(event) {
+        var that = this;
+        var saveChanges;
+        clearTimeout(saveChanges);
+
+        this.setState({
+            mediaWidth: event.target.value
+        });
+
+        saveChanges = setTimeout(function(){
+            that.saveChanges();
+        }, Constants.DRAFT_TIMER);
+    },
+
+    saveChanges: function() {
+        $.ajax({
+            url: "/uploads/" + this.props.block.upload_id,
+            type: "PUT",
+            context: this,
+            data: {
+                alt: this.state.mediaAlt,
+                width: this.state.mediaWidth
+            },
+            success: function(data) {
+                var content = this.makeHtmlContent(data, data.filetype);
+                this.setState({ blockContent: content });
+            }
+        });
+    },
+
     dynamicId: function(id){
         return "media_block_" + id;
     },
@@ -394,6 +454,7 @@ var MediaBlock = React.createClass({
 
 	render: function() {
 		var block = this.props.block;
+
 		return (
             <div className="block-inner">
                 <div className="content" key={block.id}>
@@ -427,11 +488,19 @@ var MediaBlock = React.createClass({
                             <i className="fa fa-folder-open"></i><br/>
                             Parcourir mes fichiers
                         </div>
+
                         { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
                     </div>
 
                     <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
+                    { this.state.blockContent != '' 
+                        ? <div>
+                            <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
+                            <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                        </div>
+                        : null
+                    }
                 </div>
                 <NotificationSystem ref="notificationSystem"/>
             </div>

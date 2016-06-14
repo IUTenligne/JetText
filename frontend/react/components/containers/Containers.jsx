@@ -1,5 +1,6 @@
 var React = require('react');
 import { Router, Route, Link, hashHistory } from 'react-router';
+var Constants = require('../constants');
 var Loader = require('../widgets/Loader.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var NotificationSystem = require('react-notification-system');
@@ -17,12 +18,14 @@ var Result = React.createClass({
     getInitialState: function() {
         return {
             option: false,
-            overview: false
+            overview: false,
+            coverBackground: {}
         };
     },
     
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
+        this.generateGradient();
     },
 
     deleteContainer: function(event){
@@ -113,6 +116,17 @@ var Result = React.createClass({
         this.setState({ overview: st });
     },
 
+    generateGradient: function() {
+        var i = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+        var bg = {
+            background: Constants.gradient+i[0],
+            background: "-webkit-linear-gradient(to left, "+Constants.gradient+i[0]+" , "+Constants.gradient+i[1]+")",
+            background: "linear-gradient(to left, "+Constants.gradient+i[0]+" , "+Constants.gradient+i[1]+")"
+        };
+
+        this.setState({ coverBackground: bg });
+    },
+
     _notificationSystem: null, 
 
     render: function() {
@@ -123,7 +137,7 @@ var Result = React.createClass({
                 <figure className='book'>
                     <ul className='hardcover_front'>
                         <li>
-                            <div className="coverDesign capitalize">
+                            <div className="coverDesign capitalize" style={this.state.coverBackground} >
                                 <span className="ribbon">{JSON.parse(currentUser).firstname}</span>
                                 <p>{result.name}</p>
                             </div>
@@ -288,6 +302,7 @@ var Containers = React.createClass({
             })
         }    
     },
+
     _handleKeyPress: function(event) {
         if (event.key === 'Enter') {
             this.createContainer(event);

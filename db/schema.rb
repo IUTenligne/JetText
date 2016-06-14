@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530151746) do
+ActiveRecord::Schema.define(version: 20160530093248) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20160530151746) do
     t.datetime "file_updated_at"
     t.string   "filetype",          limit: 255
     t.string   "url",               limit: 255
+    t.string   "alt",               limit: 255
+    t.string   "width",             limit: 255
     t.integer  "user_id",           limit: 4
   end
 

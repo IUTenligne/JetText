@@ -133,6 +133,7 @@
   box-shadow: inset 0 1px $blue,0px 5px $blue,0 2px 3px rgba(0,0,0,.3) !important;
   @include specialFont(1.5em);
   padding: 3px 12px;
+  color: white;
 }
 
 .btn {
@@ -258,24 +259,12 @@
   border: 3px solid blue;
 }
 
-$backgrounds: ('fish.png', 'owl.png', 'bird.png');
-
 html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
 li.container figure.book ul.hardcover_front div.coverDesign {
   background-color: white !important;
   background-size: 100% !important;
   background-position: bottom left !important;
   background-repeat: no-repeat !important;
-}
-
-$elements: 15;
-@for $i from 0 to $elements {
-  $img: nth($backgrounds, random(length($backgrounds)));
-
-  html section#main-outlet div#wrapper .outlet article#containers ul li.container figure.book ul.hardcover_front div.coverDesign, body section#main-outlet div#wrapper .outlet article#containers ul
-  li.container:nth-child(#{$i}) figure.book ul.hardcover_front div.coverDesign {
-    background-image: url($img) !important;
-  }
 }
 
 .experiment {

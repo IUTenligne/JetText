@@ -3,7 +3,7 @@ class UploadsController < ApplicationController
   before_action :authenticate_user!
   before_filter :require_validation
   before_filter :block_permission, only: [:create, :clear]
-  before_filter :require_permission, only: [:show, :destroy]
+  before_filter :require_permission, only: [:show, :destroy, :update]
   respond_to :html, :json
 	skip_before_filter :verify_authenticity_token, :only => [:create]
 
@@ -36,7 +36,7 @@ class UploadsController < ApplicationController
 	end
 	
 	def create
-		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile])
+		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile], alt: params[:alt], width: params[:width])
 		@upload.user_id = current_user.id
 		@upload.url = @upload.file.url
 		if @upload.save
@@ -51,6 +51,12 @@ class UploadsController < ApplicationController
 			end
 		end
 	end
+
+  def update
+    @upload = Upload.find(params[:id])
+    @upload.update_attributes(:alt => params[:alt], :width => params[:width])
+    render json: @upload
+  end
 
   def destroy
 		Upload.find(params[:id]).destroy
@@ -72,7 +78,7 @@ class UploadsController < ApplicationController
 
 	private
 		def upload_params
-			params.require(:upload).permit(:name, :file, :url)
+			params.require(:upload).permit(:name, :file, :url, :alt, :width)
 		end
     
 end	
