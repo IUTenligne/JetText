@@ -114,20 +114,11 @@ class Upload < ActiveRecord::Base
       self.filetype ||= self.file_type
     end
 
-end
+    def self.sort_by(current_user, column, way)
+      return nil unless current_user.present? && (column == "file_file_name" || column == "filetype" || column == "file_updated_at")
+      return Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at")
+        .where(user_id: current_user.id)
+        .order("#{column} #{way}")
+    end
 
-# == Schema Information
-#
-# Table name: uploads
-#
-#  id                :integer          not null, primary key
-#  name              :string(255)
-#  file_file_name    :string(255)
-#  file_content_type :string(255)
-#  file_file_size    :integer
-#  file_updated_at   :datetime
-#  type              :string(255)
-#  url               :string(255)
-#  size              :integer
-#  user_id           :integer
-#
+end

@@ -99,6 +99,7 @@ var UsersFiles = React.createClass({
         return {
             files: [],
             icon: '',
+            sorter: '',
             loading: true
         };
     },
@@ -118,15 +119,20 @@ var UsersFiles = React.createClass({
     },
 
     sort: function(list, elem) {
-        if ((this.state.icon === "down") || (this.state.icon === ""))
+        if ((this.state.icon === "down") || (this.state.icon === "")) {
             this.setState({ icon: "up" });
-        else
+            var way = "asc";
+        } else {
             this.setState({ icon: "down" });
+            var way = "desc";
+        }
 
-        this.setState({
-            files: list.sort().reverse(),
-            sorter: elem
-        });
+        $.get("/files/sort/"+ elem +"/"+ way +".json", function(result) {
+            this.setState({
+                files: result.uploads,
+                loading: false
+            });
+        }.bind(this));
     },
 
     _notificationSystem: null,
@@ -148,15 +154,15 @@ var UsersFiles = React.createClass({
                     <table>
                         <thead>
                             <tr>
-                                <th onClick={this.sort.bind(this, this.state.files, "name")} width="auto" />
-                                <th onClick={this.sort.bind(this, this.state.files, "name")} width="50%">
-                                    Nom {this.state.sorter === "name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th onClick={this.sort.bind(this, this.state.files, "file_file_name")} width="auto" />
+                                <th onClick={this.sort.bind(this, this.state.files, "file_file_name")} width="50%">
+                                    Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, this.state.files, "type")} width="20%">
-                                    Type {this.state.sorter === "type" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th onClick={this.sort.bind(this, this.state.files, "filetype")} width="20%">
+                                    Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, this.state.files, "date")} width="20%">
-                                    Date {this.state.sorter === "date" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th onClick={this.sort.bind(this, this.state.files, "file_updated_at")} width="20%">
+                                    Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                             </tr>
                         </thead>

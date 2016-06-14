@@ -66,6 +66,10 @@ class UploadsController < ApplicationController
   	render json: { uploads: @uploads }
   end
 
+  def sort
+    render json: { uploads: Upload.sort_by(current_user, params["column"], params["way"]) }
+  end
+
 	private
 		def upload_params
 			params.require(:upload).permit(:name, :file, :url)

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get "/search/:name" => "uploads#search", on: :collection
     end
     get "/files" => "uploads#index"
+    get "/files/sort/:column/:way" => "uploads#sort"
 
     resources :glossaries do
       get "/box/:id"=> "glossaries#glossaries_box", on: :collection
