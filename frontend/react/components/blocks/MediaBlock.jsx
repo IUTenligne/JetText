@@ -257,6 +257,7 @@ var MediaBlock = React.createClass({
         return {
             blockName: '',
             blockContent: '',
+            upload: null,
             browserList: [],
             modalState: false,
             changeName: false,
@@ -268,14 +269,15 @@ var MediaBlock = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/uploads/"+ this.props.block.upload_id +".json", function(result) {
             this.setState({
+                upload: result.id,
                 mediaAlt: result.alt,
-                mediaWidth: result.width
+                mediaWidth: result.width,
+                blockContent: this.makeHtmlContent(result, result.filetype, result.width)
             });
         }.bind(this));
 
         this.setState({ 
             blockName: this.props.block.name,
-            blockContent: this.props.block.content
         });
 
     },
@@ -315,7 +317,7 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                var content = this.makeHtmlContent(data, data.filetype);
+                var content = this.makeHtmlContent(data, data.filetype, '');
 
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
@@ -326,19 +328,19 @@ var MediaBlock = React.createClass({
                     }
                 });
 
-                this.setState({ blockContent: content });
+                this.setState({ blockContent: content, upload: data.id });
             }
         });
     },
 
-    makeHtmlContent: function(data, type) {
+    makeHtmlContent: function(data, type, width) {
         if (type == "video") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
         } else if (type == "audio") {
             return '<audio controls>\n\t<source src="'+data.url+'" type="'+data.file_content_type+'">\n</audio>';
         } else if (type == "image") {
-            if (this.state.mediaWidth != '')
-                return '<img src="'+data.url+'" style="max-width:'+this.state.mediaWidth+'px">';
+            if (width != '')
+                return '<img src="'+data.url+'" style="max-width:'+width+'px">';
             else
                 return '<img src="'+data.url+'">';
         } else if (type == "pdf") {
@@ -357,7 +359,7 @@ var MediaBlock = React.createClass({
     },
 
     handleBlockChange: function(data) {
-        var content = this.makeHtmlContent(data, data.filetype);
+        var content = this.makeHtmlContent(data, data.filetype, '');
 
         $.ajax({
             url: "/blocks/update_upload",
@@ -430,7 +432,7 @@ var MediaBlock = React.createClass({
 
     saveChanges: function() {
         $.ajax({
-            url: "/uploads/" + this.props.block.upload_id,
+            url: "/uploads/" + this.state.upload,
             type: "PUT",
             context: this,
             data: {
@@ -438,7 +440,7 @@ var MediaBlock = React.createClass({
                 width: this.state.mediaWidth
             },
             success: function(data) {
-                var content = this.makeHtmlContent(data, data.filetype);
+                var content = this.makeHtmlContent(data, data.filetype, this.state.mediaWidth);
                 this.setState({ blockContent: content });
             }
         });
@@ -502,6 +504,7 @@ var MediaBlock = React.createClass({
                         : null
                     }
                 </div>
+
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );

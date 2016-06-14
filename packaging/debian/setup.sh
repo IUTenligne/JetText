@@ -39,3 +39,9 @@ global_check() {
 }
 
 main
+
+
+
+#DUMP commands
+#mysqldump --defaults-file=/etc/mysql/debian.cnf --no-create-db --no-create-info --ignore-table=jettext_dev.schema_migrations jettext_dev > /tmp/dumps/jettext-dump.sql
+#mysql --defaults-file=/etc/mysql/debian.cnf jettext_dev < /tmp/dumps/jettext-dump.sql
