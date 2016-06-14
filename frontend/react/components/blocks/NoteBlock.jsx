@@ -289,7 +289,7 @@ var NoteBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id}>
+                <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
                         <h3>
@@ -304,46 +304,48 @@ var NoteBlock = React.createClass({
                         </h3>
                     </div>
 
-                    <center className="block-note-types">
-                        { this.state.noteStyles.map(function(style, i) {
-                            return(
-                                <div key={i} className={"note-style " + style} title={style} onClick={that.applyStyle.bind(that, style)}>
-                                    <i className={"fa note-icon-" + style + " fa-fw"}></i>
-                                </div>
-                            );
-                        })}
-                    </center>
+                    <div className="block-content">
+                        <center className="block-note-types">
+                            { this.state.noteStyles.map(function(style, i) {
+                                return(
+                                    <div key={i} className={"note-style " + style} title={style} onClick={that.applyStyle.bind(that, style)}>
+                                        <i className={"fa note-icon-" + style + " fa-fw"}></i>
+                                    </div>
+                                );
+                            })}
+                        </center>
 
-                    <div className={"block-note block-content block-content-" + this.state.selectedStyle} >
-                        <div className={"block-note-title block-note-title-" + this.state.selectedStyle}  >
-                            <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>
+                        <div className={"block-note block-content-" + this.state.selectedStyle} >
+                            <div className={"block-note-title block-note-title-" + this.state.selectedStyle}  >
+                                <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>
+                            </div>
+                            { this.state.blockVirtualContent != ''
+                                ? <div
+                                        id={this.dynamicId(block.id)}
+                                        ref="editableblock"
+                                        dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)}
+                                        onDoubleClick={this.unlockEditor}
+                                    />
+                                : <div
+                                        id={this.dynamicId(block.id)}
+                                        ref="editableblock"
+                                        dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)}
+                                        onDoubleClick={this.unlockEditor}
+                                    />
+                            }
+
+                            { this.state.editBlock 
+                                ? null 
+                                : <div className="block-save">
+                                    <button 
+                                        title="Enregister" 
+                                        className="text-block-save note" 
+                                        onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
+                                        <i className="fa fa-check"></i>
+                                    </button>
+                                </div> 
+                            }
                         </div>
-                        { this.state.blockVirtualContent != ''
-                            ? <div
-                                    id={this.dynamicId(block.id)}
-                                    ref="editableblock"
-                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)}
-                                    onDoubleClick={this.unlockEditor}
-                                />
-                            : <div
-                                    id={this.dynamicId(block.id)}
-                                    ref="editableblock"
-                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)}
-                                    onDoubleClick={this.unlockEditor}
-                                />
-                        }
-
-                        { this.state.editBlock 
-                            ? null 
-                            : <div className="block-save">
-                                <button 
-                                    title="Enregister" 
-                                    className="text-block-save note" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
-                                    <i className="fa fa-check"></i>
-                                </button>
-                            </div> 
-                        }
                     </div>
                 </div>
 

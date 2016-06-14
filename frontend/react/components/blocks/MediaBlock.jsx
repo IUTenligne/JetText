@@ -459,7 +459,7 @@ var MediaBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id}>
+                <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-image"></i>
                         <h3>
@@ -469,40 +469,41 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                            <div className="viewDropzone">
+                        <div className="block-media-actions">
+                            <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                                <div className="viewDropzone">
 
-                            </div> 
-                            <div className="viewDropzonebis">
-                               <div className="textDropzone">
-                                    <i className="fa fa-file-text"></i>
-                                    <br/>
-                                    Déposer un fichier
-                                 </div>
-                            </div>   
-                            <div className="zoneDropzone">
-                                <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                                </div> 
+                                <div className="viewDropzonebis">
+                                   <div className="textDropzone">
+                                        <i className="fa fa-file-text"></i>
+                                        <br/>
+                                        Déposer un fichier
+                                     </div>
+                                </div>   
+                                <div className="zoneDropzone">
+                                    <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                                </div>
                             </div>
-                        </div>
-                    
+                        
+                            <div className="browse-files" onClick={this.handleBrowseFiles}>
+                                <i className="fa fa-folder-open"></i><br/>
+                                Parcourir mes fichiers
+                            </div>
 
-                        <div className="browse-files" onClick={this.handleBrowseFiles}>
-                            <i className="fa fa-folder-open"></i><br/>
-                            Parcourir mes fichiers
+                            { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
                         </div>
 
-                        { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
+                        <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+
+                        { this.state.blockContent != '' 
+                            ? <div>
+                                <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
+                                <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                            </div>
+                            : null
+                        }
                     </div>
-
-                    <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
-
-                    { this.state.blockContent != '' 
-                        ? <div>
-                            <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
-                            <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
-                        </div>
-                        : null
-                    }
                 </div>
 
                 <NotificationSystem ref="notificationSystem"/>

@@ -246,7 +246,7 @@ var TextBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id}>
+                <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
