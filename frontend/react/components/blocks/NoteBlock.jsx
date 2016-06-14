@@ -2,9 +2,6 @@ var React = require('react');
 var Constants = require('../constants');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
-var Glossaries = require('../glossaries/Glossaries.jsx');
-var Term = require('../glossaries/Term.jsx');
-var TermOverlay = require('../glossaries/TermOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 var ContainersList = require('./ContainersList.jsx');
@@ -22,7 +19,6 @@ var NoteBlock = React.createClass({
             left: '',
             top: '',
             termsList: [],
-            glossaryModalState: false,
             formulaModalState: false,
             helpModalState: false,
             formulaString: '',
@@ -216,32 +212,6 @@ var NoteBlock = React.createClass({
         return {__html: data};
     },
 
-    overTerm: function(event){
-        event.preventDefault();
-
-        this.setState({
-            selectedText: document.getSelection().toString(),
-            left: event.pageX-40,
-            top: event.pageY -50
-        });
-
-        var txt = document.getSelection().toString();
-
-        if ( (!txt.match(/^\s$/)) && (txt.length > 0) ) {
-            this.setState({ focusPopup: true });
-        } else {
-            this.setState({ focusPopup: false });
-        }
-    },
-
-    termOverlay: function(){
-        this.setState({ glossaryModalState: true });
-    },
-
-    handleGlossaryModalState: function(st){
-        this.setState({ glossaryModalState: st });
-    },
-
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value.trim(),
@@ -319,16 +289,7 @@ var NoteBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id} onMouseUp={this.overTerm}>
-                    { this.state.focusPopup
-                        ? <div className="focus" style={myStyle}>
-                            <a onClick={this.termOverlay}>
-                                <i className="fa fa-book fa-fw" title="Glossaire" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                        : null
-                    }
-
+                <div className="content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
                         <h3>
@@ -385,13 +346,6 @@ var NoteBlock = React.createClass({
                         }
                     </div>
                 </div>
-
-                { this.state.glossaryModalState
-                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Créer une définition"}>
-                        <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
-                    </Modal>
-                    : null
-                }
 
                 { this.state.formulaModalState
                     ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>

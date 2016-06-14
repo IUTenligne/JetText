@@ -2,9 +2,6 @@ var React = require('react');
 var Constants = require('../constants');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
-var Glossaries = require('../glossaries/Glossaries.jsx');
-var Term = require('../glossaries/Term.jsx');
-var TermOverlay = require('../glossaries/TermOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 var ContainersList = require('./ContainersList.jsx');
@@ -19,7 +16,6 @@ var TextBlock = React.createClass({
             blockVirtualContent: '',
             loading: false,
             termsList: [],
-            glossaryModalState: false,
             formulaModalState: false,
             helpModalState: false,
             formulaString: '',
@@ -250,8 +246,7 @@ var TextBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id} onMouseUp={this.overTerm}>
-
+                <div className="content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
