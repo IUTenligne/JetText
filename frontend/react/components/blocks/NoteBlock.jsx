@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
 var Glossaries = require('../glossaries/Glossaries.jsx');
@@ -118,7 +119,7 @@ var NoteBlock = React.createClass({
         if (editor) { editor.destroy(true); }
     },
 
-    saveDraft: function(id, name, content) {
+    saveDraft: function(id, name, content, classes) {
         var block = { id: id, name: name, content: content, classes: classes };
         this.props.saveBlock(block);
     },
@@ -152,7 +153,7 @@ var NoteBlock = React.createClass({
             /* Automatically saves the block content after change */
             saveDraft = setTimeout(function(){
                 that.saveDraft(that.props.block.id, that.state.blockName, that.state.blockContent, that.state.selectedStyle);
-            }, 3000);
+            }, Constants.DRAFT_TIMER);
         });
 
         this.setState({ focusPopup: false, editBlock: false });
@@ -298,11 +299,11 @@ var NoteBlock = React.createClass({
     },
 
     moveUpBlock: function() {
-        this.props.moveBlock(this.props.item, "up");
+        this.props.moveBlock("up");
     },
 
     moveDownBlock: function() {
-        this.props.moveBlock(this.props.item, "down");
+        this.props.moveBlock("down");
     },
 
 	render: function() {

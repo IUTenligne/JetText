@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');
@@ -183,8 +184,7 @@ var Block = React.createClass({
         this.props.moveBlock(this.props.item, "down");
     },
 
-    handleBlockMove: function(block, way) {
-        console.log(block, way),
+    handleBlockMove: function(way) {
         this.props.moveBlock(this.props.item, way);
     },
 

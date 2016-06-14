@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var ReactDOM = require('react-dom');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
@@ -218,11 +219,11 @@ var MathBlock = React.createClass({
     },
 
     moveUpBlock: function() {
-        this.props.moveBlock(this.props.item, "up");
+        this.props.moveBlock("up");
     },
 
     moveDownBlock: function() {
-        this.props.moveBlock(this.props.item, "down");
+        this.props.moveBlock("down");
     },
 
     render: function() {
