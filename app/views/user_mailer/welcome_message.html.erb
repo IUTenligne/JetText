@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Bienvenue dans JetText, <%= @user.firstname.capitalize %>.</h1>
+    <h1>Bienvenue dans JetText, <%= @user.firstname.capitalize if @user.firstname %>.</h1>
     <p>
       Vous recevez un email de confirmation à l'adresse <strong><%= @user.email %></strong> lorsque votre compte sera validé.
     </p>
