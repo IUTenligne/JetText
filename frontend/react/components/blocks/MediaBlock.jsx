@@ -328,7 +328,10 @@ var MediaBlock = React.createClass({
                     }
                 });
 
-                this.setState({ blockContent: content, upload: data.id });
+                this.setState({ 
+                    blockContent: content, 
+                    upload: data.id 
+                });
             }
         });
     },
@@ -360,6 +363,7 @@ var MediaBlock = React.createClass({
 
     handleBlockChange: function(data) {
         var content = this.makeHtmlContent(data, data.filetype, '');
+        var upload = data;
 
         $.ajax({
             url: "/blocks/update_upload",
@@ -372,7 +376,10 @@ var MediaBlock = React.createClass({
                 upload_id: data.id,
             },
             success: function(data) {
-                this.setState({ blockContent: content });
+                this.setState({ 
+                    blockContent: content,
+                    upload: upload.id 
+                });
             }
         });
     },
@@ -491,7 +498,10 @@ var MediaBlock = React.createClass({
                                 Parcourir mes fichiers
                             </div>
 
-                            { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
+                            { this.state.modalState 
+                                ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} selectFile={this.selectFile} /> 
+                                : null 
+                            }
                         </div>
 
                         <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />

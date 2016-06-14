@@ -9,9 +9,7 @@ span.bold{
 	margin-bottom: 40px;
 	/*box-shadow: 0 2px 4px 2px rgba(0,0,0,0.15);
 	border-radius: 4px;*/
-	border-bottom: 1px solid #E9E9E9;
-	border-left: 1px solid #E9E9E9;
-	border-radius: 3px;
+	border-bottom: 1px solid $blockBorder;
 
 	/* global MediaBlock TextBlock NoteBlock*/
 	.block-inner {
@@ -46,25 +44,23 @@ span.bold{
 				width: 100%;
 				display: inline-block;
 				line-height: 20px;
-				border-bottom: 1px solid #E9E9E9;
+				border-bottom: 1px solid $blockBorder;
 				margin-bottom: -3px;
 				background: $grey;
 
 				i {
 					background: white;
 					float: left;
-					padding: 4px 18px;
-					line-height: 24px;
+					padding: 4px 22px 0px 22px;
+					line-height: 22px;
 					color: white;
-					border-top: 1px solid #E9E9E9;
-					border-right: 1px solid #E9E9E9;
+					border-top: 1px solid $blockBorder;
 					border-bottom: 1px solid white;
 					margin-bottom: -1px;
-					border-radius: 2px 3px 0 0;
 				}
 
 				h3 {
-					line-height: 30px;
+					line-height: 20px;
 					color: #3b4045;
 					font-weight: bold;
 					float: left;
@@ -76,13 +72,13 @@ span.bold{
 						min-width: 100%;
 						float: left;
 						display: inline-block;
-						padding: 6px 12px;
-						font-size: 15px;
+						padding: 2px 12px;
+						font-size: 16px;
 						line-height: 1.42857143;
 						background-color: transparent;
 						background-image: none;
 						border: none;
-						color: #3b4045;
+						color: $black;
 						font-weight: bold;
 
 					}
@@ -108,7 +104,6 @@ span.bold{
 
 		.block-content {
 			font-family: Helvetica,Arial,sans-serif;
-			border-right: 1px solid #E9E9E9;
 			margin-top: 0;
 			font-size: 14px;
 			line-height: 19px;
@@ -152,8 +147,9 @@ span.bold{
 		    }
 
 			blockquote {
-				border-left: 2px solid #F0F0F0;
-				padding-left: 15px;
+				border-left: 4px solid $iGrey;
+				padding: 10px 15px 8px 15px;
+				background: $quoteGrey
 			}
 
 			/* glossary tooltip */
@@ -230,7 +226,6 @@ span.bold{
 		width: 100%;
 		color: $iGrey;
 		font-size: 20px;
-		border-right: 1px solid #E9E9E9;
 
 		.handle {
 			background: none;
@@ -323,31 +318,51 @@ span.bold{
 /* spacial UI block */
 .block-text,
 .block-texte {
+	border-color: $lightBlue;
+
 	div.block-inner {
 		div.block-title {
+			border-color: $lightBlue !important;
+
 			i {
-				border-top: 3px solid $lightBlue !important;
+				border-top: 4px solid $lightBlue !important;
+				border-right-color: $lightBlue !important;
 				color: $lightBlue !important;
 			}
 		}
 		div.block-title:hover {
+
 			i {
 				cursor: pointer;
 			}
+		}
+
+		.block-content {
+			border-color: $lightBlue;
+		}
+
+		.action {
+			border-color: $lightBlue;
 		}
 	}
 }
 
 .block-math,
 .block-maths {
+	border-color: $lightPurple;
+
 	div.block-inner {
 		div.block-title {
+			border-color: $lightPurple !important;
 			i {
-				border-top: 3px solid $lightPurple !important;
+				border-top: 4px solid $lightPurple !important;
 				color: $lightPurple !important;
+				border-right-color: $lightPurple !important;
 			}
 		}
 		div.block-content {
+			border-color: $lightPurple;
+
 			#mathToolbar {
 				button {
 					width: 120px;
@@ -401,18 +416,28 @@ span.bold{
 			}
 		}
 	}
+	.action {
+		border-color: $lightPurple;
+	}
 }
 
 .block-media {
+	border-color: $lightOrange;
+
 	.block-inner {
 		div.block-inner-content {
+			border-color: $lightOrange;
 			.block-title {
+				border-color: $lightOrange;
 				i {
-					border-top: 3px solid $lightOrange !important;
-					color: $lightOrange !important;
+					border-top: 4px solid $lightOrange !important;
+					color: #E48D23 !important;
+					border-right-color: $lightOrange;
 				}
 			}
+
 			div.block-content{
+				border-color: $lightOrange;
 				
 				.block-media-actions {
 					border: 2px dashed $lightOrange;
@@ -508,17 +533,25 @@ span.bold{
 			}
 		}
 	}
+	.action {
+		border-color: $lightOrange;
+	}
 }
 
 
 .block-note,
 .block-remarque {
+	border-color: $lightRed;
+
 	div.block-inner {
 		div.block-inner-content {
 			.block-title {
+				border-color: $lightRed !important;
+
 				i {
-					border-top: 3px solid $lightRed !important;
+					border-top: 4px solid $lightRed !important;
 					color: $lightRed !important;
+					border-right-color: $lightRed;
 				}
 			}
 
@@ -529,6 +562,7 @@ span.bold{
 			}
 
 			.block-content {
+				border-color: $lightRed !important;
 
 				.block-note-types {
 					margin: 10px 0 15px 0;
@@ -608,7 +642,8 @@ span.bold{
 				}
 
 				.block-content-quote {
-					border-color: $lighTbGrey;
+					border-left: 4px solid $quoteBorder;
+					background: $quoteBg;
 					.block-note-title-quote i{
 						color: $lighTbGrey;
 					}
@@ -671,6 +706,10 @@ span.bold{
 					}
 				}
 			}
+		}
+
+		.action {
+			border-color: $lightRed;
 		}
 	}
 }

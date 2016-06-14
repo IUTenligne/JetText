@@ -3,20 +3,24 @@
 /* title page*/
 h2.header_page {
 	text-transform: capitalize;
+
 	.title-page{
+    font-family: Helvetica,Arial,sans-serif;
 		background: none;
 		border: none;
-		font-size: 20px;
-		margin-top: 15px;
+		font-size: 22px;
+		margin-top: 30px;
 		font-weight: bold;
 		min-width: 90%;
 		box-shadow: none;
 	}
+
 	button {
 		width: 10%;
 		float: right;
 		background: none;
 		border: none;
+
 		i{
 			border-radius: 20px;
 			float: right;
@@ -165,7 +169,7 @@ h2.header_page {
       padding: 0;
       margin: 0;
       height: 35px;
-      padding-left: 15px;
+      padding-left: 35px;
       cursor: pointer;
       white-space: nowrap;
 			text-overflow: ellipsis;
@@ -177,11 +181,11 @@ h2.header_page {
       font-family: FontAwesome;
       font-size: 15px;
       text-align: center;
-      width: 50px;
+      width: 60px;
       clear: both;
       position: absolute;
       top: 34px;
-      left: 15px;
+      left: 35px;
       line-height: 15px;
       background: white !important;
       z-index: 0 !important;
@@ -198,7 +202,8 @@ h2.header_page {
       background: white;
       height: auto;
       width: 250px;
-      padding: 1em 1em;
+      margin-left: 28px;
+      padding: 1.5em 1em 1em 1em;
       border: 1px solid #e9e9e9;
       box-shadow: 0 2px 2px rgba(0,0,0,0.25);
 
@@ -246,6 +251,7 @@ h2.header_page {
     height: 35px;
     display: inline-block;
     text-align: right;
+    background: $quoteBg;
 
     .timeline-container {
       .blocks-timeline {
