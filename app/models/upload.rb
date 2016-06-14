@@ -64,7 +64,6 @@ class Upload < ActiveRecord::Base
       end
       return self.types_hash.fetch(ext.to_sym)
     end
-
     return self.types_hash.fetch(ext.to_sym)
   end
 

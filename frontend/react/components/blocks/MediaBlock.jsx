@@ -305,7 +305,7 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                var content = this.makeHtmlContent(data, fileExt);
+                var content = this.makeHtmlContent(data, data.filetype);
 
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,

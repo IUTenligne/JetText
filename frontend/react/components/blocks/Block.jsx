@@ -101,6 +101,23 @@ var Block = React.createClass({
         this.setState({ editBlock: st });
     },
 
+    saveBlock: function(block) {
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/'+block.id,
+            context: this,
+            data: { 
+                id: block.id,
+                name: block.name,
+                content: block.content,
+                classes: block.classes
+            },
+            success: function(data) {
+                
+            }
+        });
+    },
+
     handleBlockAdd: function(data) {
         /* updates the block list after a duplication on the same page */
         this.props.addBlock(data);
@@ -132,6 +149,15 @@ var Block = React.createClass({
         this.setState({ helpModalState: !this.state.helpModalState });
     },
 
+    getContainers: function() {
+        this.serverRequest = $.get("/containers.json", function(result) {
+            this.setState({
+                containersList: result.containers,
+                loading: false
+            });
+        }.bind(this));
+    },
+
     exportBlock: function() {
         this.setState({
             modalState: true,
@@ -147,15 +173,6 @@ var Block = React.createClass({
 
     closeModal: function() {
         this.setState({ modalState: false });
-    },
-
-    getContainers: function() {
-        this.serverRequest = $.get("/containers.json", function(result) {
-            this.setState({
-                containersList: result.containers,
-                loading: false
-            });
-        }.bind(this));
     },
 
     moveUpBlock: function() {
@@ -180,17 +197,37 @@ var Block = React.createClass({
             return (
                 <div className="block block-text" id={"block-"+block.id} data-id={block.id}>
                     <TextBlock
-                        block={block}
                         key={block.id}
+                        block={block}
                         containerId={this.props.containerId}
-                        removeMe={this.handleRemoveBlock}
+                        removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        saveBlock={this.saveBlock}
                         moveBlock={this.handleBlockMove}
+                        exportBlock={this.exportBlock}
                     />
+
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                                <div className="modal-in">
+                                    { this.state.loading
+                                        ? <Loader />
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd}
+                                            />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
 
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } else if (block.type_id === 2) {
             return (
                 <div className="block block-media" id={"block-"+block.id} data-id={block.id}>
@@ -260,8 +297,11 @@ var Block = React.createClass({
                             </Modal>
                         : null
                     }
+
+                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } if (block.type_id === 3) {
             return (
                 <div className="block block-note" id={"block-"+block.id} data-id={block.id}>
@@ -269,14 +309,34 @@ var Block = React.createClass({
                         block={block}
                         key={block.id}
                         containerId={this.props.containerId}
-                        removeMe={this.handleRemoveBlock}
+                        removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        saveBlock={this.saveBlock}
                         moveBlock={this.handleBlockMove}
+                        exportBlock={this.exportBlock}
                     />
+
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                                <div className="modal-in">
+                                    { this.state.loading
+                                        ? <Loader />
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd}
+                                            />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
 
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } if (block.type_id === 4) {
             return (
                 <div className="block block-math" id={"block-"+block.id} data-id={block.id}>
@@ -284,14 +344,32 @@ var Block = React.createClass({
                         block={block}
                         key={block.id}
                         containerId={this.props.containerId}
-                        removeMe={this.handleRemoveBlock}
+                        removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
                         moveBlock={this.handleBlockMove}
                     />
 
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                                <div className="modal-in">
+                                    { this.state.loading
+                                        ? <Loader />
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd}
+                                            />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
+
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } else {
             return null;
         }
