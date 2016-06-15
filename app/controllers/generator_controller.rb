@@ -58,7 +58,7 @@ class GeneratorController < ApplicationController
           @glossaries.map { |glossary| 
             @terms = Term.where(glossary_id: glossary.glossary_id)
             @terms.each do |term|
-              block.content.gsub!(/#{term.name}/i, '<span style="background: green !important">'+term.name+'</span>') unless block.content.nil?
+              block.content.gsub!(/#{term.name}/i, '<span class="glossary" ><span class="description">'+term.description+'</span>'+term.name+'</span>') unless block.content.nil?
             end
           }
         end
