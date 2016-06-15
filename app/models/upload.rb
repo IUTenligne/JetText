@@ -76,7 +76,7 @@ class Upload < ActiveRecord::Base
   end
 
   def valid_name
-    return File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z_-]/, '').downcase
+    return File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z0-9_-]/, '').downcase
   end
 
   def valid_ext
@@ -106,7 +106,7 @@ class Upload < ActiveRecord::Base
     def reencode_filename
       # lowercase the ext
       extension = File.extname(file_file_name).downcase
-      name = File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z_-]/, '').downcase
+      name = File.basename(file_file_name, File.extname(file_file_name)).gsub(/[^a-zA-Z0-9_-]/, '').downcase
       self.file.instance_write(:file_name, "#{name}#{extension}")
     end
 

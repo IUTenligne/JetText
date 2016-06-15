@@ -10,7 +10,6 @@ var ContainersList = require('./ContainersList.jsx');
 var NoteBlock = React.createClass({
 	getInitialState: function() {
         return {
-            changeName: false,
             blockName: '',
             blockContent: '',
             blockVirtualContent: '',
@@ -214,9 +213,10 @@ var NoteBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value.trim(),
-            changeName: true
+            blockName: event.target.value.trim()
         });
+
+        this.saveDraft(this.props.block.id, event.target.value, this.state.blockContent);
     },
 
     applyStyle: function(style) {
@@ -294,13 +294,6 @@ var NoteBlock = React.createClass({
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName 
-                                ? <button 
-                                    title="Enregister" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
-                                    <i className="fa fa-check"></i>
-                                </button> 
-                            : null }
                         </h3>
                     </div>
 

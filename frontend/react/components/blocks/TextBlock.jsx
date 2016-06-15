@@ -10,7 +10,6 @@ var ContainersList = require('./ContainersList.jsx');
 var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
-            changeName: false,
             blockName: '',
             blockContent: '',
             blockVirtualContent: '',
@@ -194,9 +193,10 @@ var TextBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value,
-            changeName: true
+            blockName: event.target.value
         });
+
+        this.saveDraft(this.props.block.id, event.target.value, this.state.blockContent);
     },
 
     viewBlockAction: function() {
@@ -251,14 +251,6 @@ var TextBlock = React.createClass({
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName 
-                                ? <button 
-                                    title="Enregister" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent)}>
-                                    <i className="fa fa-check"></i>
-                                </button> 
-                                : null 
-                            }
                         </h3>
                     </div>
 

@@ -269,7 +269,7 @@ var MediaBlock = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/uploads/"+ this.props.block.upload_id +".json", function(result) {
             this.setState({
-                upload: result.id,
+                upload: result,
                 mediaAlt: result.alt,
                 mediaWidth: result.width,
                 blockContent: this.makeHtmlContent(result, result.filetype, result.width)
@@ -283,7 +283,7 @@ var MediaBlock = React.createClass({
     },
 
     componentWillUnmount: function() {
-         $.ajax({
+        $.ajax({
             url: "/blocks/"+this.props.block.id,
             type: "PUT",
             context: this,
@@ -330,7 +330,7 @@ var MediaBlock = React.createClass({
 
                 this.setState({ 
                     blockContent: content, 
-                    upload: data.id 
+                    upload: data 
                 });
             }
         });
@@ -378,7 +378,7 @@ var MediaBlock = React.createClass({
             success: function(data) {
                 this.setState({ 
                     blockContent: content,
-                    upload: upload.id 
+                    upload: upload 
                 });
             }
         });
@@ -388,24 +388,6 @@ var MediaBlock = React.createClass({
         this.setState({
             blockName: event.target.value.trim(),
             changeName: true
-        });
-    },
-
-    saveBlockName: function() {
-        $.ajax({
-            url: "/blocks/"+this.props.block.id,
-            type: "PUT",
-            context: this,
-            data: {
-                name: this.state.blockName,
-                content: this.state.blockContent
-            },
-            success: function(data) {
-                this.setState({ 
-                    changeName: false,
-                    blockName: data.name
-                });
-            }
         });
     },
 
@@ -439,16 +421,26 @@ var MediaBlock = React.createClass({
 
     saveChanges: function() {
         $.ajax({
-            url: "/uploads/" + this.state.upload,
+            url: "/uploads/" + this.state.upload.id,
             type: "PUT",
             context: this,
             data: {
+                name: this.state.blockName,
                 alt: this.state.mediaAlt,
                 width: this.state.mediaWidth
             },
             success: function(data) {
                 var content = this.makeHtmlContent(data, data.filetype, this.state.mediaWidth);
                 this.setState({ blockContent: content });
+                $.ajax({
+                    url: "/blocks/"+this.props.block.id,
+                    type: "PUT",
+                    context: this,
+                    data: {
+                        name: this.state.blockName,
+                        content: content
+                    }
+                });  
             }
         });
     },
@@ -471,7 +463,6 @@ var MediaBlock = React.createClass({
                         <i className="fa fa-image"></i>
                         <h3>
                             <input ref="mediablockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName ? <button title="Enregister" onClick={this.saveBlockName}><i className="fa fa-check"></i></button> : null }
                         </h3>
                     </div>
 

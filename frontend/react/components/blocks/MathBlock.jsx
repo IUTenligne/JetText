@@ -168,7 +168,6 @@ var MathToolbox = React.createClass({
 var MathBlock = React.createClass({
 	getInitialState: function() {
         return {
-            changeName: false,
             blockName: '',
             areaContent: '',
             value: '',
@@ -241,6 +240,8 @@ var MathBlock = React.createClass({
             value: this.refs.matharea.value
         });
 
+        this.saveDraft(this.props.block.id, this.state.blockName, event.target.value);
+
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
     },
 
@@ -250,9 +251,10 @@ var MathBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value,
-            changeName: true
+            blockName: event.target.value
         });
+
+        this.saveDraft(this.props.block.id, event.target.value, this.state.areaContent);
     },
 
     createMarkup: function(data) {
@@ -282,13 +284,6 @@ var MathBlock = React.createClass({
                         <i className="fa fa-superscript"></i>
                         <h3>
                             <input type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName 
-                                ? <button 
-                                    title="Enregister" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.areaContent)}>
-                                    <i className="fa fa-check"></i></button> 
-                                : null 
-                            }
                         </h3>
                     </div>
 

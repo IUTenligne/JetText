@@ -9,14 +9,6 @@ var ContainersList = React.createClass({
         };
     },
 
-    componentDidMount: function() {
-          
-    },
-
-    componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
-
     itemSelection: function(item) {
         this.setState({ 
             selectedItem: item,
