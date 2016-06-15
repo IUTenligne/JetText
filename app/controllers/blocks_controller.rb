@@ -42,8 +42,10 @@ class BlocksController < ApplicationController
   def export
     @block = Block.find(params[:id])
     @export = @block.dup
-    if Page.find(params[:page_id]).user == current_user
+    @page = Page.find(params[:page_id])
+    if @page.user == current_user
       @export.page_id = params[:page_id]
+      @export.sequence = @page.blocks.maximum("sequence")
       @export.save
       render json: { block: @export }
     else

@@ -44,21 +44,27 @@ class Upload < ActiveRecord::Base
       "image/jpg",
       "image/jpeg",
       "image/gif",
+      "image/svg+xml",
+      "image/svg",
       "audio/mp3",
       "audio/mpeg"
 		],
 		:message => 'Seuls les fichiers PDF, MP3, PNG, JPG et MP4 sont autorisés.'
 
   def file_type
-    ext = self.file_file_name.split('.')[-1]
+    ext = self.file_file_name.split('.')[-1].downcase
     type = self.file_content_type.mb_chars.normalize(:kd).split('/')
 
     # forces directory's name if the mime-type's bug force-download is encounterd
     if type[0] === "application" && type[1] === "force-download" && !self.types_hash.fetch(ext.to_sym).nil?
-      return ext
+      if type[1] === "force-download" && (ext === "mp4" || ext === "avi" || ext === "flv")
+        self.file_content_type = "video/#{ext}"
+      elsif type[1] === "force-download" && ext === "mp3"
+        self.file_content_type = "audio/#{ext}"
+      end
+      return self.types_hash.fetch(ext.to_sym)
     end
-
-    return ext
+    return self.types_hash.fetch(ext.to_sym)
   end
 
   def month
@@ -89,7 +95,8 @@ class Upload < ActiveRecord::Base
       gif: "image",
       svg: "image",
       mp3: "audio",
-      mpeg: "audio"
+      mpeg: "audio",
+      svg: "image"
     }
     return types
   end
@@ -104,24 +111,14 @@ class Upload < ActiveRecord::Base
     end
 
     def set_type
-      ext = self.file_type
-      self.filetype ||= self.types_hash.fetch(ext.to_sym)
+      self.filetype ||= self.file_type
+    end
+
+    def self.sort_by(current_user, column, way)
+      return nil unless current_user.present? && (column == "file_file_name" || column == "filetype" || column == "file_updated_at")
+      return Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at")
+        .where(user_id: current_user.id)
+        .order("#{column} #{way}")
     end
 
 end
-
-# == Schema Information
-#
-# Table name: uploads
-#
-#  id                :integer          not null, primary key
-#  name              :string(255)
-#  file_file_name    :string(255)
-#  file_content_type :string(255)
-#  file_file_size    :integer
-#  file_updated_at   :datetime
-#  type              :string(255)
-#  url               :string(255)
-#  size              :integer
-#  user_id           :integer
-#

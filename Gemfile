@@ -39,3 +39,8 @@ gem 'paperclip'
 gem 'diffy'
 #cron jobs
 gem 'whenever', :require => false
+#omniauth
+gem 'omniauth'
+gem 'omniauth-openid'
+gem "omniauth-google-oauth2"
+gem 'omniauth-facebook'

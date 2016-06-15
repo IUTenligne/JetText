@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');
@@ -15,6 +16,7 @@ var Block = React.createClass({
         return {
             editBlock: true,
             tooltipState: false,
+            tooltipMovesState: false,
             modalState: false,
             helpModalState: false,
             loading: false,
@@ -100,21 +102,61 @@ var Block = React.createClass({
         this.setState({ editBlock: st });
     },
 
+    saveBlock: function(block) {
+        $.ajax({
+            type: "PUT",
+            url: '/blocks/'+block.id,
+            context: this,
+            data: { 
+                id: block.id,
+                name: block.name,
+                content: block.content,
+                classes: block.classes
+            },
+            success: function(data) {
+                
+            }
+        });
+    },
+
     handleBlockAdd: function(data) {
         /* updates the block list after a duplication on the same page */
         this.props.addBlock(data);
     },
 
     viewBlockAction: function() {
-        this.setState({ tooltipState: !this.state.tooltipState });
+        this.setState({ 
+            tooltipState: !this.state.tooltipState,
+            tooltipMovesState: false
+        });
+    },
+
+    viewBlockMoves: function() {
+        this.setState({ 
+            tooltipState: false,
+            tooltipMovesState: !this.state.tooltipMovesState
+        });
     },
 
     handleTooltipState: function(st) {
         this.setState({ tooltipState: st });
     },
 
+    handleTooltipMovesState: function(st) {
+        this.setState({ tooltipMovesState: st });
+    },
+
     handleHelpModalState: function() {
         this.setState({ helpModalState: !this.state.helpModalState });
+    },
+
+    getContainers: function() {
+        this.serverRequest = $.get("/containers.json", function(result) {
+            this.setState({
+                containersList: result.containers,
+                loading: false
+            });
+        }.bind(this));
     },
 
     exportBlock: function() {
@@ -134,13 +176,16 @@ var Block = React.createClass({
         this.setState({ modalState: false });
     },
 
-    getContainers: function() {
-        this.serverRequest = $.get("/containers.json", function(result) {
-            this.setState({
-                containersList: result.containers,
-                loading: false
-            });
-        }.bind(this));
+    moveUpBlock: function() {
+        this.props.moveBlock(this.props.item, "up");
+    },
+
+    moveDownBlock: function() {
+        this.props.moveBlock(this.props.item, "down");
+    },
+
+    handleBlockMove: function(way) {
+        this.props.moveBlock(this.props.item, way);
     },
 
     _notificationSystem: null,
@@ -152,16 +197,37 @@ var Block = React.createClass({
             return (
                 <div className="block block-text" id={"block-"+block.id} data-id={block.id}>
                     <TextBlock
-                        block={block}
                         key={block.id}
+                        block={block}
                         containerId={this.props.containerId}
-                        removeMe={this.handleRemoveBlock}
+                        removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        saveBlock={this.saveBlock}
+                        moveBlock={this.handleBlockMove}
+                        exportBlock={this.exportBlock}
                     />
+
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                                <div className="modal-in">
+                                    { this.state.loading
+                                        ? <Loader />
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd}
+                                            />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
 
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } else if (block.type_id === 2) {
             return (
                 <div className="block block-media" id={"block-"+block.id} data-id={block.id}>
@@ -190,7 +256,7 @@ var Block = React.createClass({
                     <div className="action">
                         <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                         <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
-                        <button className="handle" title="Déplacer le bloc"></button>
+                        <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
                     </div>
 
                     <Tooltip tooltipState={this.handleTooltipState}>
@@ -198,6 +264,17 @@ var Block = React.createClass({
                             ? <div className="block-actions">
                                 <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button><br/>
                                 <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
+                                <NotificationSystem ref="notificationSystem" />
+                            </div>
+                            : null
+                        }
+                    </Tooltip>
+
+                    <Tooltip tooltipState={this.handleTooltipMovesState}>
+                        { this.state.tooltipMovesState
+                            ? <div className="block-actions block-moves">
+                                <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
+                                <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
                                 <NotificationSystem ref="notificationSystem" />
                             </div>
                             : null
@@ -220,8 +297,11 @@ var Block = React.createClass({
                             </Modal>
                         : null
                     }
+
+                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } if (block.type_id === 3) {
             return (
                 <div className="block block-note" id={"block-"+block.id} data-id={block.id}>
@@ -229,13 +309,34 @@ var Block = React.createClass({
                         block={block}
                         key={block.id}
                         containerId={this.props.containerId}
-                        removeMe={this.handleRemoveBlock}
+                        removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        saveBlock={this.saveBlock}
+                        moveBlock={this.handleBlockMove}
+                        exportBlock={this.exportBlock}
                     />
+
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                                <div className="modal-in">
+                                    { this.state.loading
+                                        ? <Loader />
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd}
+                                            />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
 
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } if (block.type_id === 4) {
             return (
                 <div className="block block-math" id={"block-"+block.id} data-id={block.id}>
@@ -243,13 +344,32 @@ var Block = React.createClass({
                         block={block}
                         key={block.id}
                         containerId={this.props.containerId}
-                        removeMe={this.handleRemoveBlock}
+                        removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        moveBlock={this.handleBlockMove}
                     />
+
+                    { this.state.modalState
+                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                                <div className="modal-in">
+                                    { this.state.loading
+                                        ? <Loader />
+                                        : <ContainersList
+                                                closeModal={this.closeModal}
+                                                containers={this.state.containersList}
+                                                block={block.id}
+                                                addBlock={this.handleBlockAdd}
+                                            />
+                                    }
+                                </div>
+                            </Modal>
+                        : null
+                    }
 
                     <NotificationSystem ref="notificationSystem" />
                 </div>
             );
+
         } else {
             return null;
         }

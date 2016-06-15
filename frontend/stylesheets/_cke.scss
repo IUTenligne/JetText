@@ -3,7 +3,6 @@
 }
 
 .block-note {
-	padding-bottom: 10px !important;
 	.cke{
 		padding: 0 !important;
 		margin: 0;
@@ -17,11 +16,8 @@
 
 .cke_top {
 	background: transparent;
-	padding: 7px 7px 0 7px;
+	padding: 7px 0 4px 0;
 	border-radius: 0px;
-	border-top: 1px solid $lightGrey;
-	border-right: 1px solid $lightGrey;
-	border-left: 1px solid $lightGrey;
 	border-bottom: 0px;
 }
 

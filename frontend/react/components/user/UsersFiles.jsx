@@ -23,21 +23,28 @@ var FileInfo = React.createClass({
 
     handleFileWrapper: function() {
         if (this.props.file.filetype === "image") {
-            return { __html: '<img src="'+ this.props.file.url +'" height="30">' };
+            return { __html: '<img src="'+ this.props.file.url +'" height="28">' };
         } else if (this.props.file.filetype === "audio") {
             return { __html: '<i class="fa fa-music"></i>' };
         } else if (this.props.file.filetype === "video") {
             return { __html: '<i class="fa fa-camera"></i>' };
+        } else if (this.props.file.filetype === "pdf") {
+            return { __html: '<i class="fa fa-file-pdf-o"></i>' };
         }
     },
 
     handleFilePreview: function() {
         if (this.props.file.filetype === "image") {
-            return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px    ">' };
+            if (this.props.file.file_content_type.split("/")[1] === "svg+xml")
+                return { __html: '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'" height="28">\n</object>' };
+            else
+                return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px    ">' };
         } else if (this.props.file.filetype === "audio") {
             return { __html: '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>' };
-        } else if (this.props.file.filetype === "audio") {
-            return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="video/mpeg">\n</video>' };
+        } else if (this.props.file.filetype === "video") {
+            return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>' };
+        } else if (this.props.file.filetype === "pdf") {
+           return { __html: '<object data="'+ this.props.file.url +'" width="100%" height="300px" type="application/pdf">\n\t<embed src="'+ this.props.file.url +'" type="application/pdf"/>\n</object>' };
         }
     },
 
@@ -71,7 +78,7 @@ var FileInfo = React.createClass({
                 <td>
                     <NotificationSystem ref="notificationSystem"/>
                     { this.state.modalPreview
-                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu"}>
+                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu " + file.file_file_name}>
                                 <div className="modal-in">
                                     <center>
                                         <div dangerouslySetInnerHTML={this.handleFilePreview()} />
@@ -92,6 +99,7 @@ var UsersFiles = React.createClass({
         return {
             files: [],
             icon: '',
+            sorter: '',
             loading: true
         };
     },
@@ -111,15 +119,20 @@ var UsersFiles = React.createClass({
     },
 
     sort: function(list, elem) {
-        if ((this.state.icon === "down") || (this.state.icon === ""))
+        if ((this.state.icon === "down") || (this.state.icon === "")) {
             this.setState({ icon: "up" });
-        else
+            var way = "asc";
+        } else {
             this.setState({ icon: "down" });
+            var way = "desc";
+        }
 
-        this.setState({
-            files: list.sort().reverse(),
-            sorter: elem
-        });
+        $.get("/files/sort/"+ elem +"/"+ way +".json", function(result) {
+            this.setState({
+                files: result.uploads,
+                loading: false
+            });
+        }.bind(this));
     },
 
     _notificationSystem: null,
@@ -141,15 +154,15 @@ var UsersFiles = React.createClass({
                     <table>
                         <thead>
                             <tr>
-                                <th onClick={this.sort.bind(this, this.state.files, "validated")} width="auto" />
-                                <th onClick={this.sort.bind(this, this.state.files, "validated")} width="50%">
-                                    Nom {this.state.sorter === "validated" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                <th onClick={this.sort.bind(this, this.state.files, "file_file_name")} width="auto" />
+                                <th onClick={this.sort.bind(this, this.state.files, "file_file_name")} width="50%">
+                                    Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th width="20%">
-                                    Type
+                                <th onClick={this.sort.bind(this, this.state.files, "filetype")} width="20%">
+                                    Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th width="20%">
-                                    Date
+                                <th onClick={this.sort.bind(this, this.state.files, "file_updated_at")} width="20%">
+                                    Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                             </tr>
                         </thead>

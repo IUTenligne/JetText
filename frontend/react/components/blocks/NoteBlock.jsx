@@ -1,9 +1,7 @@
 var React = require('react');
+var Constants = require('../constants');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
-var Glossaries = require('../glossaries/Glossaries.jsx');
-var Term = require('../glossaries/Term.jsx');
-var TermOverlay = require('../glossaries/TermOverlay.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 var ContainersList = require('./ContainersList.jsx');
@@ -21,7 +19,6 @@ var NoteBlock = React.createClass({
             left: '',
             top: '',
             termsList: [],
-            glossaryModalState: false,
             formulaModalState: false,
             helpModalState: false,
             formulaString: '',
@@ -32,7 +29,7 @@ var NoteBlock = React.createClass({
             selectedStyle: '',
             editBlock: true,
             tooltipState: false,
-            modalState: false,
+            tooltipMovesState: false,
             noteStyles: ["remarque", "important", "quote", "exemple", "definition", "methode"]
         };
     },
@@ -110,35 +107,25 @@ var NoteBlock = React.createClass({
         if (editor) { editor.destroy(true); }
     },
 
-    saveBlock: function() {
-        var block = this.props.block;
-
-        $.ajax({
-            type: "PUT",
-            url: '/blocks/'+block.id,
-            context: this,
-            data: {
-                id: block.id,
-                name: this.state.blockName,
-                content: this.state.blockContent,
-                classes: this.state.selectedStyle
-            },
-            success: function(data) {
-                this.setState({
-                    blockName: data.name,
-                    blockContent: data.content,
-                    classes: data.classes,
-                    changeName: false,
-                    editBlock: true
-                });
-            }
-        });
-
+    saveBlock: function(id, name, content, classes) {
+        var block = { id: id, name: name, content: content, classes: classes };
+        this.props.saveBlock(block);
+        this.setState({ editBlock: true });
         var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
     },
 
+    saveDraft: function(id, name, content, classes) {
+        var block = { id: id, name: name, content: content, classes: classes };
+        this.props.saveBlock(block);
+    },
+
     unlockEditor: function() {
+        for (name in CKEDITOR.instances) {
+            /* avoid CKE instances conflicts */
+            CKEDITOR.instances[name].destroy(true);
+        }
+
         var that = this;
 
         var editor = CKEDITOR.replace("note_block_"+this.props.block.id, {
@@ -156,40 +143,17 @@ var NoteBlock = React.createClass({
             var content = that._highlightText(evt.editor.getData(), editor);
             that.setState({
                 blockContent: content,
-                blockVirtualContent: that.regexTerm(that.state.termsList, content)
+                blockVirtualContent: that.regexTerm(that.state.termsList, content),
             });
 
             /* Automatically saves the block content after change */
             saveDraft = setTimeout(function(){
-                that.saveDraft();
-            }, 3000);
+                that.saveDraft(that.props.block.id, that.state.blockName, that.state.blockContent, that.state.selectedStyle);
+            }, Constants.DRAFT_TIMER);
         });
 
         this.setState({ focusPopup: false, editBlock: false });
     },
-
-    saveDraft: function() {
-        var block = this.props.block;
-
-        $.ajax({
-            type: "PUT",
-            url: '/blocks/'+block.id,
-            context: this,
-            data: {
-                id: block.id,
-                name: this.state.blockName,
-                content: this.state.blockContent,
-                classes: this.state.selectedStyle
-            },
-            success: function(data) {
-                this.setState({
-                    blockName: data.name,
-                    blockContent: data.content
-                });
-            }
-        });
-    },
-
 
     _highlightText: function(query, editor) {
         if ( query.match(/{{(.*?)}}/) ) {
@@ -248,32 +212,6 @@ var NoteBlock = React.createClass({
         return {__html: data};
     },
 
-    overTerm: function(event){
-        event.preventDefault();
-
-        this.setState({
-            selectedText: document.getSelection().toString(),
-            left: event.pageX-40,
-            top: event.pageY -50
-        });
-
-        var txt = document.getSelection().toString();
-
-        if ( (!txt.match(/^\s$/)) && (txt.length > 0) ) {
-            this.setState({ focusPopup: true });
-        } else {
-            this.setState({ focusPopup: false });
-        }
-    },
-
-    termOverlay: function(){
-        this.setState({ glossaryModalState: true });
-    },
-
-    handleGlossaryModalState: function(st){
-        this.setState({ glossaryModalState: st });
-    },
-
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value.trim(),
@@ -297,15 +235,29 @@ var NoteBlock = React.createClass({
     },
 
     viewBlockAction: function() {
-        this.setState({ tooltipState: !this.state.tooltipState });
+        this.setState({ 
+            tooltipState: !this.state.tooltipState,
+            tooltipMovesState: false
+        });
+    },
+
+    viewBlockMoves: function() {
+        this.setState({ 
+            tooltipState: false,
+            tooltipMovesState: !this.state.tooltipMovesState
+        });
     },
 
     handleTooltipState: function(st) {
         this.setState({ tooltipState: st });
     },
 
+    handleTooltipMovesState: function(st) {
+        this.setState({ tooltipMovesState: st });
+    },
+
     handleRemoveBlock: function() {
-        this.props.removeMe(this.props.block);
+        this.props.removeBlock(this.props.block);
     },
 
     handleHelpModalState: function() {
@@ -313,29 +265,15 @@ var NoteBlock = React.createClass({
     },
 
     exportBlock: function() {
-        this.setState({
-            modalState: true,
-            loading: true
-        });
-
-        this.getContainers();
+        this.props.exportBlock();
     },
 
-    getContainers: function() {
-        this.serverRequest = $.get("/containers.json", function(result) {
-            this.setState({
-                containersList: result.containers,
-                loading: false
-            });
-        }.bind(this));
+    moveUpBlock: function() {
+        this.props.moveBlock("up");
     },
 
-    handleModalState: function(st) {
-        this.setState({ modalState: st });
-    },
-
-    closeModal: function() {
-        this.setState({ modalState: false });
+    moveDownBlock: function() {
+        this.props.moveBlock("down");
     },
 
 	render: function() {
@@ -351,63 +289,65 @@ var NoteBlock = React.createClass({
 
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id} onMouseUp={this.overTerm}>
-                    { this.state.focusPopup
-                        ? <div className="focus" style={myStyle}>
-                            <a onClick={this.termOverlay}>
-                                <i className="fa fa-book fa-fw" title="Glossaire" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                        : null
-                    }
-
+                <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName ? <button title="Enregister" onClick={this.saveBlock}><i className="fa fa-check"></i></button> : null }
+                            { this.state.changeName 
+                                ? <button 
+                                    title="Enregister" 
+                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
+                                    <i className="fa fa-check"></i>
+                                </button> 
+                            : null }
                         </h3>
                     </div>
 
-                    <center className="block-note-types">
-                        { this.state.noteStyles.map(function(style, i) {
-                            return(
-                                <div key={i} className={"note-style " + style} title={style} onClick={that.applyStyle.bind(that, style)}>
-                                    <i className={"fa note-icon-" + style + " fa-fw"}></i>
-                                </div>
-                            );
-                        })}
-                    </center>
+                    <div className="block-content">
+                        <center className="block-note-types">
+                            { this.state.noteStyles.map(function(style, i) {
+                                return(
+                                    <div key={i} className={"note-style " + style} title={style} onClick={that.applyStyle.bind(that, style)}>
+                                        <i className={"fa note-icon-" + style + " fa-fw"}></i>
+                                    </div>
+                                );
+                            })}
+                        </center>
 
-                    <div className={"block-note block-content block-content-" + this.state.selectedStyle} >
-                        <div className={"block-note-title block-note-title-" + this.state.selectedStyle}  >
-                            <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>
+                        <div className={"block-note block-content-" + this.state.selectedStyle} >
+                            <div className={"block-note-title block-note-title-" + this.state.selectedStyle}  >
+                                <i className={"fa note-icon-" +  this.state.selectedStyle + " fa-fw"}></i>
+                            </div>
+                            { this.state.blockVirtualContent != ''
+                                ? <div
+                                        id={this.dynamicId(block.id)}
+                                        ref="editableblock"
+                                        dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)}
+                                        onDoubleClick={this.unlockEditor}
+                                    />
+                                : <div
+                                        id={this.dynamicId(block.id)}
+                                        ref="editableblock"
+                                        dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)}
+                                        onDoubleClick={this.unlockEditor}
+                                    />
+                            }
+
+                            { this.state.editBlock 
+                                ? null 
+                                : <div className="block-save">
+                                    <button 
+                                        title="Enregister" 
+                                        className="text-block-save note" 
+                                        onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
+                                        <i className="fa fa-check"></i>
+                                    </button>
+                                </div> 
+                            }
                         </div>
-                        { this.state.blockVirtualContent != ''
-                            ? <div
-                                    id={this.dynamicId(block.id)}
-                                    ref="editableblock"
-                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockVirtualContent)}
-                                    onDoubleClick={this.unlockEditor}
-                                />
-                            : <div
-                                    id={this.dynamicId(block.id)}
-                                    ref="editableblock"
-                                    dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)}
-                                    onDoubleClick={this.unlockEditor}
-                                />
-                        }
-
-                        { this.state.editBlock ? null : <div className="block-save"><button title="Enregister" className="text-block-save note" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button></div> }
                     </div>
                 </div>
-
-                { this.state.glossaryModalState
-                    ? <Modal active={this.handleGlossaryModalState} mystyle={""} title={"Créer une définition"}>
-                        <TermOverlay select={this.state.selectedText} modalState={this.handleGlossaryModalState}/>
-                    </Modal>
-                    : null
-                }
 
                 { this.state.formulaModalState
                     ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>
@@ -416,23 +356,6 @@ var NoteBlock = React.createClass({
                             <input type="submit" value="Ok" onClick={this.saveFormula} />
                         </div>
                     </Modal>
-                    : null
-                }
-
-                { this.state.modalState
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
-                            <div className="modal-in">
-                                { this.state.loading
-                                    ? <Loader />
-                                    : <ContainersList
-                                            closeModal={this.closeModal}
-                                            containers={this.state.containersList}
-                                            block={block.id}
-                                            addBlock={this.handleBlockAdd}
-                                        />
-                                }
-                            </div>
-                        </Modal>
                     : null
                 }
 
@@ -453,7 +376,7 @@ var NoteBlock = React.createClass({
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
-                    <button className="handle" title="Déplacer le bloc"></button>
+                    <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
                 </div>
 
                 <Tooltip tooltipState={this.handleTooltipState}>
@@ -461,12 +384,27 @@ var NoteBlock = React.createClass({
                         ? <div className="block-actions">
                             { this.state.editBlock
                                 ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Editer</button>
-                                : <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
+                                : <button 
+                                    className="text-block-save" 
+                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
+                                    <i className="fa fa-check"></i> Enregistrer
+                                </button>
                             }
                             <br/>
                             <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
+                        </div>
+                        : null
+                    }
+                </Tooltip>
+
+                <Tooltip tooltipState={this.handleTooltipMovesState}>
+                    { this.state.tooltipMovesState
+                        ? <div className="block-actions block-moves">
+                            <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
+                            <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
+                            <NotificationSystem ref="notificationSystem" />
                         </div>
                         : null
                     }

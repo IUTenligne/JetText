@@ -113,18 +113,20 @@ var Glossaries = React.createClass({
                 <ul className="content-glossary">
         			{this.state.glossariesList.map(function(glossary){
         				return(
-                            <a href={"/#/glossaries/"+glossary.id}>
-                                <li key={glossary.id} className="list-group-glossary">
+                            <a href={"/#/glossaries/"+glossary.id} key={glossary.id}>
+                                <li className="list-group-glossary">
                                     <h4 className="capitalize">{glossary.name}</h4>
                                     <div className="triangle"></div>
                                 </li>
                             </a>
         				);
         			})}
+
                     <li id="addGlossary" onClick={this.viewCreateGlossaries}>
                         <i className="fa fa-plus fa-fw "></i>
                     </li>
                 </ul>
+                
                 { this.state.viewCreate
                     ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
                         <div className="add_new_glossary">

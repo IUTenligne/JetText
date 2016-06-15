@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530151746) do
+ActiveRecord::Schema.define(version: 20160530093248) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20160530151746) do
     t.datetime "file_updated_at"
     t.string   "filetype",          limit: 255
     t.string   "url",               limit: 255
+    t.string   "alt",               limit: 255
+    t.string   "width",             limit: 255
     t.integer  "user_id",           limit: 4
   end
 
@@ -138,8 +140,8 @@ ActiveRecord::Schema.define(version: 20160530151746) do
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",      null: false
     t.string   "encrypted_password",     limit: 255, default: "",      null: false
-    t.string   "firstname",              limit: 255, default: "",      null: false
-    t.string   "lastname",               limit: 255, default: "",      null: false
+    t.string   "firstname",              limit: 255, default: ""
+    t.string   "lastname",               limit: 255, default: ""
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -152,6 +154,7 @@ ActiveRecord::Schema.define(version: 20160530151746) do
     t.datetime "updated_at",                                           null: false
     t.string   "provider",               limit: 255, default: "email", null: false
     t.string   "uid",                    limit: 255, default: "",      null: false
+    t.string   "image",                  limit: 255
     t.string   "authentication_token",   limit: 255
     t.boolean  "validated",                          default: false
     t.integer  "role_id",                limit: 4

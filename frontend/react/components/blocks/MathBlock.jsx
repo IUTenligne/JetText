@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var ReactDOM = require('react-dom');
 var Loader = require('../widgets/Loader.jsx');
 var NotificationSystem = require('react-notification-system');
@@ -100,7 +101,6 @@ var MathToolbox = React.createClass({
                     :null
                 }
                 
-                
                 {this.state.arrow
                     ? <ul>
                         <li><button onClick={this.addMath.bind(this, "leftarrow ")}>&larr;</button></li>
@@ -118,6 +118,7 @@ var MathToolbox = React.createClass({
                         </ul>
                     :null
                 }
+
                 {this.state.letter
                     ? <ul>
                         <li><button onClick={this.addMath.bind(this, "alpha")}>&alpha;</button></li>
@@ -172,7 +173,7 @@ var MathBlock = React.createClass({
             areaContent: '',
             value: '',
             tooltipState: false,
-            modalState: false
+            tooltipMovesState: false
         }
     },
 
@@ -186,35 +187,17 @@ var MathBlock = React.createClass({
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
     },
 
-    saveBlock: function() {
-        var block = this.props.block;
-
-        $.ajax({
-            type: "PUT",
-            url: '/blocks/' + block.id,
-            context: this,
-            data: {
-                id: block.id,
-                name: this.state.blockName,
-                content: this.state.areaContent,
-                classes: ''
-            },
-            success: function() {
-                this.setState({ changeName: false })
-            }
-        });
-
-        var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
+    saveBlock: function(id, name, content) {
+        var block = { id: id, name: name, content: content };
+        this.props.saveBlock(block);
+        this.setState({ editBlock: true });
+        var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
     },
 
-    exportBlock: function() {
-        this.setState({
-            modalState: true,
-            loading: true
-        });
-
-        this.getContainers();
+    saveDraft: function(id, name, content) {
+        var block = { id: id, name: name, content: content };
+        this.props.saveBlock(block);
     },
 
     handleBlockAdd: function(data) {
@@ -222,29 +205,26 @@ var MathBlock = React.createClass({
         this.props.addBlock(data);
     },
 
-    handleModalState: function(st) {
-        this.setState({ modalState: st });
-    },
-
-    closeModal: function() {
-        this.setState({ modalState: false });
-    },
-
-    getContainers: function() {
-        this.serverRequest = $.get("/containers.json", function(result) {
-            this.setState({
-                containersList: result.containers,
-                loading: false
-            });
-        }.bind(this));
-    },
-
     viewBlockAction: function() {
-        this.setState({ tooltipState: !this.state.tooltipState });
+        this.setState({ 
+            tooltipState: !this.state.tooltipState,
+            tooltipMovesState: false
+        });
+    },
+
+    viewBlockMoves: function() {
+        this.setState({ 
+            tooltipState: false,
+            tooltipMovesState: !this.state.tooltipMovesState
+        });
     },
 
     handleTooltipState: function(st) {
         this.setState({ tooltipState: st });
+    },
+
+    handleTooltipMovesState: function(st) {
+        this.setState({ tooltipMovesState: st });
     },
 
     handleInteraction: function(fn) {
@@ -265,7 +245,7 @@ var MathBlock = React.createClass({
     },
 
     handleRemoveBlock: function() {
-        this.props.removeMe(this.props.block);
+        this.props.removeBlock(this.props.block);
     },
 
     handleBlockName: function(event) {
@@ -280,13 +260,24 @@ var MathBlock = React.createClass({
         return {__html: "$$" + data + "$$"};
     },
 
+    exportBlock: function() {
+        this.props.exportBlock();
+    },
+
+    moveUpBlock: function() {
+        this.props.moveBlock("up");
+    },
+
+    moveDownBlock: function() {
+        this.props.moveBlock("down");
+    },
+
     render: function() {
     	var block = this.props.block;
 
     	return (
     		<div className="block-inner">
-
-                <div className="content" key={block.id}>
+                <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-superscript"></i>
                         <h3>
@@ -320,7 +311,7 @@ var MathBlock = React.createClass({
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
-                    <button className="handle" title="Déplacer le bloc"></button>
+                    <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
                 </div>
 
                 <Tooltip tooltipState={this.handleTooltipState}>
@@ -336,22 +327,16 @@ var MathBlock = React.createClass({
                     }
                 </Tooltip>
 
-                { this.state.modalState
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
-                            <div className="modal-in">
-                                { this.state.loading
-                                    ? <Loader />
-                                    : <ContainersList
-                                            closeModal={this.closeModal}
-                                            containers={this.state.containersList}
-                                            block={block.id}
-                                            addBlock={this.handleBlockAdd}
-                                        />
-                                }
-                            </div>
-                        </Modal>
-                    : null
-                }
+                <Tooltip tooltipState={this.handleTooltipMovesState}>
+                    { this.state.tooltipMovesState
+                        ? <div className="block-actions block-moves">
+                            <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
+                            <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
+                            <NotificationSystem ref="notificationSystem" />
+                        </div>
+                        : null
+                    }
+                </Tooltip>
 
                 <NotificationSystem ref="notificationSystem"/>
             </div>

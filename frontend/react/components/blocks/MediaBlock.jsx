@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
 var Loader = require('../widgets/Loader.jsx');
@@ -256,16 +257,27 @@ var MediaBlock = React.createClass({
         return {
             blockName: '',
             blockContent: '',
+            upload: null,
             browserList: [],
             modalState: false,
-            changeName: false
+            changeName: false,
+            mediaAlt: '',
+            mediaWidth: ''
         };
     },
 
     componentDidMount: function() {
+        this.serverRequest = $.get("/uploads/"+ this.props.block.upload_id +".json", function(result) {
+            this.setState({
+                upload: result.id,
+                mediaAlt: result.alt,
+                mediaWidth: result.width,
+                blockContent: this.makeHtmlContent(result, result.filetype, result.width)
+            });
+        }.bind(this));
+
         this.setState({ 
             blockName: this.props.block.name,
-            blockContent: this.props.block.content
         });
 
     },
@@ -305,26 +317,35 @@ var MediaBlock = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                var content = this.makeHtmlContent(data, fileExt);
+                var content = this.makeHtmlContent(data, data.filetype, '');
 
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
                     type: "PUT",
-                    data: { content: content, upload_id: data.id }
+                    data: { 
+                        content: content,
+                        upload_id: data.id
+                    }
                 });
 
-                this.setState({ blockContent: content });
+                this.setState({ 
+                    blockContent: content, 
+                    upload: data.id 
+                });
             }
         });
     },
 
-    makeHtmlContent: function(data, type) {
-        if (type == "mp4") {
+    makeHtmlContent: function(data, type, width) {
+        if (type == "video") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
-        } else if (type == "mp3" || type == "mpeg") {
-            return "<audio controls>\n\t<source src='"+data.url+"' type='audio/mpeg'>\n</audio>";
-        } else if (type == "jpg" || type == "jpeg" || type == "svg" || type == "gif" || type == "png") {
-            return "<img src='"+data.url+"'>";
+        } else if (type == "audio") {
+            return '<audio controls>\n\t<source src="'+data.url+'" type="'+data.file_content_type+'">\n</audio>';
+        } else if (type == "image") {
+            if (width != '')
+                return '<img src="'+data.url+'" style="max-width:'+width+'px">';
+            else
+                return '<img src="'+data.url+'">';
         } else if (type == "pdf") {
             return "<object data='"+data.url+"' width='100%' height='300px' type='application/pdf'>\n\t<embed src='"+data.url+"' type='application/pdf'/>\n</object>";
         } else {
@@ -341,8 +362,8 @@ var MediaBlock = React.createClass({
     },
 
     handleBlockChange: function(data) {
-        var fileExt = data.file_file_name.split(".").slice(-1)[0];
-        var content = this.makeHtmlContent(data, fileExt);
+        var content = this.makeHtmlContent(data, data.filetype, '');
+        var upload = data;
 
         $.ajax({
             url: "/blocks/update_upload",
@@ -355,7 +376,10 @@ var MediaBlock = React.createClass({
                 upload_id: data.id,
             },
             success: function(data) {
-                this.setState({ blockContent: content });
+                this.setState({ 
+                    blockContent: content,
+                    upload: upload.id 
+                });
             }
         });
     },
@@ -385,6 +409,50 @@ var MediaBlock = React.createClass({
         });
     },
 
+    handleMediaAlt: function(event) {
+        var that = this;
+        var saveChanges;
+        clearTimeout(saveChanges);
+
+        this.setState({
+            mediaAlt: event.target.value
+        });
+
+        saveChanges = setTimeout(function(){
+            that.saveChanges();
+        }, Constants.DRAFT_TIMER);
+    },
+
+    handleMediaWidth: function(event) {
+        var that = this;
+        var saveChanges;
+        clearTimeout(saveChanges);
+
+        this.setState({
+            mediaWidth: event.target.value
+        });
+
+        saveChanges = setTimeout(function(){
+            that.saveChanges();
+        }, Constants.DRAFT_TIMER);
+    },
+
+    saveChanges: function() {
+        $.ajax({
+            url: "/uploads/" + this.state.upload,
+            type: "PUT",
+            context: this,
+            data: {
+                alt: this.state.mediaAlt,
+                width: this.state.mediaWidth
+            },
+            success: function(data) {
+                var content = this.makeHtmlContent(data, data.filetype, this.state.mediaWidth);
+                this.setState({ blockContent: content });
+            }
+        });
+    },
+
     dynamicId: function(id){
         return "media_block_" + id;
     },
@@ -395,9 +463,10 @@ var MediaBlock = React.createClass({
 
 	render: function() {
 		var block = this.props.block;
+
 		return (
             <div className="block-inner">
-                <div className="content" key={block.id}>
+                <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-image"></i>
                         <h3>
@@ -407,33 +476,46 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                            <div className="viewDropzone">
+                        <div className="block-media-actions">
+                            <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                                <div className="viewDropzone">
 
-                            </div> 
-                            <div className="viewDropzonebis">
-                               <div className="textDropzone">
-                                    <i className="fa fa-file-text"></i>
-                                    <br/>
-                                    Déposer un fichier
-                                 </div>
-                            </div>   
-                            <div className="zoneDropzone">
-                                <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                                </div> 
+                                <div className="viewDropzonebis">
+                                   <div className="textDropzone">
+                                        <i className="fa fa-file-text"></i>
+                                        <br/>
+                                        Déposer un fichier
+                                     </div>
+                                </div>   
+                                <div className="zoneDropzone">
+                                    <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                                </div>
                             </div>
-                        </div>
-                    
+                        
+                            <div className="browse-files" onClick={this.handleBrowseFiles}>
+                                <i className="fa fa-folder-open"></i><br/>
+                                Parcourir mes fichiers
+                            </div>
 
-                        <div className="browse-files" onClick={this.handleBrowseFiles}>
-                            <i className="fa fa-folder-open"></i><br/>
-                            Parcourir mes fichiers
+                            { this.state.modalState 
+                                ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} selectFile={this.selectFile} /> 
+                                : null 
+                            }
                         </div>
-                        { this.state.modalState ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> : null }
+
+                        <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+
+                        { this.state.blockContent != '' 
+                            ? <div>
+                                <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
+                                <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                            </div>
+                            : null
+                        }
                     </div>
-
-                    <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
-
                 </div>
+
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );

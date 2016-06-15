@@ -6,21 +6,23 @@ span.bold{
 
 .block {
 	background: white;
-	margin-bottom: 20px;
-	box-shadow: 0 2px 4px 2px rgba(0,0,0,0.15);
-	border-radius: 4px;
+	margin-bottom: 30px;
+	/*box-shadow: 0 2px 4px 2px rgba(0,0,0,0.15);
+	border-radius: 4px;*/
+	border-bottom: 1px solid $blockBorder;
 
 	/* global MediaBlock TextBlock NoteBlock*/
 	.block-inner {
-		.content {
+		.block-inner-content {
 			.focus {
 				background: $lightBlue;
 				padding: 7px;
 				text-align: center;
-				width: 150 px;
+				width: 150px;
 				border-radius: 7px;
 				position: absolute;
 				z-index: 1000;
+
 				a {
 					color: $white;
 					background: $lightBlue;
@@ -37,25 +39,29 @@ span.bold{
 			}
 
 			.block-title {
-				border-radius: 4px 4px 0 0;
 				margin-top: 0;
-				min-height: 40px;
+				min-height: 22px;
 				width: 100%;
 				display: inline-block;
-				line-height: 30px;
-				background: rgba(0,0,0,0.08);
+				line-height: 20px;
+				border-bottom: 1px solid $blockBorder;
+				margin-bottom: -3px;
+				background: $grey;
 
 				i {
-					border-radius: 4px 0 0 0;
+					background: white;
 					float: left;
-					padding: 6px 15px;
-					line-height: 28px;
+					padding: 4px 22px 0px 22px;
+					line-height: 22px;
 					color: white;
+					border-top: 1px solid $blockBorder;
+					border-bottom: 1px solid white;
+					margin-bottom: -1px;
 				}
 
 				h3 {
-					line-height: 38px;
-					color: $uiGrey;
+					line-height: 20px;
+					color: #3b4045;
 					font-weight: bold;
 					float: left;
 					padding: 0 15px;
@@ -63,15 +69,18 @@ span.bold{
 					min-width: 90%;
 
 					input {
-						min-width: 90%;
+						min-width: 100%;
 						float: left;
 						display: inline-block;
-						padding: 6px 12px;
-						font-size: 14px;
+						padding: 2px 0px;
+						font-size: 16px;
 						line-height: 1.42857143;
 						background-color: transparent;
 						background-image: none;
 						border: none;
+						color: $black;
+						font-weight: bold;
+
 					}
 
 					button {
@@ -81,7 +90,8 @@ span.bold{
 						background: none;
 						border: none;
             cursor: pointer;
-						i{
+
+						i {
               border-radius: 20px;
         			float: right;
         			font-size: 15px;
@@ -93,6 +103,11 @@ span.bold{
 		}
 
 		.block-content {
+			font-family: Helvetica,Arial,sans-serif;
+			margin-top: 0;
+			font-size: 14px;
+			line-height: 19px;
+
 			ul,ol {
 				margin-top: 20px;
 				margin-left: 20px;
@@ -132,8 +147,9 @@ span.bold{
 		    }
 
 			blockquote {
-				border-left: 2px solid #F0F0F0;
-				padding-left: 15px;
+				border-left: 4px solid $iGrey;
+				padding: 10px 15px 8px 15px;
+				background: $quoteGrey
 			}
 
 			/* glossary tooltip */
@@ -208,13 +224,13 @@ span.bold{
 	.action {
 		text-align: right;
 		width: 100%;
-		color: rgba($darkGrey,0.5);
+		color: $iGrey;
 		font-size: 20px;
 
 		.handle {
 			background: none;
 			border: none;
-			color: rgba($darkGrey,0.5);
+			color: $iGrey;
 			font-size: 17px;
 			margin: 5px;
 		}
@@ -259,7 +275,6 @@ span.bold{
 			width: 100%;
 			border: none;
 			background: none;
-			color: $black;
 			font-size: 17px;
 			text-align: left;
 			padding: 2px 5px 2px 5px;
@@ -270,6 +285,7 @@ span.bold{
 			color: $lightBlue;
 		}
 	}
+
 	.block-actions:after {
 		position: absolute;
 		right: 45px;
@@ -291,34 +307,61 @@ span.bold{
 		border-right: 8px solid transparent;
 		border-bottom: 8px solid $white;
 	}
+	.block-actions.block-moves:after {
+		right: 0px;
+	}
+	.block-actions.block-moves:before {
+		right: 1px;
+	}
 }
 
 /* spacial UI block */
 .block-text,
 .block-texte {
+	border-color: $lightBlue;
+
 	div.block-inner {
 		div.block-title {
+			border-color: $lightBlue !important;
+
 			i {
-				background-image:linear-gradient($lighTbBlue, rgb(52,129,177));
+				border-top: 4px solid $lightBlue !important;
+				border-right-color: $lightBlue !important;
+				color: $lightBlue !important;
 			}
 		}
 		div.block-title:hover {
+
 			i {
 				cursor: pointer;
 			}
+		}
+
+		.block-content {
+			border-color: $lightBlue;
+		}
+
+		.action {
+			border-color: $lightBlue;
 		}
 	}
 }
 
 .block-math,
 .block-maths {
+	border-color: $lightPurple;
+
 	div.block-inner {
 		div.block-title {
+			border-color: $lightPurple !important;
 			i {
-				background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
+				border-top: 4px solid $lightPurple !important;
+				color: $lightPurple !important;
+				border-right-color: $lightPurple !important;
 			}
 		}
 		div.block-content {
+			border-color: $lightPurple;
 			width: 100%;
 			#output{
 				width: 100%;
@@ -386,267 +429,300 @@ span.bold{
 			}
 		}
 	}
+	.action {
+		border-color: $lightPurple;
+	}
 }
 
 .block-media {
+	border-color: $lightOrange;
+
 	.block-inner {
-		.block-title {
-			i {
-				background-image:linear-gradient($lightOrange,rgb(217,125,14));
-			}
-		}
-		div.block-content{
-			border: 2px dashed $lightOrange;
-			width: 95%;
-			display: table;
-			text-align: center;
-			border-radius: 4px;
-			margin: 0 auto;
-			margin-top: 5px;
-
-
-			.dropzone {
-			  	width: 50%;
-			  	height: 70px;
-			  	display: table-cell;
-			  	border-right: 2px solid $lightOrange;
-				overflow: hidden;
-				text-align: center;
-
-				.viewDropzone{
-					position: absolute;
-					height: 70px;
+		div.block-inner-content {
+			border-color: $lightOrange;
+			.block-title {
+				border-color: $lightOrange;
+				i {
+					border-top: 4px solid $lightOrange !important;
+					color: #E48D23 !important;
+					border-right-color: $lightOrange;
 				}
-				.viewDropzonebis{
-					position: relative;
-					text-align: center;
-					table-layout: fixed;
+			}
 
-					.textDropzone{
-						width: 100%;
-				  		height: 70px;
-				  		top: 0;
-				  		right: 0;
-				  		position: absolute;
+			div.block-content{
+				border-color: $lightOrange;
+				
+				.block-media-actions {
+					border: 2px dashed $lightOrange;
+					width: 95%;
+					display: table;
+					text-align: center;
+					border-radius: 4px;
+					margin: 0 auto;
+					margin-top: 5px;
+
+					.dropzone {
+					  width: 50%;
+					  height: 70px;
+					  display: table-cell;
+					  border-right: 2px solid $lightOrange;
+						overflow: hidden;
 						text-align: center;
-						margin-top: 10px;
-						color: $textGrey;
-						i{
-							font-size: 30px;
+
+						.viewDropzone{
+							position: absolute;
+							height: 70px;
+						}
+
+						.viewDropzonebis{
+							position: relative;
+							text-align: center;
+							table-layout: fixed;
+
+							.textDropzone{
+								width: 100%;
+						  	height: 70px;
+						  	top: 0;
+						  	right: 0;
+						  	position: absolute;
+								text-align: center;
+								margin-top: 10px;
+								color: $textGrey;
+								i{
+									font-size: 30px;
+									color: $textGrey;
+									margin-bottom: 5px;
+								}
+							}
+						}
+						.zoneDropzone{
+							position: relative;
+							height: 70px;
 							color: $textGrey;
+
+							input[type=file] {
+								cursor: pointer;
+								overflow: hidden;
+								width: 100%;
+						  		height: 70px;
+						  		top: 0;
+						  		right: 0;
+						  		position: absolute;
+						  		opacity: 0;
+						  		color: $textGrey;
+							}
+						}
+
+					}
+
+		      	.browse-files:hover{
+		        	color: $lightBlue;
+		          	i{
+		            	color: $lightBlue;
+		          	}
+		      	}
+		       	.browse-files{
+						width: 50%;
+						vertical-align: middle;
+						display: table-cell;
+						cursor: pointer;
+						color: $textGrey;
+
+						i {
+							font-size: 30px;
 							margin-bottom: 5px;
+							color: $textGrey;
 						}
 					}
 				}
-				.zoneDropzone{
-					position: relative;
-					height: 70px;
-					color: $textGrey;
-
-					input[type=file] {
-						cursor: pointer;
-						overflow: hidden;
-						width: 100%;
-				  		height: 70px;
-				  		top: 0;
-				  		right: 0;
-				  		position: absolute;
-				  		opacity: 0;
-				  		color: $textGrey;
-					}
-				}
-
 			}
 
-      	.browse-files:hover{
-        	color: $lightBlue;
-          	i{
-            	color: $lightBlue;
-          	}
-      	}
-       	.browse-files{
-				width: 50%;
-				vertical-align: middle;
-				display: table-cell;
-				cursor: pointer;
-				color: $textGrey;
+			div.block-content.border{
+				border: none;
+			}
 
-				i {
-					font-size: 30px;
-					margin-bottom: 5px;
-					color: $textGrey;
-				}
+			div.block-content {
+				text-align: center;
 			}
 		}
-		div.block-content.border{
-			border: none;
-		}
+	}
+	.action {
+		border-color: $lightOrange;
 	}
 }
 
 
 .block-note,
 .block-remarque {
+	border-color: $lightRed;
+
 	div.block-inner {
-		div.content {
+		div.block-inner-content {
 			.block-title {
+				border-color: $lightRed !important;
+
 				i {
-					background-image:linear-gradient( $lightRed,rgb(186,67,38));
+					border-top: 4px solid $lightRed !important;
+					color: $lightRed !important;
+					border-right-color: $lightRed;
 				}
 			}
+
 			div.block-title:hover {
 				i {
 					cursor: pointer;
 				}
 			}
 
-			.block-note-types {
-				margin: 10px 0 15px 0;
-			}
-
-			.note-style {
-				display: inline-block;
-				margin: 2px 2px 2px 10px;
-				border-radius: 4px;
-				cursor: pointer;
-				text-align: center;
-				box-shadow: 0px 2px 2px rgba(0,0,0,0.50);
-
-				i {
-					font-size: 25px;
-					margin: 0 2px 0 2px;
-					width: 35px;
-					padding: 2px;
-					color: $white;
-
-				}
-			}
-
-			.important{
-				background-image:linear-gradient($lightRed,rgb(186,67,38));
-				box-shadow: 2px 2px 4px rgba($lightRed,0.8);
-			}
-
-			.quote{
-				background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
-				box-shadow: 2px 2px 4px rgba($lighTbGrey,0.8);
-			}
-
-			.exemple{
-				background-image:linear-gradient($lightGreen,rgb(62,156,110));
-				box-shadow: 2px 2px 4px rgba($lightGreen,0.8);
-			}
-
-			.definition{
-				background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
-				box-shadow: 2px 2px 4px rgba($lighTbpurple,0.8);
-			}
-
-			.methode{
-				background-image:linear-gradient($lightOrange,rgb(217,125,14));
-				box-shadow: 2px 2px 4px rgba($lightOrange,0.8);
-			}
-
-			.remarque{
-				background-image:linear-gradient($lighTbBlue,rgb(52,129,177));
-				box-shadow: 2px 2px 4px rgba($lighTbBlue,0.8);
-			}
-
 			.block-content {
-				border: 2px solid;
-				border-radius: 4px;
-				margin: 5px 10px 0px 10px;
+				border-color: $lightRed !important;
 
-				.block-note-title {
-					background: $white;
-					margin: -30px 0 0 0;
-					width: 160px;
-					padding: 0 0 10px 8px;
-					font-size: 20px;
+				.block-note-types {
+					margin: 10px 0 15px 0;
+				}
+
+				.note-style {
+					display: inline-block;
+					margin: 2px 2px 2px 10px;
+					border-radius: 4px;
+					cursor: pointer;
+					text-align: center;
 
 					i {
-						padding-right: 30px;
 						font-size: 25px;
+						margin: 0 2px 0 2px;
+						width: 35px;
+						padding: 2px;
+						color: $white;
+
+					}
+				}
+
+				.important{
+					background-image:linear-gradient($lightRed,rgb(186,67,38));
+				}
+
+				.quote{
+					background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
+				}
+
+				.exemple{
+					background-image:linear-gradient($lightGreen,rgb(62,156,110));
+				}
+
+				.definition{
+					background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
+				}
+
+				.methode{
+					background-image:linear-gradient($lightOrange,rgb(217,125,14));
+				}
+
+				.remarque{
+					background-image:linear-gradient($lighTbBlue,rgb(52,129,177));
+				}
+
+				.block-note {
+					border: 2px solid;
+					padding: 5px 10px 0px 10px;
+					border-radius: 3px;
+
+					.block-note-title {
+						background: $white;
+						margin: -30px 0 0 0;
+						width: 160px;
+						padding: 0 0 10px 8px;
+						font-size: 20px;
+
+						i {
+							padding-right: 30px;
+							font-size: 25px;
+						}
+					}
+				}
+
+				.block-content-important {
+					border-color: $lightRed;
+					.block-note-title-important i{
+						color: $lightRed;
+					}
+					.block-note-title-important:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Important";
+						color: $lightRed;
+					}
+				}
+
+				.block-content-quote {
+					border-left: 4px solid $quoteBorder;
+					background: $quoteBg;
+					.block-note-title-quote i{
+						color: $lighTbGrey;
+					}
+					.block-note-title-quote:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Citation";
+						color: $lighTbGrey;
+					}
+				}
+
+				.block-content-exemple {
+					border-color: $lightGreen;
+					.block-note-title-exemple i{
+						color: $lightGreen;
+					}
+					.block-note-title-exemple:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Exemple";
+						color: $lightGreen;
+					}
+				}
+
+				.block-content-definition {
+					border-color: $lighTbpurple;
+					.block-note-title-definition i{
+						color: $lighTbpurple;
+					}
+					.block-note-title-definition:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Définition";
+						color: $lighTbpurple;
+					}
+				}
+				.block-content-methode {
+					border-color: $lightOrange;
+					.block-note-title-methode i{
+						color: $lightOrange;
+					}
+					.block-note-title-methode:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Méthode";
+						color: $lightOrange;
+					}
+				}
+
+				.block-content-remarque {
+					border-color: $lighTbBlue;
+					.block-note-title-remarque i{
+						color: $lighTbBlue;
+					}
+					.block-note-title-remarque:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Remarque";
+						color: $lighTbBlue;
 					}
 				}
 			}
+		}
 
-			.block-content-important {
-				border-color: $lightRed;
-				.block-note-title-important i{
-					color: $lightRed;
-				}
-				.block-note-title-important:after{
-					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-					font-size: 24px;
-					content: "Important";
-					color: $lightRed;
-				}
-			}
-
-			.block-content-quote {
-				border-color: $lighTbGrey;
-				.block-note-title-quote i{
-					color: $lighTbGrey;
-				}
-				.block-note-title-quote:after{
-					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-					font-size: 24px;
-					content: "Citation";
-					color: $lighTbGrey;
-				}
-			}
-
-			.block-content-exemple {
-				border-color: $lightGreen;
-				.block-note-title-exemple i{
-					color: $lightGreen;
-				}
-				.block-note-title-exemple:after{
-					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-					font-size: 24px;
-					content: "Exemple";
-					color: $lightGreen;
-				}
-			}
-
-			.block-content-definition {
-				border-color: $lighTbpurple;
-				.block-note-title-definition i{
-					color: $lighTbpurple;
-				}
-				.block-note-title-definition:after{
-					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-					font-size: 24px;
-					content: "Définition";
-					color: $lighTbpurple;
-				}
-			}
-			.block-content-methode {
-				border-color: $lightOrange;
-				.block-note-title-methode i{
-					color: $lightOrange;
-				}
-				.block-note-title-methode:after{
-					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-					font-size: 24px;
-					content: "Méthode";
-					color: $lightOrange;
-				}
-			}
-
-			.block-content-remarque {
-				border-color: $lighTbBlue;
-				.block-note-title-remarque i{
-					color: $lighTbBlue;
-				}
-				.block-note-title-remarque:after{
-					font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
-					font-size: 24px;
-					content: "Remarque";
-					color: $lighTbBlue;
-				}
-			}
+		.action {
+			border-color: $lightRed;
 		}
 	}
 }
@@ -691,19 +767,6 @@ span.bold{
 		cursor: pointer;
 	}
 }
-
-/* xla */
-.gu-mirror {
-  	background: red !important;
-}
-
-.gu-transit {
-	.block-content,
-	.block-actions {
-		display: none;
-	}
-}
-/* */
 
 .matharea {
 	min-width: 100%;

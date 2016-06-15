@@ -1,6 +1,6 @@
 module ApplicationHelper
   
-	#Devise resource helpers
+	# Devise resource helpers
 	def resource_name
     :user
   end
@@ -11,6 +11,11 @@ module ApplicationHelper
 
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
+  end
+
+  def resource_class
+    # Needed by Omniauth
+    devise_mapping.to
   end
 
 end
