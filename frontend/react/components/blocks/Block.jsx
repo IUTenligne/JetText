@@ -346,7 +346,9 @@ var Block = React.createClass({
                         containerId={this.props.containerId}
                         removeBlock={this.handleRemoveBlock}
                         addBlock={this.handleBlockAdd}
+                        saveBlock={this.saveBlock}
                         moveBlock={this.handleBlockMove}
+                        exportBlock={this.exportBlock}
                     />
 
                     { this.state.modalState

@@ -236,7 +236,13 @@ var MathBlock = React.createClass({
                         <i className="fa fa-superscript"></i>
                         <h3>
                             <input type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName ? <button title="Enregister" onClick={this.saveBlock.bind(this, true)}><i className="fa fa-check"></i></button> : null }
+                            { this.state.changeName 
+                                ? <button 
+                                    title="Enregister" 
+                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.areaContent)}>
+                                    <i className="fa fa-check"></i></button> 
+                                : null 
+                            }
                         </h3>
                     </div>
 
@@ -262,7 +268,11 @@ var MathBlock = React.createClass({
                 <Tooltip tooltipState={this.handleTooltipState}>
                     { this.state.tooltipState
                         ? <div className="block-actions">
-                            <button className="text-block-save" onClick={this.saveBlock}><i className="fa fa-check"></i> Enregistrer</button>
+                            <button 
+                                className="text-block-save" 
+                                onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.areaContent)}>
+                                <i className="fa fa-check"></i> Enregistrer
+                            </button>
                             <br/>
                             <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
