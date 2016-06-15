@@ -42,7 +42,5 @@ gem 'whenever', :require => false
 #omniauth
 gem 'omniauth'
 gem 'omniauth-openid'
-gem 'openid-redis-store'
+gem "omniauth-google-oauth2"
 gem 'omniauth-facebook'
-gem 'omniauth-twitter'
-gem 'omniauth-instagram'

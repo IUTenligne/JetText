@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20160530093248) do
     t.datetime "updated_at",                                           null: false
     t.string   "provider",               limit: 255, default: "email", null: false
     t.string   "uid",                    limit: 255, default: "",      null: false
+    t.string   "image",                  limit: 255
     t.string   "authentication_token",   limit: 255
     t.boolean  "validated",                          default: false
     t.integer  "role_id",                limit: 4
