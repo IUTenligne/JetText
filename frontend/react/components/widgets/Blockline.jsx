@@ -2,10 +2,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var dragula = require('react-dragula');
+var BlockTypes = require('../blocktypes');
 var enhanceWithClickOutside = require('react-click-outside');
 
 
-var Timeline = React.createClass({
+var Blockline = React.createClass({
 	getInitialState: function() {
 	  return {
 	    blocks: [],
@@ -23,8 +24,6 @@ var Timeline = React.createClass({
 	  this.setState({ 
 	  	blocks: this.props.blocks,
 	  });
-
-	  window.addEventListener('scroll', this.handleScroll);
 
 	  var container = ReactDOM.findDOMNode(this.refs.dragableblocks);
     /* makes the blocks draggable by using "handle" class elements in block's jsx */
@@ -82,21 +81,30 @@ var Timeline = React.createClass({
     });
   },
 
+  handleClick: function(blockId, event) {
+		event.preventDefault();
+		var block = document.getElementById("block-" + blockId).offsetTop;
+		window.scrollTo(0, Math.floor(block - 45));
+	},
+
 	handleClickOutside: function() {
     this.setState({ menu: false });
   },
 
 	render: function(){
 		var blocks = this.props.blocks;
+		var that = this;
 
 		return(
-			<div id="verticaltimeline">
-				<div className="verticaltimeline-container">
-					<div className="verticaltimeline-blocks" ref="dragableblocks">
+			<div id="blockline">
+				<div className="blockline-container">
+					<div className="blockline-blocks" ref="dragableblocks">
 						{ this.props.blocks.map(function(block, index) {
 							return(
-								<div className="verticaltimeline-block" key={block.id} data-id={block.id}>
-									<button className="handle" title="Déplacer le bloc">{block.id}</button>
+								<div className={"blockline-block " + BlockTypes[block.type_id]} key={block.id} data-id={block.id}>
+									<button className="handle" title="Déplacer le bloc" onClick={that.handleClick.bind(that, block.id)}>
+										<i className="fa"></i>
+									</button>
 								</div>
 							);
 						})}
@@ -107,4 +115,4 @@ var Timeline = React.createClass({
 	}
 });
 
-module.exports = enhanceWithClickOutside(Timeline);
+module.exports = enhanceWithClickOutside(Blockline);

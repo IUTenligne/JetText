@@ -337,19 +337,73 @@ h2.header_page {
 }
 
 
-#verticaltimeline {
-  width: 1px;
+#blockline {
+  width: 2px;
   clear: both;
   position: fixed;
   right: 40px;
-  top: 100px;
+  top: 102px;
   z-index: 1000 !important;
-  height: 400px;
+  height: auto;
   display: inline-block;
   text-align: right;
   background: $lightBlue;
 
-  .timeline-container {
-    background: red;
+  .blockline-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .blockline-blocks {
+      margin-left: -14px;
+      .blockline-block {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        outline: 0;
+        button {
+          width: 30px;
+          height: 30px;
+          border-radius: 6px;
+          border: 0px solid;
+          color: white;
+          outline: 0;
+          box-shadow: 0 2px 2px rgba(0,0,0,0.25);
+          i.fa:before {
+            font-family: FontAwesome;
+            font-size: 16px;
+          }
+        }
+        button:hover {
+          cursor: pointer;
+          transform: scale(1.1);
+        }
+      }
+      .blockline-block.text-block button {
+        background: $lightBlue;
+        border-color: #26648B;
+        i.fa:before {
+          content: "\f040";
+        }
+      }
+      .blockline-block.media-block button {
+        background: $lightOrange;
+        border-color: #9E5B0B;
+        i.fa:before {
+          content: "\f03e";
+        }
+      }
+      .blockline-block.note-block button {
+        background: $lightRed;
+        border-color: #932D14;
+        i.fa:before {
+          content: "\f10e";
+        }
+      }
+      .blockline-block.math-block button {
+        background: $lightPurple;
+        border-color: #5F2D81;
+        i.fa:before {
+          content: "\f12b";
+        }
+      }
+    }
   }
 }

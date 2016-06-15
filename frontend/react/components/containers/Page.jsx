@@ -7,7 +7,7 @@ var GlossariesBox = require('../glossaries/GlossariesBox.jsx');
 var dragula = require('react-dragula');
 var Toolbar = require('../widgets/Toolbar.jsx');
 var Timeline = require('../widgets/Timeline.jsx');
-var VerticalTimeline = require('../widgets/VerticalTimeline.jsx');
+var Blockline = require('../widgets/Blockline.jsx');
 
 
 var Page = React.createClass({
@@ -275,7 +275,7 @@ var Page = React.createClass({
                     </div>
                 </ReactCSSTransitionGroup> 
 
-                <VerticalTimeline blocks={this.state.blocks} page={this.state.page} updateBlockSequence={this.handleDragAction} />  
+                <Blockline blocks={this.state.blocks} page={this.state.page} updateBlockSequence={this.handleDragAction} />  
             </div>
         );
     }
