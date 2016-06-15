@@ -13,10 +13,6 @@ var ContainersList = React.createClass({
           
     },
 
-    componentWillUnmount: function() {
-        this.serverRequest.abort();
-    },
-
     itemSelection: function(item) {
         this.setState({ 
             selectedItem: item,
@@ -55,7 +51,7 @@ var ContainersList = React.createClass({
         var that = this;
 
         return(
-            <ul>
+            <ul className="alias">
                 { containers.map(function(container) {
                     return(
                         <li key={container.id} onClick={that.itemSelection.bind(that, container.id)} className="capitalize">{container.name}

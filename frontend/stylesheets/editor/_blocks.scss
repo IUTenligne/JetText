@@ -84,18 +84,18 @@ span.bold{
 					}
 
 					button {
-            padding-top: 5px;
+            			padding-top: 5px;
 						width: 10%;
 						float: right;
 						background: none;
 						border: none;
-            cursor: pointer;
+            			cursor: pointer;
 
 						i {
-              border-radius: 20px;
-        			float: right;
-        			font-size: 15px;
-        			padding: 0px 6px;
+              				border-radius: 20px;
+		        			float: right;
+		        			font-size: 15px;
+		        			padding: 0px 6px;
 						}
 					}
 				}
@@ -116,16 +116,22 @@ span.bold{
 					margin-bottom: 15px;
 				}
 			}
+			ul{
+				list-style-type: disc;
+			}
+			ol{
+				list-style-type: decimal;
+			}
       		strong{
         		font-weight : bold;
       		}
-		     em{
+		    em{
 		        font-style : italic;
 		    }
       		u{
         		text-decoration : underline;
       		}
-      		s{
+      		strike{
         		text-decoration : line-through;
       		}
       		table{
@@ -364,6 +370,7 @@ span.bold{
 		div.block-content {
 			border-color: $lightPurple;
 			width: 100%;
+
 			#output{
 				width: 100%;
 			}

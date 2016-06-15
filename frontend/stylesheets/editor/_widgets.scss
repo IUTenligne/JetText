@@ -119,7 +119,7 @@
 					margin-top: 30px;
 				}
 
-				ul {
+				ul.alias{
 					margin: 10px 0 10px 10px;
 					li {
 						margin-bottom: 10px;
@@ -159,6 +159,12 @@
 				.ins {
 					background-color: #EAFFEA;
 					padding: 3px;
+				}
+			}
+			.aide{
+				ul{
+					margin: 10px 0 10px 25px;
+					list-style-type: disc;
 				}
 			}
 			/* css ajout des glossary in glossaries view*/

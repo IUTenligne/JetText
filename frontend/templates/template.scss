@@ -28,12 +28,6 @@ $lightRmYellow: #F8AB1D;
   font-weight: normal;
   font-style: normal;
 }
-@font-face {
-	 font-family: 'Lobster';
-	 src: url('../fonts/Lobster-Regular.ttf') format('truetype');
-	 font-weight: normal;
-	 font-style: normal;
-}
 
 /********  overall ********/
 img{
@@ -148,6 +142,7 @@ $menuWidth: 350px;
             margin: 0;
             padding: 0;
             list-style: none;
+
             .logo{
             	background: #3598DB;
             	height: 100px !important;
@@ -199,6 +194,7 @@ $menuWidth: 350px;
 					border: none;
 				}
 			}
+
 			/********  menu navigation container ********/
 			ul.nav-menu {
 				text-align: left;
@@ -281,8 +277,10 @@ $menuWidth: 350px;
 
     /********  icon toggle ********/
     #icone-menu{
-		width: 50px;
-		left: 0px;
+		right: 10px;
+		position: absolute;
+		z-index: 999;
+		margin-right: 0;
 		a{
 			background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 			border-radius: 4px;
@@ -293,12 +291,14 @@ $menuWidth: 350px;
 			text-align: center;
 			font-size: 15px;
 			margin: 5px;
+			border: none;
 			i {
-			color: $white;
-			font-size: 30px;
+				color: $white;
+				font-size: 30px;
 			}
 			i:hover {
-				color: $black;
+				color: black;
+				border: none;
 			}
 		}
 	}
@@ -314,18 +314,22 @@ $menuWidth: 350px;
         	/********  title container ********/
 			h1.container-title {
 				color: $darkGrey;
-				font-size: 50px;
+				font-size: 35px;
 				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 				background: rgba(#AEABB4,0.3);
 				height: 100px !important;
 				margin:0;
-				padding: 20px 0 0 20px;
+				padding: 30px 90px 0 20px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow:hidden;
+
 			}
 			/********  title page general********/
 			h2.page-title{
 				margin-left: 50px;
 				font-size: 35px;
-				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+				font-family: Tahoma, Geneva, sans-serif;
 			}
 			.row{ 
 				margin:0;
@@ -334,11 +338,12 @@ $menuWidth: 350px;
 				.col-lg-12{
 					padding: 0;
 					h3{
-						padding-left: 30px; 
+						padding-left: 50px; 
+						margin-top: 40px;
 						z-index: 1;
 					}
 					div.content{
-						margin-left: 40px;
+						margin-left: 60px;
 						margin-right: 40px;
 						padding: 15px;
 						font-size: 17px;
@@ -352,13 +357,12 @@ $menuWidth: 350px;
 							z-index: 200;
 						}
 
-						.important {
-							border: 2px solid red;
-						}
-						/********  block remarque overall ********/
-						.block{
+						
+						/********  block note overall ********/
+						.blockNote{
 							border: 2px solid;
 							border-radius: 4px;
+							margin-top: 20px;
 							 
 
 							.block-note-title {
@@ -460,6 +464,14 @@ $menuWidth: 350px;
 								color: $lighRmBlue;
 							}
 						}
+
+
+						/********  block math ********/
+						.blockMathJax{
+							background: rgba(#c8c6cc,0.2);
+							padding: 5px;
+							border-radius: 4px;
+						}
 					}
 				}	
 			}
@@ -499,7 +511,7 @@ $menuWidth: 350px;
 			}
 			/********  btn next and after ********/
 			.btn {
-				width: 100%;
+				width: 100% !important;
 				margin-top: 20px;
 
 				.btn-after, .btn-next {
@@ -513,6 +525,7 @@ $menuWidth: 350px;
 						color: $lighBlue;
 						text-decoration: none;
 						display: inline-block;
+						outline: 0;
 					}
 					a:hover {
 						color: $blue;
@@ -525,6 +538,15 @@ $menuWidth: 350px;
 				.btn-after {
 					text-align: left;
 				}
+			}
+			.btn:active{
+				border: none;
+				box-shadow: none;
+			}
+
+			/********  page empty ********/
+			ul.microNav{
+
 			}
 		}
     }
@@ -557,6 +579,11 @@ $menuWidth: 350px;
         #page-content-wrapper {
             padding: 20px;
             position: relative;
+            .container-fluid {
+            	h1.container-title {
+            		padding-right: 0px;
+            	}
+            }
         }
     }
     #wrapper.toggled {
@@ -592,6 +619,9 @@ $menuWidth: 350px;
             position: relative;
 
             .container-fluid {
+            	h1.container-title {
+            		padding-right: 0px;
+            	}
             	h2.page-title{
             		width: 1190px;
 					margin-left: auto;
@@ -601,6 +631,14 @@ $menuWidth: 350px;
             		width: 1190px;
 					margin-left: auto;
     				margin-right: auto;
+    				.col-lg-12{
+    					h3{
+	    					padding: 0;
+	    				}
+	    				div.content{
+	    					margin-left: 0px;
+	    				}
+    				}
             	}
             }
         }

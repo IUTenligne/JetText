@@ -238,7 +238,7 @@ var Block = React.createClass({
 
                     { this.state.helpModalState
                         ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
-                                <div className="modal-in">
+                                <div className="modal-in aide">
                                     Déposer un nouveau fichier :
                                     <ul>
                                         <li>cliquez sur l'icône <i className="fa fa-file-text"></i> ou glissez directement votre fichier par dessus.</li>

@@ -305,7 +305,7 @@ var TextBlock = React.createClass({
 
                 { this.state.helpModalState
                     ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Texte"}>
-                            <div className="modal-in">
+                            <div className="modal-in aide">
                                 Activer le mode édition : 
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
