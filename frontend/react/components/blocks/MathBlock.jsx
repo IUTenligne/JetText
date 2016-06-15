@@ -10,8 +10,10 @@ var ContainersList = require('./ContainersList.jsx');
 var MathToolbox = React.createClass({
     getInitialState: function() {
         return {
+            symbol: false,
             arrow: false,
-            letter: false
+            letter: false,
+            general: true
         }
     },
     addMath: function(fn) {
@@ -53,48 +55,54 @@ var MathToolbox = React.createClass({
     render: function() {
         return (
             <div id="mathToolbar">
-                <button className="general" onClick={this.activeGeneral}>General</button>
-                <button className="symbol" onClick={this.activeSymbol}>Symbols</button>
-                <button className="arrows" onClick={this.activeArrow}>Arrows</button>
-                <button className="letter" onClick={this.activeLetter}>Greek Letters</button>
-                <button onClick={this.addMath.bind(this, ";")}>espace</button>
-
+                <div id="btn">
+                    <button onClick={this.activeGeneral}>General</button>
+                    <button onClick={this.activeSymbol}>Symbols</button>
+                    <button onClick={this.activeArrow}>Arrows</button>
+                    <button onClick={this.activeLetter}>Letters</button>
+                    <button onClick={this.addMath.bind(this, ";")}>espace</button>
+                </div>
                 {this.state.general
-                    ? <ul className="generalList">
+                    ? <ul>
+                        <li><button onClick={this.addMath.bind(this, "textrm{abc}")}><img src="/assets/mathjax/texte.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, " +")}>+</button></li>
-                        <li><button onClick={this.addMath.bind(this, "times")}>x</button></li>
+                        <li><button onClick={this.addMath.bind(this, "times")}><img src="/assets/mathjax/multiplication.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, " -")}>-</button></li>
-                        <li><button onClick={this.addMath.bind(this, "div")}>division</button></li>
-                        <li><button onClick={this.addMath.bind(this, "pm")}>plus ou moin</button></li>
-                        <li><button onClick={this.addMath.bind(this, "mp")}>plus ou moin</button></li>
+                        <li><button onClick={this.addMath.bind(this, "div")}><img src="/assets/mathjax/division.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "pm")}><img src="/assets/mathjax/plusmoin.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "mp")}><img src="/assets/mathjax/moinplus.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, " =")}>=</button></li>
-                        <li><button onClick={this.addMath.bind(this, "neq")}>pas egale</button></li>
-                        <li><button onClick={this.addMath.bind(this, "frac{?}{?}")}>frac</button></li>
+                        <li><button onClick={this.addMath.bind(this, "neq")}><img src="/assets/mathjax/pasegale.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "frac{?}{?}")}><img src="/assets/mathjax/frac.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "sqrt{?}")}>&radic;</button></li>
-                        <li><button onClick={this.addMath.bind(this, "int_{?}^{?}")}>&int;</button></li>
+                        <li><button onClick={this.addMath.bind(this, "int_{?}^{?}")}><img src="/assets/mathjax/integral.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "int_{?} ")}><img src="/assets/mathjax/integral1.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "infty")}>&infin;</button></li>
                     </ul>
                     :null
                 }
 
                 {this.state.symbol
-                    ? <ul className="symbolList">
+                    ? <ul>
                         <li><button onClick={this.addMath.bind(this, "ast")}>&lowast;</button></li>
                         <li><button onClick={this.addMath.bind(this, "circ")}>°</button></li>
-                        <li><button onClick={this.addMath.bind(this, "geq")}>plus grand</button></li>
-                        <li><button onClick={this.addMath.bind(this, "leq")}>plus petit</button></li>
+                        <li><button onClick={this.addMath.bind(this, "geq")}><img src="/assets/mathjax/plusgrand.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "leq")}><img src="/assets/mathjax/pluspetit.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "propto")}>&prop;</button></li>
-                        <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?\\\\?\\end{array}\\right.")}>&prop;</button></li>
-                        <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?&?\\\\?&?\\end{array}\\right.")}>&prop;</button></li>
-                        <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?\\end{array}\\right\\}")}>&prop;</button></li>
-                        <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?&?\\end{array}\\right\\}")}>&prop;</button></li>
+                        <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?\\\\?\\end{array}\\right.")}><img src="/assets/mathjax/array2left.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?&?\\\\?&?\\end{array}\\right.")}><img src="/assets/mathjax/array4left.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?\\end{array}\\right\\}")}><img src="/assets/mathjax/array2right.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?&?\\end{array}\\right\\}")}><img src="/assets/mathjax/array4right.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?\\\\?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\\\?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche4colone.svg"/></button></li>
                     </ul>
                     :null
                 }
                 
                 
                 {this.state.arrow
-                    ? <ul className="arrowsList">
+                    ? <ul>
                         <li><button onClick={this.addMath.bind(this, "leftarrow ")}>&larr;</button></li>
                         <li><button onClick={this.addMath.bind(this, "rightarrow ")}>&rarr;</button></li>
                         <li><button onClick={this.addMath.bind(this, "uparrow")}>&uarr;</button></li>
@@ -111,7 +119,7 @@ var MathToolbox = React.createClass({
                     :null
                 }
                 {this.state.letter
-                    ? <ul className="letterList">
+                    ? <ul>
                         <li><button onClick={this.addMath.bind(this, "alpha")}>&alpha;</button></li>
                         <li><button onClick={this.addMath.bind(this, "delta")}>&delta;</button></li>
                         <li><button onClick={this.addMath.bind(this, "eta")}>&eta;</button></li>
@@ -288,9 +296,6 @@ var MathBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        <MathToolbox interact={this.handleInteraction} />
-
-                        <textarea ref="matharea" type="text" value={this.state.areaContent} onChange={this.handleChange} rows="5" cols="50" />
 
                         <div
                            className="content"
@@ -298,6 +303,18 @@ var MathBlock = React.createClass({
                            ref="output"
                            dangerouslySetInnerHTML={this.createMarkup(this.state.value)}
                         />
+                        <textarea 
+                            ref="matharea" 
+                            type="text" 
+                            value={this.state.areaContent} 
+                            onChange={this.handleChange} 
+                            rows="5" 
+                            cols="50" 
+                            id="block-math"
+                        />
+                            
+                        <MathToolbox interact={this.handleInteraction} />
+
                     </div>
                 </div>
 

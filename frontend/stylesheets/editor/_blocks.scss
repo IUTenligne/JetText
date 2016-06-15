@@ -319,56 +319,70 @@ span.bold{
 			}
 		}
 		div.block-content {
+			width: 100%;
+			#output{
+				width: 100%;
+			}
+			#block-math{
+				width: 100%;
+			}
 			#mathToolbar {
-				button {
-					width: 120px;
-					padding: 5px;
-					display: inline-block;
-					margin: 2px 2px 0px 10px;
-					border-radius: 4px 4px 0px 0px;
-					cursor: pointer;
-					border: none;
-					text-align: center;
-					box-shadow: 0px 2px 2px rgba(0,0,0,0.50);
-				}
-				.symbol {
-					background-image:linear-gradient($lightRed,rgb(186,67,38));
-					box-shadow: 2px 2px 4px rgba($lightRed,0.8);
-				}
-				.arrows {
-					background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
-					box-shadow: 2px 2px 4px rgba($lighTbGrey,0.8);
-				}
-				.letter {
-					background-image:linear-gradient($lightGreen,rgb(62,156,110));
-					box-shadow: 2px 2px 4px rgba($lightGreen,0.8);
-				}
+				width: 80%;
+				margin: 0 auto;
 
+				div#btn{
+					margin: 0 auto;
+					text-align: center;
+
+					button {
+						width: 75px;
+						height: 60px;
+						padding: 5px;
+						display: inline-block;
+						margin: 15px;
+						border-radius: 6px;
+    					transition: background-color .25s;
+						cursor: pointer;
+						border: none;
+						text-align: center;
+						background-image:linear-gradient( #cecece,#d8d8d8);
+    					box-shadow: 0px 5px #cecece, 0 3px 5px rgba(0,0,0,.3);
+					}
+					button:hover { 
+						transform: scale(1.1); 
+					}
+				}
+				
 				ul {
 					padding: 5px;
 					display: inline-block;
-					margin: 0px 2px 2px 10px;
-					border-radius: 0 4px 4px 4px;
-					cursor: pointer;
-					box-shadow: 0px 2px 2px rgba(0,0,0,0.50);
+					margin: 0 auto;
+					min-height: 80px;
+					width: 100%;
 
 					li{
 						display: inline-block;
+						margin: 8px;
+						button{
+							box-shadow: 3px 2px 2px #898989, 0 2px 2px rgba(0,0,0,0.5);
+							border-radius: 5px 0px 0px 0px;
+							width: 35px;
+							height: 35px;
+							cursor: pointer;
+							font-size: 20px;
+							border: none;
+							background-image:linear-gradient(#e1e1e1,#ebebeb);
+
+							img{
+								display: table-cell;
+    							vertical-align: middle;
+							}
+						}
+						button:active {
+						  	box-shadow: 3px 2px 2px #898989 inset, 0 2px 2px rgba(0,0,0,0.5) inset;
+						}
 					}
 				}
-				ul.symbolList {
-					background-image:linear-gradient($lightRed,rgb(186,67,38));
-					box-shadow: 2px 2px 4px rgba($lightRed,0.8);
-				}
-				ul.arrowsList {
-					background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
-					box-shadow: 2px 2px 4px rgba($lighTbGrey,0.8);
-				}
-				ul.letterList {
-					background-image:linear-gradient($lightGreen,rgb(62,156,110));
-					box-shadow: 2px 2px 4px rgba($lightGreen,0.8);
-				}
-
 			}
 		}
 	}
