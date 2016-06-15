@@ -258,6 +258,7 @@ var MediaBlock = React.createClass({
             blockName: '',
             blockContent: '',
             upload: null,
+            showActions: true,
             browserList: [],
             modalState: false,
             changeName: false,
@@ -267,14 +268,16 @@ var MediaBlock = React.createClass({
     },
 
     componentDidMount: function() {
-        this.serverRequest = $.get("/uploads/"+ this.props.block.upload_id +".json", function(result) {
-            this.setState({
-                upload: result,
-                mediaAlt: result.alt,
-                mediaWidth: result.width,
-                blockContent: this.makeHtmlContent(result, result.filetype, result.width)
-            });
-        }.bind(this));
+        if (this.props.block.upload_id != undefined) {
+            this.serverRequest = $.get("/uploads/"+ this.props.block.upload_id +".json", function(result) {
+                this.setState({
+                    upload: result,
+                    mediaAlt: result.alt,
+                    mediaWidth: result.width,
+                    blockContent: this.makeHtmlContent(result, result.filetype, result.width)
+                });
+            }.bind(this));
+        }
 
         this.setState({ 
             blockName: this.props.block.name,
@@ -467,33 +470,35 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        <div className="block-media-actions">
-                            <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                                <div className="viewDropzone">
-
-                                </div> 
-                                <div className="viewDropzonebis">
-                                   <div className="textDropzone">
-                                        <i className="fa fa-file-text"></i>
-                                        <br/>
-                                        Déposer un fichier
-                                     </div>
-                                </div>   
-                                <div className="zoneDropzone">
-                                    <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
-                                </div>
-                            </div>
                         
-                            <div className="browse-files" onClick={this.handleBrowseFiles}>
-                                <i className="fa fa-folder-open"></i><br/>
-                                Parcourir mes fichiers
-                            </div>
+                        { this.showActions 
+                            ? <div className="block-media-actions">
+                                    <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                                        <div className="viewDropzone"></div> 
+                                        <div className="viewDropzonebis">
+                                           <div className="textDropzone">
+                                                <i className="fa fa-file-text"></i>
+                                                <br/>
+                                                Déposer un fichier
+                                             </div>
+                                        </div>   
+                                        <div className="zoneDropzone">
+                                            <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                                        </div>
+                                    </div>
+                                
+                                    <div className="browse-files" onClick={this.handleBrowseFiles}>
+                                        <i className="fa fa-folder-open"></i><br/>
+                                        Parcourir mes fichiers
+                                    </div>
 
-                            { this.state.modalState 
-                                ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} selectFile={this.selectFile} /> 
-                                : null 
-                            }
-                        </div>
+                                    { this.state.modalState 
+                                        ? <FileBrowser active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} selectFile={this.selectFile} /> 
+                                        : null 
+                                    }
+                                </div>
+                            : null
+                        }
 
                         <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
