@@ -335,3 +335,21 @@ h2.header_page {
   margin-top: -40px;
   transition: 500ms;
 }
+
+
+#verticaltimeline {
+  width: 1px;
+  clear: both;
+  position: fixed;
+  right: 40px;
+  top: 100px;
+  z-index: 1000 !important;
+  height: 400px;
+  display: inline-block;
+  text-align: right;
+  background: $lightBlue;
+
+  .timeline-container {
+    background: red;
+  }
+}
