@@ -170,6 +170,8 @@ var MathBlock = React.createClass({
         return {
             blockName: '',
             areaContent: '',
+            editButton: false,
+            toolboxState: false,
             value: '',
             tooltipState: false,
             tooltipMovesState: false
@@ -274,11 +276,23 @@ var MathBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
+    showEditButton: function() {
+        this.setState({ editButton: true });
+    },
+
+    hideEditButton: function() {
+        this.setState({ editButton: false });
+    },
+
+    toggleToolbox: function() {
+        this.setState({ toolboxState: !this.state.toolboxState });
+    },
+
     render: function() {
     	var block = this.props.block;
 
     	return (
-    		<div className="block-inner">
+    		<div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-superscript"></i>
@@ -295,6 +309,7 @@ var MathBlock = React.createClass({
                            ref="output"
                            dangerouslySetInnerHTML={this.createMarkup(this.state.value)}
                         />
+
                         <textarea 
                             ref="matharea" 
                             type="text" 
@@ -305,10 +320,12 @@ var MathBlock = React.createClass({
                             id="block-math"
                         />
                             
-                        <MathToolbox interact={this.handleInteraction} />
+                        { this.state.toolboxState ? <MathToolbox interact={this.handleInteraction} /> : null }
 
                     </div>
                 </div>
+
+                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleToolbox}><i className="fa fa-random"></i></button></div> : null }
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>

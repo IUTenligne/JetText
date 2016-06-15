@@ -3,6 +3,9 @@ var Constants = require('../constants');
 var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
 var Loader = require('../widgets/Loader.jsx');
+var Tooltip = require('../widgets/Tooltip.jsx');
+var ContainersList = require('./ContainersList.jsx');
+
 
 /* File browser's content in the modal */
 var FileType = React.createClass({
@@ -257,13 +260,15 @@ var MediaBlock = React.createClass({
         return {
             blockName: '',
             blockContent: '',
+            editButton: false,
             upload: null,
             showActions: true,
             browserList: [],
             modalState: false,
-            changeName: false,
             mediaAlt: '',
-            mediaWidth: ''
+            mediaWidth: '',
+            tooltipState: false,
+            tooltipMovesState: false
         };
     },
 
@@ -274,7 +279,8 @@ var MediaBlock = React.createClass({
                     upload: result,
                     mediaAlt: result.alt,
                     mediaWidth: result.width,
-                    blockContent: this.makeHtmlContent(result, result.filetype, result.width)
+                    blockContent: this.makeHtmlContent(result, result.filetype, result.width),
+                    showActions: false
                 });
             }.bind(this));
         }
@@ -333,7 +339,8 @@ var MediaBlock = React.createClass({
 
                 this.setState({ 
                     blockContent: content, 
-                    upload: data 
+                    upload: data,
+                    showActions: false 
                 });
             }
         });
@@ -381,7 +388,8 @@ var MediaBlock = React.createClass({
             success: function(data) {
                 this.setState({ 
                     blockContent: content,
-                    upload: upload 
+                    upload: upload, 
+                    showActions: false 
                 });
             }
         });
@@ -390,7 +398,7 @@ var MediaBlock = React.createClass({
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value.trim(),
-            changeName: true
+            
         });
     },
 
@@ -448,6 +456,10 @@ var MediaBlock = React.createClass({
         });
     },
 
+    toggleActions: function () {
+        this.setState({ showActions: !this.state.showActions });
+    },
+
     dynamicId: function(id){
         return "media_block_" + id;
     },
@@ -456,11 +468,57 @@ var MediaBlock = React.createClass({
         return {__html: data};
     },
 
+    viewBlockAction: function() {
+        this.setState({ 
+            tooltipState: !this.state.tooltipState,
+            tooltipMovesState: false
+        });
+    },
+
+    viewBlockMoves: function() {
+        this.setState({ 
+            tooltipState: false,
+            tooltipMovesState: !this.state.tooltipMovesState
+        });
+    },
+
+    handleTooltipState: function(st) {
+        this.setState({ tooltipState: st });
+    },
+
+    handleTooltipMovesState: function(st) {
+        this.setState({ tooltipMovesState: st });
+    },
+
+    handleRemoveBlock: function() {
+        this.props.removeBlock(this.props.block);
+    },
+
+    handleHelpModalState: function() {
+        this.setState({ helpModalState: !this.state.helpModalState });
+    },
+
+    exportBlock: function() {
+        this.props.exportBlock();
+    },
+
+    moveUpBlock: function() {
+        this.props.moveBlock("up");
+    },
+
+    moveDownBlock: function() {
+        this.props.moveBlock("down");
+    },
+
+    showEditButton: function() {
+        this.setState({ editButton: !this.state.editButton });
+    },
+
 	render: function() {
 		var block = this.props.block;
 
 		return (
-            <div className="block-inner">
+            <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.showEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-image"></i>
@@ -470,8 +528,18 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-                        
-                        { this.showActions 
+
+                        <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+
+                        { this.state.blockContent != '' 
+                            ? <div>
+                                <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
+                                <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                            </div>
+                            : null
+                        }
+
+                        { this.state.showActions 
                             ? <div className="block-media-actions">
                                     <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
                                         <div className="viewDropzone"></div> 
@@ -499,17 +567,59 @@ var MediaBlock = React.createClass({
                                 </div>
                             : null
                         }
+                    </div>
+                        
+                    { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleActions}><i className="fa fa-random"></i></button></div> : null }
 
-                        <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
+                    { this.state.helpModalState
+                        ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
+                                <div className="modal-in">
+                                    Déposer un nouveau fichier :
+                                    <ul>
+                                        <li>cliquez sur l'icône <i className="fa fa-file-text"></i> ou glissez directement votre fichier par dessus.</li>
+                                    </ul>
+                                    <br /><br />
+                                    Réemployer un fichier :
+                                    <ul>
+                                        <li>cliquez sur l'icône <i className="fa fa-folder-open"></i>.</li>
+                                    </ul>
+                                </div>
+                            </Modal>
+                        : null
+                    }
 
-                        { this.state.blockContent != '' 
-                            ? <div>
-                                <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
-                                <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                    <div className="action">
+                        <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
+                        <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
+                        <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
+                    </div>
+
+                    <Tooltip tooltipState={this.handleTooltipState}>
+                        { this.state.tooltipState
+                            ? <div className="block-actions">
+                                { this.state.showActions
+                                    ? null
+                                    : <button className="media-block-edit" onClick={this.toggleActions}><i className="fa fa-pencil"></i> Editer</button>
+                                }
+                                <br/>
+                                <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
+                                <br/>
+                                <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
                             </div>
                             : null
                         }
-                    </div>
+                    </Tooltip>
+
+                    <Tooltip tooltipState={this.handleTooltipMovesState}>
+                        { this.state.tooltipMovesState
+                            ? <div className="block-actions block-moves">
+                                <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
+                                <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
+                                <NotificationSystem ref="notificationSystem" />
+                            </div>
+                            : null
+                        }
+                    </Tooltip>
                 </div>
 
                 <NotificationSystem ref="notificationSystem"/>

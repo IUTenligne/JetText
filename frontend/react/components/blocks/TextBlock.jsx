@@ -12,6 +12,7 @@ var TextBlock = React.createClass({
         return {
             blockName: '',
             blockContent: '',
+            editButton: false,
             blockVirtualContent: '',
             loading: false,
             termsList: [],
@@ -241,11 +242,19 @@ var TextBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
+    showEditButton: function() {
+        this.setState({ editButton: true });
+    },
+
+    hideEditButton: function() {
+        this.setState({ editButton: false });
+    },
+
 	render: function() {
 		var block = this.props.block;
 
 		return (
-            <div className="block-inner">
+            <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
@@ -308,6 +317,8 @@ var TextBlock = React.createClass({
                         </Modal>
                     : null
                 }
+
+                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>

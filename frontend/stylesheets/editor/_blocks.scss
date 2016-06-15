@@ -313,6 +313,13 @@ span.bold{
 	.block-actions.block-moves:before {
 		right: 1px;
 	}
+
+	.block-edit-button {
+		position: relative;
+		width: 50px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 /* spacial UI block */
@@ -386,7 +393,7 @@ span.bold{
 						display: inline-block;
 						margin: 15px;
 						border-radius: 6px;
-    					transition: background-color .25s;
+    				transition: background-color .25s;
 						cursor: pointer;
 						border: none;
 						text-align: center;
@@ -453,7 +460,7 @@ span.bold{
 
 			div.block-content{
 				border-color: $lightOrange;
-				
+
 				.block-media-actions {
 					border: 2px dashed $lightOrange;
 					width: 95%;

@@ -14,7 +14,7 @@ var ContainersList = React.createClass({
             selectedItem: item,
             loading: true 
         });
-
+        
         this.serverRequest = $.get("/containers/"+item+".json", function (result) {
             this.setState({
                 pages: result.pages,
