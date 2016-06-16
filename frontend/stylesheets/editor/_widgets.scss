@@ -385,43 +385,6 @@
 	padding: 10px;
 }
 
-/* Browser File UI modal box*/
-.file-type {
-	padding: 10px;
-	box-sizing: border-box;
-	display: inline-block;
-	text-align: center;
-
-	i {
-		width: 80px;
-		height: 80px;
-		color: white;
-		vertical-align: middle;
-		display: table-cell;
-		font-size: 30px;
-		box-shadow: 0px 2px 4px rgba(0,0,0,0.50);
-	}
-
-	i.images {
-		background-image:linear-gradient( $lightYellow,rgb(212,140,7));
-	}
-
-	i.pdfs {
-		background-image:linear-gradient( $lightRed,rgb(186,67,38));
-	}
-
-	i.videos {
-		background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
-	}
-
-	i.audios {
-		background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
-	}
-	
-	i.miscs {
-		background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
-	}
-}
 
 #files-zone {
 	padding: 10px;
@@ -480,7 +443,6 @@
 	right: 50% !important;
 	position: absolute !important;
 	box-shadow: none !important;
-    
 	strong, h1, h2, h3, h4, .notification-title {
 		color: $lightBlue !important;
 	}
@@ -499,11 +461,8 @@
 	background: white;
 	border-radius: 6px;
 	border: 2px dashed $lightBlue;
-
-
 	.viewDropzonebis{
 		position: relative;
-
 		.textDropzone{
 			width: 100%;
 	  	height: 70px;
@@ -523,7 +482,6 @@
 		position: relative;
 		height: 70px;
 		color: $textGrey;
-
 		input[type=file] {
 			cursor: pointer;
 			overflow: hidden;
@@ -538,3 +496,65 @@
 	}
 }
 
+.filters-bar {
+	margin-bottom: 30px;
+	.active-filter {
+		transform: scale(1.1); 
+		box-shadow: 0px 2px 3px $lightBlue;
+	}
+
+	.filter-file {
+		width: 60px;
+		height: 60px;
+		color: white;
+		font-size: 15px;
+		box-shadow: 0px 2px 3px rgba(0,0,0,0.30);
+		margin-left: 5px;
+		margin-right: 5px;
+		border: 0px;
+		border-radius: 4px;
+		i:before {
+			font-size: 26px;
+		}
+	}
+
+	.filter-image {
+		background-image:linear-gradient($lightYellow,rgb(212,140,7));
+		i:before{
+	    content: "\f1c5";
+	    font-family: FontAwesome;
+	  }
+	}
+
+	.filter-pdf {
+		background-image:linear-gradient( $lightRed,rgb(186,67,38));
+		i:before{
+	    content: "\f1c1";
+	    font-family: FontAwesome;
+	  }
+	}
+
+	.filter-video {
+		background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+		i:before{
+	    content: "\f16a";
+	    font-family: FontAwesome;
+	  }
+	}
+
+	.filter-audio {
+		background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
+		i:before{
+	    content: "\f028";
+	    font-family: FontAwesome;
+	  }
+	}
+
+	.filter-misc {
+		background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
+		i:before{
+	    content: "\f15b";
+	    font-family: FontAwesome;
+	  }
+	}
+}

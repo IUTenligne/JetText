@@ -23,7 +23,7 @@ var FileInfo = React.createClass({
 
     handleFileWrapper: function() {
         if (this.props.file.filetype === "image") {
-            return { __html: '<img src="'+ this.props.file.url +'" height="28">' };
+            return { __html: '<img src="'+ this.props.file.url +'" height="24">' };
         } else if (this.props.file.filetype === "audio") {
             return { __html: '<i class="fa fa-music"></i>' };
         } else if (this.props.file.filetype === "video") {
@@ -36,7 +36,7 @@ var FileInfo = React.createClass({
     handleFilePreview: function() {
         if (this.props.file.filetype === "image") {
             if (this.props.file.file_content_type.split("/")[1] === "svg+xml")
-                return { __html: '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'" height="28">\n</object>' };
+                return { __html: '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'">\n</object>' };
             else
                 return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px">' };
         } else if (this.props.file.filetype === "audio") {
@@ -99,10 +99,13 @@ var UsersFiles = React.createClass({
         return {
             files: [],
             filter: false,
+            filterSearch: false,
             filteredFiles: [],
+            activeFilter: '',
             types: [],
             icon: '',
             sorter: '',
+            searchedString: '',
             loading: true
         };
     },
@@ -166,8 +169,8 @@ var UsersFiles = React.createClass({
                     return a.file_file_name < b.file_file_name;
                 if (attribute === "filetype")
                     return a.filetype < b.filetype;
-                if (attribute === "date")
-                    return a.date < b.date;
+                if (attribute === "file_updated_at")
+                    return a.file_updated_at < b.file_updated_at;
             });
         } else {
             this.setState({ icon: "desc" });
@@ -176,8 +179,9 @@ var UsersFiles = React.createClass({
                     return a.file_file_name > b.file_file_name;
                 if (attribute === "filetype")
                     return a.filetype > b.filetype;
-                if (attribute === "date")
-                    return a.date > b.date;
+                if (attribute === "file_updated_at") {
+                    return a.file_updated_at > b.file_updated_at;
+                }
             });
         }
 
@@ -194,15 +198,56 @@ var UsersFiles = React.createClass({
         });
 
         if (!this.state.filter === true) {
-            var files = this.state.files.filter((i, _) => i["filetype"] === type);
+            if (this.state.filterSearch === true) {
+                var files = this.state.files.filter( i => (i["filetype"] === type) && (i["file_file_name"].indexOf(this.state.searchedString) > -1) );
+            } else {
+                var files = this.state.files.filter( i => i["filetype"] === type );
+            }
 
             this.setState({
                 filteredFiles: files,
+                activeFilter: type,
                 loading: false
             });
         } else {
+            if (this.state.filterSearch === true) {
+                var files = this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 );
+                this.setState({
+                    loading: false,
+                    activeFilter: '',
+                    filteredFiles: files
+                });
+            } else {
+                this.setState({
+                    loading: false,
+                    activeFilter: ''
+                });
+            }
+        }
+    },
+
+    searchByString: function(event) {
+        if (event.target.value.length > 0) {
+            if (this.state.activeFilter != '') {
+                var filterType = this.state.activeFilter;
+                this.setState({
+                    filterSearch: true,
+                    searchedString: event.target.value,
+                    filteredFiles: this.state.files.filter( i => (i["file_file_name"].indexOf(event.target.value) > -1) && (i["filetype"] === filterType) )
+                });
+            } else {
+                this.setState({
+                    filterSearch: true,
+                    searchedString: event.target.value,
+                    filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(event.target.value) > -1 )
+                });
+            }
+        } else {
             this.setState({
-                loading: false
+                searchedString: '',
+                filter: false,
+                activeFilter: '',
+                filteredFiles: this.state.files
             });
         }
     },
@@ -211,6 +256,7 @@ var UsersFiles = React.createClass({
 
     render: function() {
         var that = this;
+                        console.log(this.state.activeFilter);
 
         return (
             <article className="admin-panel">
@@ -229,55 +275,62 @@ var UsersFiles = React.createClass({
                 </div>
 
                 <ul className="align">
-                    { this.state.loading
-                        ? <Loader />
-                        : null
-                    }  
-
                     <h2>Fichiers :</h2>
 
                     <div className="filters-bar">
+                        <input type="text" placeholder="Rechercher..." onChange={this.searchByString} />
                         { this.state.types.map(function(type, index){
-                            return( <button key={index} className="filter" onClick={that.filterByType.bind(that, type.filetype)}>{type.filetype}</button> );
+                            return( 
+                                that.state.activeFilter === type.filetype 
+                                ? <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+                                    <i className={"file-" + type.filetype}></i>
+                                </button> 
+                                : <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+                                    <i className={"file-" + type.filetype}></i>
+                                </button> 
+                            );
                         })}
                     </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th onClick={this.sort.bind(this, "file_file_name")} width="auto" />
-                                <th onClick={this.sort.bind(this, "file_file_name")} width="50%">
-                                    Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
-                                </th>
-                                <th onClick={this.sort.bind(this, "filetype")} width="20%">
-                                    Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
-                                </th>
-                                <th onClick={this.sort.bind(this, "file_updated_at")} width="20%">
-                                    Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { this.state.filter
-                                ? this.state.filteredFiles.map(function(result){
-                                    return (
-                                        <FileInfo 
-                                            file={result}
-                                            key={result.id}
-                                        />
-                                    );
-                                })
-                                : this.state.files.map(function(result){
-                                    return (
-                                        <FileInfo 
-                                            file={result}
-                                            key={result.id}
-                                        />
-                                    );
-                                })
-                            }
-                        </tbody>
-                    </table>
+                    { this.state.loading
+                        ? <Loader />
+                        : <table id="user-files">
+                            <thead>
+                                <tr>
+                                    <th onClick={this.sort.bind(this, "file_file_name")} width="auto" />
+                                    <th onClick={this.sort.bind(this, "file_file_name")} width="50%">
+                                        Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                    </th>
+                                    <th onClick={this.sort.bind(this, "filetype")} width="20%">
+                                        Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                    </th>
+                                    <th onClick={this.sort.bind(this, "file_updated_at")} width="20%">
+                                        Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                { this.state.filter || this.state.filterSearch
+                                    ? this.state.filteredFiles.map(function(result){
+                                        return (
+                                            <FileInfo 
+                                                file={result}
+                                                key={result.id}
+                                            />
+                                        );
+                                    })
+                                    : this.state.files.map(function(result){
+                                        return (
+                                            <FileInfo 
+                                                file={result}
+                                                key={result.id}
+                                            />
+                                        );
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </ul>
             </article>
         );
