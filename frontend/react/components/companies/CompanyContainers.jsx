@@ -112,7 +112,7 @@ var Result = React.createClass({
                 </td>
                 <td>
                     { this.state.infos 
-                        ? <Modal active={this.handleInfosModalState} mystyle={"view"} title={"Informations"}> 
+                        ? <Modal active={this.handleInfosModalState} mystyle={"compagnie"} title={"Informations"}> 
                             <div className="modal-in">
                                 <ContainerPanel container={this.props.item} author={this.props.user} />
                             </div>

@@ -207,11 +207,12 @@ var Menu = React.createClass({
                 </ul> 
 
                 <div id="add_new_page" className="input-group">
-                    <span className="input-group-addon">
+                    <span className="input-group-addon" onClick={this.createPage}>
                         <i className="fa fa-plus fa-fw"></i>
                     </span>
                     <input type="text" id="new_page" className="form-control " value={this.state.newPageValue} onChange={this.handleChange} onKeyPress={this._handleKeyPress} autoComplet="off" placeholder="Ajouter une page..." />
                 </div>
+                { this.state.newPageValue ? <button onClick={this.createPage} className="btn-success"><i className="fa fa-check"></i></button> : null }
             </div>
         );
     }

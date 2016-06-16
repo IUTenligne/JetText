@@ -331,9 +331,9 @@ var Containers = React.createClass({
                 </ul>
 
                 { this.state.viewCreate
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
-                        <div id="add_new_container">
-                            <span className="input-group-addon">
+                    ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
+                        <div className="add_new">
+                            <span className="input-group-addon" onClick={this.createContainer}>
                                 <i className="fa fa-plus fa-fw"></i>
                             </span>
                             <input 
@@ -345,7 +345,7 @@ var Containers = React.createClass({
                                 onKeyPress={this._handleKeyPress} 
                                 onChange={this.handleChange.bind(this, "newContainerValue")} 
                                 value={this.state.newContainerValue}  
-                                placeholder="Titre de la ressource..." 
+                                placeholder="Titre de la ressource..."
                             />
                             <br/>
                             { this.state.inputCreate 

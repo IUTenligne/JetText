@@ -211,6 +211,7 @@ div.sidebar.menu {
 			vertical-align: middle;
 			float: left;
 			height: 34px;
+			cursor: pointer;
 		}
 		
 		input {
@@ -236,5 +237,10 @@ div.sidebar.menu {
 			float: left;
 			margin-bottom: 0;
 		}
+	}
+	.btn-success{
+		float: right;
+		margin: 4px 10px 0 0;
+		cursor: pointer;
 	}
 }

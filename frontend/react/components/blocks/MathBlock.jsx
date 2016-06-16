@@ -90,6 +90,7 @@ var MathToolbox = React.createClass({
                         <li><button onClick={this.addMath.bind(this, "geq")}><img src="/assets/mathjax/plusgrand.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "leq")}><img src="/assets/mathjax/pluspetit.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "propto")}>&prop;</button></li>
+                        <li><button onClick={this.addMath.bind(this, "underbrace{?}")}><img src="/assets/mathjax/arraybottom.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?\\\\?\\end{array}\\right.")}><img src="/assets/mathjax/array2left.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?&?\\\\?&?\\end{array}\\right.")}><img src="/assets/mathjax/array4left.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?\\end{array}\\right\\}")}><img src="/assets/mathjax/array2right.svg"/></button></li>
@@ -97,6 +98,7 @@ var MathToolbox = React.createClass({
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?\\\\?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\\\?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche4colone.svg"/></button></li>
+
                     </ul>
                     :null
                 }
@@ -171,10 +173,12 @@ var MathBlock = React.createClass({
             blockName: '',
             areaContent: '',
             editButton: false,
-            toolboxState: false,
+            toolboxState: true,
             value: '',
             tooltipState: false,
-            tooltipMovesState: false
+            tooltipMovesState: false,
+            editBlock: false,
+            helpModalState: false
         }
     },
 
@@ -191,7 +195,10 @@ var MathBlock = React.createClass({
     saveBlock: function(id, name, content) {
         var block = { id: id, name: name, content: content };
         this.props.saveBlock(block);
-        this.setState({ editBlock: true });
+        this.setState({ 
+            editBlock: true,
+            toolboxState: false
+        });
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
     },
@@ -286,6 +293,12 @@ var MathBlock = React.createClass({
 
     toggleToolbox: function() {
         this.setState({ toolboxState: !this.state.toolboxState });
+        if(this.state.editBlock == true){
+            this.setState({ editBlock: false});
+        }
+    },
+    handleHelpModalState: function() {
+        this.setState({ helpModalState: !this.state.helpModalState });
     },
 
     render: function() {
@@ -301,6 +314,8 @@ var MathBlock = React.createClass({
                         </h3>
                     </div>
 
+                    
+                    
                     <div className="block-content">
 
                         <div
@@ -310,36 +325,44 @@ var MathBlock = React.createClass({
                            dangerouslySetInnerHTML={this.createMarkup(this.state.value)}
                         />
 
-                        <textarea 
-                            ref="matharea" 
-                            type="text" 
-                            value={this.state.areaContent} 
-                            onChange={this.handleChange} 
-                            rows="5" 
-                            cols="50" 
-                            id="block-math"
-                        />
-                            
-                        { this.state.toolboxState ? <MathToolbox interact={this.handleInteraction} /> : null }
+                        { this.state.toolboxState 
+                            ?
+                            <div>
+                                <textarea 
+                                    ref="matharea" 
+                                    type="text" 
+                                    value={this.state.areaContent} 
+                                    onChange={this.handleChange} 
+                                    rows="5" 
+                                    cols="50" 
+                                    id="block-math"
+                                />
+                                
+                                <MathToolbox interact={this.handleInteraction} /> 
+                            </div>
 
-                        <div className="block-edit-button"><button onClick={this.toggleToolbox}><i className="fa fa-random"></i></button></div>
+                         : null }
                     </div>
-                </div>
+                </div>               
 
                 <div className="action">
+                    { this.state.editBlock
+                        ? <i onClick={this.toggleToolbox} title="Editer" className="fa fa-pencil"></i>
+                        :<i 
+                            className="fa fa-check"
+                            onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.areaContent)}
+                            title="Enregistrer"
+                            >
+                        </i>
+                    }
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
+                    <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
                 </div>
 
                 <Tooltip tooltipState={this.handleTooltipState}>
                     { this.state.tooltipState
                         ? <div className="block-actions">
-                            <button 
-                                className="text-block-save" 
-                                onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.areaContent)}>
-                                <i className="fa fa-check"></i> Enregistrer
-                            </button>
-                            <br/>
                             <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
@@ -347,6 +370,26 @@ var MathBlock = React.createClass({
                         : null
                     }
                 </Tooltip>
+
+                { this.state.helpModalState
+                    ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                            <div className="modal-in math">
+                                <h4> Block Math (En cours d'édition)</h4>
+                                
+
+                                Editer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-pencil"></i>.</li>
+                                </ul>
+                                <br/>
+                                Enregistrer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
+                                </ul>
+                            </div>
+                        </Modal>
+                    : null
+                }
 
                 <Tooltip tooltipState={this.handleTooltipMovesState}>
                     { this.state.tooltipMovesState

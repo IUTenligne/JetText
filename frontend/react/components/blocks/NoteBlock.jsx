@@ -316,16 +316,17 @@ var NoteBlock = React.createClass({
                 </div>
 
                 { this.state.editBlock 
-                                ? null 
-                                : <div className="block-save">
-                                    <button 
-                                        title="Enregister" 
-                                        className="text-block-save note" 
-                                        onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
-                                        <i className="fa fa-check"></i>
-                                    </button>
-                                </div> 
-                            }
+                    ? null 
+                    : <div className="block-save">
+                        <button 
+                            title="Enregister" 
+                            className="text-block-save note" 
+                            onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
+                            <i className="fa fa-check"></i>
+                        </button>
+                    </div> 
+                }
+
 
                 { this.state.formulaModalState
                     ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>
@@ -338,13 +339,18 @@ var NoteBlock = React.createClass({
                 }
 
                 { this.state.helpModalState
-                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Remarque"}>
-                            <div className="modal-in">
+                    ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                            <div className="modal-in note">
+                                <h4>Block Remarque (En cours d'édition)</h4>
                                 Activer le mode édition : 
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
                                     <li>ou cliquer sur l'icône <i className="fa fa-quote-right"></i> dans l'entête du bloc,</li>
                                     <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                                Enregistrer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
                                 </ul>
                             </div>
                         </Modal>
@@ -352,6 +358,14 @@ var NoteBlock = React.createClass({
                 }
 
                 <div className="action">
+                    { this.state.editBlock
+                        ? <i onClick={this.unlockEditor} title="Editer" className="fa fa-pencil"></i>
+                        : <i
+                            className="fa fa-check"
+                            title="Enregistrer" 
+                            onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>  
+                        </i> 
+                    }
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
@@ -360,15 +374,6 @@ var NoteBlock = React.createClass({
                 <Tooltip tooltipState={this.handleTooltipState}>
                     { this.state.tooltipState
                         ? <div className="block-actions">
-                            { this.state.editBlock
-                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Editer</button>
-                                : <button 
-                                    className="text-block-save" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
-                                    <i className="fa fa-check"></i> Enregistrer
-                                </button>
-                            }
-                            <br/>
                             <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>

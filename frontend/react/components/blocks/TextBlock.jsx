@@ -293,13 +293,18 @@ var TextBlock = React.createClass({
                 }
 
                 { this.state.helpModalState
-                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Texte"}>
-                            <div className="modal-in">
+                    ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                            <div className="modal-in text">
+                                <h4>Block Text (En cours d'édition)</h4>
                                 Activer le mode édition : 
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
                                     <li>ou cliquer sur l'icône <i className="fa fa-pencil"></i> dans l'entête du bloc,</li>
                                     <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                                Enregistrer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
                                 </ul>
                             </div>
                         </Modal>
@@ -307,6 +312,15 @@ var TextBlock = React.createClass({
                 }
 
                 <div className="action">
+                    { this.state.editBlock
+                        ? <i onClick={this.unlockEditor} title="Editer" className="fa fa-pencil"></i>
+                        :<i 
+                            className="fa fa-check"
+                            onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent)}
+                            title="Enregistrer"
+                            >
+                        </i>
+                    }
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                     <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
@@ -315,15 +329,6 @@ var TextBlock = React.createClass({
                 <Tooltip tooltipState={this.handleTooltipState}>
                     { this.state.tooltipState
                         ? <div className="block-actions">
-                            { this.state.editBlock
-                                ? <button className="text-block-edit" onClick={this.unlockEditor}><i className="fa fa-pencil"></i> Editer</button>
-                                : <button 
-                                    className="text-block-save" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent)}>
-                                    <i className="fa fa-check"></i> Enregistrer
-                                </button>
-                            }
-                            <br/>
                             <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button>
                             <br/>
                             <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
