@@ -1,4 +1,5 @@
 var React = require('react');
+var Constants = require('../constants');
 var ReactDOM = require('react-dom');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var enhanceWithClickOutside = require('react-click-outside');
@@ -63,7 +64,7 @@ var Timeline = React.createClass({
 					currentBlock: this.props.blocks[this.props.blocks.length-1],
 					currentBlockId: this.props.blocks.length
 				});
-			} else if ( Math.floor(scroll + 35) >= document.getElementById("block-" + this.props.blocks[i]["id"]).offsetTop ) {
+			} else if ( Math.floor(scroll + parseInt(Constants.blockOffsetScroll)) >= document.getElementById("block-" + this.props.blocks[i]["id"]).offsetTop ) {
 				this.setState({ 
 					currentBlock: this.props.blocks[i],
 					currentBlockId: parseInt(i) + 1
@@ -78,7 +79,7 @@ var Timeline = React.createClass({
 		event.preventDefault();
 		var block = document.getElementById("block-" + blockId).offsetTop;
 		this.setState({ menu: false });
-		window.scrollTo(0, Math.floor(block - 45));
+		window.scrollTo(0, Math.floor(block - parseInt(Constants.blockOffsetScroll)));
 	},
 
 	toggleMenu: function() {

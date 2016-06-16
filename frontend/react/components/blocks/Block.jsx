@@ -1,5 +1,4 @@
 var React = require('react');
-var Constants = require('../constants');
 var TextBlock = require('./TextBlock.jsx');
 var MediaBlock = require('./MediaBlock.jsx');
 var NoteBlock = require('./NoteBlock.jsx');

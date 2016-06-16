@@ -267,18 +267,6 @@ var TextBlock = React.createClass({
                             onDoubleClick={this.unlockEditor}
                         />
                     }
-
-                    { this.state.editBlock 
-                        ? null 
-                        : <div className="block-save">
-                            <button 
-                                className="text-block-save" 
-                                title="Enregister" 
-                                onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent)}>
-                                <i className="fa fa-check"></i>
-                            </button>
-                        </div> 
-                    }
                 </div>
 
 

@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Constants = require('../constants');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var dragula = require('react-dragula');
 var BlockTypes = require('../blocktypes');
@@ -84,7 +85,7 @@ var Blockline = React.createClass({
   handleClick: function(blockId, event) {
 		event.preventDefault();
 		var block = document.getElementById("block-" + blockId).offsetTop;
-		window.scrollTo(0, Math.floor(block - 45));
+		window.scrollTo(0, Math.floor(block - parseInt(Constants.blockOffsetScroll)));
 	},
 
 	handleClickOutside: function() {
