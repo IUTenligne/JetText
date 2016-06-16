@@ -88,21 +88,6 @@ var NoteBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
-
-        /* Saves the block's content if before leaving the page */
-        var block = this.props.block;
-        $.ajax({
-            type: "PUT",
-            url: '/blocks/'+block.id,
-            context: this,
-            data: {
-                id: block.id,
-                name: this.state.blockName,
-                content: this.state.blockContent,
-                classes: this.state.selectedStyle
-            }
-        });
-
         if (editor) { editor.destroy(true); }
     },
 
@@ -354,13 +339,18 @@ var NoteBlock = React.createClass({
                 }
 
                 { this.state.helpModalState
-                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Remarque"}>
-                            <div className="modal-in aide">
+                    ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                            <div className="modal-in note">
+                                <h4>Block Remarque (En cours d'édition)</h4>
                                 Activer le mode édition : 
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
                                     <li>ou cliquer sur l'icône <i className="fa fa-quote-right"></i> dans l'entête du bloc,</li>
                                     <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                                Enregistrer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
                                 </ul>
                             </div>
                         </Modal>

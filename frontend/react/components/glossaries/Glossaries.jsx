@@ -128,8 +128,8 @@ var Glossaries = React.createClass({
                 </ul>
                 
                 { this.state.viewCreate
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
-                        <div className="add_new_glossary">
+                    ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
+                        <div className="add_new">
                             <div className="input-group input-group-lg">
                                 <span className="input-group-addon" onClick={this.createGlossary}>
                                     <i className="fa fa-plus fa-fw"></i>

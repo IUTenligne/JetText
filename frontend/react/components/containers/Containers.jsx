@@ -272,7 +272,6 @@ var Containers = React.createClass({
                 }
             },
             success: function(data){
-                console.log(data, this.state.containersList);
                 this.setState({
                     viewCreate: false,
                     containersList: this.state.containersList.concat([data]),
@@ -332,8 +331,8 @@ var Containers = React.createClass({
                 </ul>
 
                 { this.state.viewCreate
-                    ? <Modal active={this.handleModalState} mystyle={""} title={"Créer une nouvelle ressource"}>
-                        <div id="add_new_container">
+                    ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
+                        <div className="add_new">
                             <span className="input-group-addon" onClick={this.createContainer}>
                                 <i className="fa fa-plus fa-fw"></i>
                             </span>

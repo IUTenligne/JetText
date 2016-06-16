@@ -114,11 +114,24 @@ class Upload < ActiveRecord::Base
       self.filetype ||= self.file_type
     end
 
-    def self.sort_by(current_user, column, way)
-      return nil unless current_user.present? && (column == "file_file_name" || column == "filetype" || column == "file_updated_at")
-      return Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at")
+    def self.get_all(current_user)
+      return nil unless current_user.present?
+      return Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at, file_file_size")
         .where(user_id: current_user.id)
-        .order("#{column} #{way}")
     end
 
+    def self.get_all_types(current_user)
+      return nil unless current_user.present?
+      return Upload.select("filetype")
+        .where(user_id: current_user.id)
+        .distinct
+    end
+
+    def self.get_all_by_type(current_user, type)
+      return nil unless current_user.present?
+      return Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at, file_file_size")
+        .where(user_id: current_user.id)
+        .where("filetype = ?", type)
+        .distinct
+    end
 end

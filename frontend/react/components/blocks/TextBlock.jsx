@@ -79,9 +79,6 @@ var TextBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
-
-        /* Saves the block's content if before leaving the page */
-        this.saveBlock(this.props.block.id, this.state.blockName, this.state.blockContent);
         if (editor) { editor.destroy(true); }
         this.serverRequest.abort();
     },
@@ -296,13 +293,18 @@ var TextBlock = React.createClass({
                 }
 
                 { this.state.helpModalState
-                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Texte"}>
-                            <div className="modal-in aide">
+                    ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                            <div className="modal-in text">
+                                <h4>Block Text (En cours d'édition)</h4>
                                 Activer le mode édition : 
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
                                     <li>ou cliquer sur l'icône <i className="fa fa-pencil"></i> dans l'entête du bloc,</li>
                                     <li>ou à partir du menu du bloc <i className="fa fa-cog"></i>.</li>
+                                </ul>
+                                Enregistrer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
                                 </ul>
                             </div>
                         </Modal>

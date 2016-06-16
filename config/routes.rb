@@ -36,9 +36,9 @@ Rails.application.routes.draw do
     resources :uploads do
       delete "/clear/:block_id" => "uploads#clear", on: :collection
       get "/search/:name" => "uploads#search", on: :collection
+      get "/filter/:type" => "uploads#filter_types", on: :collection
     end
     get "/files" => "uploads#index"
-    get "/files/sort/:column/:way" => "uploads#sort"
 
     resources :glossaries do
       get "/box/:id"=> "glossaries#glossaries_box", on: :collection

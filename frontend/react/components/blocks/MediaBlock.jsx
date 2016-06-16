@@ -219,7 +219,7 @@ var FileBrowser = React.createClass({
         var that = this;
 
         return (
-            <Modal active={this.handleModalState} mystyle={""} title={"Mes fichiers"}>
+            <Modal active={this.handleModalState} mystyle={"media"} title={"Mes fichiers"}>
                 { this.state.loading 
                     ? <Loader />
                     : null
@@ -528,7 +528,10 @@ var MediaBlock = React.createClass({
                         { this.state.blockContent != '' 
                             ? <div>
                                 <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
-                                <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                                {  this.state.upload.filetype != null && this.state.upload.filetype === "image"
+                                    ? <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                                    : null
+                                }
                             </div>
                             : null
                         }
@@ -564,16 +567,27 @@ var MediaBlock = React.createClass({
                     </div>
                         
                     { this.state.helpModalState
-                        ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
-                                <div className="modal-in">
+                        ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                                <div className="modal-in media">
+                                <h4> Block Média (En cours d'édition)</h4>
                                     Déposer un nouveau fichier :
                                     <ul>
                                         <li>cliquez sur l'icône <i className="fa fa-file-text"></i> ou glissez directement votre fichier par dessus.</li>
                                     </ul>
-                                    <br /><br />
+                                    <br />
                                     Réemployer un fichier :
                                     <ul>
                                         <li>cliquez sur l'icône <i className="fa fa-folder-open"></i>.</li>
+                                    </ul>
+                                    <br />
+                                    Editer le block :
+                                    <ul>
+                                        <li>cliquez sur l'icône <i className="fa fa-pencil"></i>.</li>
+                                    </ul>
+                                    <br />
+                                    Enregistrer le block :
+                                    <ul>
+                                        <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
                                     </ul>
                                 </div>
                             </Modal>

@@ -47,7 +47,7 @@ var ContainersList = React.createClass({
         var that = this;
 
         return(
-            <ul className="alias">
+            <ul>
                 { containers.map(function(container) {
                     return(
                         <li key={container.id} onClick={that.itemSelection.bind(that, container.id)} className="capitalize">{container.name}

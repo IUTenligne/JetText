@@ -372,9 +372,20 @@ var MathBlock = React.createClass({
                 </Tooltip>
 
                 { this.state.helpModalState
-                    ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Math"}>
-                            <div className="modal-in aide">
-                                en cours d'édition
+                    ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
+                            <div className="modal-in math">
+                                <h4> Block Math (En cours d'édition)</h4>
+                                
+
+                                Editer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-pencil"></i>.</li>
+                                </ul>
+                                <br/>
+                                Enregistrer le block :
+                                <ul>
+                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
+                                </ul>
                             </div>
                         </Modal>
                     : null

@@ -187,7 +187,7 @@ var Block = React.createClass({
                     />
 
                     { this.state.modalState
-                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                        ? <Modal active={this.handleModalState} mystyle={"export"} title={"Exporter le bloc"}>
                                 <div className="modal-in">
                                     { this.state.loading
                                         ? <Loader />
@@ -222,7 +222,7 @@ var Block = React.createClass({
                     />
 
                     { this.state.modalState
-                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                        ? <Modal active={this.handleModalState} mystyle={"export"} title={"Exporter le bloc"}>
                                 <div className="modal-in">
                                     { this.state.loading
                                         ? <Loader />
@@ -257,7 +257,7 @@ var Block = React.createClass({
                     />
 
                     { this.state.modalState
-                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                        ? <Modal active={this.handleModalState} mystyle={"export"} title={"Exporter le bloc"}>
                                 <div className="modal-in">
                                     { this.state.loading
                                         ? <Loader />
@@ -292,7 +292,7 @@ var Block = React.createClass({
                     />
 
                     { this.state.modalState
-                        ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>
+                        ? <Modal active={this.handleModalState} mystyle={"export"} title={"Exporter le bloc"}>
                                 <div className="modal-in">
                                     { this.state.loading
                                         ? <Loader />
