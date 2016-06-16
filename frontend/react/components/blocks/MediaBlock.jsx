@@ -569,7 +569,7 @@ var MediaBlock = React.createClass({
                         }
                     </div>
                         
-                    { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleActions}><i className="fa fa-random"></i></button></div> : null }
+                    { this.state.editButton ? <div className="block-edit-button"><button className="media" onClick={this.toggleActions}><i className="fa fa-random"></i></button></div> : null }
 
                     { this.state.helpModalState
                         ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>

@@ -351,7 +351,7 @@ var NoteBlock = React.createClass({
                     </div>
                 </div>
 
-                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
+                { this.state.editButton ? <div className="block-edit-button"><button className="note" onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
 
                 { this.state.formulaModalState
                     ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>

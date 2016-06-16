@@ -318,7 +318,7 @@ var TextBlock = React.createClass({
                     : null
                 }
 
-                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
+                { this.state.editButton ? <div className="block-edit-button"><button className="texte" onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>

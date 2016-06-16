@@ -301,6 +301,8 @@ var MathBlock = React.createClass({
                         </h3>
                     </div>
 
+                    { this.state.editButton ? <div className="block-edit-button"><button className="math" onClick={this.toggleToolbox}><i className="fa fa-pencil fa-fw"></i></button></div> : null }
+                    
                     <div className="block-content">
 
                         <div
@@ -323,9 +325,7 @@ var MathBlock = React.createClass({
                         { this.state.toolboxState ? <MathToolbox interact={this.handleInteraction} /> : null }
 
                     </div>
-                </div>
-
-                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleToolbox}><i className="fa fa-random"></i></button></div> : null }
+                </div>               
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
