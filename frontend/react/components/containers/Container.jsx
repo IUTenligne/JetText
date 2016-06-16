@@ -157,6 +157,12 @@ var Container = React.createClass({
         this.setState({ newPageValue: event.target.value });
     },
 
+    _handleKeyPress: function(event) {
+        if (event.key === 'Enter') {
+            this.createPage(event);
+        }
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -211,10 +217,10 @@ var Container = React.createClass({
 
                                 { !this.props.routeParams.pageId && !this.state.activePage 
                                     ? <div id="create_new_page">
-                                        <span className="input-group-addon">
+                                        <span className="input-group-addon" onClick={this.createPage}>
                                             <i className="fa fa-plus fa-fw"></i>
                                         </span>
-                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName}/><br/>
+                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName} onKeyPress={this._handleKeyPress}/><br/>
                                             { this.state.newPageValue ? <button onClick={this.createPage} className="btn-success"><i className="fa fa-check"></i></button> : null }
                                     </div>
                                     : null
