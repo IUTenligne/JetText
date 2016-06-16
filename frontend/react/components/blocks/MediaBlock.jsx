@@ -260,7 +260,6 @@ var MediaBlock = React.createClass({
         return {
             blockName: '',
             blockContent: '',
-            editButton: false,
             upload: null,
             showActions: true,
             browserList: [],
@@ -510,10 +509,6 @@ var MediaBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
-    showEditButton: function() {
-        this.setState({ editButton: !this.state.editButton });
-    },
-
 	render: function() {
 		var block = this.props.block;
 
@@ -528,7 +523,6 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-
                         <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
                         { this.state.blockContent != '' 
@@ -567,10 +561,10 @@ var MediaBlock = React.createClass({
                                 </div>
                             : null
                         }
+
+                        <div className="block-edit-button"><button onClick={this.toggleActions}><i className="fa fa-random"></i></button></div>
                     </div>
                         
-                    { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleActions}><i className="fa fa-random"></i></button></div> : null }
-
                     { this.state.helpModalState
                         ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
                                 <div className="modal-in">

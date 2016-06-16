@@ -292,7 +292,7 @@ var MathBlock = React.createClass({
     	var block = this.props.block;
 
     	return (
-    		<div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
+    		<div className="block-inner">
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-superscript"></i>
@@ -322,10 +322,9 @@ var MathBlock = React.createClass({
                             
                         { this.state.toolboxState ? <MathToolbox interact={this.handleInteraction} /> : null }
 
+                        <div className="block-edit-button"><button onClick={this.toggleToolbox}><i className="fa fa-random"></i></button></div>
                     </div>
                 </div>
-
-                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleToolbox}><i className="fa fa-random"></i></button></div> : null }
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>

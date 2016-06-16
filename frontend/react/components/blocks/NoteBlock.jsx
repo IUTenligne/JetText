@@ -13,7 +13,6 @@ var NoteBlock = React.createClass({
             blockName: '',
             blockContent: '',
             blockVirtualContent: '',
-            editButton: false,
             loading: false,
             myStyle: '',
             left: '',
@@ -277,14 +276,6 @@ var NoteBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
-    showEditButton: function() {
-        this.setState({ editButton: true });
-    },
-
-    hideEditButton: function() {
-        this.setState({ editButton: false });
-    },
-
 	render: function() {
 		var block = this.props.block;
         var myStyle = {
@@ -297,7 +288,7 @@ var NoteBlock = React.createClass({
         var that = this;
 
 		return (
-            <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
+            <div className="block-inner">
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
@@ -335,8 +326,11 @@ var NoteBlock = React.createClass({
                                         onDoubleClick={this.unlockEditor}
                                     />
                             }
+                        </div>
+                    </div>
+                </div>
 
-                            { this.state.editBlock 
+                { this.state.editBlock 
                                 ? null 
                                 : <div className="block-save">
                                     <button 
@@ -347,11 +341,6 @@ var NoteBlock = React.createClass({
                                     </button>
                                 </div> 
                             }
-                        </div>
-                    </div>
-                </div>
-
-                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
 
                 { this.state.formulaModalState
                     ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>

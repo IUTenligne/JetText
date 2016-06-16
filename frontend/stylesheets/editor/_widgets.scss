@@ -470,4 +470,24 @@
 	}
 }
 
-/* imput d'ajout*/
+.notification {
+	background: white !important;
+	border-color: $lightBlue !important;
+	border-left: 1px solid $lightBlue !important;
+	border-right: 1px solid $lightBlue !important;
+	border-bottom: 1px solid $lightBlue !important;
+	top: 50% !important;
+	right: 50% !important;
+	position: absolute !important;
+	box-shadow: none !important;
+    
+	strong, h1, h2, h3, h4, .notification-title {
+		color: $lightBlue !important;
+	}
+	i {
+		color: $lightBlue !important;
+	}
+	button, span {
+		background-color: $lightBlue !important;
+	}
+}

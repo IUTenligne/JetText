@@ -13,6 +13,7 @@ span.bold{
 
 	/* global MediaBlock TextBlock NoteBlock*/
 	.block-inner {
+		border-left: 1px solid $blockBorder;
 		.block-inner-content {
 			.focus {
 				background: $lightBlue;
@@ -54,9 +55,11 @@ span.bold{
 					padding: 4px 22px 0px 22px;
 					line-height: 22px;
 					color: white;
-					border-top: 1px solid $blockBorder;
+					border-top: 3px solid;
+					border-right: 1px solid $blockBorder;
 					border-bottom: 1px solid white;
 					margin-bottom: -1px;
+					border-radius: 1px 2px 0 0;
 				}
 
 				h3 {
@@ -107,6 +110,7 @@ span.bold{
 			margin-top: 0;
 			font-size: 14px;
 			line-height: 19px;
+			border-right: 1px solid $blockBorder;
 
 			ul,ol {
 				margin-top: 20px;
@@ -186,8 +190,13 @@ span.bold{
 			}
 		}
 
+		.block-save {
+			border-right: 1px solid $blockBorder;
+		}
+
 		.block-content,
 		.cke {
+			border-right: 1px solid $blockBorder;
 			padding: 10px 15px;
 			text-align: justify;
 			p {
@@ -226,6 +235,8 @@ span.bold{
 		width: 100%;
 		color: $iGrey;
 		font-size: 20px;
+		margin-top: 0;
+		border-right: 1px solid $blockBorder;
 
 		.handle {
 			background: none;
@@ -264,7 +275,7 @@ span.bold{
 		position: absolute;
 		background: $white;
 		width: 130px;
-		right: 55px;
+		right: 90px;
 		margin-top: 4px;
 		border-bottom: none;
 		border-radius: 4px;
@@ -288,7 +299,7 @@ span.bold{
 
 	.block-actions:after {
 		position: absolute;
-		right: 45px;
+		right: 61px;
 		margin-top: -9px;
 		top:0;
 		border-top: 0;
@@ -298,8 +309,8 @@ span.bold{
 	}
 	.block-actions:before {
 		position: absolute;
-		right: 46px;
-		margin-top: -7px;
+		right: 62px;
+		margin-top: -8px;
 		border-top: 0;
 		z-index: 10;
 		border-top: 0;
@@ -308,32 +319,20 @@ span.bold{
 		border-bottom: 8px solid $white;
 	}
 	.block-actions.block-moves:after {
-		right: 0px;
+		right: 8px;
 	}
 	.block-actions.block-moves:before {
-		right: 1px;
-	}
-
-	.block-edit-button {
-		position: relative;
-		width: 50px;
-		margin-left: auto;
-		margin-right: auto;
+		right: 9px;
 	}
 }
 
 /* spacial UI block */
 .block-text,
 .block-texte {
-	border-color: $lightBlue;
-
 	div.block-inner {
 		div.block-title {
-			border-color: $lightBlue !important;
-
 			i {
-				border-top: 4px solid $lightBlue !important;
-				border-right-color: $lightBlue !important;
+				border-top-color: $lightBlue !important;
 				color: $lightBlue !important;
 			}
 		}
@@ -343,33 +342,19 @@ span.bold{
 				cursor: pointer;
 			}
 		}
-
-		.block-content {
-			border-color: $lightBlue;
-			padding-bottom: 0;
-		}
-
-		.action {
-			border-color: $lightBlue;
-		}
 	}
 }
 
 .block-math,
 .block-maths {
-	border-color: $lightPurple;
-
 	div.block-inner {
 		div.block-title {
-			border-color: $lightPurple !important;
 			i {
-				border-top: 4px solid $lightPurple !important;
+				border-top-color: $lightPurple !important;
 				color: $lightPurple !important;
-				border-right-color: $lightPurple !important;
 			}
 		}
 		div.block-content {
-			border-color: $lightPurple;
 			width: 100%;
 			#output{
 				width: 100%;
@@ -438,29 +423,19 @@ span.bold{
 			}
 		}
 	}
-	.action {
-		border-color: $lightPurple;
-	}
 }
 
 .block-media {
-	border-color: $lightOrange;
-
 	.block-inner {
 		div.block-inner-content {
-			border-color: $lightOrange;
 			.block-title {
-				border-color: $lightOrange;
 				i {
-					border-top: 4px solid $lightOrange !important;
+					border-top-color: $lightOrange !important;
 					color: #E48D23 !important;
-					border-right-color: $lightOrange;
 				}
 			}
 
 			div.block-content{
-				border-color: $lightOrange;
-
 				.block-media-actions {
 					border: 2px dashed $lightOrange;
 					width: 95%;
@@ -555,25 +530,17 @@ span.bold{
 			}
 		}
 	}
-	.action {
-		border-color: $lightOrange;
-	}
 }
 
 
 .block-note,
 .block-remarque {
-	border-color: $lightRed;
-
 	div.block-inner {
 		div.block-inner-content {
 			.block-title {
-				border-color: $lightRed !important;
-
 				i {
-					border-top: 4px solid $lightRed !important;
+					border-top-color: $lightRed !important;
 					color: $lightRed !important;
-					border-right-color: $lightRed;
 				}
 			}
 
@@ -584,8 +551,6 @@ span.bold{
 			}
 
 			.block-content {
-				border-color: $lightRed !important;
-
 				.block-note-types {
 					margin: 10px 0 15px 0;
 				}
@@ -607,39 +572,42 @@ span.bold{
 					}
 				}
 
-				.important{
-					background-image:linear-gradient($lightRed,rgb(186,67,38));
+				.note-style:hover {
+					transform: scale(1.2);
 				}
 
-				.quote{
-					background-image:linear-gradient($lighTbGrey, rgb(100,110,118));
+				.important i {
+					color: $lightRed;
 				}
 
-				.exemple{
-					background-image:linear-gradient($lightGreen,rgb(62,156,110));
+				.quote i {
+					color: $lighTbGrey;
 				}
 
-				.definition{
-					background-image:linear-gradient($lighTbpurple,rgb(118,70,150));
+				.exemple i {
+					color: $lightGreen;
 				}
 
-				.methode{
-					background-image:linear-gradient($lightOrange,rgb(217,125,14));
+				.definition i {
+					color: $lighTbpurple;
 				}
 
-				.remarque{
-					background-image:linear-gradient($lighTbBlue,rgb(52,129,177));
+				.methode i {
+					color: $lightOrange;
+				}
+
+				.remarque i {
+					color: $lighTbBlue;
 				}
 
 				.block-note {
 					border: 2px solid;
 					padding: 5px 10px 0px 10px;
-					border-radius: 3px;
 
 					.block-note-title {
 						background: $white;
-						margin: -30px 0 0 0;
-						width: 160px;
+						margin: -25px 0 0 0;
+						width: 130px;
 						padding: 0 0 10px 8px;
 						font-size: 20px;
 
@@ -664,8 +632,7 @@ span.bold{
 				}
 
 				.block-content-quote {
-					border-left: 4px solid $quoteBorder;
-					background: $quoteBg;
+					border-color: $lighTbGrey;
 					.block-note-title-quote i{
 						color: $lighTbGrey;
 					}
@@ -728,10 +695,6 @@ span.bold{
 					}
 				}
 			}
-		}
-
-		.action {
-			border-color: $lightRed;
 		}
 	}
 }

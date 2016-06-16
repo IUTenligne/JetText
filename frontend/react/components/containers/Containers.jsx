@@ -5,14 +5,6 @@ var Loader = require('../widgets/Loader.jsx');
 var Modal = require('../widgets/Modal.jsx');
 var NotificationSystem = require('react-notification-system');
 
-var style = {
-    NotificationItem: { 
-        DefaultStyle: { 
-            margin: '50px 5px 2px 1px',
-            background: " #eeeeee",
-        },
-    }
-}
 
 var Result = React.createClass({
     getInitialState: function() {
@@ -218,7 +210,7 @@ var Result = React.createClass({
                     : null 
                 }
 
-                <NotificationSystem ref="notificationSystem" style={style}/>
+                <NotificationSystem ref="notificationSystem" />
             </li> 
         );
     }
