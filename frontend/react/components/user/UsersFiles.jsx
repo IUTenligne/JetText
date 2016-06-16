@@ -122,6 +122,35 @@ var UsersFiles = React.createClass({
         this.serverRequest.abort();
     },
 
+    submitMedia: function(event) {
+        event.preventDefault();
+        this.setState({ loading: true });
+
+        var fileName = $(this.refs.mediaFile.files[0])[0].name;
+        /* lowercase the ext to stick to the upload backend model */
+        var fileExt = fileName.split(".").slice(-1)[0].toLowerCase();
+        var formData = new FormData();
+        formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
+
+        /* Ajax file upload handled by uploads_controller.rb & model upload.rb */
+        $.ajax({
+            url: "/uploads",
+            type: "POST",
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formData,
+            context: this,
+            success: function(data) {
+                this.setState({ 
+                    files: this.state.files.concat([data]),
+                    filter: false,
+                    loading: false
+                });
+            }
+        });
+    },
+
     sort: function(attribute) {
         this.setState({ sorter: attribute });
 
@@ -185,6 +214,19 @@ var UsersFiles = React.createClass({
 
         return (
             <article className="admin-panel">
+
+                <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                    <div className="viewDropzonebis">
+                       <div className="textDropzone">
+                            <i className="fa fa-file-text"></i>
+                            <br/>
+                            Déposer un fichier
+                         </div>
+                    </div>   
+                    <div className="zoneDropzone">
+                        <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
+                    </div>
+                </div>
 
                 <ul className="align">
                     { this.state.loading
