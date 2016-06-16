@@ -168,9 +168,10 @@ var MathToolbox = React.createClass({
 var MathBlock = React.createClass({
 	getInitialState: function() {
         return {
-            changeName: false,
             blockName: '',
             areaContent: '',
+            editButton: false,
+            toolboxState: false,
             value: '',
             tooltipState: false,
             tooltipMovesState: false
@@ -241,6 +242,8 @@ var MathBlock = React.createClass({
             value: this.refs.matharea.value
         });
 
+        this.saveDraft(this.props.block.id, this.state.blockName, event.target.value);
+
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
     },
 
@@ -250,9 +253,10 @@ var MathBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value,
-            changeName: true
+            blockName: event.target.value
         });
+
+        this.saveDraft(this.props.block.id, event.target.value, this.state.areaContent);
     },
 
     createMarkup: function(data) {
@@ -272,23 +276,28 @@ var MathBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
+    showEditButton: function() {
+        this.setState({ editButton: true });
+    },
+
+    hideEditButton: function() {
+        this.setState({ editButton: false });
+    },
+
+    toggleToolbox: function() {
+        this.setState({ toolboxState: !this.state.toolboxState });
+    },
+
     render: function() {
     	var block = this.props.block;
 
     	return (
-    		<div className="block-inner">
+    		<div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-superscript"></i>
                         <h3>
                             <input type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName 
-                                ? <button 
-                                    title="Enregister" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.areaContent)}>
-                                    <i className="fa fa-check"></i></button> 
-                                : null 
-                            }
                         </h3>
                     </div>
 
@@ -300,6 +309,7 @@ var MathBlock = React.createClass({
                            ref="output"
                            dangerouslySetInnerHTML={this.createMarkup(this.state.value)}
                         />
+
                         <textarea 
                             ref="matharea" 
                             type="text" 
@@ -310,10 +320,12 @@ var MathBlock = React.createClass({
                             id="block-math"
                         />
                             
-                        <MathToolbox interact={this.handleInteraction} />
+                        { this.state.toolboxState ? <MathToolbox interact={this.handleInteraction} /> : null }
 
                     </div>
                 </div>
+
+                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.toggleToolbox}><i className="fa fa-random"></i></button></div> : null }
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>

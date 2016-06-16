@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Nouvel utilisateur JetText :</h1>
+    <p>
+      <%= @user.firstname.capitalize if @user.firstname %> <%= @user.lastname.capitalize if @user.lastname %> <%= @user.email if @user.email %> en attente de validation.
+    </p>
+    <p>
+      <br>
+    </p>
+    <p>
+      Cordialement,<br>
+      L'équipe d'<a href="http://iutenligne.net/">IUTenLigne</a>
+    </p>
+  </body>
+</html>

@@ -10,9 +10,9 @@ var ContainersList = require('./ContainersList.jsx');
 var TextBlock = React.createClass({
 	getInitialState: function() {
         return {
-            changeName: false,
             blockName: '',
             blockContent: '',
+            editButton: false,
             blockVirtualContent: '',
             loading: false,
             termsList: [],
@@ -194,9 +194,10 @@ var TextBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value,
-            changeName: true
+            blockName: event.target.value
         });
+
+        this.saveDraft(this.props.block.id, event.target.value, this.state.blockContent);
     },
 
     viewBlockAction: function() {
@@ -241,24 +242,24 @@ var TextBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
+    showEditButton: function() {
+        this.setState({ editButton: true });
+    },
+
+    hideEditButton: function() {
+        this.setState({ editButton: false });
+    },
+
 	render: function() {
 		var block = this.props.block;
 
 		return (
-            <div className="block-inner">
+            <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-pencil" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="textblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName 
-                                ? <button 
-                                    title="Enregister" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent)}>
-                                    <i className="fa fa-check"></i>
-                                </button> 
-                                : null 
-                            }
                         </h3>
                     </div>
 
@@ -316,6 +317,8 @@ var TextBlock = React.createClass({
                         </Modal>
                     : null
                 }
+
+                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
 
                 <div className="action">
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>

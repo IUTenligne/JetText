@@ -82,6 +82,7 @@ $menuWidth: 350px;
   list-style-type: none;
 }
 
+/********  view term and description********/
 .glossary{
 	color: $blue;
 	cursor: help;
@@ -106,6 +107,33 @@ $menuWidth: 350px;
 		opacity:1;
 		transform:scale(1) rotate(0);
 	}
+}
+/********  view term and description********/
+table{
+    box-shadow: 2px 2px 2px rgba($black,0.2);
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+
+    th,td,tr{
+    	vertical-align: middle;
+    }
+	th{
+  		background: rgba(#343230,0.85);
+  		font-weight: bold;
+  		color: white;
+	}
+	th,td{
+		border: 1px solid grey;
+		padding: 0 15px;
+	}
+}
+table tr:nth-child(even) {
+     background: #eee;
+}
+table tr:nth-child(odd) {
+    background:$white;
 }
 
 
@@ -472,6 +500,8 @@ $menuWidth: 350px;
 							padding: 5px;
 							border-radius: 4px;
 						}
+
+						/********  block text ********/
 					}
 				}	
 			}

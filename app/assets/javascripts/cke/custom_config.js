@@ -19,5 +19,5 @@ CKEDITOR.editorConfig = function( config ) {
 	//config.extraPlugins = 'uploader,dynavar,justify';
 	config.extraPlugins = 'glossary,pastefromword,justify';
 
-	config.allowedContent = 'a[!href]; ul; li; ol; strong; em; table; tbody; thead; tfoot; th; tr; td; p{text-align}; u; strike; sub; sup; iframe[*]; blockquote'; //keep special styles on re-edition
+	config.allowedContent = 'a[!href]; ul; li; ol; strong; em; table; tbody; thead; tfoot; th[colspan,rowspan]; tr[colspan,rowspan]; td[colspan,rowspan]; p{text-align}; u; strike; sub; sup; iframe[*]; blockquote'; //keep special styles on re-edition
 };

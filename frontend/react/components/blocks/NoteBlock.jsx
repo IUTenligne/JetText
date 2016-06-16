@@ -10,10 +10,10 @@ var ContainersList = require('./ContainersList.jsx');
 var NoteBlock = React.createClass({
 	getInitialState: function() {
         return {
-            changeName: false,
             blockName: '',
             blockContent: '',
             blockVirtualContent: '',
+            editButton: false,
             loading: false,
             myStyle: '',
             left: '',
@@ -214,9 +214,10 @@ var NoteBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value.trim(),
-            changeName: true
+            blockName: event.target.value.trim()
         });
+
+        this.saveDraft(this.props.block.id, event.target.value, this.state.blockContent);
     },
 
     applyStyle: function(style) {
@@ -276,6 +277,14 @@ var NoteBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
+    showEditButton: function() {
+        this.setState({ editButton: true });
+    },
+
+    hideEditButton: function() {
+        this.setState({ editButton: false });
+    },
+
 	render: function() {
 		var block = this.props.block;
         var myStyle = {
@@ -288,19 +297,12 @@ var NoteBlock = React.createClass({
         var that = this;
 
 		return (
-            <div className="block-inner">
+            <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
                         <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
-                            { this.state.changeName 
-                                ? <button 
-                                    title="Enregister" 
-                                    onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
-                                    <i className="fa fa-check"></i>
-                                </button> 
-                            : null }
                         </h3>
                     </div>
 
@@ -348,6 +350,8 @@ var NoteBlock = React.createClass({
                         </div>
                     </div>
                 </div>
+
+                { this.state.editButton ? <div className="block-edit-button"><button onClick={this.unlockEditor}><i className="fa fa-random"></i></button></div> : null }
 
                 { this.state.formulaModalState
                     ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>

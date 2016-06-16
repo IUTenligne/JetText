@@ -38,11 +38,11 @@ var FileInfo = React.createClass({
             if (this.props.file.file_content_type.split("/")[1] === "svg+xml")
                 return { __html: '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'" height="28">\n</object>' };
             else
-                return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px    ">' };
+                return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px">' };
         } else if (this.props.file.filetype === "audio") {
             return { __html: '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>' };
         } else if (this.props.file.filetype === "video") {
-            return { __html: '<video controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>' };
+            return { __html: '<video controls style="max-width:100%">\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>' };
         } else if (this.props.file.filetype === "pdf") {
            return { __html: '<object data="'+ this.props.file.url +'" width="100%" height="300px" type="application/pdf">\n\t<embed src="'+ this.props.file.url +'" type="application/pdf"/>\n</object>' };
         }

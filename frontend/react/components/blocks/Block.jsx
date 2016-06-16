@@ -124,27 +124,6 @@ var Block = React.createClass({
         this.props.addBlock(data);
     },
 
-    viewBlockAction: function() {
-        this.setState({ 
-            tooltipState: !this.state.tooltipState,
-            tooltipMovesState: false
-        });
-    },
-
-    viewBlockMoves: function() {
-        this.setState({ 
-            tooltipState: false,
-            tooltipMovesState: !this.state.tooltipMovesState
-        });
-    },
-
-    handleTooltipState: function(st) {
-        this.setState({ tooltipState: st });
-    },
-
-    handleTooltipMovesState: function(st) {
-        this.setState({ tooltipMovesState: st });
-    },
 
     handleHelpModalState: function() {
         this.setState({ helpModalState: !this.state.helpModalState });
@@ -232,9 +211,16 @@ var Block = React.createClass({
             return (
                 <div className="block block-media" id={"block-"+block.id} data-id={block.id}>
                     <MediaBlock
-                        block={block}
                         key={block.id}
+                        block={block}
+                        containerId={this.props.containerId}
+                        removeBlock={this.handleRemoveBlock}
+                        addBlock={this.handleBlockAdd}
+                        saveBlock={this.saveBlock}
+                        moveBlock={this.handleBlockMove}
+                        exportBlock={this.exportBlock}
                     />
+
 
                     { this.state.helpModalState
                         ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>

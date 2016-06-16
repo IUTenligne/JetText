@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 
   def welcome_message
     UserMailer.welcome_message(self).deliver
+    UserMailer.new_user_adminmessage(self).deliver
   end
 
   def self.validation_message

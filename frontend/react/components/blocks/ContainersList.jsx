@@ -9,16 +9,12 @@ var ContainersList = React.createClass({
         };
     },
 
-    componentDidMount: function() {
-          
-    },
-
     itemSelection: function(item) {
         this.setState({ 
             selectedItem: item,
             loading: true 
         });
-
+        
         this.serverRequest = $.get("/containers/"+item+".json", function (result) {
             this.setState({
                 pages: result.pages,

@@ -135,14 +135,23 @@ span.bold{
         		text-decoration : line-through;
       		}
       		table{
-		        box-shadow: 2px 2px 2px rgba($black,0.25);
+		        box-shadow: 2px 2px 2px rgba($black,0.1);
 		        text-align: center;
 		        margin-left: auto;
 		        margin-right: auto;
 		        margin-bottom: 10px;
 
+		        th,td,tr{
+		        	vertical-align: middle;
+		        }
 	        	th{
-	          		background: $lightBlue;
+	          		background: rgba($darkGrey,0.85);
+	          		font-weight: bold;
+	          		color: white;
+	        	}
+	        	th,td{
+	        		border: 1px solid grey;
+	        		padding: 0 15px;
 	        	}
       		}
 		    table tr:nth-child(even) {
@@ -319,6 +328,13 @@ span.bold{
 	.block-actions.block-moves:before {
 		right: 1px;
 	}
+
+	.block-edit-button {
+		position: relative;
+		width: 50px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 /* spacial UI block */
@@ -392,7 +408,7 @@ span.bold{
 						display: inline-block;
 						margin: 15px;
 						border-radius: 6px;
-    					transition: background-color .25s;
+    				transition: background-color .25s;
 						cursor: pointer;
 						border: none;
 						text-align: center;
@@ -459,7 +475,7 @@ span.bold{
 
 			div.block-content{
 				border-color: $lightOrange;
-				
+
 				.block-media-actions {
 					border: 2px dashed $lightOrange;
 					width: 95%;
