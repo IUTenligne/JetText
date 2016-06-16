@@ -426,8 +426,11 @@ span.bold{
 							background-image:linear-gradient(#e1e1e1,#ebebeb);
 
 							img{
-								display: table-cell;
     							vertical-align: middle;
+    							margin: 0;
+    							max-width: 100%;
+    							width: 35px;
+								height: 35px;
 							}
 						}
 						button:active {

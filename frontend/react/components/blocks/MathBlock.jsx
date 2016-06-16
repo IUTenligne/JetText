@@ -90,6 +90,7 @@ var MathToolbox = React.createClass({
                         <li><button onClick={this.addMath.bind(this, "geq")}><img src="/assets/mathjax/plusgrand.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "leq")}><img src="/assets/mathjax/pluspetit.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "propto")}>&prop;</button></li>
+                        <li><button onClick={this.addMath.bind(this, "underbrace{?}")}><img src="/assets/mathjax/arraybottom.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?\\\\?\\end{array}\\right.")}><img src="/assets/mathjax/array2left.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?&?\\\\?&?\\end{array}\\right.")}><img src="/assets/mathjax/array4left.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?\\end{array}\\right\\}")}><img src="/assets/mathjax/array2right.svg"/></button></li>
@@ -97,6 +98,7 @@ var MathToolbox = React.createClass({
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?\\\\?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\\\?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche4colone.svg"/></button></li>
+
                     </ul>
                     :null
                 }
