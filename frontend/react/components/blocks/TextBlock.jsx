@@ -79,9 +79,6 @@ var TextBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
-
-        /* Saves the block's content if before leaving the page */
-        this.saveBlock(this.props.block.id, this.state.blockName, this.state.blockContent);
         if (editor) { editor.destroy(true); }
         this.serverRequest.abort();
     },

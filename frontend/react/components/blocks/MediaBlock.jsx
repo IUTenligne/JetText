@@ -528,7 +528,10 @@ var MediaBlock = React.createClass({
                         { this.state.blockContent != '' 
                             ? <div>
                                 <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
-                                <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                                {  this.state.upload.filetype != null && this.state.upload.filetype === "image"
+                                    ? <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                                    : null
+                                }
                             </div>
                             : null
                         }

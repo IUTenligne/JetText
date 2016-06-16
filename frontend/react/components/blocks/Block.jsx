@@ -28,39 +28,6 @@ var Block = React.createClass({
         this._notificationSystem = this.refs.notificationSystem;
     },
 
-    removeBlock: function(event){
-        var that = this;
-        this._notificationSystem = this.refs.notificationSystem;
-
-        for (name in CKEDITOR.instances) {
-            CKEDITOR.instances[name].destroy(true);
-        }
-
-        // NotificationSystem popup
-        event.preventDefault();
-        this._notificationSystem.addNotification({
-            title: 'Confirmer la suppression',
-            message: 'Voulez-vous supprimer le bloc ?',
-            level: 'success',
-            position: 'cc',
-            timeout: '10000',
-            action: {
-                label: 'yes',
-                callback: function() {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "/blocks/" + that.props.item.id,
-                        context: that,
-                        success: function(data){
-                            /* passes the deleted block_id to the parent (Page) to handle the DOM rerendering */
-                            that.props.removeBlock(data.block);
-                        }
-                    });
-                }
-            }
-        });
-    },
-
     handleRemoveBlock: function(block){
         /* removes a block from the children (TextBlock, NoteBlock) */
         var that = this;
@@ -75,7 +42,7 @@ var Block = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le bloc ' +block.name+ '?',
             level: 'success',
-            position: 'cc',
+            position: 'tr',
             timeout: '10000',
             action: {
                 label: 'yes',
@@ -86,6 +53,7 @@ var Block = React.createClass({
                         context: that,
                         success: function(data){
                             /* passes the deleted block_id to the parent (Page) to handle the DOM rerendering */
+                            console.log(data);
                             that.props.removeBlock(data.block);
                         }
                     });

@@ -80,6 +80,7 @@ var Page = React.createClass({
 
     handleBlockDeletion: function(block_id) {
         /* updates the blocks list after a block deletion */
+        console.log(this.state.blocks, this.state.blocks.filter((i, _) => i["id"] !== block_id))
         this.setState({
             blocks: this.state.blocks.filter((i, _) => i["id"] !== block_id)
         });

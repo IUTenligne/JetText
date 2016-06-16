@@ -88,21 +88,6 @@ var NoteBlock = React.createClass({
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["note_block_"+this.props.block.id];
-
-        /* Saves the block's content if before leaving the page */
-        var block = this.props.block;
-        $.ajax({
-            type: "PUT",
-            url: '/blocks/'+block.id,
-            context: this,
-            data: {
-                id: block.id,
-                name: this.state.blockName,
-                content: this.state.blockContent,
-                classes: this.state.selectedStyle
-            }
-        });
-
         if (editor) { editor.destroy(true); }
     },
 
