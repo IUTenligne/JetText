@@ -42,7 +42,7 @@ var Block = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le bloc ?',
             level: 'success',
-            position: 'tc',
+            position: 'tr',
             timeout: '10000',
             action: {
                 label: 'yes',
@@ -75,7 +75,7 @@ var Block = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le bloc ' +block.name+ '?',
             level: 'success',
-            position: 'tc',
+            position: 'tr',
             timeout: '10000',
             action: {
                 label: 'yes',
@@ -220,52 +220,6 @@ var Block = React.createClass({
                         moveBlock={this.handleBlockMove}
                         exportBlock={this.exportBlock}
                     />
-
-
-                    { this.state.helpModalState
-                        ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
-                                <div className="modal-in aide">
-                                    Déposer un nouveau fichier :
-                                    <ul>
-                                        <li>cliquez sur l'icône <i className="fa fa-file-text"></i> ou glissez directement votre fichier par dessus.</li>
-                                    </ul>
-                                    <br /><br />
-                                    Réemployer un fichier :
-                                    <ul>
-                                        <li>cliquez sur l'icône <i className="fa fa-folder-open"></i>.</li>
-                                    </ul>
-                                </div>
-                            </Modal>
-                        : null
-                    }
-
-                    <div className="action">
-                        <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
-                        <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
-                        <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
-                    </div>
-
-                    <Tooltip tooltipState={this.handleTooltipState}>
-                        { this.state.tooltipState
-                            ? <div className="block-actions">
-                                <button className="btn-block" onClick={this.exportBlock}><i className="fa fa-files-o"></i> Dupliquer</button><br/>
-                                <button className="btn-block" onClick={this.removeBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
-                                <NotificationSystem ref="notificationSystem" />
-                            </div>
-                            : null
-                        }
-                    </Tooltip>
-
-                    <Tooltip tooltipState={this.handleTooltipMovesState}>
-                        { this.state.tooltipMovesState
-                            ? <div className="block-actions block-moves">
-                                <button className="btn-block" onClick={this.moveUpBlock}><i className="fa fa-chevron-up"></i> Monter</button><br/>
-                                <button className="btn-block" onClick={this.moveDownBlock}><i className="fa fa-chevron-down"></i> Descendre</button><br/>
-                                <NotificationSystem ref="notificationSystem" />
-                            </div>
-                            : null
-                        }
-                    </Tooltip>
 
                     { this.state.modalState
                         ? <Modal active={this.handleModalState} mystyle={""} title={"Exporter le bloc"}>

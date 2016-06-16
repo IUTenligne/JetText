@@ -135,7 +135,7 @@ var FileBrowser = React.createClass({
             images = [],
             miscs = [];
 
-        for (var i in data) {
+        for (var i in data) {
             var type = this.handleFileType(data[i]["file_content_type"], data[i]["file_file_name"]);
             
             if (type === "pdf") {
@@ -220,20 +220,20 @@ var FileBrowser = React.createClass({
 
         return (
             <Modal active={this.handleModalState} mystyle={""} title={"Mes fichiers"}>
-                { this.state.loading 
+                { this.state.loading 
                     ? <Loader />
                     : null
                 }
 
-                { this.state.images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", this.state.images)}><i className="fa fa-image images fa-fw"></i></div> : null }
+                { this.state.images.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "image", this.state.images)}><i className="fa fa-image images fa-fw"></i></div> : null }
 
-                { this.state.pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", this.state.pdfs)}><i className="fa fa-file-pdf-o pdfs fa-fw"></i></div> : null }
+                { this.state.pdfs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "PDF", this.state.pdfs)}><i className="fa fa-file-pdf-o pdfs fa-fw"></i></div> : null }
 
-                { this.state.videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", this.state.videos)}><i className="fa fa-video-camera videos fa-fw"></i></div> : null }
+                { this.state.videos.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "video", this.state.videos)}><i className="fa fa-video-camera videos fa-fw"></i></div> : null }
 
                 { this.state.audios.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "audio", this.state.audios)}><i className="fa fa-music audios fa-fw"></i></div> : null }
 
-                { this.state.miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", this.state.miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
+                { this.state.miscs.length > 0 ? <div className="file-type" onClick={this.handleTypeClick.bind(this, "other", this.state.miscs)}><i className="fa fa-random miscs fa-fw"></i></div> : null }
 
                 <div>
                     <br />
@@ -256,11 +256,10 @@ var FileBrowser = React.createClass({
 
 
 var MediaBlock = React.createClass({
-	getInitialState: function() {
+    getInitialState: function() {
         return {
             blockName: '',
             blockContent: '',
-            editButton: false,
             upload: null,
             showActions: true,
             browserList: [],
@@ -347,7 +346,7 @@ var MediaBlock = React.createClass({
     },
 
     makeHtmlContent: function(data, type, width) {
-        if (type == "video") {
+        if (type == "video") {
             return '<video width="100%" controls>\n\t<source src="'+data.url+'" type="video\/mp4">\n</video>';
         } else if (type == "audio") {
             return '<audio controls>\n\t<source src="'+data.url+'" type="'+data.file_content_type+'">\n</audio>';
@@ -363,7 +362,7 @@ var MediaBlock = React.createClass({
         }
     },
 
-    handleBrowseFiles: function() {
+    handleBrowseFiles: function() {
         this.setState({ modalState: true });
     },
 
@@ -510,14 +509,10 @@ var MediaBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
-    showEditButton: function() {
-        this.setState({ editButton: !this.state.editButton });
-    },
+    render: function() {
+        var block = this.props.block;
 
-	render: function() {
-		var block = this.props.block;
-
-		return (
+        return (
             <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.showEditButton}>
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
@@ -528,7 +523,6 @@ var MediaBlock = React.createClass({
                     </div>
 
                     <div className="block-content">
-
                         <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
                         { this.state.blockContent != '' 
@@ -569,8 +563,6 @@ var MediaBlock = React.createClass({
                         }
                     </div>
                         
-                    { this.state.editButton ? <div className="block-edit-button"><button className="media" onClick={this.toggleActions}><i className="fa fa-random"></i></button></div> : null }
-
                     { this.state.helpModalState
                         ? <Modal active={this.handleHelpModalState} mystyle={""} title={"Aide pour le bloc Média"}>
                                 <div className="modal-in">
@@ -589,6 +581,15 @@ var MediaBlock = React.createClass({
                     }
 
                     <div className="action">
+                        { this.state.showActions
+                            ? <i onClick={this.toggleActions} title="Enregistrer " className="fa fa-check"></i>
+                            :<i 
+                                className=" fa fa-pencil"
+                                onClick={this.toggleActions}
+                                title="Editer"
+                                >
+                            </i>
+                        }
                         <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                         <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
                         <button className="handle" title="Déplacer le bloc" onClick={this.viewBlockMoves}></button>
@@ -597,11 +598,6 @@ var MediaBlock = React.createClass({
                     <Tooltip tooltipState={this.handleTooltipState}>
                         { this.state.tooltipState
                             ? <div className="block-actions">
-                                { this.state.showActions
-                                    ? null
-                                    : <button className="media-block-edit" onClick={this.toggleActions}><i className="fa fa-pencil"></i> Editer</button>
-                                }
-                                <br/>
                                 <button className="btn-block" onClick={this.exportBlock.bind(this, block.id)}><i className="fa fa-files-o"></i> Dupliquer</button>
                                 <br/>
                                 <button className="btn-block" onClick={this.handleRemoveBlock}><i className="fa fa-remove"></i> Supprimer</button><br/>
@@ -625,7 +621,7 @@ var MediaBlock = React.createClass({
                 <NotificationSystem ref="notificationSystem"/>
             </div>
         );
-	}
+    }
 });
 
 module.exports = MediaBlock;
