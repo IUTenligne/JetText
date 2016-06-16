@@ -192,12 +192,29 @@ var UsersFiles = React.createClass({
     },
 
     filterByType: function(type) {
-        this.setState({ 
-            loading: true,
-            filter: !this.state.filter
-        });
+        if (this.state.activeFilter === type) {
+            if (this.state.filterSearch === true) {
+                this.setState({ 
+                    filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 ),
+                    loading: false,
+                    filterSearch: true,
+                    activeFilter: ''
+                });
+            } else {
+                this.setState({
+                    filteredFiles: this.state.files, 
+                    loading: false,
+                    filter: false,
+                    filterSearch: false,
+                    activeFilter: ''
+                });
+            }
+        } else {
+            this.setState({ 
+                loading: true,
+                filter: true
+            });
 
-        if (!this.state.filter === true) {
             if (this.state.filterSearch === true) {
                 var files = this.state.files.filter( i => (i["filetype"] === type) && (i["file_file_name"].indexOf(this.state.searchedString) > -1) );
             } else {
@@ -209,20 +226,6 @@ var UsersFiles = React.createClass({
                 activeFilter: type,
                 loading: false
             });
-        } else {
-            if (this.state.filterSearch === true) {
-                var files = this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 );
-                this.setState({
-                    loading: false,
-                    activeFilter: '',
-                    filteredFiles: files
-                });
-            } else {
-                this.setState({
-                    loading: false,
-                    activeFilter: ''
-                });
-            }
         }
     },
 
@@ -256,7 +259,6 @@ var UsersFiles = React.createClass({
 
     render: function() {
         var that = this;
-                        console.log(this.state.activeFilter);
 
         return (
             <article className="admin-panel">
@@ -282,9 +284,11 @@ var UsersFiles = React.createClass({
                         { this.state.types.map(function(type, index){
                             return( 
                                 that.state.activeFilter === type.filetype 
-                                ? <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
-                                    <i className={"file-" + type.filetype}></i>
-                                </button> 
+                                ? <span key={index} className="active-filter">
+                                    <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+                                        <i className={"file-" + type.filetype}></i>
+                                    </button> 
+                                </span>
                                 : <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
                                     <i className={"file-" + type.filetype}></i>
                                 </button> 

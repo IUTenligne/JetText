@@ -602,23 +602,24 @@
 			cursor: pointer;
 			overflow: hidden;
 			width: 100%;
-	  	height: 70px;
-  		top: 0;
-  		right: 0;
-  		position: absolute;
-  		opacity: 0;
-  		color: $textGrey;
+		  	height: 70px;
+	  		top: 0;
+	  		right: 0;
+	  		position: absolute;
+	  		opacity: 0;
+	  		color: $textGrey;
 		}
 	}
 }
 
 .filters-bar {
 	margin-bottom: 30px;
-	.active-filter {
-		transform: scale(1.1); 
-		box-shadow: 0px 2px 3px $lightBlue;
-	}
 
+	span.active-filter {
+		padding: 0 0 30px 0;
+		border-bottom: 3px solid $lightBlue;
+	}
+	
 	.filter-file {
 		width: 60px;
 		height: 60px;
@@ -634,14 +635,18 @@
 		}
 	}
 
+	.filter-file.active-filter {
+		transform: scale(1.1); 
+	}
+
 	.filter-image {
 		background-image:linear-gradient($lightYellow,rgb(212,140,7));
 		i:before{
-	    content: "\f1c5";
-	    font-family: FontAwesome;
-	  }
+		    content: "\f1c5";
+		    font-family: FontAwesome;
+		}
 	}
-
+	
 	.filter-pdf {
 		background-image:linear-gradient( $lightRed,rgb(186,67,38));
 		i:before{
