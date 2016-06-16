@@ -1,8 +1,8 @@
 /* Global UI modal box*/
 .modal {
 	clear: both !important;
-  background: rgba(0,0,0,0.8) !important;
-  position: fixed !important;
+  	background: rgba(0,0,0,0.8) !important;
+  	position: fixed !important;
 	height: 100% !important;
 	width: 100% !important;
 	top: 0 !important;
@@ -539,24 +539,38 @@
 
 
 /* pop de notification pour supression/ajout*/
+.notifications-wrapper{
+	.notifications-tr{
+		height: 100% !important;
+		width: 100% !important;
+		background: rgba(0,0,0,0.8) !important;
+	}
+	.notification{
+		background: white !important;
+		width: 30% !important;
+		margin: 35% 0 0 40% !important;
+		position: relative !important;
+		vertical-align: middle !important;
+		border-color: $lightBlue !important;
+		border-left: 1px solid $lightBlue !important;
+		border-right: 1px solid $lightBlue !important;
+		border-bottom: 1px solid $lightBlue !important;
+		box-shadow: none !important;
+	    
+		strong, h1, h2, h3, h4, .notification-title {
+			color: $lightBlue !important;
+		}
+		i {
+			color: $lightBlue !important;
+		}
+		button, span {
+			background-color: $lightBlue !important;
+		}
+	}
+}
+
+
 .notification {
-	background: white !important;
-	border-color: $lightBlue !important;
-	border-left: 1px solid $lightBlue !important;
-	border-right: 1px solid $lightBlue !important;
-	border-bottom: 1px solid $lightBlue !important;
-	top: 50% !important;
-	right: 50% !important;
-	position: absolute !important;
-	box-shadow: none !important;
-    
-	strong, h1, h2, h3, h4, .notification-title {
-		color: $lightBlue !important;
-	}
-	i {
-		color: $lightBlue !important;
-	}
-	button, span {
-		background-color: $lightBlue !important;
-	}
+	
+	
 }
