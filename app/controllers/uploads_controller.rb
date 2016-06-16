@@ -24,8 +24,10 @@ class UploadsController < ApplicationController
   end
 
   def index
-  	@uploads = Upload.select("id, file_file_name, file_content_type, url, filetype, file_updated_at").where(user_id: current_user.id)
-  	render json: { uploads: @uploads }
+  	render json: { 
+      uploads: Upload.get_all(current_user), 
+      types: Upload.get_all_types(current_user) 
+    }
   end
 
 	def show
@@ -34,6 +36,12 @@ class UploadsController < ApplicationController
 			 format.json { render json: @upload }
 		end
 	end
+
+  def filter_types
+    render json: { 
+      uploads: Upload.get_all_by_type(current_user, params[:type]), 
+    }
+  end
 	
 	def create
 		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile], alt: params[:alt], width: params[:width])
@@ -70,10 +78,6 @@ class UploadsController < ApplicationController
   		@uploads = Upload.select("id, file_file_name, file_content_type, url, file_updated_at").where("uploads.file_file_name LIKE ?", "%#{params[:name]}%").where(user_id: current_user.id)
   	end
   	render json: { uploads: @uploads }
-  end
-
-  def sort
-    render json: { uploads: Upload.sort_by(current_user, params["column"], params["way"]) }
   end
 
 	private

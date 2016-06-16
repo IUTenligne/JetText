@@ -272,7 +272,6 @@ var Containers = React.createClass({
                 }
             },
             success: function(data){
-                console.log(data, this.state.containersList);
                 this.setState({
                     viewCreate: false,
                     containersList: this.state.containersList.concat([data]),

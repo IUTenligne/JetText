@@ -98,6 +98,9 @@ var UsersFiles = React.createClass({
     getInitialState: function() {
         return {
             files: [],
+            filter: false,
+            filteredFiles: [],
+            types: [],
             icon: '',
             sorter: '',
             loading: true
@@ -108,6 +111,7 @@ var UsersFiles = React.createClass({
         this.serverRequest = $.get("/uploads.json", function(result) {
             this.setState({
                 files: result.uploads,
+                types: result.types,
                 loading: false
             });
         }.bind(this));
@@ -118,21 +122,60 @@ var UsersFiles = React.createClass({
         this.serverRequest.abort();
     },
 
-    sort: function(list, elem) {
-        if ((this.state.icon === "down") || (this.state.icon === "")) {
-            this.setState({ icon: "up" });
-            var way = "asc";
+    sort: function(attribute) {
+        this.setState({ sorter: attribute });
+
+        if (this.state.filter === false)
+            var fileList = this.state.files;
+        else
+            var fileList = this.state.filteredFiles;
+
+        if ((this.state.icon === "desc") || (this.state.icon === "")) {
+            this.setState({ icon: "asc" });
+            var files = fileList.sort(function(a, b) {
+                if (attribute === "file_file_name")
+                    return a.file_file_name < b.file_file_name;
+                if (attribute === "filetype")
+                    return a.filetype < b.filetype;
+                if (attribute === "date")
+                    return a.date < b.date;
+            });
         } else {
-            this.setState({ icon: "down" });
-            var way = "desc";
+            this.setState({ icon: "desc" });
+            var files = fileList.sort(function(a, b) {
+                if (attribute === "file_file_name")
+                    return a.file_file_name > b.file_file_name;
+                if (attribute === "filetype")
+                    return a.filetype > b.filetype;
+                if (attribute === "date")
+                    return a.date > b.date;
+            });
         }
 
-        $.get("/files/sort/"+ elem +"/"+ way +".json", function(result) {
+        if (this.state.filter === false)
+            this.setState({ files: files, loading: false });
+        else
+            this.setState({ filteredFiles: files, loading: false });
+    },
+
+    filterByType: function(type) {
+        this.setState({ 
+            loading: true,
+            filter: !this.state.filter
+        });
+
+        if (!this.state.filter === true) {
+            var files = this.state.files.filter((i, _) => i["filetype"] === type);
+
             this.setState({
-                files: result.uploads,
+                filteredFiles: files,
                 loading: false
             });
-        }.bind(this));
+        } else {
+            this.setState({
+                loading: false
+            });
+        }
     },
 
     _notificationSystem: null,
@@ -151,30 +194,46 @@ var UsersFiles = React.createClass({
 
                     <h2>Fichiers :</h2>
 
+                    <div className="filters-bar">
+                        { this.state.types.map(function(type, index){
+                            return( <button key={index} className="filter" onClick={that.filterByType.bind(that, type.filetype)}>{type.filetype}</button> );
+                        })}
+                    </div>
+
                     <table>
                         <thead>
                             <tr>
-                                <th onClick={this.sort.bind(this, this.state.files, "file_file_name")} width="auto" />
-                                <th onClick={this.sort.bind(this, this.state.files, "file_file_name")} width="50%">
+                                <th onClick={this.sort.bind(this, "file_file_name")} width="auto" />
+                                <th onClick={this.sort.bind(this, "file_file_name")} width="50%">
                                     Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, this.state.files, "filetype")} width="20%">
+                                <th onClick={this.sort.bind(this, "filetype")} width="20%">
                                     Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
-                                <th onClick={this.sort.bind(this, this.state.files, "file_updated_at")} width="20%">
+                                <th onClick={this.sort.bind(this, "file_updated_at")} width="20%">
                                     Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            { this.state.files.map(function(result){
-                                return (
-                                    <FileInfo 
-                                        file={result}
-                                        key={result.id}
-                                    />
-                                );
-                            })}
+                            { this.state.filter
+                                ? this.state.filteredFiles.map(function(result){
+                                    return (
+                                        <FileInfo 
+                                            file={result}
+                                            key={result.id}
+                                        />
+                                    );
+                                })
+                                : this.state.files.map(function(result){
+                                    return (
+                                        <FileInfo 
+                                            file={result}
+                                            key={result.id}
+                                        />
+                                    );
+                                })
+                            }
                         </tbody>
                     </table>
                 </ul>

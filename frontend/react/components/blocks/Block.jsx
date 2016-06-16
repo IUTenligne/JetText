@@ -53,7 +53,6 @@ var Block = React.createClass({
                         context: that,
                         success: function(data){
                             /* passes the deleted block_id to the parent (Page) to handle the DOM rerendering */
-                            console.log(data);
                             that.props.removeBlock(data.block);
                         }
                     });
