@@ -192,8 +192,12 @@ var UsersFiles = React.createClass({
     },
 
     filterByType: function(type) {
+        this.setState({ loading: true });
+
         if (this.state.activeFilter === type) {
+            /* case when the user selects the already active type filter */
             if (this.state.filterSearch === true) {
+                /* if any searchedString is on */
                 this.setState({ 
                     filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 ),
                     loading: false,
@@ -201,6 +205,7 @@ var UsersFiles = React.createClass({
                     activeFilter: ''
                 });
             } else {
+                /* if not, consider the user removes the type filter - set the files[] to the default state */
                 this.setState({
                     filteredFiles: this.state.files, 
                     loading: false,
@@ -210,21 +215,20 @@ var UsersFiles = React.createClass({
                 });
             }
         } else {
-            this.setState({ 
-                loading: true,
-                filter: true
-            });
-
+            /* case when the user selects a new type filter */
             if (this.state.filterSearch === true) {
+                /* if any searchedString is on */
                 var files = this.state.files.filter( i => (i["filetype"] === type) && (i["file_file_name"].indexOf(this.state.searchedString) > -1) );
             } else {
+                /* otherwise */
                 var files = this.state.files.filter( i => i["filetype"] === type );
             }
 
             this.setState({
                 filteredFiles: files,
                 activeFilter: type,
-                loading: false
+                loading: false,
+                filter: true
             });
         }
     },
@@ -232,6 +236,7 @@ var UsersFiles = React.createClass({
     searchByString: function(event) {
         if (event.target.value.length > 0) {
             if (this.state.activeFilter != '') {
+                /* case when the user hasn't selected any type filter */
                 var filterType = this.state.activeFilter;
                 this.setState({
                     filterSearch: true,
@@ -239,6 +244,7 @@ var UsersFiles = React.createClass({
                     filteredFiles: this.state.files.filter( i => (i["file_file_name"].indexOf(event.target.value) > -1) && (i["filetype"] === filterType) )
                 });
             } else {
+                /* case when the user has already selected a type filter */
                 this.setState({
                     filterSearch: true,
                     searchedString: event.target.value,
@@ -246,6 +252,7 @@ var UsersFiles = React.createClass({
                 });
             }
         } else {
+            /* case when the searchedString is empty */
             this.setState({
                 searchedString: '',
                 filter: false,
@@ -263,7 +270,7 @@ var UsersFiles = React.createClass({
         return (
             <article className="admin-panel">
 
-                <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
+                <div className="dropzone-user" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
                     <div className="viewDropzonebis">
                        <div className="textDropzone">
                             <i className="fa fa-file-text"></i>

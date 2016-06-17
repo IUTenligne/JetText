@@ -44,3 +44,5 @@ gem 'omniauth'
 gem 'omniauth-openid'
 gem "omniauth-google-oauth2"
 gem 'omniauth-facebook'
+#json
+gem 'oj'

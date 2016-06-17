@@ -69,7 +69,7 @@ var Result = React.createClass({
         // NotificationSystem popup
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Confirmer la suppression',
+            title: 'Confirmer la validation',
             message: 'Voulez-vous envoyer la ressource ' + this.props.item.name + ' pour évaluation ?',
             level: 'success',
             position: 'tr',
