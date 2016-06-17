@@ -43,12 +43,12 @@ var MathToolbox = React.createClass({
 
                 {this.state.general
                     ? <ul>
-                        <li><button onClick={this.addMath.bind(this, ";")} className="blankspace"><span>esp.</span></button></li>
-                        <li><button onClick={this.addMath.bind(this, "textrm{abc}")}><img src="/assets/mathjax/texte.svg"/></button></li>
-                        <li><button onClick={this.addMath.bind(this, " +")}>+</button></li>
-                        <li><button onClick={this.addMath.bind(this, "times")}><img src="/assets/mathjax/multiplication.svg"/></button></li>
-                        <li><button onClick={this.addMath.bind(this, " -")}>-</button></li>
-                        <li><button onClick={this.addMath.bind(this, "div")}><img src="/assets/mathjax/division.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, ";")} className="blankspace" title="espace"><span>esp.</span></button></li>
+                        <li><button onClick={this.addMath.bind(this, "textrm{abc}")} title="texte"><img src="/assets/mathjax/texte.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, " +")} title="plus">+</button></li>
+                        <li><button onClick={this.addMath.bind(this, "times")} title="multiplication"><img src="/assets/mathjax/multiplication.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, " -")} title="moins">-</button></li>
+                        <li><button onClick={this.addMath.bind(this, "div")} title="division"><img src="/assets/mathjax/division.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "pm")}><img src="/assets/mathjax/plusmoin.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "mp")}><img src="/assets/mathjax/moinplus.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, " =")}>=</button></li>

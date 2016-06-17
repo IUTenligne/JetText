@@ -378,37 +378,43 @@ span.bold{
 
 			#output{
 				width: 100%;
-				border: 1px dashed #e9e9e9;
+				border: 1px dashed #dedede;
 				box-sizing: border-box;
 				border-radius: 4px;
+				background: #f7f7f7;
 			}
 			#block-math{
 				width: 100%;
 				margin-top: 20px;
-				border: 1px solid #e9e9e9;
+				border: 1px solid #dedede;
 				box-sizing: border-box;
 				border-radius: 4px;
 				padding: 5px;
+				max-width: 100%;
 			}
 			#block-math:-webkit-input-placeholder {
 			  font-style: italic;
 			  font-family: Arial;
-			  color: #CECECE;
+			  color: #dedede;
 			}
 			#block-math:-moz-placeholder {
 			  font-style: italic;
 			  font-family: Arial;
-			  color: #CECECE;
+			  color: #dedede;
 			}
 			#block-math::-moz-placeholder {
 			  font-style: italic;
 			  font-family: Arial;
-			  color: #CECECE;
+			  color: #dedede;
 			}
 			#block-math:-ms-input-placeholder {  
 			  font-style: italic;
 			  font-family: Arial;
-			  color: #CECECE;
+			  color: #dedede;
+			}
+
+			#block-math:focus {
+			  box-shadow: 2px 2px 5px #C2EBFF;
 			}
 
 			#mathToolbar {
