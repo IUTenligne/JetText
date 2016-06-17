@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title><%= @container.name.capitalize %></title>
+        <title><%= @container.name %></title>
         <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -72,39 +72,39 @@
 
 			        <!-- content -->
                     <% @blocks.each do |block| %>
-              			<div class="row">
-              				<div class="col-lg-12">
-                          <% if block.name != "" %>
-                            <h3><%= block.name %></h3>
-                          <% end %>
-                          <div class="content">
-                              <!-- media blocks -->
-                              <% if block.type_id == 2 %>
-                                  <%= raw(block.content) if block.content %>
-                              <!-- note blocks -->
-                              <% elsif block.type_id == 3 %>
-                 					        <div class="block-<%= block.classes %> blockNote">
-                                      <div class="block-note-title block-note-title-<%= block.classes %>">
-                                          <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
-                                      </div>
-                                      <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
+                			<div class="row">
+                				<div class="col-lg-12">
+                            <% if block.name != "" %>
+                              <h3><%= block.name %></h3>
+                            <% end %>
+                            <div class="content">
+                                <!-- media blocks -->
+                                <% if block.type_id == 2 %>
+                                    <%= raw(block.content) if block.content %>
+                                <!-- note blocks -->
+                                <% elsif block.type_id == 3 %>
+                   					        <div class="block-<%= block.classes %> blockNote">
+                                        <div class="block-note-title block-note-title-<%= block.classes %>">
+                                            <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
+                                        </div>
+                                        <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
+                                    </div>
+                                <% elsif block.type_id == 4 %>
+                                  <div class="blockMathJax">
+                                    <%= raw("$$" + block.content + "$$") if block.content %>
                                   </div>
-                              <% elsif block.type_id == 4 %>
-                                <div class="blockMathJax">
-                                  <%= raw("$$" + block.content + "$$") if block.content %>
-                                </div>
-                              <% else %>
-                                  <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
-                              <% end %>
-                          </div>
-              				</div> 
-              			</div>
+                                <% else %>
+                                    <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
+                                <% end %>
+                            </div>
+                				</div> 
+                			</div>
                     <% end %>
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="content">
                           <% if @toc %>
-                            <ul class="microNav">
+                            <ul class="micro-nav">
                               <% @toc.each do |toc| %>
                                 <li>
                                   <a href="<%= toc.id %>"><%= toc.name %></a>

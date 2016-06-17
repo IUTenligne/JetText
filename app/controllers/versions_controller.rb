@@ -5,15 +5,17 @@ class VersionsController < ApplicationController
   respond_to :html, :json
 
   def show_all
-    @versions = Version.where(container_id: params[:id]).order('updated_at DESC')
+    @latest = Version.where(container_id: params[:id]).last
+    # find all but the latest (actual) version
+    @versions = Version.where(container_id: params[:id]).where.not(id: @latest.id).order('updated_at DESC')
+    
     @blocks = Block.where(version_id: @versions.last.id)
-
     words = 0
     @blocks.map{ |b| 
       words = words + b.content.scan(/\w+/).size 
     }
 
-    render json: { versions: @versions, words: words }
+    render json: { latest: @latest, versions: @versions, words: words }
   end  
 
   def show

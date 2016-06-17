@@ -58,7 +58,7 @@ class GeneratorController < ApplicationController
           @glossaries.map { |glossary| 
             @terms = Term.where(glossary_id: glossary.glossary_id)
             @terms.each do |term|
-              block.content.gsub!(/#{term.name}/i, '<span class="glossary" ><span class="description">'+term.description+'</span>'+term.name+'</span>') unless block.content.nil?
+              block.content.gsub!(/#{term.name}/i, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>') unless block.content.nil?
             end
           }
         end
@@ -316,14 +316,15 @@ class GeneratorController < ApplicationController
   end
 
 
-  def motherfucking_zipper(path, username, pages, files, mathjax)
+  def motherfucking_zipper(path, container_name, username, pages, files, mathjax)
     require 'rubygems'
     require 'zip'
 
     username = username.split("@")[0].gsub!(".", "_")
-    zippath = "#{Rails.public_path}/#{path}/tmp/#{Time.now.to_i.to_s}_#{username}.zip"
+    container = container_name.gsub(/[^a-zA-Z1-9_-]/, "_").to_s.downcase
+    zippath = "#{Rails.public_path}/#{path}/tmp/#{Time.now.to_i.to_s}_#{container}.zip"
     relpath = "#{Rails.public_path}/#{path}"
-    url = "#{path}/tmp/#{Time.now.to_i.to_s}_#{username}.zip"
+    url = "#{path}/tmp/#{Time.now.to_i.to_s}_#{container}.zip"
 
     Zip.continue_on_exists_proc = true
     Zip::File.open(zippath, Zip::File::CREATE) do |zipfile|
@@ -401,7 +402,7 @@ class GeneratorController < ApplicationController
         end
       }
 
-      if @blocks.nil?
+      if @blocks.empty?
         @toc = Page.where(container_id: params[:id]).where("sequence > ?", @pages[index].sequence)
       end
 
@@ -419,7 +420,7 @@ class GeneratorController < ApplicationController
       pages.push(filename)
     end
 
-    url = motherfucking_zipper(@container.url, @container.user.email, pages, files, @mathjax)
+    url = motherfucking_zipper(@container.url, @container.name, @container.user.email, pages, files, @mathjax)
 
     # url is used by Containers.jsx to allow the zip file to be downloaded
     render json: { :url => url }

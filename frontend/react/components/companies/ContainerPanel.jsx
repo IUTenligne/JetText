@@ -6,6 +6,7 @@ var Loader = require('../widgets/Loader.jsx');
 var ContainerPanel = React.createClass({
     getInitialState: function() {
         return {
+            latest: '',
             versions: [],
             words: null,
             selectedVersion: '',
@@ -17,6 +18,7 @@ var ContainerPanel = React.createClass({
     componentDidMount: function() {
     	this.serverRequest = $.get("/versions/show_all/" + this.props.container.id + ".json", function(result) {
             this.setState({
+                latest: result.latest,
                 versions: result.versions,
                 words: result.words
             });
@@ -28,11 +30,17 @@ var ContainerPanel = React.createClass({
     },
 
     formatDate: function(datestr) {
-        return datestr.split("T")[0].split("-").reverse().join("/");
+        if (datestr)
+            return datestr.split("T")[0].split("-").reverse().join("/");
+        else
+            return "";
     },
 
     formatTime: function(timestr) {
-        return timestr.split("T")[1].split(".")[0];
+        if (timestr)
+            return timestr.split("T")[1].split(".")[0];
+         else
+            return "";
     },
 
     checkVersion: function(version, event) {
@@ -73,6 +81,7 @@ var ContainerPanel = React.createClass({
 
     render: function() {
         var that = this;
+
     	return (
     		<div>
     			<h2>{this.props.container.name}</h2>
@@ -83,7 +92,10 @@ var ContainerPanel = React.createClass({
                     <li>Nombre de mots : {this.state.words}</li>
                 </ul>
 
-                <h3>Versions :</h3>
+                <h3>Version actuelle :</h3>
+                <a href={"/generator/diffs/" + this.state.latest.id} target="_blank">{this.formatDate(this.state.latest.created_at)}, {this.formatTime(this.state.latest.created_at)}</a>
+
+                <h3>Versions précédentes :</h3>
                 <ul>
                     {this.state.versions.map(function(version) {
                         return(
