@@ -11,45 +11,23 @@ var ContainersList = require('./ContainersList.jsx');
 var MathToolbox = React.createClass({
     getInitialState: function() {
         return {
-            symbol: false,
-            arrow: false,
-            letter: false,
-            general: true
+            general: true,
+            symbols: false,
+            arrows: false,
+            letters: false
         }
     },
+
     addMath: function(fn) {
         this.props.interact("\\" + fn);
     },
-    activeGeneral: function (){
+
+    activateToolbar: function (general, symbols, arrows, letters){
         this.setState({
-            symbol: false,
-            arrow: false,
-            letter: false,
-            general: true
-        })
-    },
-    activeSymbol: function (){
-        this.setState({
-            symbol: true,
-            arrow: false,
-            letter: false,
-            general: false
-        })
-    },
-    activeArrow: function (){
-        this.setState({
-            symbol: false,
-            arrow: true,
-            letter: false,
-            general: false
-        })
-    },
-    activeLetter: function (){
-        this.setState({
-            symbol: false,
-            arrow: false,
-            letter: true,
-            general: false
+            general: general,
+            symbols: symbols,
+            arrows: arrows,
+            letters: letters
         })
     },
 
@@ -57,14 +35,15 @@ var MathToolbox = React.createClass({
         return (
             <div id="mathToolbar">
                 <div id="btn">
-                    <button onClick={this.activeGeneral}>General</button>
-                    <button onClick={this.activeSymbol}>Symbols</button>
-                    <button onClick={this.activeArrow}>Arrows</button>
-                    <button onClick={this.activeLetter}>Letters</button>
-                    <button onClick={this.addMath.bind(this, ";")}>espace</button>
+                    <button onClick={this.activateToolbar.bind(this, true, false, false, false)} className={this.state.general ? "toolbar-active" : null} >Général</button>
+                    <button onClick={this.activateToolbar.bind(this, false, true, false, false)} className={this.state.symbols ? "toolbar-active" : null}>Symboles</button>
+                    <button onClick={this.activateToolbar.bind(this, false, false, true, false)} className={this.state.arrows ? "toolbar-active" : null}>Flèches</button>
+                    <button onClick={this.activateToolbar.bind(this, false, false, false, true)} className={this.state.letters ? "toolbar-active" : null}>Lettres</button>
                 </div>
+
                 {this.state.general
                     ? <ul>
+                        <li><button onClick={this.addMath.bind(this, ";")} className="blankspace"><span>esp.</span></button></li>
                         <li><button onClick={this.addMath.bind(this, "textrm{abc}")}><img src="/assets/mathjax/texte.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, " +")}>+</button></li>
                         <li><button onClick={this.addMath.bind(this, "times")}><img src="/assets/mathjax/multiplication.svg"/></button></li>
@@ -83,7 +62,7 @@ var MathToolbox = React.createClass({
                     :null
                 }
 
-                {this.state.symbol
+                {this.state.symbols
                     ? <ul>
                         <li><button onClick={this.addMath.bind(this, "ast")}>&lowast;</button></li>
                         <li><button onClick={this.addMath.bind(this, "circ")}>°</button></li>
@@ -103,7 +82,7 @@ var MathToolbox = React.createClass({
                     :null
                 }
                 
-                {this.state.arrow
+                {this.state.arrows
                     ? <ul>
                         <li><button onClick={this.addMath.bind(this, "leftarrow ")}>&larr;</button></li>
                         <li><button onClick={this.addMath.bind(this, "rightarrow ")}>&rarr;</button></li>
@@ -121,7 +100,7 @@ var MathToolbox = React.createClass({
                     :null
                 }
 
-                {this.state.letter
+                {this.state.letters
                     ? <ul>
                         <li><button onClick={this.addMath.bind(this, "alpha")}>&alpha;</button></li>
                         <li><button onClick={this.addMath.bind(this, "delta")}>&delta;</button></li>
@@ -182,12 +161,24 @@ var MathBlock = React.createClass({
         }
     },
 
-    componentDidMount: function (root) {
-        this.setState({
-            blockName: this.props.block.name,
-            areaContent: this.props.block.content,
-            value: this.props.block.content
-        });
+    componentDidMount: function() {
+        if (this.props.block.content != '') {
+            this.setState({
+                blockName: this.props.block.name,
+                areaContent: this.props.block.content,
+                value: this.props.block.content,
+                editBlock: true,
+                toolboxState: false
+            });
+        } else {
+            this.setState({
+                blockName: this.props.block.name,
+                areaContent: this.props.block.content,
+                value: this.props.block.content,
+                editBlock: false,
+                toolboxState: true
+            });
+        }
 
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
     },
@@ -237,7 +228,8 @@ var MathBlock = React.createClass({
 
     handleInteraction: function(fn) {
         this.setState({
-            areaContent: this.refs.matharea.value + fn
+            areaContent: this.refs.matharea.value + fn,
+            value: this.refs.matharea.value + fn
         });
 
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.refs.output]);
@@ -336,6 +328,7 @@ var MathBlock = React.createClass({
                                     rows="5" 
                                     cols="50" 
                                     id="block-math"
+                                    placeholder="Formule LaTeX..."
                                 />
                                 
                                 <MathToolbox interact={this.handleInteraction} /> 
