@@ -408,6 +408,37 @@
 						}
 					}
 				}
+
+				#media-panel {
+					width: 100%;
+					height: 100%;
+					table {
+						margin: 0 !important;
+						padding: 0 !important;
+						border: 0 !important;
+						font-size: 100% !important;
+						font: inherit !important;
+						vertical-align: baseline !important;
+						text-decoration: none !important;
+						box-shadow: none !important;
+						overflow: hidden !important;
+					}
+					#media-browser {
+						width: 100%;
+						overflow-y: auto !important;
+						
+						#media-files {
+							width: 60%;
+							float: left;
+							overflow: hidden !important;
+
+						}
+						#media-files-preview {
+							width: 40%;
+							float: right;
+						}
+					}
+				}
 			}
 		}
 
