@@ -24,10 +24,11 @@ class UploadsController < ApplicationController
   end
 
   def index
-  	render json: { 
-      uploads: Upload.get_all(current_user), 
-      types: Upload.get_all_types(current_user) 
-    }
+    @uploads = Upload.get_all(current_user)
+    @types = Upload.get_all_types(current_user)
+    #require 'oj'
+  	#render json: Oj.dump(uploads: @uploads.to_json, types: @types.to_json)
+    render json: { uploads: @uploads, types: @types }
   end
 
 	def show

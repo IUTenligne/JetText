@@ -102,7 +102,7 @@ var Glossary = React.createClass({
                 </ul>
                 
                 { this.state.viewCreate
-                    ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
+                    ? <Modal active={this.handleModalState} mystyle={"createTerm"} title={"Créer une nouvelle ressource"}>
                         <div className="add_new">
                             <TermCreate glossary={this.state.glossary.id} addTerm={that.handleTermAdd}/>
                         </div>

@@ -1,15 +1,14 @@
 var React = require('react');
-import { Router, Route, Link, hashHistory } from 'react-router';
 var Loader = require('../widgets/Loader.jsx');
 var Modal = require('../widgets/Modal.jsx');
-var NotificationSystem = require('react-notification-system');
 
 
-var FileInfo = React.createClass({
+var MediaInfo = React.createClass({
     getInitialState: function() {
         return {
             overview: false,
-            modalPreview: false
+            preview: false,
+            selectedFile: ''
         };
     },
     
@@ -52,11 +51,10 @@ var FileInfo = React.createClass({
         this.setState({ overview: st });
     },
 
-    showPreview: function(st) {
-        this.setState({ modalPreview: !this.state.modalPreview });
+    showPreview: function() {
+        this.setState({ preview: !this.state.preview });
+        this.props.preview(!this.state.preview, this.handleFilePreview());
     },
-
-    _notificationSystem: null, 
 
     render: function() {
         var file = this.props.file;
@@ -66,7 +64,7 @@ var FileInfo = React.createClass({
                 <td className="file-overview">
                     <div dangerouslySetInnerHTML={this.handleFileWrapper()} /> 
                 </td>
-                <td className="file-name" onClick={this.showPreview.bind(this, true)} >
+                <td className="file-name" onClick={this.showPreview} >
                     {file.file_file_name}
                 </td>
                 <td>
@@ -75,28 +73,16 @@ var FileInfo = React.createClass({
                 <td>
                     {file.file_updated_at.split("T")[0].split("-").reverse().join("/")}
                 </td>
-                <td>
-                    <NotificationSystem ref="notificationSystem"/>
-                    { this.state.modalPreview
-                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu " + file.file_file_name}>
-                                <div className="modal-in">
-                                    <center>
-                                        <div dangerouslySetInnerHTML={this.handleFilePreview()} />
-                                    </center>
-                                </div>
-                            </Modal>
-                        : null
-                    }
-                </td>
             </tr> 
         );
     }
 });
 
 
-var UsersFiles = React.createClass({
+var MediaFiles = React.createClass({
     getInitialState: function() {
         return {
+            modal: true,
             files: [],
             filter: false,
             filterSearch: false,
@@ -106,6 +92,7 @@ var UsersFiles = React.createClass({
             icon: '',
             sorter: '',
             searchedString: '',
+            preview: '',
             loading: true
         };
     },
@@ -262,90 +249,102 @@ var UsersFiles = React.createClass({
         }
     },
 
-    _notificationSystem: null,
+    handlePreview: function(st, file) {
+        this.setState({ preview: st });
+        this.handleFilePreview(file);
+    },
+
+    handleFilePreview: function(file) {
+        return { __html: file };
+    },
+
+    closeModal: function(st) {
+        this.setState({ modal: !this.state.modal });
+        this.props.active(false);
+    },
 
     render: function() {
         var that = this;
 
         return (
-            <article className="admin-panel">
-
-                <div className="dropzone-user" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                    <div className="viewDropzonebis">
-                       <div className="textDropzone">
-                            <i className="fa fa-file-text"></i>
-                            <br/>
-                            Déposer un fichier
-                         </div>
-                    </div>   
-                    <div className="zoneDropzone">
-                        <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
-                    </div>
-                </div>
-
-                <ul className="align">
-                    <h2>Fichiers :</h2>
-
-                    <div className="filters-bar">
-                        <input type="text" placeholder="Rechercher..." onChange={this.searchByString} />
-                        { this.state.types.map(function(type, index){
-                            return( 
-                                that.state.activeFilter === type.filetype 
-                                ? <span key={index} className="active-filter">
-                                    <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
-                                        <i className={"file-" + type.filetype}></i>
-                                    </button> 
-                                </span>
-                                : <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+            <Modal active={this.closeModal} mystyle={"media"} title={"Mes fichiers"}>
+                <div className="filters-bar">
+                    <span className="input-group-addon">
+                        <i className="fa fa-plus fa-fw"></i>
+                    </span>
+                    <input type="text" placeholder="Rechercher..." className="form-control" onChange={this.searchByString} /><br/>
+                    { this.state.types.map(function(type, index){
+                        return( 
+                            that.state.activeFilter === type.filetype 
+                            ? <span key={index} className="active-filter">
+                                <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
                                     <i className={"file-" + type.filetype}></i>
                                 </button> 
-                            );
-                        })}
-                    </div>
-
+                            </span>
+                            : 
+                            <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+                                <i className={"file-" + type.filetype}></i>
+                            </button> 
+                        );
+                    })}
+                </div>
+                <article id="media-panel"> 
+                        
                     { this.state.loading
                         ? <Loader />
-                        : <table id="user-files">
-                            <thead>
-                                <tr>
-                                    <th onClick={this.sort.bind(this, "file_file_name")} width="auto" />
-                                    <th onClick={this.sort.bind(this, "file_file_name")} width="50%">
-                                        Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
-                                    </th>
-                                    <th onClick={this.sort.bind(this, "filetype")} width="20%">
-                                        Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
-                                    </th>
-                                    <th onClick={this.sort.bind(this, "file_updated_at")} width="20%">
-                                        Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { this.state.filter || this.state.filterSearch
-                                    ? this.state.filteredFiles.map(function(result){
-                                        return (
-                                            <FileInfo 
-                                                file={result}
-                                                key={result.id}
-                                            />
-                                        );
-                                    })
-                                    : this.state.files.map(function(result){
-                                        return (
-                                            <FileInfo 
-                                                file={result}
-                                                key={result.id}
-                                            />
-                                        );
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                        : <div id="media-browser">
+                            <div id="media-table">
+                                <table id="media-files">
+                                    <thead>
+                                        <tr>
+                                            <th onClick={this.sort.bind(this, "file_file_name")} width="auto" />
+                                            <th onClick={this.sort.bind(this, "file_file_name")} width="50%">
+                                                Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                            </th>
+                                            <th onClick={this.sort.bind(this, "filetype")} width="20%">
+                                                Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                            </th>
+                                            <th onClick={this.sort.bind(this, "file_updated_at")} width="20%">
+                                                Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        { this.state.filter || this.state.filterSearch
+                                            ? this.state.filteredFiles.map(function(result){
+                                                return (
+                                                    <MediaInfo
+                                                        key={result.id} 
+                                                        file={result}
+                                                    />
+                                                );
+                                            })
+                                            : this.state.files.map(function(result){
+                                                return (
+                                                    <MediaInfo 
+                                                        key={result.id}
+                                                        file={result}
+                                                        preview={that.handlePreview}
+                                                    />
+                                                );
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="media-files-preview">
+                                <p>eeeeeeeeee</p>
+                                { this.state.preview ? <div dangerouslySetInnerHTML={this.handleFilePreview()} /> : null }
+                            </div>
+
+                        </div>
                     }
-                </ul>
-            </article>
+
+                </article>
+            </Modal>
         );
     }
 });
 
-module.exports = UsersFiles;
+
+module.exports = MediaFiles;

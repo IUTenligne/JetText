@@ -1,5 +1,5 @@
 module.exports = {
-  DRAFT_TIMER: 2000,
+  DRAFT_TIMER: 1500,
   blockOffsetScroll: 55,
   gradient1: ["#EECDA3", "#EF629F"],
   gradient2: ["#BA5370", "#F4E2D8"],
