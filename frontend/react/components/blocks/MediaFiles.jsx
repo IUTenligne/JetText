@@ -268,28 +268,32 @@ var MediaFiles = React.createClass({
 
         return (
             <Modal active={this.closeModal} mystyle={"media"} title={"Mes fichiers"}>
+                <div className="filters-bar">
+                    <span className="input-group-addon">
+                        <i className="fa fa-plus fa-fw"></i>
+                    </span>
+                    <input type="text" placeholder="Rechercher..." className="form-control" onChange={this.searchByString} /><br/>
+                    { this.state.types.map(function(type, index){
+                        return( 
+                            that.state.activeFilter === type.filetype 
+                            ? <span key={index} className="active-filter">
+                                <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+                                    <i className={"file-" + type.filetype}></i>
+                                </button> 
+                            </span>
+                            : 
+                            <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
+                                <i className={"file-" + type.filetype}></i>
+                            </button> 
+                        );
+                    })}
+                </div>
                 <article id="media-panel"> 
-                    <ul className="align">
-                        <div className="filters-bar">
-                            <input type="text" placeholder="Rechercher..." onChange={this.searchByString} />
-                            { this.state.types.map(function(type, index){
-                                return( 
-                                    that.state.activeFilter === type.filetype 
-                                    ? <span key={index} className="active-filter">
-                                        <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
-                                            <i className={"file-" + type.filetype}></i>
-                                        </button> 
-                                    </span>
-                                    : <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
-                                        <i className={"file-" + type.filetype}></i>
-                                    </button> 
-                                );
-                            })}
-                        </div>
-
-                        { this.state.loading
-                            ? <Loader />
-                            : <div id="media-browser">
+                        
+                    { this.state.loading
+                        ? <Loader />
+                        : <div id="media-browser">
+                            <div id="media-table">
                                 <table id="media-files">
                                     <thead>
                                         <tr>
@@ -327,13 +331,14 @@ var MediaFiles = React.createClass({
                                         }
                                     </tbody>
                                 </table>
-
-                                <div id="media-files-preview">
-                                    { this.state.preview ? <div dangerouslySetInnerHTML={this.handleFilePreview()} /> : null }
-                                </div>
                             </div>
-                        }
-                    </ul>
+                            <div id="media-files-preview">
+                                { this.state.preview ? <div dangerouslySetInnerHTML={this.handleFilePreview()} /> : null }
+                            </div>
+
+                        </div>
+                    }
+
                 </article>
             </Modal>
         );
