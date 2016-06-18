@@ -567,7 +567,7 @@
 		/* modal for compagnie*/
 		.modal-content.compagnie{
 			width: 90%;
-			height: 70%;
+			margin: 5% 5% 10% 5% !important;
 			border-color: $lightRed;
 			#modal-header {
 				border-color: rgba($lightRed,0.3);
@@ -586,7 +586,7 @@
 		/* modal for appercu ressource*/
 		.modal-content.view{
 			width: 90%;
-			height: 70%;
+			margin: 5% !important;
 			border-color: #32373D;
 			#modal-header {
 				border-color: rgba(#32373D,0.3);

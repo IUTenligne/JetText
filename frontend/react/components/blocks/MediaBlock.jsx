@@ -311,7 +311,7 @@ var MediaBlock = React.createClass({
                                     </div>
 
                                     { this.state.modalState 
-                                        ? <MediaFiles active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} selectFile={this.selectFile} /> 
+                                        ? <MediaFiles active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> 
                                         : null 
                                     }
                                 </div>

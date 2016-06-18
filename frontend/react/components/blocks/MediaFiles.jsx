@@ -33,27 +33,26 @@ var MediaInfo = React.createClass({
     },
 
     handleFilePreview: function() {
+        this.setState({ preview: true });
+
         if (this.props.file.filetype === "image") {
             if (this.props.file.file_content_type.split("/")[1] === "svg+xml")
-                return { __html: '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'">\n</object>' };
+                var item = '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'">\n</object>';
             else
-                return { __html: '<img src="'+ this.props.file.url +'" "style="max-height: 400px">' };
+                var item = '<img src="'+ this.props.file.url +'" "style="max-height: 400px">';
         } else if (this.props.file.filetype === "audio") {
-            return { __html: '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>' };
+            var item = '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>';
         } else if (this.props.file.filetype === "video") {
-            return { __html: '<video controls style="max-width:100%">\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>' };
+            var item = '<video controls style="max-width:100%">\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</video>';
         } else if (this.props.file.filetype === "pdf") {
-           return { __html: '<object data="'+ this.props.file.url +'" width="100%" height="300px" type="application/pdf">\n\t<embed src="'+ this.props.file.url +'" type="application/pdf"/>\n</object>' };
+           var item = '<object data="'+ this.props.file.url +'" width="100%" height="300px" type="application/pdf">\n\t<embed src="'+ this.props.file.url +'" type="application/pdf"/>\n</object>';
         }
+        
+        this.props.preview(true, item, this.props.file);
     },
 
     toggleOverview: function(st) {
         this.setState({ overview: st });
-    },
-
-    showPreview: function() {
-        this.setState({ preview: !this.state.preview });
-        this.props.preview(!this.state.preview, this.handleFilePreview());
     },
 
     render: function() {
@@ -62,9 +61,9 @@ var MediaInfo = React.createClass({
         return(
             <tr className="file">
                 <td className="file-overview">
-                    <div dangerouslySetInnerHTML={this.handleFileWrapper()} /> 
+                    
                 </td>
-                <td className="file-name" onClick={this.showPreview} >
+                <td className="file-name" onClick={this.handleFilePreview} >
                     {file.file_file_name}
                 </td>
                 <td>
@@ -93,6 +92,8 @@ var MediaFiles = React.createClass({
             sorter: '',
             searchedString: '',
             preview: '',
+            previewedFile: null,
+            selectedFile: null,
             loading: true
         };
     },
@@ -249,18 +250,21 @@ var MediaFiles = React.createClass({
         }
     },
 
-    handlePreview: function(st, file) {
-        this.setState({ preview: st });
-        this.handleFilePreview(file);
-    },
-
-    handleFilePreview: function(file) {
-        return { __html: file };
+    handlePreview: function(st, file, fileObject) {
+        this.setState({ 
+            preview: st,
+            previewedFile: file,
+            selectedFile: fileObject
+        });
     },
 
     closeModal: function(st) {
         this.setState({ modal: !this.state.modal });
         this.props.active(false);
+    },
+
+    handleUpdate: function() {
+        this.props.updateBlock(this.state.selectedFile);
     },
 
     render: function() {
@@ -316,6 +320,7 @@ var MediaFiles = React.createClass({
                                                     <MediaInfo
                                                         key={result.id} 
                                                         file={result}
+                                                        preview={that.handlePreview}
                                                     />
                                                 );
                                             })
@@ -333,9 +338,14 @@ var MediaFiles = React.createClass({
                                 </table>
                             </div>
                             <div id="media-files-preview">
-                                { this.state.preview ? <div dangerouslySetInnerHTML={this.handleFilePreview()} /> : null }
+                                { this.state.preview 
+                                    ? <div>
+                                        <div dangerouslySetInnerHTML={{__html: this.state.previewedFile}} /> 
+                                        <button onClick={this.handleUpdate}>Ok</button>
+                                    </div>
+                                    : null 
+                                }
                             </div>
-
                         </div>
                     }
 
