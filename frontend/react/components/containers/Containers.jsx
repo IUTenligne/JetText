@@ -14,7 +14,7 @@ var Result = React.createClass({
             coverBackground: {}
         };
     },
-    
+
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
         this.generateGradient();
@@ -61,7 +61,7 @@ var Result = React.createClass({
         this._notificationSystem.addNotification({
             title: 'Ressource générée !',
             level: 'success'
-        });   
+        });
     },
 
     validateContainer: function(event){
@@ -119,7 +119,7 @@ var Result = React.createClass({
         this.setState({ coverBackground: bg });
     },
 
-    _notificationSystem: null, 
+    _notificationSystem: null,
 
     render: function() {
         var result = this.props.item;
@@ -143,7 +143,7 @@ var Result = React.createClass({
                             <a className="btn list-group-item" href={"/#/containers/"+result.id}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-pencil fa-stack-1x fa-inverse"></i> 
+                                    <i className="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                 </span>
                                 Editer
                             </a>
@@ -151,7 +151,7 @@ var Result = React.createClass({
                             <a className="btn list-group-item" onClick={this.handleModalState}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-eye fa-stack-1x fa-inverse"></i> 
+                                    <i className="fa fa-eye fa-stack-1x fa-inverse"></i>
                                 </span>
                                 Aperçu
                             </a>
@@ -160,14 +160,14 @@ var Result = React.createClass({
                                 ? <a className="btn list-group-item" onClick={this.updateContainer}>
                                         <span className="fa-stack fa-lg">
                                             <i className="fa fa-square fa-stack-2x"></i>
-                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
+                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i>
                                         </span>
                                         Actualiser
                                     </a>
                                 : <a className="btn list-group-item" onClick={this.validateContainer}>
                                         <span className="fa-stack fa-lg">
                                             <i className="fa fa-square fa-stack-2x"></i>
-                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i> 
+                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i>
                                         </span>
                                         Valider
                                     </a>
@@ -176,7 +176,7 @@ var Result = React.createClass({
                             <a className="btn list-group-item" onClick={this.generateContainer}>
                                 <span className="fa-stack fa-lg">
                                     <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-download fa-stack-1x fa-inverse"></i> 
+                                    <i className="fa fa-download fa-stack-1x fa-inverse"></i>
                                 </span>
                                 Telecharger
                             </a>
@@ -185,7 +185,7 @@ var Result = React.createClass({
                                 ? null
                                 : <a className="btn list-group-item" onClick={this.deleteContainer}>
                                         <span className="fa-stack fa-lg">
-                                            <i className="fa fa-trash-o fa-stack-1x "></i> 
+                                            <i className="fa fa-trash-o fa-stack-1x "></i>
                                             <i className="fa fa-ban fa-stack-2x"></i>
                                         </span>
                                         Supprimer
@@ -203,15 +203,15 @@ var Result = React.createClass({
                     </ul>
                 </figure>
 
-                { this.state.overview 
-                    ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
+                { this.state.overview
+                    ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
                         <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
-                    </Modal> 
-                    : null 
+                    </Modal>
+                    : null
                 }
 
                 <NotificationSystem ref="notificationSystem" />
-            </li> 
+            </li>
         );
     }
 });
@@ -235,7 +235,6 @@ var Containers = React.createClass({
                 loading: false
             });
         }.bind(this));
-        this._notificationSystem = this.refs.notificationSystem;
     },
 
     componentWillUnmount: function() {
@@ -291,7 +290,7 @@ var Containers = React.createClass({
                 newContainerValue: event.target.value,
                 inputCreate: true
             })
-        }    
+        }
     },
 
     _handleKeyPress: function(event) {
@@ -304,10 +303,12 @@ var Containers = React.createClass({
 
     render: function() {
         var results = this.state.containersList;
+        console.log(results);
+
         var that = this;
         return (
             <article id="containers">
-                <h1 className="page-header">Mes ressources <i class="fa fa-folder-open fa-fw "></i></h1>
+                <h1 className="page-header">Mes ressources non validé :</h1>
 
                 <ul className="align">
                     { this.state.loading
@@ -316,18 +317,43 @@ var Containers = React.createClass({
                     }
 
                     { results.map(function(result){
+                      if(result.status == "0"){
                         return (
-                            <Result 
-                                item={result} 
-                                key={result.id} 
-                                removeContainer={that.handleContainerDeletion} 
+                            <Result
+                                item={result}
+                                key={result.id}
+                                removeContainer={that.handleContainerDeletion}
                                 validateContainer={that.handleContainerValidation}
                             />
                         );
+                      }
                     })}
+
                     <li id="addContainer" onClick={this.viewCreateContainers}>
                         <i className="fa fa-plus fa-fw "></i>
                     </li>
+                </ul>
+
+                <h1 className="page-header">Mes ressources validé :</h1>
+
+                <ul className="align">
+                    { this.state.loading
+                        ? <Loader />
+                        : null
+                    }
+
+                    { results.map(function(result){
+                      if(result.status == "1"){
+                        return (
+                            <Result
+                                item={result}
+                                key={result.id}
+                                removeContainer={that.handleContainerDeletion}
+                                validateContainer={that.handleContainerValidation}
+                            />
+                        );
+                      }
+                    })}
                 </ul>
 
                 { this.state.viewCreate
@@ -336,19 +362,19 @@ var Containers = React.createClass({
                             <span className="input-group-addon" onClick={this.createContainer}>
                                 <i className="fa fa-plus fa-fw"></i>
                             </span>
-                            <input 
+                            <input
                                 type="text"
-                                ref="new_container" 
-                                id="new_container" 
-                                className="form-control" 
-                                autoComplet="off" 
-                                onKeyPress={this._handleKeyPress} 
-                                onChange={this.handleChange.bind(this, "newContainerValue")} 
-                                value={this.state.newContainerValue}  
+                                ref="new_container"
+                                id="new_container"
+                                className="form-control"
+                                autoComplet="off"
+                                onKeyPress={this._handleKeyPress}
+                                onChange={this.handleChange.bind(this, "newContainerValue")}
+                                value={this.state.newContainerValue}
                                 placeholder="Titre de la ressource..."
                             />
                             <br/>
-                            { this.state.inputCreate 
+                            { this.state.inputCreate
                                 ?<input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
                                 : null
                             }
