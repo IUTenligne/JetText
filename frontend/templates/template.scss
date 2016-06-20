@@ -111,7 +111,6 @@ $menuWidth: 350px;
 /********  view term and description********/
 table{
     box-shadow: 2px 2px 2px rgba($black,0.2);
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
@@ -123,6 +122,7 @@ table{
   		background: rgba(#343230,0.85);
   		font-weight: bold;
   		color: white;
+  		text-align: center;
 	}
 	th,td{
 		border: 1px solid grey;
@@ -570,9 +570,9 @@ table tr:nth-child(odd) {
 					text-align: right;
 					a {
 						text-align: left;
-    				i.fa-arrow-circle-right {
-    					width: 20%;
-    					text-align: right !important;
+	    				i.fa-arrow-circle-right {
+	    					width: 20%;
+	    					text-align: right !important;
     				}
 					}
 				}

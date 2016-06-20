@@ -115,7 +115,7 @@ var GlossariesBox = React.createClass({
 	    };
 	},
 
-    handleChange: function(input,event) {
+    handleChange: function(input, event) {
         if(input == "newGlossaryValue"){
             this.setState({
                 newGlossaryValue: event.target.value,
@@ -206,17 +206,16 @@ var GlossariesBox = React.createClass({
                                 id="new_glossary" 
                                 className="form-control" 
                                 value={this.state.newGlossaryValue} 
-                                onChange={this.handleChange.bind(this,"newGlossaryValue")} 
+                                onChange={this.handleChange.bind(this, "newGlossaryValue")} 
                                 onKeyPress={this._handleKeyPress} 
                                 autoComplet="off" 
                                 placeholder="Create new glossary..." />
-        				    { this.state.inputCreate 
+        				    { this.state.inputCreate && this.state.newGlossaryValue != ''
                                 ? <input type="submit" value='Créer' className="btn-success" onClick={this.createGlossary}/>
                                 : null
                             }
                         </div>
         			</div>
-
 
                     <NotificationSystem ref="notificationSystem" />
         		</div>

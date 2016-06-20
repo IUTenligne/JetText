@@ -8,7 +8,10 @@ var GlossaryBox = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	glossary: '',
-	        termsList: []
+	        termsList: [],
+            editTerm: false,
+            termName: '',
+            termDescription: ''
 	    };
 	},
 
@@ -32,12 +35,61 @@ var GlossaryBox = React.createClass({
         })
     },
 
-    deleteTerm: function(term_id, event){
+    changeName: function(event) {
+        this.setState({ termName: event.target.value });
+    },
+
+    changeDescription: function(event) {
+        this.setState({ termDescription: event.target.value });
+    },
+
+    editTerm: function(name, description) {
+        this.setState({ 
+            editTerm: true,
+            termName: name,
+            termDescription: description
+        });
+    },
+
+    saveTerm: function(term_id, event) {
+        event.preventDefault();
+        $.ajax({
+            type: "PUT",
+            url: "/terms/" + term_id,
+            context: this,
+            data: {
+                name: this.state.termName,
+                description: this.state.termDescription
+            },
+            success: function() {
+                var that = this;
+                var modifiedTerm = this.state.termsList.filter((i, _) => i["id"] === term_id);
+                modifiedTerm.name = this.state.termName;
+                modifiedTerm.description = this.state.termDescription;
+
+                var newList = [];
+                this.state.termsList.map(function(term) {
+                    if (term.id === term_id) {
+                        term.name = that.state.termName;
+                        term.description = that.state.termDescription;
+                    }
+                    newList.push(term);
+                });
+
+                this.setState({
+                    termsList: newList,
+                    editTerm: false
+                })
+            }
+        });
+    },
+
+    deleteTerm: function(term_id, term_name, event){
         var that = this;
         event.preventDefault();
         this._notificationSystem.addNotification({
-            title: 'Confirm delete',
-            message: 'Are you sure you want to delete the glossary?',
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous supprimer le terme "' + term_name + '" ?',
             level: 'success',
             position: 'tr',
             timeout: '20000',
@@ -46,7 +98,7 @@ var GlossaryBox = React.createClass({
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
-                        url: "/terms/"+ term_id,
+                        url: "/terms/" + term_id,
                         context: that,
                         success: function() {
                             that.setState({
@@ -64,22 +116,39 @@ var GlossaryBox = React.createClass({
     render: function(){
         var terms = this.state.termsList;
         var that = this;
+
     	return(
-    		
             <div id="view-terms">
                 <NotificationSystem ref="notificationSystem" />
                 <div id="border">
                     <ul id="list-terms">
-            			{terms.map(function(term){
+            			{ terms.map(function(term){
             				return(
         						<li key={term.id}>
-        							<p className="title">{term.name} :
-                                        <a href="#" onClick={that.deleteTerm.bind(that, term.id)}>
-                                            <i className="fa fa-trash-o"></i>
-                                        </a>
-                                    </p>
-                                    <p className="desc">{term.description} </p>
-                                    
+        							{ that.state.editTerm
+                                        ? <div>
+                                            <p>
+                                                <input type="text" onChange={that.changeName} value={that.state.termName} />
+                                            </p>
+                                            <p>
+                                                <input type="text" onChange={that.changeDescription} value={that.state.termDescription} />
+                                            </p>
+                                            <p>
+                                                <button onClick={that.saveTerm.bind(that, term.id)}>Ok <i className="fa fa-check"></i></button>
+                                            </p>
+                                        </div>
+                                        : <div>
+                                            <p className="title">{term.name} :
+                                                <a href="javascript:;" onClick={that.editTerm.bind(that, term.name, term.description)}>
+                                                    <i className="fa fa-pencil"></i>
+                                                </a>
+                                                <a href="javascript:;" onClick={that.deleteTerm.bind(that, term.id, term.name)}>
+                                                    <i className="fa fa-trash-o"></i>
+                                                </a>
+                                            </p>
+                                            <p className="desc">{term.description}</p>
+                                        </div>
+                                    }
         						</li>
             				)
             			})}
