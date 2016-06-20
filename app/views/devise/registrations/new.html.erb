@@ -21,14 +21,14 @@
                         <span class="input-addon">
                             <i class="fa fa-user fa-fw"></i>
                         </span>
-                        <%= f.text_field :lastname, :required => true, class: "form-control",  placeholder: t(:lastname)  %>
+                        <%= f.text_field :lastname, :required => true, class: "form-control", placeholder: t(:lastname)  %>
                     </div>
 
                     <div class="input-group">
                         <span class="input-addon">
                             <i class="fa fa-envelope fa-fw"></i>
                         </span>
-                        <%= f.email_field :email, autofocus: true, class: "form-control",  placeholder: t("email")  %>
+                        <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: t("email")  %>
                     </div>
 
                     
@@ -37,10 +37,10 @@
                             <i class="fa fa-lock fa-fw"></i>
                         </span>
                         <% if @minimum_password_length %>
-                        <%= f.password_field :password, autocomplete: "off", class: "form-control",  placeholder: t(:minimum_password_length)  %>
-                    <% else %>
-                        <%= f.password_field :password, autocomplete: "off", class: "form-control",  placeholder: t(:minimum_password_length)  %>
-                    <% end %>
+                            <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: t(:minimum_password_length)  %>
+                        <% else %>
+                            <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: t(:minimum_password_length)  %>
+                        <% end %>
                     </div>
 
                     
@@ -49,7 +49,7 @@
                         <span class="input-addon">
                             <i class="fa fa-lock fa-fw"></i>
                         </span>
-                        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control",  placeholder: t(:password_confirmation)  %>
+                        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: t(:password_confirmation)  %>
                     </div>
 
                     <div class="actions">

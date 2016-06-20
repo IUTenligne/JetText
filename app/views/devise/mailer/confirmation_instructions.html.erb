@@ -1,5 +1,15 @@
-<p>Welcome <%= @email %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Bonjour, <%= @resource.email %></h1>
+		<p>Vous pouvez confirmer votre compte en cliquant sur le lien ci-dessous :</p>
+		<p><%= link_to 'Confirmer mon compte', confirmation_url(@resource, confirmation_token: @token) %></p>
+    <p>
+      Cordialement,<br>
+      L'équipe d'<a href="http://iutenligne.net/">IUTenLigne</a>
+    </p>
+  </body>
+</html>

@@ -14,9 +14,12 @@ fr:
   Forgot your password?: "Mot de passe oublié ?"
   Didn't receive confirmation instructions?: "Email de confirmation non reçu ?"
   Didn't receive unlock instructions?: "Instructions de déblocage non reçues ?"
+  Change your password: "Changer de mot de passe"
   Change my password: "Changer mon mot de passe"
   Send me reset password instructions: "M'envoyer les instructions"
   New password: "Nouveau mot de passe"
+  Confirm new password: "Confirmez le nouveau mot de passe"
+  Send: "Envoyer"
 
   firstname: "Prénom"
   lastname: "Nom"
