@@ -14,7 +14,8 @@ var MathToolbox = React.createClass({
             general: true,
             symbols: false,
             arrows: false,
-            letters: false
+            letters: false,
+            matrice: false
         }
     },
 
@@ -22,10 +23,11 @@ var MathToolbox = React.createClass({
         this.props.interact("\\" + fn);
     },
 
-    activateToolbar: function (general, symbols, arrows, letters){
+    activateToolbar: function (general, symbols, matrice, arrows, letters){
         this.setState({
             general: general,
             symbols: symbols,
+            matrice: matrice,
             arrows: arrows,
             letters: letters
         })
@@ -35,10 +37,11 @@ var MathToolbox = React.createClass({
         return (
             <div id="mathToolbar">
                 <div id="btn">
-                    <button onClick={this.activateToolbar.bind(this, true, false, false, false)} className={this.state.general ? "toolbar-active" : null} >Général</button>
-                    <button onClick={this.activateToolbar.bind(this, false, true, false, false)} className={this.state.symbols ? "toolbar-active" : null}>Symboles</button>
-                    <button onClick={this.activateToolbar.bind(this, false, false, true, false)} className={this.state.arrows ? "toolbar-active" : null}>Flèches</button>
-                    <button onClick={this.activateToolbar.bind(this, false, false, false, true)} className={this.state.letters ? "toolbar-active" : null}>Lettres</button>
+                    <button onClick={this.activateToolbar.bind(this, true, false, false, false, false)} className={this.state.general ? "toolbar-active" : null} >Général</button>
+                    <button onClick={this.activateToolbar.bind(this, false, true, false, false, false)} className={this.state.symbols ? "toolbar-active" : null}>Symboles</button>
+                    <button onClick={this.activateToolbar.bind(this, false, false, true, false, false)} className={this.state.matrice ? "toolbar-active" : null}>Matrice</button>
+                    <button onClick={this.activateToolbar.bind(this, false, false, false, true, false)} className={this.state.arrows ? "toolbar-active" : null}>Flèches</button>
+                    <button onClick={this.activateToolbar.bind(this, false, false, false, false, true)} className={this.state.letters ? "toolbar-active" : null}>Lettres</button>
                 </div>
 
                 {this.state.general
@@ -70,14 +73,26 @@ var MathToolbox = React.createClass({
                         <li><button onClick={this.addMath.bind(this, "leq")}><img src="/assets/mathjax/pluspetit.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "propto")}>&prop;</button></li>
                         <li><button onClick={this.addMath.bind(this, "underbrace{?}")}><img src="/assets/mathjax/arraybottom.svg"/></button></li>
+                    </ul>
+                    :null
+                }
+
+                {this.state.matrice
+                    ? <ul>
                         <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?\\\\?\\end{array}\\right.")}><img src="/assets/mathjax/array2left.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left\\{\\begin{array}{l}?&?\\\\?&?\\end{array}\\right.")}><img src="/assets/mathjax/array4left.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?\\end{array}\\right\\}")}><img src="/assets/mathjax/array2right.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "left.\\begin{array}{r}?&?\\\\?&?\\end{array}\\right\\}")}><img src="/assets/mathjax/array4right.svg"/></button></li>
-                        <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "underbrace{?}_\\textrm{abc}")}><img src="/assets/mathjax/arraybottomtexte.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche2ligne.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?\\\\?\\end{bmatrix}")}><img src="/assets/mathjax/croche2colone.svg"/></button></li>
                         <li><button onClick={this.addMath.bind(this, "begin{bmatrix}?&?\\\\?&?\\end{bmatrix}")}><img src="/assets/mathjax/croche4colone.svg"/></button></li>
-
+                        <li><button onClick={this.addMath.bind(this, "begin{pmatrix}?&?\\end{pmatrix}")}><img src="/assets/mathjax/parenthese2ligne.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{pmatrix}?\\\\?\\end{pmatrix}")}><img src="/assets/mathjax/parenthese2colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{pmatrix}?&?\\\\?&?\\end{pmatrix}")}><img src="/assets/mathjax/parenthese4colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{array}{c}?\\\\?\\\\?\\end{array}")}><img src="/assets/mathjax/3colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{array}{cc}?&?\\\\?&?\\\\?&?\\end{array}")}><img src="/assets/mathjax/2X3colone.svg"/></button></li>
+                        <li><button onClick={this.addMath.bind(this, "begin{array}{rcl}?&=&?\\\\?&=&?\\end{array}")}><img src="/assets/mathjax/2egale.svg"/></button></li>
                     </ul>
                     :null
                 }

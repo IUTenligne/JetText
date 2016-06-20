@@ -6,25 +6,10 @@ h1 {
 	border: none;
 }
 
-#btn-add-term {
-	text-align: center;
-	color: $white;
-	box-shadow: 2px 2px 4px rgba(0,0,0,0.20);
-	cursor: pointer;
-	transition: all .2s ease-in-out;
-	background-image:linear-gradient($lighTbBlue, rgb(52,129,177));
-	border-radius: 40px;
-	margin-top: -10px;
-	width: 50px;
-	height: 50px;
-	i {
-		font-size: 35px;
-		padding-top: 8px;
-	}
-}
+
 
 ul#list-term {
-	margin: 55px 0 0 10px;
+	margin: 55px 30px 0 30px;
 
 	li {
 		margin-bottom: 10px;
@@ -32,19 +17,30 @@ ul#list-term {
 		border-radius: 4px;
 		box-shadow: 2px 2px 4px rgba(0,0,0,0.30);
 		padding: 10px;
+		width: 100%;
+		display: block;
 
-		.name-term{
+		.title{
 			font-weight: bold;
 			font-size: 18px;
-			color: $darkGrey;;
+			color: $darkGrey;
+			width: 90%;
+			display: inline-block;
 		}
-		.description-term{
-			margin: 10px 0 5px 15px;
-		}
-		.trash{
-			float: right;
+		
+		.opt{
 			font-size: 18px;
 			color: $lighTbBlue;
+			width: 10%;
+			display: inline-block;
+			a{
+				margin-left: 10px;
+				color: $lighTbBlue;
+			}
+		}
+		.desc{
+			margin: 10px 0 5px 15px;
+			width: 100%;
 		}
 	}
 
@@ -53,3 +49,36 @@ ul#list-term {
         border: 0.5px solid $lightGrey;
     }
 }
+#menu-option {
+	text-align: center;
+
+	.btn-term {
+	    width: 110px;
+		display: inline-block;
+		margin: 15px;
+		text-align: center;
+		color: $white;
+		height: 90px;
+		cursor: pointer;
+		box-shadow: 2px 2px 4px rgba(0,0,0,0.50);
+		transition: all .2s ease-in-out;
+	    text-align: center;
+	    text-decoration: none;
+	    border-radius: 6px;
+	    transition: background-color .25s;
+
+	  	i {
+			font-size: 35px;
+			padding: 10px 0 10px 0;
+		}
+	}
+	.btn-term.sup{
+		background-image:linear-gradient( $lightRed,rgb(186,67,38));
+    	box-shadow: 0px 5px #932d14, 0 3px 5px rgba(0,0,0,.3);
+	}
+	.btn-term.add{
+		background-image:linear-gradient( $lightGreen,rgb(62,156,110));
+    	box-shadow: 0px 5px #2c7f57, 0 3px 5px rgba(0,0,0,.3);
+	}
+}
+

@@ -116,11 +116,24 @@ var Glossary = React.createClass({
     },
 
     deleteGlossary: function() {
-        $.ajax({
-            type: "DELETE",
-            url: "/glossaries/" + this.state.glossary.id,
-            success: function() {
-                window.location = "/#/glossaries";
+        var that = this;
+        this._notificationSystem.addNotification({
+            title: 'Confirmer la suppression',
+            message: 'Voulez-vous supprimer le terme "' + that.state.glossary.name + '" ?',
+            level: 'success',
+            position: 'tr',
+            timeout: '20000',
+            action: {
+                label: 'yes',
+                callback: function() {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/glossaries/" + that.state.glossary.id,
+                        success: function() {
+                            window.location = "/#/glossaries";
+                        }
+                    });
+                }
             }
         });
     },
@@ -149,10 +162,6 @@ var Glossary = React.createClass({
         return(
             <div id="terms">
                 <h1 className="page-header">Termes du glossaire {that.state.glossary.name}</h1>
-                <div onClick={this.viewCreateTerm} id="btn-add-term">
-                    <i className="fa fa-plus fa-fw" title="Ajouter un term" aria-hidden="true"></i>
-                    <span className="sr-only">Ajouter un term</span>
-                </div>
 
                 <ul id="list-term">
                     {terms.map(function(term){
@@ -179,7 +188,10 @@ var Glossary = React.createClass({
                                         </div>
                                     </Modal>
                                     : <div>
-                                        <p className="title">{term.name} :
+                                        <p className="title">
+                                            {term.name} :
+                                        </p>
+                                        <p className="opt">
                                             <a href="javascript:;" onClick={that.editTerm.bind(that, term.name, term.description)}>
                                                 <i className="fa fa-pencil"></i>
                                             </a>
@@ -194,7 +206,21 @@ var Glossary = React.createClass({
                         )
                     })}
                 </ul>
-                
+
+                <div id="menu-option">
+                    <div onClick={this.viewCreateTerm} className="btn-term add">
+                        <i className="fa fa-plus fa-fw" title="Ajouter un term" aria-hidden="true"></i>
+                        <span className="sr-only">Ajouter un term</span><br/>
+                        Ajouter<br/> un term
+                    </div> 
+
+                    <div onClick={this.deleteGlossary} className="btn-term sup">
+                        <i className="fa fa-trash fa-fw" title="Supprimer le glossaire" aria-hidden="true"></i>
+                        <span className="sr-only">Supprimer le glossaire</span><br/>
+                        Supprimer<br/> le glossaire
+                    </div>
+                </div>
+
                 { this.state.viewCreate
                     ? <Modal active={this.handleModalState} mystyle={"createTerm"} title={"Créer une nouvelle ressource"}>
                         <div className="add_new">
@@ -203,11 +229,6 @@ var Glossary = React.createClass({
                     </Modal>
                     : null
                 }
-
-                <button onClick={this.deleteGlossary}>
-                    <i className="fa fa-trash fa-fw" title="Supprimer le glossaire" aria-hidden="true"></i>
-                    <span className="sr-only">Supprimer le glossaire</span>
-                </button>
 
                 <NotificationSystem ref="notificationSystem" />
             </div>

@@ -629,7 +629,8 @@
 			#modal-header {
 				border-color: rgba($lightRed,0.3);
 				.close:hover {
-					i{						color: $lightRed;
+					i{						
+						color: $lightRed;
 					}
 				}
 			}
@@ -692,10 +693,9 @@
 	}
 	.notification{
 		background: white !important;
-		width: 30% !important;
-		margin: 35% 0 0 40% !important;
-		position: relative !important;
-		vertical-align: middle !important;
+		width: 40% !important;
+		max-height: 100px !important;
+		margin: 30% 30% 40% 30% !important;
 		border-color: $lightBlue !important;
 		border-left: 1px solid $lightBlue !important;
 		border-right: 1px solid $lightBlue !important;
