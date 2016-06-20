@@ -11,9 +11,7 @@ class VersionsController < ApplicationController
     
     @blocks = Block.where(version_id: @versions.last.id)
     words = 0
-    @blocks.map{ |b| 
-      words = words + b.content.scan(/\w+/).size 
-    }
+    @blocks.map{ |b| words = words + b.content.scan(/\w+/).size }
 
     render json: { latest: @latest, versions: @versions, words: words }
   end  

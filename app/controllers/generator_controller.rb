@@ -55,7 +55,7 @@ class GeneratorController < ApplicationController
           @glossaries.map { |glossary| 
             @terms = Term.where(glossary_id: glossary.glossary_id)
             @terms.each do |term|
-              block.content.gsub!(/#{term.name}/i, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>') unless block.content.nil?
+              block.content.gsub! /#{term.name}\b/, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>' unless block.content.nil?
             end
           }
         end
@@ -138,7 +138,7 @@ class GeneratorController < ApplicationController
             @glossaries.map { |glossary| 
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
-                block.content.gsub!(/#{term.name}/i, '<span class="glossary" ><span class="description">'+term.description+'</span>'+term.name+'</span>') unless block.content.nil?
+                block.content.gsub! /#{term.name}\b/, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>' unless block.content.nil?
               end
             }
           end
@@ -154,7 +154,7 @@ class GeneratorController < ApplicationController
             @glossaries.map { |glossary| 
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
-                block.content.gsub!(/#{term.name}/i, '<span class="glossary" ><span class="description">'+term.description+'</span>'+term.name+'</span>') unless block.content.nil?
+                block.content.gsub! /#{term.name}\b/, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>' unless block.content.nil?
               end
             }
           end
@@ -206,7 +206,7 @@ class GeneratorController < ApplicationController
     unless glossaries.empty?
       glossaries.each do |glossary|
         if content.downcase.include? glossary.name.downcase
-          content.gsub!(/#{glossary.name}/i, "<span style='background:red'>#{glossary.name}</span><span>#{glossary.description}</span>")
+          content.gsub! /#{glossary.name}\b/, "<span style='background:red'>#{glossary.name}</span><span>#{glossary.description}</span>"
         end
       end
     end
