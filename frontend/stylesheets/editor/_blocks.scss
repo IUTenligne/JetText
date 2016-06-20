@@ -546,8 +546,9 @@ span.bold{
 						  	right: 0;
 						  	position: absolute;
 								text-align: center;
-								margin-top: 10px;
+								padding-top: 10px;
 								color: $textGrey;
+								background: #f7f7f7;
 								i{
 									font-size: 30px;
 									color: $textGrey;
@@ -587,6 +588,7 @@ span.bold{
 						display: table-cell;
 						cursor: pointer;
 						color: $textGrey;
+						background: #f7f7f7;
 
 						i {
 							font-size: 30px;

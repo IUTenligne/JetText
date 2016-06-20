@@ -21,6 +21,11 @@ class User < ActiveRecord::Base
     return false
   end
 
+  def is_expert?
+    expert = Role.where(role: "expert").take
+    self.role_id == expert.id
+  end
+
   def welcome_message
     UserMailer.welcome_message(self).deliver
     UserMailer.new_user_adminmessage(self).deliver
@@ -31,7 +36,6 @@ class User < ActiveRecord::Base
   end
 
   private
-  
     def self.from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email

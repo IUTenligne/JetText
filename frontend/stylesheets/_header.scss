@@ -37,9 +37,17 @@ nav.navbar {
 					color: #00AEEF;
 					@include specialFont(1.2em);
 					text-transform: capitalize;
-					
-					i.admin-links {
-						color: #94e2ff;
+				}
+			}
+
+			li.admin-links {
+				background: $lightBlue;
+				padding: 5px 9px 5px 10px;
+				margin-bottom: 1px;
+				margin-top: 0;
+				a {
+					i {
+						color: white;
 					}
 				}
 			}
