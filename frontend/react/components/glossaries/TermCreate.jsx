@@ -29,10 +29,6 @@ var TermCreate = React.createClass({
             },
     		success: function(data){
     			this.props.addTerm(data);
-                this.setState({
-                    newTermValue: '',
-                    newDescriptionValue: ''
-                });
     		}
     	})
     },

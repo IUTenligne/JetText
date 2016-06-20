@@ -5,7 +5,6 @@ class GeneratorController < ApplicationController
   
   def container
     # Container overview method
-
   	@container = Container.find(params[:id])
   	@pages = Page.where(container_id: params[:id])
     @next_link = "pages/#{@pages.first.id}" unless @pages.first.nil?
@@ -19,7 +18,6 @@ class GeneratorController < ApplicationController
 
   def container_generation
     # Container generation method
-
     @container = Container.find(params[:id])
     @pages = Page.where(container_id: params[:id])
     @next_link = "pages/#{@pages.first.id}.html" unless @pages.first.nil?
@@ -33,7 +31,6 @@ class GeneratorController < ApplicationController
 
   def page
     # Page overview method
-
   	@page = Page.find(params[:id])
   	@container = Container.find(@page.container_id)
     @version = Version.where(container_id: @container.id).last
@@ -79,7 +76,6 @@ class GeneratorController < ApplicationController
 
   def page_generation
     # Page generation method
-
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
     @version = Version.where(container_id: @container.id).last

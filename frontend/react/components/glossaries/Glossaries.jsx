@@ -103,7 +103,8 @@ var Glossaries = React.createClass({
     _notificationSystem: null,
 
     render: function(){
-    var that = this;
+        var that = this;
+
     	return(
     		<article id="glossary">
                 <NotificationSystem ref="notificationSystem" />
@@ -111,7 +112,7 @@ var Glossaries = React.createClass({
                 <h1 className="page-header">Mes glossaires</h1>
 
                 <ul className="content-glossary">
-        			{this.state.glossariesList.map(function(glossary){
+        			{ this.state.glossariesList.map(function(glossary){
         				return(
                             <a href={"/#/glossaries/"+glossary.id} key={glossary.id}>
                                 <li className="list-group-glossary">
@@ -134,6 +135,7 @@ var Glossaries = React.createClass({
                                 <span className="input-group-addon" onClick={this.createGlossary}>
                                     <i className="fa fa-plus fa-fw"></i>
                                 </span>
+
                                 <input 
                                     type="text" 
                                     id="new_glossary" 

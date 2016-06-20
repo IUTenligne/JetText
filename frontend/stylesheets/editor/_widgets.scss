@@ -427,15 +427,14 @@
 					position: fixed;
 					background: $white;
 					padding: 7px;
-					overflow: hidden !important;
-
+					overflow: hidden !important;					
 					button{
 						clear: both;
 					}
 				}
 				article#media-panel {
 					width: 100%;
-					margin-top: 140px;
+					margin-top: 150px;
 					height: calc(100% - 120px);
 					clear: both !important;
 						
@@ -460,6 +459,9 @@
 									border-left: 0px;
 									border-right: 0px;
 									vertical-align: middle;
+									th:hover {
+										cursor: pointer;
+									}
 									th, td {
 										background: none;
 										border: 0px;
@@ -574,8 +576,8 @@
 		/* modal for create*/
 		.modal-content.create{
 			border-color: $lighTbGrey;
-			margin-top:42% !important;
-			margin-bottom: 42% !important;
+			margin-top:41% !important;
+			margin-bottom: 41% !important;
 			#modal-header {
 				border-color: rgba($lighTbGrey,0.3);
 
@@ -627,7 +629,8 @@
 			#modal-header {
 				border-color: rgba($lightRed,0.3);
 				.close:hover {
-					i{						color: $lightRed;
+					i{						
+						color: $lightRed;
 					}
 				}
 			}
