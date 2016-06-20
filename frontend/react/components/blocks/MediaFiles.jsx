@@ -20,26 +20,14 @@ var MediaInfo = React.createClass({
         this.setState({ infos: st });
     },
 
-    handleFileWrapper: function() {
-        if (this.props.file.filetype === "image") {
-            return { __html: '<img src="'+ this.props.file.url +'" height="24">' };
-        } else if (this.props.file.filetype === "audio") {
-            return { __html: '<i class="fa fa-music"></i>' };
-        } else if (this.props.file.filetype === "video") {
-            return { __html: '<i class="fa fa-camera"></i>' };
-        } else if (this.props.file.filetype === "pdf") {
-            return { __html: '<i class="fa fa-file-pdf-o"></i>' };
-        }
-    },
-
     handleFilePreview: function() {
         this.setState({ preview: true });
 
         if (this.props.file.filetype === "image") {
             if (this.props.file.file_content_type.split("/")[1] === "svg+xml")
-                var item = '<object data="'+ this.props.file.url +'" type="image/svg+xml">\n\t<img src="'+ this.props.file.url +'">\n</object>';
+                var item = '<object data="'+ this.props.file.url +'" type="image/svg+xml" style="min-width:600px">\n\t<img src="'+ this.props.file.url +'">\n</object>';
             else
-                var item = '<img src="'+ this.props.file.url +'" "style="max-height: 400px">';
+                var item = '<img src="'+ this.props.file.url +'">';
         } else if (this.props.file.filetype === "audio") {
             var item = '<audio controls>\n\t<source src="'+ this.props.file.url +'" type="'+ this.props.file.file_content_type +'">\n</audio>';
         } else if (this.props.file.filetype === "video") {
@@ -60,8 +48,8 @@ var MediaInfo = React.createClass({
 
         return(
             <tr className="file">
-                <td className="file-overview">
-                    
+                <td>
+                    {this.props.index}
                 </td>
                 <td className="file-name" onClick={this.handleFilePreview} >
                     {file.file_file_name}
@@ -274,7 +262,7 @@ var MediaFiles = React.createClass({
             <Modal active={this.closeModal} mystyle={"media"} title={"Mes fichiers"}>
                 <div className="filters-bar">
                     <span className="input-group-addon">
-                        <i className="fa fa-plus fa-fw"></i>
+                        <i className="fa fa-search fa-fw"></i>
                     </span>
                     <input type="text" placeholder="Rechercher..." className="form-control" onChange={this.searchByString} /><br/>
                     { this.state.types.map(function(type, index){
@@ -301,34 +289,36 @@ var MediaFiles = React.createClass({
                                 <table id="media-files">
                                     <thead>
                                         <tr>
-                                            <th onClick={this.sort.bind(this, "file_file_name")} width="auto" />
-                                            <th onClick={this.sort.bind(this, "file_file_name")} width="50%">
+                                            <th></th>
+                                            <th onClick={this.sort.bind(this, "file_file_name")}>
                                                 Nom {this.state.sorter === "file_file_name" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                             </th>
-                                            <th onClick={this.sort.bind(this, "filetype")} width="20%">
+                                            <th onClick={this.sort.bind(this, "filetype")}>
                                                 Type {this.state.sorter === "filetype" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                             </th>
-                                            <th onClick={this.sort.bind(this, "file_updated_at")} width="20%">
+                                            <th onClick={this.sort.bind(this, "file_updated_at")}>
                                                 Date {this.state.sorter === "file_updated_at" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         { this.state.filter || this.state.filterSearch
-                                            ? this.state.filteredFiles.map(function(result){
+                                            ? this.state.filteredFiles.map(function(result, index){
                                                 return (
                                                     <MediaInfo
                                                         key={result.id} 
                                                         file={result}
+                                                        index={index+1}
                                                         preview={that.handlePreview}
                                                     />
                                                 );
                                             })
-                                            : this.state.files.map(function(result){
+                                            : this.state.files.map(function(result, index){
                                                 return (
                                                     <MediaInfo 
                                                         key={result.id}
                                                         file={result}
+                                                        index={index+1}
                                                         preview={that.handlePreview}
                                                     />
                                                 );
@@ -340,8 +330,10 @@ var MediaFiles = React.createClass({
                             <div id="media-files-preview">
                                 { this.state.preview 
                                     ? <div>
-                                        <div dangerouslySetInnerHTML={{__html: this.state.previewedFile}} /> 
-                                        <button onClick={this.handleUpdate}>Ok</button>
+                                        <div id="previewed-file" dangerouslySetInnerHTML={{__html: this.state.previewedFile}} /> 
+                                        <button id="previewed-btn" className="btn btn-lg" onClick={this.handleUpdate}>
+                                            Ok <i className="fa fa-check"></i>
+                                        </button>
                                     </div>
                                     : null 
                                 }

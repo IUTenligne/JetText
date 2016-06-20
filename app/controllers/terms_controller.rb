@@ -6,9 +6,9 @@ class TermsController < ApplicationController
   respond_to :json
 
 	def require_permission
-	    if current_user != Term.find(params[:id]).glossary.user || current_user.nil?
-	      render json: { status: "error" }
-	    end
+	  if current_user != Term.find(params[:id]).glossary.user || current_user.nil?
+	    render json: { status: "error" }
+	  end
 	end
 
 	def index
@@ -34,13 +34,23 @@ class TermsController < ApplicationController
 		end
 	end
 
+	def update
+		@term = Term.find(params[:id])
+		@term.update_attributes(name: params[:name], description: params[:description])
+		if @term.save
+			render json: @term
+		else
+			render json: "Error"
+		end
+	end	
+
 	def destroy
-	    @term = Term.find(params[:id])
-	    if @term.destroy
-	      render json: { status: "ok", term: @term.id }
-	    else
-	      redirect_to "/#/glossaries/#{@glossary.glossary_id}"
-	    end
+	  @term = Term.find(params[:id])
+	  if @term.destroy
+	    render json: { status: "ok", term: @term.id }
+	  else
+	    redirect_to "/#/glossaries/#{@glossary.glossary_id}"
+	  end
 	end
 
 	private

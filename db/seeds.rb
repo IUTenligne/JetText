@@ -1,4 +1,4 @@
-=begin
+
 Type.create!([ 
   {name: "Texte", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
   {name: "Media", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
@@ -12,14 +12,13 @@ Company.create!([
 
 Role.create!([ 
 	{role: "Pending"},
-	{role: "Auteur"},
+	{role: "Author"},
 	{role: "Expert"},
 	{role: "Staff"},
 	{role: "Admin"}
 ])
 
-=end
-
+=begin
 500.times do |i|
   r = Random.new      
 
@@ -36,3 +35,4 @@ Role.create!([
     user_id: 1
   ])
 end
+=end

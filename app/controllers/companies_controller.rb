@@ -10,8 +10,8 @@ class CompaniesController < ApplicationController
   	@company = Company.find(params[:id])
 
     @inc_containers = @company.containers.where(status: 0).where(visible: 1)
-    @validated_containers  = @company.containers.where(status: 1)
-    @deleted_containers  = @company.containers.where(visible: 0)
+    @validated_containers = @company.containers.where(status: 1)
+    @deleted_containers = @company.containers.where(visible: 0)
 
     @inc_users = Array.new
     @inc_containers.each do |c|
