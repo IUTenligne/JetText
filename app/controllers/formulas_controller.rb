@@ -17,6 +17,15 @@ class FormulasController < ApplicationController
 		end
 	end
 
+	def find
+		@formulas = Formula.select("id, name, value").where("formulas.name LIKE ?", "#{params[:searched]}%").where(user_id: current_user.id)
+		unless @formulas.empty?
+			render json: { status: 0, formulas: @formulas } 
+		else
+			render json: { status: 1 }
+		end
+	end
+
 	private
 		def formula_params
       params.require(:formula).permit(:name, :value)

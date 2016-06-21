@@ -86,9 +86,6 @@ var TextBlock = React.createClass({
         this.setState({ termModalState: true });
     },
 
-
-
-
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
         if (editor) { editor.destroy(true); }
