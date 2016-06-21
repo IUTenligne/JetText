@@ -119,7 +119,7 @@ var Glossary = React.createClass({
         var that = this;
         this._notificationSystem.addNotification({
             title: 'Confirmer la suppression',
-            message: 'Voulez-vous supprimer le terme "' + that.state.glossary.name + '" ?',
+            message: 'Voulez-vous supprimer ce glossaire ?',
             level: 'success',
             position: 'tr',
             timeout: '20000',

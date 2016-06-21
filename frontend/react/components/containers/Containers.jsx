@@ -303,12 +303,11 @@ var Containers = React.createClass({
 
     render: function() {
         var results = this.state.containersList;
-        console.log(results);
 
         var that = this;
         return (
             <article id="containers">
-                <h1 className="page-header">Mes ressources non validé :</h1>
+                <h1 className="page-header">Mes ressources en cours de création :</h1>
 
                 <ul className="align">
                     { this.state.loading
@@ -334,7 +333,7 @@ var Containers = React.createClass({
                     </li>
                 </ul>
 
-                <h1 className="page-header">Mes ressources validé :</h1>
+                <h1 className="page-header">Mes ressources validées :</h1>
 
                 <ul className="align">
                     { this.state.loading

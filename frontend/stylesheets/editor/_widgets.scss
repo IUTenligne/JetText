@@ -573,7 +573,7 @@
 			}
 		}
 
-		/* modal for create*/
+		/* modal for create */
 		.modal-content.create{
 			border-color: $lighTbGrey;
 			margin-top:41% !important;
@@ -621,7 +621,7 @@
 			}
 		}
 
-		/* modal for compagnie*/
+		/* modal for compagnie */
 		.modal-content.compagnie{
 			width: 90%;
 			margin: 10% !important;
@@ -640,7 +640,7 @@
 			}
 		}
 
-		/* modal for appercu ressource*/
+		/* modal for appercu ressource */
 		.modal-content.view{
 			width: 90%;
 			margin: 5% !important;
@@ -659,6 +659,27 @@
 				height: 100%;
 			}
 		}	
+
+		/* modal for formulas */
+		.modal-content.formula{
+			width: 60%;
+			margin-top: 30% !important;
+			margin-bottom: 30% !important;
+			border-color: $lightRed;
+			#modal-header {
+				border-color: rgba($lightRed,0.3);
+				.close:hover {
+					i{						
+						color: $lightRed;
+					}
+				}
+			}
+			#modal-body{
+				width: 100%;
+				height: 100%;
+				padding: 20px;
+			}
+		}
 	}
 }
 
