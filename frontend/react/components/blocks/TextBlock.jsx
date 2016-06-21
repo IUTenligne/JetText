@@ -24,7 +24,8 @@ var TextBlock = React.createClass({
             containersGlossariesList: [],
             editBlock: true,
             tooltipState: false,
-            tooltipMovesState: false
+            tooltipMovesState: false,
+            termModalState: false 
         };
     },
 
@@ -77,6 +78,15 @@ var TextBlock = React.createClass({
         }
         return content;
     },
+    handleTermModalState: function(st) {
+        this.setState({ termModalState: st });
+    },
+
+    openTermModalState: function() {
+        this.setState({ termModalState: true });
+    },
+
+
 
 
     componentWillUnmount: function() {
@@ -298,6 +308,15 @@ var TextBlock = React.createClass({
                                 </ul>
                             </div>
                         </Modal>
+                    : null
+                }
+
+                { this.state.termModalState
+                    ? <Modal active={this.handleTermModalState} mystyle={"terms"} title={"Ajouter une formule"}>
+                        <div>
+
+                        </div>
+                    </Modal>
                     : null
                 }
 

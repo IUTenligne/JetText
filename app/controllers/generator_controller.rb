@@ -55,7 +55,7 @@ class GeneratorController < ApplicationController
           @glossaries.map { |glossary| 
             @terms = Term.where(glossary_id: glossary.glossary_id)
             @terms.each do |term|
-              block.content.gsub! /#{term.name}\b/, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>' unless block.content.nil?
+              block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
             end
           }
         end
@@ -138,7 +138,7 @@ class GeneratorController < ApplicationController
             @glossaries.map { |glossary| 
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
-                block.content.gsub! /#{term.name}\b/, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>' unless block.content.nil?
+                block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
               end
             }
           end
@@ -154,7 +154,7 @@ class GeneratorController < ApplicationController
             @glossaries.map { |glossary| 
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
-                block.content.gsub! /#{term.name}\b/, '<span class="glossary"><span class="description">'+term.description+'</span>'+term.name+'</span>' unless block.content.nil?
+                block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
               end
             }
           end
