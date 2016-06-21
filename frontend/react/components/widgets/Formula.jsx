@@ -9,6 +9,7 @@ var Formula = React.createClass({
             formulaString: '',
             formulaOverview: '',
             variables: [],
+            selectedVariables: [],
             showAutocomplete: false,
             start: '@',
             matcher: /@(\w[\w.-]{0,59})\b$/i,
@@ -17,15 +18,22 @@ var Formula = React.createClass({
 
     componentDidMount: function() {
         this.setState({ blockId: this.props.blockId });
+        this.serverRequest = $.get("/formulas.json", function (result) {
+            this.setState({
+                selectedVariables: result.formulas
+            });
+        }.bind(this));
+    },
+
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
     },
 
     composeFormula: function(event) {
         var str = event.target.value;
 
-        this.setState({ 
-            formulaString: str,
-            formulaOverview: str
-        });
+        this.setState({ formulaString: str });
+        this.buildOverview(event.target.value);
 
         if (str.match(this.state.matcher)) {
             var searchedVar = str.match(this.state.matcher)[1];
@@ -49,13 +57,27 @@ var Formula = React.createClass({
     selectVariable: function(variable) {
         var formula = this.state.formulaString.replace(this.state.matcher, "@"+variable.name);
         var str = this.state.formulaOverview.replace(this.state.matcher, variable.value);
+        var variables = formula.match(this.state.matcher);
 
         this.setState({
             showAutocomplete: false,
             variables: [],
+            selectedVariables: this.state.selectedVariables.concat([ variable ]),
             formulaString: formula,
             formulaOverview: str
         });
+    },
+
+    buildOverview: function(str) {
+        var that = this;
+        var o = str;
+        for (var i in this.state.selectedVariables) {
+            if (o.match(this.state.selectedVariables[i]["name"])) {
+                o = o.replace(this.state.selectedVariables[i]["name"], this.state.selectedVariables[i]["value"]);
+            }
+        }
+
+        this.setState({ formulaOverview: o });
     },
 
     render: function() {
