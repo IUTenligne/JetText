@@ -5,7 +5,7 @@ class FormulasController < ApplicationController
   respond_to :json
 
 	def index
-		@formulas = Formula.where(user_id: current_user.id)
+		@formulas = Formula.where(user_id: current_user.id).where(user_id: current_user.id)
 		render json: { formulas: @formulas }
 	end
 

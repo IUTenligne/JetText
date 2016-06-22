@@ -25,16 +25,16 @@ article#containers {
 						padding: 60px 3px 0 3px;
 						background: $lightGrey;
 						overflow: hidden;
-						z-index: 0 !important;
+						z-index: 0;
 
 						p {
 							text-align: left;
 							color: $white;
 							background: $lightBlue;
 							padding: 5px 3px;
-				            overflow: hidden;
-				            max-height: 140px;
-				            z-index: 999 !important;
+				      overflow: hidden;
+				      max-height: 140px;
+				      z-index: 10;
 						}
 					}
 				}
