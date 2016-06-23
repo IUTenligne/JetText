@@ -4,85 +4,91 @@
 article#containers {
 	padding: 20px;
 
-	h1.page-header {
-		color: $darkGrey;
-		border: none;
-	}
+	.containers {
+		margin-top: 15px;
+		margin-bottom: 30px;
 
-	ul.align{
-		width: 100%;
-		margin: 0;
-		padding: 0;
+		h1.page-header {
+			color: $darkGrey;
+			border: none;
+			margin-bottom: 15px;
+		}
 
-		li.container {
-			list-style-type: none;
+		ul.align{
+			width: 100%;
+			margin: 0;
+			padding: 0;
 
-			figure.book{
-				ul.hardcover_front {
-					list-style-type: none;
+			li.container {
+				list-style-type: none;
 
-					div.coverDesign {
-						padding: 60px 3px 0 3px;
-						background: $lightGrey;
-						overflow: hidden;
-						z-index: 0;
+				figure.book{
+					ul.hardcover_front {
+						list-style-type: none;
 
-						p {
-							text-align: left;
-							color: $white;
-							background: $lightBlue;
-							padding: 5px 3px;
-				      overflow: hidden;
-				      max-height: 140px;
-				      z-index: 10;
+						div.coverDesign {
+							padding: 60px 3px 0 3px;
+							background: $lightGrey;
+							overflow: hidden;
+							z-index: 0;
+
+							p {
+								text-align: left;
+								color: $white;
+								background: $lightBlue;
+								padding: 5px 3px;
+					      overflow: hidden;
+					      max-height: 140px;
+					      z-index: 10;
+							}
+						}
+					}
+
+					ul.sheet{
+						list-style-type: none;
+
+						li.option {
+							list-style-type: none;
+
+							a {
+				            	width: 100%;
+				            	display: block;
+				            	padding: 0;
+				            	text-align: left;
+				            	margin: 12px 0 5px 12px;
+				            	cursor: pointer;
+				            	color: $bookGrey;
+	        				}
+
+	        				.list-group-item {
+			        			span, .fa {
+			        				font-size: 14px;
+			          			}
+			        		}
+
+					        a:hover{
+					          	color: $lightBlue;
+					        }
 						}
 					}
 				}
-
-				ul.sheet{
-					list-style-type: none;
-
-					li.option {
-						list-style-type: none;
-
-						a {
-			            	width: 100%;
-			            	display: block;
-			            	padding: 0;
-			            	text-align: left;
-			            	margin: 12px 0 5px 12px;
-			            	cursor: pointer;
-			            	color: $bookGrey;
-        				}
-
-        				.list-group-item {
-		        			span, .fa {
-		        				font-size: 14px;
-		          			}
-		        		}
-
-				        a:hover{
-				          	color: $lightBlue;
-				        }
-					}
-				}
 			}
-		}
-		
-		li#addContainer{
-			border: 2px dashed $lightBlue;
-			min-height: 180px !important;
-			width: 180px !important;
-			margin: 0 auto;
-			margin: 0;
-			padding: 0;
-			margin-top: 50px;
-			cursor: pointer;
-			background: rgba($lightGrey,0.4);
-			i{
-				color: black;
-				font-size: 40px;
-				margin-top: 70px;
+			
+			li#addContainer{
+				border: 2px dashed $lightBlue;
+				min-height: 180px !important;
+				width: 180px !important;
+				margin: 0 auto;
+				margin: 0;
+				padding: 0;
+				margin-top: 50px;
+				cursor: pointer;
+				background: rgba($lightGrey,0.4);
+				i{
+					color: black;
+					font-size: 40px;
+					margin-top: 70px;
+				}
 			}
 		}
 	}

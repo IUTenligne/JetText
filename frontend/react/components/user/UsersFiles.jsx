@@ -9,7 +9,9 @@ var FileInfo = React.createClass({
     getInitialState: function() {
         return {
             overview: false,
-            modalPreview: false
+            modalPreview: false,
+            errors: false,
+            errorMessage: ''
         };
     },
     
@@ -56,6 +58,26 @@ var FileInfo = React.createClass({
         this.setState({ modalPreview: !this.state.modalPreview });
     },
 
+    deleteFile: function() {
+        $.ajax({
+            type: "DELETE",
+            url: "/uploads/" + this.props.file.id,
+            context: this,
+            success: function(data) {
+                if (data.status === "success") {
+                    this.setState({ modalPreview: false });
+                    this.showPreview(false);
+                    this.props.delete(this.props.file.id)
+                } else {
+                    this.setState({ 
+                        errors: true, 
+                        errorMessage: "Ce fichier est employé dans des blocs de contenu."
+                    });
+                }
+            }
+        })
+    },
+
     _notificationSystem: null, 
 
     render: function() {
@@ -83,6 +105,13 @@ var FileInfo = React.createClass({
                                     <center>
                                         <div dangerouslySetInnerHTML={this.handleFilePreview()} />
                                     </center>
+
+                                    <button onClick={this.deleteFile}><i className="fa fa-trash"></i> Supprimer</button>
+
+                                    { this.state.errors
+                                        ? <div className="error-msg">{ this.state.errorMessage }</div> 
+                                        : null
+                                    }
                                 </div>
                             </Modal>
                         : null
@@ -262,6 +291,13 @@ var UsersFiles = React.createClass({
         }
     },
 
+    deleteFile: function(file_id) {
+        this.setState({ 
+            files: this.state.files.filter((i,_) => i["id"] != file_id),
+            filteredFiles: this.state.filteredFiles.filter((i,_) => i["id"] != file_id)
+        })
+    },
+
     _notificationSystem: null,
 
     render: function() {
@@ -325,16 +361,18 @@ var UsersFiles = React.createClass({
                                     ? this.state.filteredFiles.map(function(result){
                                         return (
                                             <FileInfo 
-                                                file={result}
                                                 key={result.id}
+                                                file={result}
+                                                delete={that.deleteFile}
                                             />
                                         );
                                     })
                                     : this.state.files.map(function(result){
                                         return (
                                             <FileInfo 
-                                                file={result}
                                                 key={result.id}
+                                                file={result}
+                                                delete={that.deleteFile}
                                             />
                                         );
                                     })
