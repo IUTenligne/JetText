@@ -40,7 +40,6 @@ var MediaBlock = React.createClass({
         this.setState({ 
             blockName: this.props.block.name,
         });
-
     },
 
     componentWillUnmount: function() {
@@ -264,6 +263,10 @@ var MediaBlock = React.createClass({
 
     render: function() {
         var block = this.props.block;
+        $('image').on("click", function(event) {
+            event.preventDefault();
+            console.log("ok");
+        });
 
         return (
             <div className="block-inner" onMouseEnter={this.showEditButton} onMouseLeave={this.showEditButton}>

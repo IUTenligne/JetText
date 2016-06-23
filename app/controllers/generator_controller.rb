@@ -231,36 +231,36 @@ class GeneratorController < ApplicationController
       if zip == true
         if current_page != nil && pages[i].id == current_page.id
           if pages[i].name
-            content = content + "<li class=\"active\"><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name+ "</a></li>\n"
+            content = content + "<li class=\"active\"><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name+ "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           else
-            content = content + "<li class=\"active\"><a href=\"#{i}\">" + i + "</a></li>\n"
+            content = content + "<li class=\"active\"><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         else
           if pages[i].name
-            content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name + "</a></li>\n"
+            content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           else
-            content = content + "<li><a href=\"#{i}\">" + i + "</a></li>\n"
+            content = content + "<li><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         end
       else
         if index == true
           if pages[i].name
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name + "</a></li>\n"
+            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           else
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a></li>\n"
+            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         else
           if current_page != nil && pages[i].id == current_page.id
             if pages[i].name
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + pages[i].name + "</a></li>\n"
+              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             else
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
+              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           else
             if pages[i].name
-              content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name + "</a></li>\n"
+              content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             else
-              content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
+              content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           end
         end

@@ -5,6 +5,7 @@
         <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
         <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="<%= @assets_prefix %>assets/css/lightbox.min.css" rel="stylesheet">
     </head>
 
     <body>
@@ -13,10 +14,9 @@
           		<div class="sidebar-nav">
                 <div class="logo">
             			<a href="<%= @org_link %>" target="_blank">
-            				<img src="<%= @assets_prefix %>assets/img/iutenligne.png"  border="0">
+            				<img src="<%= @assets_prefix %>assets/images/iutenligne.png"  border="0">
             			</a>
                 </div>
-
 
           			<ul class="nav-link">
           				<li>
@@ -100,6 +100,7 @@
                 				</div> 
                 			</div>
                     <% end %>
+
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="content">
@@ -121,14 +122,14 @@
                         <% if @prev_link && @prev_link != "" %>
                           <a href="<%= @prev_link %>">
                             <i class="fa fa-arrow-circle-left"></i>
-                            Précédent<br>
+                            <span class="link-text">Précédent</span>
                           </a>
                         <% end %>
                       </div>
                       <div class="col-lg-6 btn-next">
                         <% if @next_link && @next_link != "" %>
                           <a  href="<%= @next_link %>">
-                            Suite
+                            <span class="link-text">Suite</span>
                             <i class="fa fa-arrow-circle-right"></i>
                           </a> 
                         <% end %>
@@ -168,6 +169,8 @@
 
       <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
 		  <script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
+      <script src="<%= @assets_prefix %>assets/js/lightbox.min.js"></script>
+
 	    <script type="text/javascript">
             $(document).ready(function() {
                 $("#menu-toggle").click(function(e) {
@@ -193,19 +196,42 @@
 
                 findParentItem(activePage);
 
-                function findChildren(el){
+                function findChildren(el) {
                   if ($(el).next().is("ul")){
                     $(el).next().show();
                   }
                 }
+
                 findChildren(activePage);
 
                 var uls = $('#nav-menu').find('ul').each(function() {
-                  console.log($(this));
-                  if ( $(this).is(":visible") ) {
-                    $(this).prev().addClass("moins");
+                  var $ul = $(this);
+                  var $elem = $(this).prev().find('span').find('i');
+                  $elem.bind("click", function(){
+                    $ul.toggle();
+                      if ($ul.is(":visible")) {
+                      if ($elem.hasClass("fa-plus")) {
+                        $elem.removeClass("fa-plus");
+                      }
+                      $elem.addClass("fa-minus");
+                    } else {
+                      if ($elem.hasClass("fa-minus")) {
+                        $elem.removeClass("fa-minus");
+                      }
+                      $elem.addClass("fa-plus");
+                    }
+                  });
+
+                  if ($ul.is(":visible")) {
+                    if ($elem.hasClass("fa-plus")) {
+                      $elem.removeClass("fa-plus");
+                    }
+                    $elem.addClass("fa-minus");
                   } else {
-                    $(this).prev().addClass("plus");;
+                    if ($elem.hasClass("fa-minus")) {
+                      $elem.removeClass("fa-minus");
+                    }
+                    $elem.addClass("fa-plus");
                   }
                 });
             });

@@ -87,17 +87,17 @@ class Upload < ActiveRecord::Base
 
   def types_hash
     types = {
-      mp4: "video",
-      flv: "video",
-      avi: "video",
-      pdf: "pdf",
-      png: "image",
-      jpg: "image",
+      mp4:  "video",
+      flv:  "video",
+      avi:  "video",
+      pdf:  "pdf",
+      png:  "image",
+      jpg:  "image",
       jpeg: "image",
-      gif: "image",
-      svg: "image",
-      svg: "image",
-      mp3: "audio",
+      gif:  "image",
+      svg:  "image",
+      svg:  "image",
+      mp3:  "audio",
       mpeg: "audio"
     }
     return types
@@ -138,6 +138,8 @@ class Upload < ActiveRecord::Base
     end
 
     def self.is_used?(current_user, upload_id)
+      # returns true if a file is already used inside a block content
+      # prevents removing any useful file
       return nil unless current_user.present?
       blocks = Block.select("id").where('blocks.upload_id' => upload_id).where(user_id: current_user.id)
       return false if blocks.empty?
