@@ -27,7 +27,7 @@ var GlossaryItem = React.createClass({
         var that = this;
         event.preventDefault();
         this._notificationSystem = this.refs.notificationSystem;
-        
+
         this._notificationSystem.addNotification({
             title: 'Confirm delete',
             message: 'Are you sure you want to delete the glossary?',
@@ -71,30 +71,32 @@ var GlossaryItem = React.createClass({
 
     render: function(){
         var glossary = this.props.glossary;
-        
+
         return(
             <li className="name-glossary">
                 <NotificationSystem ref="notificationSystem"/>
                 <div className="viewGlossary">
-                    <div className="check">
-                        <label for="IdCheckBox" className="capitalize">
-                            <input 
-                                type="checkbox" 
-                                checked={this.state.isChecked} 
+                    <div className="switch">
+
+                            <input
+                                type="checkbox"
+                                checked={this.state.isChecked}
                                 onChange={this.onChange}
-                                id="IdCheckBox"/>
+                                id="IdCheckBox"
+                                className="cmn-toggle cmn-toggle-round-flat"/>
                             { this.state.isChecked ?
-                                <i className="fa fa-check-circle-o" aria-hidden="true"></i>
-                                : <i className="fa fa-circle-thin" aria-hidden="true"></i>
+                                <label className="check" for="IdCheckBox"/>
+                                : <label for="IdCheckBox"/>
                             }
-                            <p>{glossary.name}</p>
-                        </label> 
-                        <i className="fa fa-chevron-down" aria-hidden="true" onClick={this.showTerms}></i>
+                      </div>
+                    <div className="name">
+                      <p>{glossary.name}</p>
+                      <i className="fa fa-chevron-down" aria-hidden="true" onClick={this.showTerms}></i>
                     </div>
-                    
                     <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} className="delete">
                         <i className="fa fa-trash-o" ></i>
                     </a>
+
                 </div>
                 { this.state.showTerms ? <GlossaryBox glossary={glossary.id} /> : null }
             </li>
@@ -122,7 +124,7 @@ var GlossariesBox = React.createClass({
                 inputCreate: true
             });
         }
-        
+
     },
 
 	componentDidMount: function() {
@@ -146,16 +148,16 @@ var GlossariesBox = React.createClass({
     		type: "POST",
     		url:'/glossaries',
     		context: this,
-    		data: { 
+    		data: {
                 glossary: {
                     name: this.state.newGlossaryValue
-                } 
+                }
             },
     		success: function(data){
     			this.setState({
                     newGlossaryValue: '',
                     glossariesList: this.state.glossariesList.concat([data])
-                }); 
+                });
     		}
     	})
          event.target.value='';
@@ -201,14 +203,14 @@ var GlossariesBox = React.createClass({
         					<span className="input-group-addon">
                                 <i className="fa fa-plus fa-fw"></i>
                             </span>
-                            <input 
-                                type="text" 
-                                id="new_glossary" 
-                                className="form-control" 
-                                value={this.state.newGlossaryValue} 
-                                onChange={this.handleChange.bind(this, "newGlossaryValue")} 
-                                onKeyPress={this._handleKeyPress} 
-                                autoComplet="off" 
+                            <input
+                                type="text"
+                                id="new_glossary"
+                                className="form-control"
+                                value={this.state.newGlossaryValue}
+                                onChange={this.handleChange.bind(this, "newGlossaryValue")}
+                                onKeyPress={this._handleKeyPress}
+                                autoComplet="off"
                                 placeholder="Create new glossary..." />
         				    { this.state.inputCreate && this.state.newGlossaryValue != ''
                                 ? <input type="submit" value='Créer' className="btn-success" onClick={this.createGlossary}/>

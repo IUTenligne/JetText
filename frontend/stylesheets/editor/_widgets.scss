@@ -8,7 +8,7 @@
 	top: 0 !important;
 	left: 0 !important;
 	z-index: 999 !important;
-	
+
 
 	.modal-inner{
 		display: flex;
@@ -91,7 +91,7 @@
 					background-image: none;
 					border: 1px solid #ccc;
 					border-radius:0 4px 4px 0;
-					border-left: none; 
+					border-left: none;
 					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 					box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 					-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -147,13 +147,13 @@
 
 				}
 				.modal-in.note{
-					
+
 				}
 				.modal-in.media{
-					
+
 				}
 				.modal-in.math{
-					
+
 				}
 			}
 		}
@@ -190,55 +190,97 @@
 								width: 100%;
 								display: table;
 
-								div.check{
-									min-width: 90%;
-									max-width: 90%;
-									text-overflow: hidden;
+								.switch{
 									display: table-cell;
-									vertical-align: middle;
+									vertical-align: bottom;;
+									width: 10%;
+									padding-top: 15px;
 
-									label{
-										display: table;
-										display: table-cell;
-										vertical-align: middle;
-
-										#IdCheckBox{
-											display: none;
-										}
-										i{
-											color: $lightGreen;
-											font-size: 25px;
-											display: table-cell;
-											vertical-align: middle;
-											padding: 0;
-										}
-										p{
-											display: table-cell;
-											vertical-align: middle;
-											padding-left: 7px;
-										}
-									}
-									i {
-										display: table-cell;
-										vertical-align: middle;
-										padding-left: 25px;
+									input.cmn-toggle {
+									  position: relative !important;
 										cursor: pointer;
+									  outline: none;
+									  user-select: none;
+										display: block;
+										clear: both;
+										opacity: 0;
+									}
+									 label {
+									  display: block;
+									  position: relative;
+									  cursor: pointer;
+									  outline: none;
+									  user-select: none;
+									}
+									input.cmn-toggle-round-flat, label {
+									  padding: 2px;
+									  width: 50px;
+									  height: 25px;
+									  background-color: #dddddd;
+									  border-radius: 60px;
+									  transition: background 0.4s;
+									}
+									input.cmn-toggle-round-flat, label:before,
+									input.cmn-toggle-round-flat, label:after {
+									  display: block;
+									  position: absolute;
+									  content: "";
+									}
+									input.cmn-toggle-round-flat, label:before {
+									  top: 2px;
+									  left: 2px;
+									  bottom: 2px;
+									  right: 2px;
+									  background-color: #fff;
+									  border-radius: 60px;
+									  transition: background 0.4s;
+									}
+									input.cmn-toggle-round-flat, label:after {
+									  top: 4px;
+									  left: 4px;
+									  bottom: 4px;
+									  width: 18px;
+									  background-color: #dddddd;
+									  border-radius: 52px;
+									  transition: margin 0.4s, background 0.4s;
+									}
+									input.cmn-toggle-round-flat:checked, label.check {
+									  background-color: $lightGreen;
+									}
+									input.cmn-toggle-round-flat:checked, label.check:after {
+									  margin-left: 22px;
+									  background-color: $lightGreen;
 									}
 								}
-								
+								.name{
+									display: table-cell;
+									vertical-align: middle;
+									width: 80%;
+									p{
+										display: inline-block;
+										vertical-align: middle;
+										width: 90%;
+										padding-left: 10px;
+									}
+									i{
+										display: inline-block;
+										vertical-align: middle;
+										width: 10%;
+									}
+								}
 								a.delete {
 									color: $lightGreen;
 									display: table-cell;
 									vertical-align: top;
-									width: 90%;
-									
+									width: 10%;
+
 									i{
 										float: right;
 										padding-right: 5px;
 									}
 								}
 							}
-							
+
 							div#view-terms{
 								margin-left: 17px;
 
@@ -271,7 +313,7 @@
 													}
 												}
 											}
-											
+
 											.desc{
 												padding: 5px 0 0 15px;
 												width: 100%;
@@ -297,7 +339,7 @@
 												color: $white;
 											}
 										}
-										
+
 									}
 								}
 							}
@@ -338,7 +380,7 @@
 				max-height: calc(100% - 40px);
 				overflow-x: hidden !important;
 				overflow-y: auto !important;
-				
+
 				.file-type {
 					padding: 10px;
 					box-sizing: border-box;
@@ -370,7 +412,7 @@
 					i.audios {
 						background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
 					}
-					
+
 					i.miscs {
 						background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
 					}
@@ -428,7 +470,7 @@
 					position: fixed;
 					background: $white;
 					padding: 7px;
-					overflow: hidden !important;					
+					overflow: hidden !important;
 					button{
 						clear: both;
 					}
@@ -439,7 +481,7 @@
 					margin-top: 150px;
 					height: calc(100% - 120px);
 					clear: both !important;
-						
+
 					#media-browser {
 						height: calc(100% - 10%);
 						display: table;
@@ -448,7 +490,7 @@
 							width: 65%;
 							float: left;
 							display: table-cell;
-							table#media-files{ 
+							table#media-files{
 								overflow: hidden;
 								display: block;
 								padding: 5px;
@@ -596,7 +638,7 @@
 				}
 			}
 		}
-		
+
 		.modal-content.createTerm{
 			border-color: $lighTbGrey;
 			margin-top: 40% !important;
@@ -629,9 +671,9 @@
 			border-color: $lightRed;
 			#modal-header {
 				border-color: rgba($lightRed,0.3);
-				
+
 				.close:hover {
-					i{						
+					i{
 						color: $lightRed;
 					}
 				}
@@ -672,7 +714,7 @@
 					}
 				}
 			}
-		}	
+		}
 
 		/* modal for formulas */
 		.modal-content.formula{
@@ -683,7 +725,7 @@
 			#modal-header {
 				border-color: rgba($lightRed,0.3);
 				.close:hover {
-					i{						
+					i{
 						color: $lightRed;
 					}
 				}
@@ -736,7 +778,7 @@
 		border-right: 1px solid $lightBlue !important;
 		border-bottom: 1px solid $lightBlue !important;
 		box-shadow: none !important;
-	    
+
 		strong, h1, h2, h3, h4, .notification-title {
 			color: $lightBlue !important;
 		}
@@ -799,7 +841,7 @@
 		padding: 0 0 30px 0;
 		border-bottom: 3px solid $lightBlue;
 	}
-	
+
 	.filter-file {
 		width: 60px;
 		height: 60px;
@@ -816,7 +858,7 @@
 	}
 
 	.filter-file.active-filter {
-		transform: scale(1.1); 
+		transform: scale(1.1);
 	}
 
 	.filter-image {
@@ -826,7 +868,7 @@
 		    font-family: FontAwesome;
 		}
 	}
-	
+
 	.filter-pdf {
 		background-image:linear-gradient( $lightRed,rgb(186,67,38));
 		i:before{

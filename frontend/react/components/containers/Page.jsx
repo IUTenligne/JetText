@@ -54,19 +54,19 @@ var Page = React.createClass({
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy(true);
         }
-        
+
         $.ajax({
             type: "POST",
             url: '/blocks',
             context: this,
-            data: { 
-                block: { 
-                    name: '', 
-                    content: '', 
-                    sequence: this.state.blocks.length, 
+            data: {
+                block: {
+                    name: '',
+                    content: '',
+                    sequence: this.state.blocks.length,
                     page_id: this.state.page.id,
                     type_id: typeId
-                } 
+                }
             },
             success: function(data) {
                 this.setState({
@@ -98,7 +98,7 @@ var Page = React.createClass({
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy(true);
         }
-        
+
         var that = this;
 
         drake.on('drag', function(element, source) {
@@ -187,9 +187,9 @@ var Page = React.createClass({
     },
 
     handlePageRename: function(event) {
-        this.setState({ 
+        this.setState({
             pageName: event.target.value,
-            changePageName: true 
+            changePageName: true
         });
     },
 
@@ -223,17 +223,17 @@ var Page = React.createClass({
     render: function() {
         var page = this.state.page;
         var that = this;
-        
+
         return (
             <div className="page">
                 <ReactCSSTransitionGroup transitionName="toolbar-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                     <Toolbar container={this.props.container} page={this.state.page}>
-                        <Timeline blocks={this.state.blocks} page={this.state.page} /> 
+                        <Timeline blocks={this.state.blocks} page={this.state.page} />
                     </Toolbar>
-                </ReactCSSTransitionGroup> 
+                </ReactCSSTransitionGroup>
 
                 <h2 className="header_page">
-                    <input className="capitalize title-page" ref="containername" type="text" value={this.state.pageName} placeholder="Titre de la page..." onChange={this.handlePageRename}/>
+                    <input className="title-page" ref="containername" type="text" value={this.state.pageName} placeholder="Titre de la page..." onChange={this.handlePageRename}/>
                     { this.state.changePageName ? <button onClick={this.savePageName}><i className="fa fa-check"></i></button> : null }
                 </h2>
 
@@ -241,18 +241,18 @@ var Page = React.createClass({
                     <div className={this.state.retractedBlocks ? "blocks retracted" : "blocks"} ref="dragableblocks">
                         { this.state.blocks.map(function(block){
                             return (
-                                <Block 
-                                    key={block.id} 
-                                    item={block} 
-                                    containerId={page.container_id} 
+                                <Block
+                                    key={block.id}
+                                    item={block}
+                                    containerId={page.container_id}
                                     removeBlock={that.handleBlockDeletion}
-                                    addBlock={that.handleBlockAdd} 
+                                    addBlock={that.handleBlockAdd}
                                     moveBlock={that.handleBlockMove}
                                 />
                             );
                         })}
                     </div>
-                    
+
                     <div id="add_new_block">
                         { this.props.types.map(function(type) {
                             return (
@@ -273,9 +273,9 @@ var Page = React.createClass({
                     <div>
                         {this.state.popUp ? <GlossariesBox containerId={page.container_id}  handleModalState={this.closeModal}/> : null}
                     </div>
-                </ReactCSSTransitionGroup> 
+                </ReactCSSTransitionGroup>
 
-                <Blockline blocks={this.state.blocks} page={this.state.page} updateBlockSequence={this.handleDragAction} />  
+                <Blockline blocks={this.state.blocks} page={this.state.page} updateBlockSequence={this.handleDragAction} />
             </div>
         );
     }
