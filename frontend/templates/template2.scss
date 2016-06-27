@@ -8,7 +8,12 @@ $sidebar: rgba(246,247,146,0.9);
 $sidebarGrey: rgba(51,55,69,0.9);
 $blue: #69c0ec;
 $IELblue: #5B8AC2;
+$remarque: #62A7D1;
 $important: rgba(234,46,73,0.9);
+$quote:   #cbd0d3;
+$exemple: #cef8e4;
+$defintion: #AF89C8;
+$methode: #F3A342;
 $white: rgba(255,255,255,0.92);
 
 /******** typos ********/
@@ -113,14 +118,43 @@ body {
                 color: $textGrey;
               }
             }
-            .block.block-note.block-important {
-              background: $important;
+            .block-quote {
+              border-left: 6px solid $quote;
+              background: $white;
+              color: $textGrey !important;
+              left: 0;
+              margin-left: 0 0 0 -100px;
+              padding: 30px 50px 30px 100px;
+              h3 {
+                margin-top: 0;
+                margin-bottom: 30px;
+                color: $textGrey;
+              }
+            }
+
+            .block.block-note {
               margin: 40px 0 40px 0;
               padding: 30px;
               color: white;
               h3 {
                 color: white
               }
+            }
+            .block-remarque {
+              background: $remarque;
+            }
+            .block-important {
+              background: $important;
+            }
+            .block-exemple {
+              background: $exemple;
+              color: $textGrey !important;
+            }
+            .block-definition {
+              background: $defintion;
+            }
+            .block-methode {
+              background: $methode;
             }
             .block.block-math {
               margin: 40px 0 40px 0;
@@ -174,6 +208,15 @@ body {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+        .logo{
+          margin: 0 15% 0 15%;
+          a{
+            width: 100%;
+            img{
+              max-width: 100%;
+            }
+          }
+        }
       }
 
       .nav-link {

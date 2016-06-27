@@ -157,7 +157,7 @@ table tr:nth-child(odd) {
 	            	}
 				}
             }
-            
+
 			ul.nav-link,ul.nav-menu {
 				list-style: none;
 				margin: 0;
@@ -216,24 +216,30 @@ table tr:nth-child(odd) {
 					border-bottom: 2px solid rgba($black,0.4);
 					border-top: 2px solid rgba($white,0.4);
 					width: 100%;
-					a{
-						color: $white ;
-						width: 100%;
+
+					a {
+						color: $white;
+						width: 88%;
+						min-width: 88%;
 						text-decoration: none;
 						overflow: hidden;
-						display: table;
-		      			p{
-		      				display: table-cell;
-		      				vertical-align: middle;
-		      				
-		      			}
-		      			p.name{
-							width: 70%;
-		      			}
-		      			p.icone{
-							width: 30%;
-							text-align: right;
-		      			}
+						float: left;
+						line-height: 36px;
+						padding-left: 20px;
+					}
+
+					span {
+						width: 10%;
+						float: right;
+						padding: 11px 5px 0 0;
+						line-height: 40px;
+						i {
+							color: white;
+						}
+					}
+
+					span:hover {
+						cursor: pointer;
 					}
 				}
 				li.active {
@@ -246,7 +252,7 @@ table tr:nth-child(odd) {
 					display: none;
 					background: $white;
 					padding: 0;
-					
+
 					li {
 						border: none;
 						margin: 0;
@@ -333,7 +339,7 @@ table tr:nth-child(odd) {
     width: 100%;
     position: absolute;
     padding: 0 !important;
-      
+
     .container-fluid {
       padding: 0;
       /********  title container ********/
@@ -357,14 +363,14 @@ table tr:nth-child(odd) {
 				font-size: 35px;
 				font-family: Tahoma, Geneva, sans-serif;
 			}
-			.row{ 
+			.row{
 				margin:0;
 				padding: 0;
 				width: 100%;
 				.col-lg-12{
 					padding: 0;
 					h3{
-						padding-left: 50px; 
+						padding-left: 50px;
 						margin-top: 40px;
 						z-index: 1;
 					}
@@ -383,19 +389,19 @@ table tr:nth-child(odd) {
 							z-index: 200;
 						}
 
-						
+
 						/********  block note overall ********/
 						.blockNote{
 							border: 2px solid;
 							border-radius: 4px;
 							margin-top: 20px;
-							 
+
 
 							.block-note-title {
 								background: $white;
 								margin: -20px 0 0px 30px;
 								width: 160px;
-								padding: 0 0 30px 8px; 
+								padding: 0 0 30px 8px;
 								font-size: 20px;
 								z-index: 2;
 								i {
@@ -508,7 +514,7 @@ table tr:nth-child(odd) {
 							padding: 0;
 						}
 					}
-				}	
+				}
 			}
 			/********  index   ********/
 			.index {
@@ -637,7 +643,7 @@ table tr:nth-child(odd) {
 	width: 100% !important;
 	top: 0 !important;
 	left: 0 !important;
-	
+
 
 	.modal-dialog{
 		top:25%;
@@ -670,12 +676,12 @@ table tr:nth-child(odd) {
     }
     #wrapper.toggled {
         padding-left: 0;
-    }   
+    }
 
     #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
- 
+
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
@@ -727,12 +733,12 @@ table tr:nth-child(odd) {
     }
     #wrapper.toggled {
         padding-left: 0;
-    }   
+    }
 
     #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
- 
+
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;

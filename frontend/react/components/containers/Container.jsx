@@ -137,13 +137,13 @@ var Container = React.createClass({
             type: "POST",
             url: '/pages',
             context: this,
-            data: { 
-                page: { 
-                    name: this.state.newPageValue, 
-                    content: '', 
+            data: {
+                page: {
+                    name: this.state.newPageValue,
+                    content: '',
                     sequence: 0,
-                    level: 0, 
-                    container_id: this.state.container.id 
+                    level: 0,
+                    container_id: this.state.container.id
                 }
             },
             success: function(data) {
@@ -177,14 +177,14 @@ var Container = React.createClass({
 
                     <ReactCSSTransitionGroup transitionName="menu-transition" transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionAppear={true} transitionAppearTimeout={500}>
                         <aside id="sidebar-wrapper">
-                            <Menu 
-                                key={Math.floor((Math.random() * 900))} 
-                                pages={pages} 
-                                container={container} 
-                                dragAction={this.dragPages} 
-                                levelizeAction={this.levelizePages} 
-                                pageDeletion={this.deletePage} 
-                                activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id} 
+                            <Menu
+                                key={Math.floor((Math.random() * 900))}
+                                pages={pages}
+                                container={container}
+                                dragAction={this.dragPages}
+                                levelizeAction={this.levelizePages}
+                                pageDeletion={this.deletePage}
+                                activePage={this.props.routeParams.pageId ? this.props.routeParams.pageId : this.state.activePage.id}
                             />
                         </aside>
                     </ReactCSSTransitionGroup>
@@ -193,34 +193,35 @@ var Container = React.createClass({
                         { this.state.loading
                             ? null
                             : <div className="content">
-                                { this.props.routeParams.pageId 
-                                    ? <Page 
-                                            key={this.props.routeParams.pageId} 
+                                { this.props.routeParams.pageId
+                                    ? <Page
+                                            key={this.props.routeParams.pageId}
                                             container={this.state.container}
-                                            page={this.props.routeParams.pageId} 
+                                            page={this.props.routeParams.pageId}
                                             types={this.state.types}
                                             changePageName={this.changePageName}
-                                        /> 
-                                    : null 
+                                        />
+                                    : null
                                 }
 
-                                { !this.props.routeParams.pageId && this.state.activePage 
-                                    ? <Page 
-                                            key={this.state.activePage.id} 
+                                { !this.props.routeParams.pageId && this.state.activePage
+                                    ? <Page
+                                            key={this.state.activePage.id}
                                             container={this.state.container}
-                                            page={this.state.activePage.id} 
+                                            page={this.state.activePage.id}
                                             types={this.state.types}
-                                            changePageName={this.changePageName} 
-                                        /> 
-                                    : null 
+                                            changePageName={this.changePageName}
+                                        />
+                                    : null
                                 }
 
-                                { !this.props.routeParams.pageId && !this.state.activePage 
+                                { !this.props.routeParams.pageId && !this.state.activePage
                                     ? <div id="create_new_page">
+                                      <h4> Pour ajouter du contenu à votre ressource créer une première page:</h4>
                                         <span className="input-group-addon" onClick={this.createPage}>
                                             <i className="fa fa-plus fa-fw"></i>
                                         </span>
-                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName} onKeyPress={this._handleKeyPress}/><br/>
+                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la première page..." onChange={this.handlePageName} onKeyPress={this._handleKeyPress}/><br/>
                                             { this.state.newPageValue ? <button onClick={this.createPage} className="btn-success"><i className="fa fa-check"></i></button> : null }
                                     </div>
                                     : null
