@@ -1,252 +1,260 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title><%= @container.name %></title>
-        <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<%= @assets_prefix %>assets/css/template.css" rel="stylesheet">
-        <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="<%= @assets_prefix %>assets/css/lightbox.min.css" rel="stylesheet">
-    </head>
+<head>
+  <meta charset="utf-8">
+  <title><%= @container.name %></title>
+  <link href="<%= @assets_prefix %>assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<%= @assets_prefix %>assets/css/template2.css" rel="stylesheet">
+  <link href="<%= @assets_prefix %>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="<%= @assets_prefix %>assets/css/lightbox.min.css" rel="stylesheet">
+</head>
 
-    <body>
-        <div id="wrapper">
-        	<div id="sidebar-wrapper">
-          		<div class="sidebar-nav">
-                <div class="logo">
-            			<a href="<%= @org_link %>" target="_blank">
-            				<img src="<%= @assets_prefix %>assets/images/iutenligne.png"  border="0">
-            			</a>
+<body>
+  <div id="wrapper" class="toggled">
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+
+        <!-- title container-->
+        <h1 class="container-title"><%= @container.name %></h1>
+        <!-- / title container -->
+
+        <!-- title page -->
+        <h2 class="page-title"><%= @page.name %></h2>
+        <!-- / title page -->
+
+        <!-- content -->
+        <% @blocks.each do |block| %>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="content">
+              <!-- media blocks -->
+              <% if block.type_id == 2 %>
+                <div class="block">
+                  <% if block.name != "" %>
+                    <h3><%= block.name %></h3>
+                  <% end %>
+                  <%= raw(block.content) if block.content %>
                 </div>
+              <!-- note blocks -->
+              <% elsif block.type_id == 3 %>
+              <div class="block block-<%= block.classes %> block-note">
+                <% if block.name != "" %>
+                  <h3><%= block.name %></h3>
+                <% end %>
+                <div class="block-note-title block-note-title-<%= block.classes %>">
+                  <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
+                </div>
+                <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
+              </div>
+              <% elsif block.type_id == 4 %>
+                <div class="block block-math">
+                  <% if block.name != "" %>
+                    <h3><%= block.name %></h3>
+                  <% end %>
+                  <%= raw("$$" + block.content + "$$") if block.content %>
+                </div>
+              <% else %>
+                <div class="block">
+                  <% if block.name != "" %>
+                    <h3><%= block.name %></h3>
+                  <% end %>
+                  <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
 
-          			<ul class="nav-link">
-          				<li>
-  					        <a class="btn btn-default" href="<%= @home_link %>">
-  					          	<i class="fa fa-home fa-fw" title="Home" aria-hidden="true"></i>
-  					          	<span class="sr-only">Home</span>
-            					</a>
-            				</li>
-            				<li>
-  					        <a class="btn btn-default" href="#">
-  						        <i class="fa fa-facebook fa-fw" title="Facebook" aria-hidden="true"></i>
-  						        <span class="sr-only">Facebook</span>
-  					        </a>
-  					     </li>
-					       <li>
-					        <a class="btn btn-default" href="#">
-					          	<i class="fa fa-pencil fa-fw" title="Mail" aria-hidden="true"></i>
-					          	<span class="sr-only">Mail</span>
-					        </a>
-					       </li>
-					       <li>
-					        <a href="#menu-toggle" id="menu-toggle" class="btn btn-default">
-						          <i class="fa fa-chevron-left fa-fw" title="Navigation" aria-hidden="true"></i>
-						          <span class="sr-only">Navigation</span>
-					        </a>
-					       </li>
-					   </ul>
-
-          			<ul class="nav-menu" id="nav-menu">
-                  <%= raw(@menu) %>
-					      </ul>
-          		</div>
-          	</div>
-
-          	<!-- icone bars-->  
-          	<div id="icone-menu" class="none">
-          		<a href="#menu-bars" id="menu-bars" class="btn btn-default">
-         			<i class="fa fa-bars fa-fw" title="Menu" aria-hidden="true"></i>
-          			<span class="sr-only">Menu</span> 
-          		</a> 
-          	</div>
-          	<!-- / icone bars-->
-
-         	<div id="page-content-wrapper">
-          		<div class="container-fluid">
-          			<!-- title container--> 
-          			<h1 class="container-title"><%= @container.name %></h1>
-			        <!-- / title container -->
-
-			        <!-- title page -->
-			        <h2 class="page-title"><%= @page.name %></h2>
-			        <!-- / title page --> 
-
-			        <!-- content -->
-                    <% @blocks.each do |block| %>
-                			<div class="row">
-                				<div class="col-lg-12">
-                            <% if block.name != "" %>
-                              <h3><%= block.name %></h3>
-                            <% end %>
-                            <div class="content">
-                                <!-- media blocks -->
-                                <% if block.type_id == 2 %>
-                                    <%= raw(block.content) if block.content %>
-                                <!-- note blocks -->
-                                <% elsif block.type_id == 3 %>
-                   					        <div class="block-<%= block.classes %> blockNote">
-                                        <div class="block-note-title block-note-title-<%= block.classes %>">
-                                            <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
-                                        </div>
-                                        <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
-                                    </div>
-                                <% elsif block.type_id == 4 %>
-                                  <div class="blockMathJax">
-                                    <%= raw("$$" + block.content + "$$") if block.content %>
-                                  </div>
-                                <% else %>
-                                    <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
-                                <% end %>
-                            </div>
-                				</div> 
-                			</div>
-                    <% end %>
-
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="content">
-                          <% if @toc && @blocks.length === 0 %>
-                            <ul class="micro-nav">
-                              <% @toc.each do |toc| %>
-                                <li>
-                                  <a href="<%= toc.id %>"><%= toc.name %></a>
-                                </li>
-                              <% end %>
-                            </ul>
-                          <% end %>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- btn next and prev -->
-                    <div class="row btn">
-                      <div class="col-lg-6 btn-after">
-                        <% if @prev_link && @prev_link != "" %>
-                          <a href="<%= @prev_link %>">
-                            <i class="fa fa-arrow-circle-left"></i>
-                            <span class="link-text">Précédent</span>
-                          </a>
-                        <% end %>
-                      </div>
-                      <div class="col-lg-6 btn-next">
-                        <% if @next_link && @next_link != "" %>
-                          <a  href="<%= @next_link %>">
-                            <span class="link-text">Suite</span>
-                            <i class="fa fa-arrow-circle-right"></i>
-                          </a> 
-                        <% end %>
-                      </div>
-                    </div>
-                    <!-- /btn next and prev -->
-					<!-- / content --> 
-
-            	</div>
-        	</div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="content">
+              <% if @toc && @blocks.length === 0 %>
+              <ul class="micro-nav">
+                <% @toc.each do |toc| %>
+                <li>
+                  <a href="<%= toc.id %>"><%= toc.name %></a>
+                </li>
+                <% end %>
+              </ul>
+              <% end %>
+            </div>
+          </div>
         </div>
 
-        <!-- Modal -->
-        <% unless @terms.nil? %>
-          <% @terms.each do |term| %>
-            <div class="modal fade" id="<%= term.id.to_s %>-term" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>       
-                    <h4 class="modal-title" id="myModalLabel"><%= term.name if term.name != "" %></h4>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <%= term.description if term.description != "" %>
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-        <!-- / Modal -->
+        <!-- btn next and prev -->
+        <div class="row btn">
+          <div class="col-lg-6 btn-after">
+            <% if @prev_link && @prev_link != "" %>
+            <a href="<%= @prev_link %>">
+              <i class="fa fa-arrow-circle-left"></i>
+              <span class="link-text">Précédent</span>
+            </a>
+            <% end %>
+          </div>
+          <div class="col-lg-6 btn-next">
+            <% if @next_link && @next_link != "" %>
+            <a  href="<%= @next_link %>">
+              <span class="link-text">Suite</span>
+              <i class="fa fa-arrow-circle-right"></i>
+            </a>
+            <% end %>
+          </div>
+        </div>
+        <!-- /btn next and prev -->
+      </div>
+    </div>
 
-      <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
-		  <script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
-      <script src="<%= @assets_prefix %>assets/js/lightbox.min.js"></script>
+    <div id="sidebar-wrapper">
+      <div class="sidebar-nav">
+        <div id="brand">
+          <div class="logo">
+            <a href="<%= @org_link %>" target="_blank">
+              <img src="<%= @assets_prefix %>assets/images/iutenligne.png"  border="0">
+            </a>
+          </div>
+        </div>
+        <ul class="nav-link">
+          <li>
+            <a class="btn btn-default" href="<%= @home_link %>">
+              <i class="fa fa-home fa-fw" title="Home" aria-hidden="true"></i>
+              <span class="sr-only">Home</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-default" href="#">
+              <i class="fa fa-facebook fa-fw" title="Facebook" aria-hidden="true"></i>
+              <span class="sr-only">Facebook</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn btn-default" href="#">
+              <i class="fa fa-pencil fa-fw" title="Mail" aria-hidden="true"></i>
+              <span class="sr-only">Mail</span>
+            </a>
+          </li>
+          <li>
+            <a href="#menu-toggle" id="menu-toggle" class="btn btn-default">
+              <i class="fa fa-chevron-left fa-fw" title="Navigation" aria-hidden="true"></i>
+              <span class="sr-only">Navigation</span>
+            </a>
+          </li>
+        </ul>
 
-	    <script type="text/javascript">
-            $(document).ready(function() {
-                $("#menu-toggle").click(function(e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                    $("#icone-menu").removeClass('none').addClass('block');
-                });
-                 
-                $("#menu-bars").click(function(e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                    $("#icone-menu").removeClass('block').addClass('none');
-                });
+        <ul class="nav-menu" id="nav-menu">
+          <%= raw(@menu) %>
+        </ul>
+      </div>
+    </div>
 
-                var activePage = $('#nav-menu').find('.active');
-                
-                function findParentItem(el) {
-                  if (($(el).parent().is('ul')) && (!$(el).parent().hasClass('nav-menu'))) {
-                    $(el).parent().addClass('active-parent');
-                    findParentItem($(el).parent());
-                  }
-                }
+  </div>
 
-                findParentItem(activePage);
+  <!-- Modal -->
+  <% unless @terms.nil? %>
+    <% @terms.each do |term| %>
+    <div class="modal fade" id="<%= term.id.to_s %>-term" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"><%= term.name if term.name != "" %></h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              <%= term.description if term.description != "" %>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
+  <!-- / Modal -->
 
-                function findChildren(el) {
-                  if ($(el).next().is("ul")){
-                    $(el).next().show();
-                  }
-                }
+  <div class="extra-flying-div"></div>
 
-                findChildren(activePage);
+  <script src="<%= @assets_prefix %>assets/js/jquery.js"></script>
+  <script src="<%= @assets_prefix %>assets/js/bootstrap.min.js"></script>
+  <script src="<%= @assets_prefix %>assets/js/lightbox.min.js"></script>
 
-                var uls = $('#nav-menu').find('ul').each(function() {
-                  var $ul = $(this);
-                  var $elem = $(this).prev().find('span').find('i');
-                  $elem.bind("click", function(){
-                    $ul.toggle();
-                      if ($ul.is(":visible")) {
-                      if ($elem.hasClass("fa-plus")) {
-                        $elem.removeClass("fa-plus");
-                      }
-                      $elem.addClass("fa-minus");
-                    } else {
-                      if ($elem.hasClass("fa-minus")) {
-                        $elem.removeClass("fa-minus");
-                      }
-                      $elem.addClass("fa-plus");
-                    }
-                  });
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      $("#icone-menu").removeClass('none').addClass('block');
+    });
 
-                  if ($ul.is(":visible")) {
-                    if ($elem.hasClass("fa-plus")) {
-                      $elem.removeClass("fa-plus");
-                    }
-                    $elem.addClass("fa-minus");
-                  } else {
-                    if ($elem.hasClass("fa-minus")) {
-                      $elem.removeClass("fa-minus");
-                    }
-                    $elem.addClass("fa-plus");
-                  }
-                });
-            });
-      </script>
+    $("#menu-bars").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      $("#icone-menu").removeClass('block').addClass('none');
+    });
 
-      <% if @mathjax == true %>
-          <script type="text/x-mathjax-config">
-              MathJax.Hub.Config({ 
-                  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']] }
-              });
-          </script>
-          <script type="text/javascript" src="<%= @libs_prefix %>mathjax/MathJax.js?config=TeX-AMS_HTML" data-no-turbolinks="true"></script>
-          <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathMenu.js" data-no-turbolinks="true"></script>
-          <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathZoom.js" data-no-turbolinks="true"></script>
-      <% end %>
+    var activePage = $('#nav-menu').find('.active');
 
-	</body>
+    function findParentItem(el) {
+      if (($(el).parent().is('ul')) && (!$(el).parent().hasClass('nav-menu'))) {
+        $(el).parent().addClass('active-parent');
+        findParentItem($(el).parent());
+      }
+    }
+
+    findParentItem(activePage);
+
+    function findChildren(el) {
+      if ($(el).next().is("ul")){
+        $(el).next().show();
+      }
+    }
+
+    findChildren(activePage);
+
+    var uls = $('#nav-menu').find('ul').each(function() {
+      var $ul = $(this);
+      var $elem = $(this).prev().find('span').find('i');
+      $elem.bind("click", function(){
+        $ul.toggle();
+        if ($ul.is(":visible")) {
+          if ($elem.hasClass("fa-plus")) {
+            $elem.removeClass("fa-plus");
+          }
+          $elem.addClass("fa-minus");
+        } else {
+          if ($elem.hasClass("fa-minus")) {
+            $elem.removeClass("fa-minus");
+          }
+          $elem.addClass("fa-plus");
+        }
+      });
+
+      if ($ul.is(":visible")) {
+        if ($elem.hasClass("fa-plus")) {
+          $elem.removeClass("fa-plus");
+        }
+        $elem.addClass("fa-minus");
+      } else {
+        if ($elem.hasClass("fa-minus")) {
+          $elem.removeClass("fa-minus");
+        }
+        $elem.addClass("fa-plus");
+      }
+    });
+  });
+  </script>
+
+  <% if @mathjax == true %>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']] }
+  });
+  </script>
+  <script type="text/javascript" src="<%= @libs_prefix %>mathjax/MathJax.js?config=TeX-AMS_HTML" data-no-turbolinks="true"></script>
+  <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathMenu.js" data-no-turbolinks="true"></script>
+  <script type="text/javascript" src="<%= @libs_prefix %>mathjax/extensions/MathZoom.js" data-no-turbolinks="true"></script>
+  <% end %>
+
+</body>
 </html>

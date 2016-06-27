@@ -49,7 +49,7 @@ gulp.task('editor', function () {
 });
 
 gulp.task('template', function () {
-  gulp.src('./frontend/templates/*.scss')
+  gulp.src('./frontend/templates/template.scss')
     .pipe(sass({outputStyle: 'compressed'})
       .on('error', sass.logError)
       .on('error', function(){
@@ -57,6 +57,21 @@ gulp.task('template', function () {
       })
     )
     .pipe(concat("template.css"))
+    .pipe(gulp.dest('./public/templates/iutenligne/assets/css'))
+    .on('end', function() { 
+      gutil.log(gutil.colors.green('/ᐠ｡ꞈ｡ᐟ\\') + gutil.colors.green(' CSS generated !'))
+    });
+});
+
+gulp.task('template2', function () {
+  gulp.src('./frontend/templates/template2.scss')
+    .pipe(sass({outputStyle: 'compressed'})
+      .on('error', sass.logError)
+      .on('error', function(){
+        gutil.log(gutil.colors.red(' ( ⓛ ω ⓛ ) not good'));
+      })
+    )
+    .pipe(concat("template2.css"))
     .pipe(gulp.dest('./public/templates/iutenligne/assets/css'))
     .on('end', function() { 
       gutil.log(gutil.colors.green('/ᐠ｡ꞈ｡ᐟ\\') + gutil.colors.green(' CSS generated !'))
@@ -82,7 +97,8 @@ gulp.task("es6", function () {
 gulp.task('watch', function () {
   gulp.watch('./frontend/stylesheets/**/*.scss', ['sass']);
   gulp.watch('./frontend/stylesheets/editor/*.scss', ['editor']);
-  gulp.watch('./frontend/templates/*.scss', ['template']);
+  gulp.watch('./frontend/templates/template.scss', ['template']);
+  gulp.watch('./frontend/templates/template2.scss', ['template2']);
   gulp.watch('./frontend/javascripts/**/*.es6', ['js']);
   gulp.watch('./frontend/react/**/*.jsx', ['react']);
 });

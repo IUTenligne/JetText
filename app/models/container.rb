@@ -6,7 +6,7 @@ class Container < ActiveRecord::Base
   has_many :versions
   has_and_belongs_to_many :companies, :through => :companies_container
 
-  validates :name,		:presence => true, length: { maximum: 250 }
+  validates :name,		  :presence => true, length: { maximum: 250 }
   validates :content, 	:presence => false
   validates :user_id, 	:presence => true
 

@@ -16,14 +16,14 @@ group :development do
 end
 
 group :test do
-  gem 'minitest'
-  gem 'minitest-reporters'
 end
 
 group :development, :test do
   gem 'annotate'
   gem 'better_errors'
-  gem 'factory_girl'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
   gem 'factory_girl_rails'
 end
 
