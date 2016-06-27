@@ -63,7 +63,13 @@ class GeneratorController < ApplicationController
     }
 
     if @blocks.empty? || @blocks.length === 0
-      @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
+      @toc = Array.new
+      @next_pages = Page.where(container_id: @container.id)
+        .where("sequence > ?", @page.sequence)
+        .map{|p|
+          break if p.level === @page.level
+          @toc.push(p)
+        }
     end
 
     @assets_prefix = "/templates/iutenligne/"
