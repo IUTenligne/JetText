@@ -381,42 +381,6 @@
 				overflow-x: hidden !important;
 				overflow-y: auto !important;
 
-				.file-type {
-					padding: 10px;
-					box-sizing: border-box;
-					display: inline-block;
-					text-align: center;
-
-					i {
-						width: 80px;
-						height: 80px;
-						color: white;
-						vertical-align: middle;
-						display: table-cell;
-						font-size: 30px;
-						box-shadow: 0px 2px 4px rgba(0,0,0,0.50);
-					}
-
-					i.images {
-						background-image:linear-gradient( $lightYellow,rgb(212,140,7));
-					}
-
-					i.pdfs {
-						background-image:linear-gradient( $lightRed,rgb(186,67,38));
-					}
-
-					i.videos {
-						background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
-					}
-
-					i.audios {
-						background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
-					}
-
-					i.miscs {
-						background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
-					}
-				}
 
 				#files-zone {
 					padding: 10px;
@@ -464,18 +428,88 @@
 						}
 					}
 				}
+
 				div.filters-bar{
 					width: 100% - 10%;
-					max-height: 120px;
+					height: 150px;
 					position: fixed;
 					background: $white;
 					padding: 7px;
 					overflow: hidden !important;
-					button{
-						clear: both;
+
+					#bars{
+						width: calc(100% - 20%);
+						overflow: hidden !important;
+						margin: 0 10% 0 10%;
+						span.active-filter {
+							padding: 0 0 30px 0;
+							border-bottom: 3px solid $lightBlue;
+						}
+					}
+					.filter-file {
+						width: 60px;
+						height: 60px;
+						color: white;
+						font-size: 15px;
+						box-shadow: 0px 2px 3px rgba(0,0,0,0.30);
+						margin-left: 5px;
+						margin-right: 5px;
+						border: 0px;
+						border-radius: 4px;
+						i:before {
+							font-size: 26px;
+						}
+					}
+
+					.filter-file.active-filter {
+						transform: scale(1.1);
+					}
+
+					.filter-image {
+						background-image:linear-gradient($lightYellow,rgb(212,140,7));
+						box-shadow: 2px 2px 7px 0px rgba($lightYellow,0.48);
+						i:before{
+						    content: "\f1c5";
+						    font-family: FontAwesome;
+						}
+					}
+
+					.filter-pdf {
+						background-image:linear-gradient( $lightRed,rgb(186,67,38));
+						box-shadow: 2px 2px 7px 0px rgba($lightRed,0.48);
+						i:before{
+					    content: "\f1c1";
+					    font-family: FontAwesome;
+					  }
+					}
+
+					.filter-video {
+						background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
+						box-shadow: 2px 2px 7px 0px rgba($lighTbBlue,0.48);
+						i:before{
+					    content: "\f16a";
+					    font-family: FontAwesome;
+					  }
+					}
+
+					.filter-audio {
+						background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
+						box-shadow: 2px 2px 7px 0px rgba($lighTbpurple,0.48);
+						i:before{
+					    content: "\f028";
+					    font-family: FontAwesome;
+					  }
+					}
+
+					.filter-misc {
+						background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
+						box-shadow: 2px 2px 7px 0px rgba($lighTbGrey,0.48);
+						i:before{
+					    content: "\f15b";
+					    font-family: FontAwesome;
+					  }
 					}
 				}
-
 				article#media-panel {
 					width: 100%;
 					margin-top: 150px;
@@ -536,11 +570,14 @@
 						}
 
 						div#media-files-preview {
-							position: fixed;
-							overflow: hidden;
 							right: 8%;
 							width: 28%;
+							display: table-cell;
+							vertical-align: top;
+							overflow: hidden;
+							max-height: 50%;
 							#previewed-file {
+								display: block;
 								width: 100%;
 								float: right;
 								border-radius: 4px;
@@ -834,73 +871,6 @@
 	}
 }
 
-.filters-bar {
-	margin-bottom: 30px;
-
-	span.active-filter {
-		padding: 0 0 30px 0;
-		border-bottom: 3px solid $lightBlue;
-	}
-
-	.filter-file {
-		width: 60px;
-		height: 60px;
-		color: white;
-		font-size: 15px;
-		box-shadow: 0px 2px 3px rgba(0,0,0,0.30);
-		margin-left: 5px;
-		margin-right: 5px;
-		border: 0px;
-		border-radius: 4px;
-		i:before {
-			font-size: 26px;
-		}
-	}
-
-	.filter-file.active-filter {
-		transform: scale(1.1);
-	}
-
-	.filter-image {
-		background-image:linear-gradient($lightYellow,rgb(212,140,7));
-		i:before{
-		    content: "\f1c5";
-		    font-family: FontAwesome;
-		}
-	}
-
-	.filter-pdf {
-		background-image:linear-gradient( $lightRed,rgb(186,67,38));
-		i:before{
-	    content: "\f1c1";
-	    font-family: FontAwesome;
-	  }
-	}
-
-	.filter-video {
-		background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
-		i:before{
-	    content: "\f16a";
-	    font-family: FontAwesome;
-	  }
-	}
-
-	.filter-audio {
-		background-image:linear-gradient( $lighTbpurple,rgb(118,70,150));
-		i:before{
-	    content: "\f028";
-	    font-family: FontAwesome;
-	  }
-	}
-
-	.filter-misc {
-		background-image:linear-gradient( $lighTbGrey, rgb(100,110,118));
-		i:before{
-	    content: "\f15b";
-	    font-family: FontAwesome;
-	  }
-	}
-}
 
 
 #mention-autocomplete {

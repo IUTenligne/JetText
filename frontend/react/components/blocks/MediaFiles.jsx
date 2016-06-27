@@ -11,7 +11,7 @@ var MediaInfo = React.createClass({
             selectedFile: ''
         };
     },
-    
+
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
     },
@@ -35,7 +35,7 @@ var MediaInfo = React.createClass({
         } else if (this.props.file.filetype === "pdf") {
            var item = '<object data="'+ this.props.file.url +'" width="100%" height="300px" type="application/pdf">\n\t<embed src="'+ this.props.file.url +'" type="application/pdf"/>\n</object>';
         }
-        
+
         this.props.preview(true, item, this.props.file);
     },
 
@@ -60,7 +60,7 @@ var MediaInfo = React.createClass({
                 <td>
                     {file.file_updated_at.split("T")[0].split("-").reverse().join("/")}
                 </td>
-            </tr> 
+            </tr>
         );
     }
 });
@@ -121,7 +121,7 @@ var MediaFiles = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     files: this.state.files.concat([data]),
                     filter: false,
                     loading: false
@@ -174,7 +174,7 @@ var MediaFiles = React.createClass({
             /* case when the user selects the already active type filter */
             if (this.state.filterSearch === true) {
                 /* if any searchedString is on */
-                this.setState({ 
+                this.setState({
                     filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 ),
                     loading: false,
                     filterSearch: true,
@@ -183,7 +183,7 @@ var MediaFiles = React.createClass({
             } else {
                 /* if not, consider the user removes the type filter - set the files[] to the default state */
                 this.setState({
-                    filteredFiles: this.state.files, 
+                    filteredFiles: this.state.files,
                     loading: false,
                     filter: false,
                     filterSearch: false,
@@ -239,7 +239,7 @@ var MediaFiles = React.createClass({
     },
 
     handlePreview: function(st, file, fileObject) {
-        this.setState({ 
+        this.setState({
             preview: st,
             previewedFile: file,
             selectedFile: fileObject
@@ -261,27 +261,30 @@ var MediaFiles = React.createClass({
         return (
             <Modal active={this.closeModal} mystyle={"media"} title={"Mes fichiers"}>
                 <div className="filters-bar">
+                  <div id="bars">
                     <span className="input-group-addon">
                         <i className="fa fa-search fa-fw"></i>
                     </span>
-                    <input type="text" placeholder="Rechercher..." className="form-control" onChange={this.searchByString} /><br/>
+                    <input type="text" placeholder="Rechercher..." className="form-control" onChange={this.searchByString} />
+                    <br/>
+                  </div>
                     { this.state.types.map(function(type, index){
-                        return( 
-                            that.state.activeFilter === type.filetype 
+                        return(
+                            that.state.activeFilter === type.filetype
                             ? <span key={index} className="active-filter">
                                 <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
                                     <i className={"file-" + type.filetype}></i>
-                                </button> 
+                                </button>
                             </span>
-                            : 
+                            :
                             <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
                                 <i className={"file-" + type.filetype}></i>
-                            </button> 
+                            </button>
                         );
                     })}
                 </div>
-                <article id="media-panel"> 
-                        
+                <article id="media-panel">
+
                     { this.state.loading
                         ? <Loader />
                         : <div id="media-browser">
@@ -306,7 +309,7 @@ var MediaFiles = React.createClass({
                                             ? this.state.filteredFiles.map(function(result, index){
                                                 return (
                                                     <MediaInfo
-                                                        key={result.id} 
+                                                        key={result.id}
                                                         file={result}
                                                         index={index+1}
                                                         preview={that.handlePreview}
@@ -315,7 +318,7 @@ var MediaFiles = React.createClass({
                                             })
                                             : this.state.files.map(function(result, index){
                                                 return (
-                                                    <MediaInfo 
+                                                    <MediaInfo
                                                         key={result.id}
                                                         file={result}
                                                         index={index+1}
@@ -328,14 +331,14 @@ var MediaFiles = React.createClass({
                                 </table>
                             </div>
                             <div id="media-files-preview">
-                                { this.state.preview 
+                                { this.state.preview
                                     ? <div>
-                                        <div id="previewed-file" dangerouslySetInnerHTML={{__html: this.state.previewedFile}} /> 
+                                        <div id="previewed-file" dangerouslySetInnerHTML={{__html: this.state.previewedFile}} />
                                         <button id="previewed-btn" className="btn btn-lg" onClick={this.handleUpdate}>
                                             Ok <i className="fa fa-check"></i>
                                         </button>
                                     </div>
-                                    : null 
+                                    : null
                                 }
                             </div>
                         </div>
