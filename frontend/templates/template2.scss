@@ -82,7 +82,7 @@ body {
 
   #page-content-wrapper {
   	width: 100%;
-    padding: 40px 50px 50px 50px;
+    padding: 40px 50px 0px 50px;
     float: left;
 
     .container-fluid {
@@ -101,7 +101,6 @@ body {
 					padding: 0;
 
           .content {
-
             .block {
               background: $white;
               left: 0;
@@ -114,13 +113,18 @@ body {
                 color: $textGrey;
               }
             }
+
+            .block > * {
+              max-width: 1200px;
+            }
+
             .block.block-note {
               margin: 40px 0 40px 0;
               padding: 30px;
             }
             .block.block-note.block-important {
               background: $important;
-              box-shadow: 0 3px 3px rgba(0,0,0,0.50);
+              box-shadow: 0 3px 3px rgba(0,0,0,0.40);
               color: white;
               h3 {
                 color: white
@@ -128,13 +132,12 @@ body {
             }
             .block.block-note.block-exemple {
               background: $exemple;
-              box-shadow: 0 3px 3px rgba(0,0,0,0.30);
+              box-shadow: 0 3px 3px rgba(0,0,0,0.40);
             }
             .block.block-math {
               margin: 30px 0 30px 0;
               padding: 15px;
               background: url('../images/math-bg.png') repeat;
-              border-radius: 4px;
               box-shadow: 0 3px 3px rgba(0,0,0,0.50);
             }
           }
