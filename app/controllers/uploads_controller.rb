@@ -68,8 +68,13 @@ class UploadsController < ApplicationController
   end
 
   def destroy
-		Upload.find(params[:id]).destroy
-    render :nothing => true
+    used = Upload.is_used?(current_user, params[:id])
+    unless used === true
+		  Upload.find(params[:id]).destroy
+      render json: { status: "success" }
+    else
+      render json: { status: "error" }
+    end
   end
 
   def search

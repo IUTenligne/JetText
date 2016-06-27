@@ -62,7 +62,7 @@ class GeneratorController < ApplicationController
       end
     }
 
-    if @blocks.empty?
+    if @blocks.empty? || @blocks.length === 0
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
     end
     
@@ -79,22 +79,38 @@ class GeneratorController < ApplicationController
     @page = Page.find(params[:id])
     @container = Container.find(@page.container_id)
     @version = Version.where(container_id: @container.id).last
+    @glossaries = ContainersGlossary.where(container_id: @container.id)
     @pages = Page.where(container_id: @page.container_id)
-
+    
     @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
     @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
     @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
     @next_link = "#{@next_page.id}" unless @next_page.nil?
+    
+    @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
+    @mathjax = false
 
-    @menu = recur_page_level(true, @pages, false, 0, "", 0, @page)
     @blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
+    @blocks.map { |block| 
+      block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
+      @mathjax = true if block.type_id == 4
+      if block.type_id != 2
+        unless @glossaries.nil?
+          @glossaries.map { |glossary| 
+            @terms = Term.where(glossary_id: glossary.glossary_id)
+            @terms.each do |term|
+              block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
+            end
+          }
+        end
+      end
+    }
 
-    if @blocks.empty?
+    if @blocks.empty? || @blocks.length === 0
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
     end
 
-    @mathjax = false
     @assets_prefix = ""
     @home_link = "index.html"
     @libs_prefix = "libs/"
@@ -233,13 +249,13 @@ class GeneratorController < ApplicationController
           if pages[i].name
             content = content + "<li class=\"active\"><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\"><p class=\"name\">" + pages[i].name+ "</p><p class=\"icone\"></p></a></li>\n"
           else
-            content = content + "<li class=\"active\"><a href=\"#{i}\">" + i + "</a></li>\n"
+            content = content + "<li class=\"active\"><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         else
           if pages[i].name
             content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\"><p class=\"name\">" + pages[i].name + "</p><p class=\"icone\"></p></a></li>\n"
           else
-            content = content + "<li><a href=\"#{i}\">" + i + "</a></li>\n"
+            content = content + "<li><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         end
       else
@@ -247,20 +263,20 @@ class GeneratorController < ApplicationController
           if pages[i].name
             content = content + "<li><a href=\"pages/#{pages[i].id}\"><p class=\"name\">" + pages[i].name + "</p><p class=\"icone\"></p></a></li>\n"
           else
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a></li>\n"
+            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         else
           if current_page != nil && pages[i].id == current_page.id
             if pages[i].name
               content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\"><p class=\"name\">" + pages[i].name + "</p><p class=\"icone\"></p></a></li>\n"
             else
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
+              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           else
             if pages[i].name
               content = content + "<li><a href=\"#{pages[i].id}\"><p class=\"name\">" + pages[i].name + "</p><p class=\"icone\"></p></a></li>\n"
             else
-              content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
+              content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           end
         end
@@ -396,9 +412,21 @@ class GeneratorController < ApplicationController
         if block.type_id == 4
           @mathjax = true
         end
+
+        # glossaries handling
+        if block.type_id != 2
+          unless @glossaries.nil?
+            @glossaries.map { |glossary| 
+              @terms = Term.where(glossary_id: glossary.glossary_id)
+              @terms.each do |term|
+                block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
+              end
+            }
+          end
+        end
       }
 
-      if @blocks.empty?
+      if @blocks.empty? || @blocks.length === 0
         @toc = Page.where(container_id: params[:id]).where("sequence > ?", @pages[index].sequence)
       end
 

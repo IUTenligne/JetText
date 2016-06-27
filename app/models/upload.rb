@@ -1,10 +1,12 @@
 class Upload < ActiveRecord::Base
 
   belongs_to :user
-  has_and_belongs_to_many :blocks
+  has_many :blocks
 
   before_create :reencode_filename
   before_create :set_type
+
+  attr_accessor :used
 
   Paperclip.interpolates('user') do |attachment, style|
     attachment.instance.user.email.to_s
@@ -85,17 +87,17 @@ class Upload < ActiveRecord::Base
 
   def types_hash
     types = {
-      mp4: "video",
-      flv: "video",
-      avi: "video",
-      pdf: "pdf",
-      png: "image",
-      jpg: "image",
+      mp4:  "video",
+      flv:  "video",
+      avi:  "video",
+      pdf:  "pdf",
+      png:  "image",
+      jpg:  "image",
       jpeg: "image",
-      gif: "image",
-      svg: "image",
-      svg: "image",
-      mp3: "audio",
+      gif:  "image",
+      svg:  "image",
+      svg:  "image",
+      mp3:  "audio",
       mpeg: "audio"
     }
     return types
@@ -133,5 +135,14 @@ class Upload < ActiveRecord::Base
         .where(user_id: current_user.id)
         .where("filetype = ?", type)
         .distinct
+    end
+
+    def self.is_used?(current_user, upload_id)
+      # returns true if a file is already used inside a block content
+      # prevents removing any useful file
+      return nil unless current_user.present?
+      blocks = Block.select("id").where('blocks.upload_id' => upload_id).where(user_id: current_user.id)
+      return false if blocks.empty?
+      return true
     end
 end

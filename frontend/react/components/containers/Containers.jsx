@@ -303,85 +303,88 @@ var Containers = React.createClass({
 
     render: function() {
         var results = this.state.containersList;
-        console.log(results);
 
         var that = this;
         return (
             <article id="containers">
-                <h1 className="page-header">Mes ressources non validé :</h1>
+                <div className="containers">
+                    <h1 className="page-header">Mes ressources en cours de création :</h1>
 
-                <ul className="align">
-                    { this.state.loading
-                        ? <Loader />
+                    <ul className="align">
+                        { this.state.loading
+                            ? <Loader />
+                            : null
+                        }
+
+                        { results.map(function(result){
+                          if(result.status == "0"){
+                            return (
+                                <Result
+                                    item={result}
+                                    key={result.id}
+                                    removeContainer={that.handleContainerDeletion}
+                                    validateContainer={that.handleContainerValidation}
+                                />
+                            );
+                          }
+                        })}
+
+                        <li id="addContainer" onClick={this.viewCreateContainers}>
+                            <i className="fa fa-plus fa-fw "></i>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div className="containers">
+                    <h1 className="page-header">Mes ressources validées :</h1>
+
+                    <ul className="align">
+                        { this.state.loading
+                            ? <Loader />
+                            : null
+                        }
+
+                        { results.map(function(result){
+                          if(result.status == "1"){
+                            return (
+                                <Result
+                                    item={result}
+                                    key={result.id}
+                                    removeContainer={that.handleContainerDeletion}
+                                    validateContainer={that.handleContainerValidation}
+                                />
+                            );
+                          }
+                        })}
+                    </ul>
+
+                    { this.state.viewCreate
+                        ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
+                            <div className="add_new">
+                                <span className="input-group-addon" onClick={this.createContainer}>
+                                    <i className="fa fa-plus fa-fw"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    ref="new_container"
+                                    id="new_container"
+                                    className="form-control"
+                                    autoComplet="off"
+                                    onKeyPress={this._handleKeyPress}
+                                    onChange={this.handleChange.bind(this, "newContainerValue")}
+                                    value={this.state.newContainerValue}
+                                    placeholder="Titre de la ressource..."
+                                />
+                                <br/>
+                                { this.state.inputCreate
+                                    ?<input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                    : null
+                                }
+                            </div>
+                        </Modal>
                         : null
                     }
-
-                    { results.map(function(result){
-                      if(result.status == "0"){
-                        return (
-                            <Result
-                                item={result}
-                                key={result.id}
-                                removeContainer={that.handleContainerDeletion}
-                                validateContainer={that.handleContainerValidation}
-                            />
-                        );
-                      }
-                    })}
-
-                    <li id="addContainer" onClick={this.viewCreateContainers}>
-                        <i className="fa fa-plus fa-fw "></i>
-                    </li>
-                </ul>
-
-                <h1 className="page-header">Mes ressources validé :</h1>
-
-                <ul className="align">
-                    { this.state.loading
-                        ? <Loader />
-                        : null
-                    }
-
-                    { results.map(function(result){
-                      if(result.status == "1"){
-                        return (
-                            <Result
-                                item={result}
-                                key={result.id}
-                                removeContainer={that.handleContainerDeletion}
-                                validateContainer={that.handleContainerValidation}
-                            />
-                        );
-                      }
-                    })}
-                </ul>
-
-                { this.state.viewCreate
-                    ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
-                        <div className="add_new">
-                            <span className="input-group-addon" onClick={this.createContainer}>
-                                <i className="fa fa-plus fa-fw"></i>
-                            </span>
-                            <input
-                                type="text"
-                                ref="new_container"
-                                id="new_container"
-                                className="form-control"
-                                autoComplet="off"
-                                onKeyPress={this._handleKeyPress}
-                                onChange={this.handleChange.bind(this, "newContainerValue")}
-                                value={this.state.newContainerValue}
-                                placeholder="Titre de la ressource..."
-                            />
-                            <br/>
-                            { this.state.inputCreate
-                                ?<input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
-                                : null
-                            }
-                        </div>
-                    </Modal>
-                    : null
-                }
+                </div>
             </article>
         );
     }

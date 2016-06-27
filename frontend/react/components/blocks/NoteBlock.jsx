@@ -78,7 +78,7 @@ var NoteBlock = React.createClass({
 
     regexTerm: function(termsList, content){
         for ( var i in termsList ) {
-            var regex = new RegExp(termsList[i]["name"], "gi");
+            var regex = new RegExp("\\b" + termsList[i]["name"] + "\\b", "gi");
             if ( content.match(regex) ) {
                 content = content.replace(regex, '<a href="#" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
             }

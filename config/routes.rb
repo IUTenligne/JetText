@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'home#index'
+
   devise_for :users, :controllers => { 
     :registrations => "registrations",
     :omniauth_callbacks => "users/omniauth_callbacks" 
@@ -50,6 +51,7 @@ Rails.application.routes.draw do
     post "/containers_glossaries" => "containers_glossaries#check"
 
     resources :formulas
+    get "/search_variables" => "formulas#find"
 
     resources :generator
     get "/generator/overview/:id" => "generator#container"
@@ -75,6 +77,5 @@ Rails.application.routes.draw do
     resources :versions
     get "/versions/show_all/:id" => "versions#show_all"
   end
-
 
 end

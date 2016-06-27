@@ -149,7 +149,7 @@ table tr:nth-child(odd) {
 
             .logo{
             	background: #3598DB;
-            	height: 100px !important;
+            	height: 80px !important;
             	a {
 	            	img{
 	            		padding-top: 5px;
@@ -203,19 +203,19 @@ table tr:nth-child(odd) {
 			ul.nav-menu {
 				text-align: left;
 				padding-top: 25px;
+				border-right: 1px solid #717985;
 
-				li{
+				li {
 					list-style: none;
 					white-space: nowrap;
 					text-overflow: ellipsis;
-					overflow:hidden;
+					overflow: hidden;
 					font-size: 16px;
-					background-image:linear-gradient( #7e8793, $grey);
-					padding: 7px 0 7px 20px;
+					background-image: linear-gradient(#7e8793, $grey);
+					padding: 0;
 					border-bottom: 2px solid rgba($black,0.4);
 					border-top: 2px solid rgba($white,0.4);
 					width: 100%;
-
 					a{
 						color: $white ;
 						width: 100%;
@@ -236,34 +236,34 @@ table tr:nth-child(odd) {
 		      			}
 					}
 				}
-				li.active{
+				li.active {
 					background: $blue;
 					a{
 						color: $white;
 					}
 				}
-				ul{
+				ul {
 					display: none;
 					background: $white;
 					padding: 0;
 					
-					li{
+					li {
 						border: none;
 						margin: 0;
 						background: none;
 						font-size: 14px;
-						padding: 4px 0 4px 40px;
+						padding: 4px 0 4px 10px;
 						a{
-							color: #AEABB4;
+							color: $darkBlue;
 						}
 					}
-					ul{
-						li{
-							padding-left: 60px;
+					ul {
+						li {
+							padding-left: 40px;
 						}
-						ul{
-							li{
-								padding-left: 80px;
+						ul {
+							li {
+								padding-left: 60px;
 							}
 						}
 					}
@@ -297,16 +297,16 @@ table tr:nth-child(odd) {
 					}
 				}
 			}
-        }
     }
+  }
 
-    /********  icon toggle ********/
-    #icone-menu{
+  /********  icon toggle ********/
+  #icone-menu{
 		right: 10px;
 		position: absolute;
 		z-index: 999;
 		margin-right: 0;
-		a{
+		a {
 			background-image:linear-gradient( $lighTbBlue,rgb(52,129,177));
 			border-radius: 4px;
 			-webkit-border-radius:4px;
@@ -328,31 +328,32 @@ table tr:nth-child(odd) {
 		}
 	}
 
-	 /********  overall content ********/
-    #page-content-wrapper {
-        width: 100%;
-        position: absolute;
-        padding: 0 !important;
-        
-        .container-fluid {
-        	padding: 0;
-        	/********  title container ********/
+	/********  overall content ********/
+  #page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 0 !important;
+      
+    .container-fluid {
+      padding: 0;
+      /********  title container ********/
 			h1.container-title {
 				color: $darkGrey;
 				font-size: 35px;
 				font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
 				background: rgba(#AEABB4,0.3);
-				height: 100px !important;
+				height: 80px !important;
 				margin:0;
-				padding: 30px 90px 0 20px;
+				padding: 18px 90px 0 20px;
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				overflow:hidden;
 
 			}
-			/********  title page general********/
+		/********  title page general********/
 			h2.page-title{
 				margin-left: 50px;
+				margin-right: 50px;
 				font-size: 35px;
 				font-family: Tahoma, Geneva, sans-serif;
 			}
@@ -548,6 +549,8 @@ table tr:nth-child(odd) {
 				width: 100% !important;
 				margin-top: 20px;
 				margin-bottom: 40px;
+				padding-left: 50px;
+				padding-right: 50px;
 
 				.btn-after, .btn-next {
 					color: $black;
@@ -562,9 +565,9 @@ table tr:nth-child(odd) {
 						outline: 0;
 						padding: 10px 8px 10px 8px;
 						background-color: #f3f6f6 !important;
-    				color: #404040 !important;
-    				border: 1px solid rgba(0,0,0,0.1);
-    				box-shadow: 0px 1px 2px -1px rgba(255,255,255,0.5) inset,0px -2px 0px 0px rgba(0,0,0,0.1) inset;
+	  				color: #404040 !important;
+	  				border: 1px solid rgba(0,0,0,0.1);
+	  				box-shadow: 0px 1px 2px -1px rgba(255,255,255,0.5) inset,0px -2px 0px 0px rgba(0,0,0,0.1) inset;
 					}
 					a:hover {
 						color: $blue;
@@ -574,22 +577,32 @@ table tr:nth-child(odd) {
 					text-align: right;
 					a {
 						text-align: left;
-	    				i.fa-arrow-circle-right {
-	    					width: 20%;
-	    					text-align: right !important;
-    				}
+
+  					span.link-text {
+  						width: 80%;
+  						float: left;
+  					}
+  					i {
+  						width: 20%;
+  						float: right;
+  						padding-top: 3px;
+  					}
 					}
 				}
 				.btn-after {
 					text-align: left;
 					a {
-						text-align: right;
-						i.fa-arrow-circle-left {
-    					text-align: left;
-    				}
-    				i.fa-arrow-circle-right {
-    					text-align: right;
-    				}
+						width: 100%;
+						line-height: 30px;
+
+	  				span.link-text {
+  						width: 80%;
+  						float: right;
+  					}
+  					i {
+  						width: 20%;
+  						float: left;
+  					}
 					}
 				}
 			}
@@ -603,7 +616,7 @@ table tr:nth-child(odd) {
 
 			}
 		}
-    }
+  }
 }
 
 #wrapper.toggled {

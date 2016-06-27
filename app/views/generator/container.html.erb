@@ -12,7 +12,7 @@
           		<div class="sidebar-nav">
                 <div class="logo">
             			<a href="<% @org_link %>" target="_blank">
-            				<img src="<%= @assets_prefix %>assets/img/iutenligne.png"  border="0">
+            				<img src="<%= @assets_prefix %>assets/images/iutenligne.png"  border="0">
             			</a>
                 </div>
 
@@ -84,7 +84,7 @@
                       <div class="col-lg-6 btn-next">
                         <% if @next_link %>
                           <a  href="<%= @next_link %>">
-                            Suite
+                            <span class="link-text">Suite</span>
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-square fa-stack-2x"></i>
                               <i class="fa fa-chevron-right fa-stack-1x fa-inverse"></i> 
@@ -109,12 +109,63 @@
                     $("#wrapper").toggleClass("toggled");
                     $("#icone-menu").removeClass('none').addClass('block');
                 });
+                 
                 $("#menu-bars").click(function(e) {
                     e.preventDefault();
                     $("#wrapper").toggleClass("toggled");
                     $("#icone-menu").removeClass('block').addClass('none');
                 });
+
+                var activePage = $('#nav-menu').find('.active');
+                
+                function findParentItem(el) {
+                  if (($(el).parent().is('ul')) && (!$(el).parent().hasClass('nav-menu'))) {
+                    $(el).parent().addClass('active-parent');
+                    findParentItem($(el).parent());
+                  }
+                }
+
+                findParentItem(activePage);
+
+                function findChildren(el) {
+                  if ($(el).next().is("ul")){
+                    $(el).next().show();
+                  }
+                }
+
+                findChildren(activePage);
+
+                var uls = $('#nav-menu').find('ul').each(function() {
+                  var $ul = $(this);
+                  var $elem = $(this).prev().find('span').find('i');
+                  $elem.bind("click", function(){
+                    $ul.toggle();
+                      if ($ul.is(":visible")) {
+                      if ($elem.hasClass("fa-plus")) {
+                        $elem.removeClass("fa-plus");
+                      }
+                      $elem.addClass("fa-minus");
+                    } else {
+                      if ($elem.hasClass("fa-minus")) {
+                        $elem.removeClass("fa-minus");
+                      }
+                      $elem.addClass("fa-plus");
+                    }
+                  });
+
+                  if ($ul.is(":visible")) {
+                    if ($elem.hasClass("fa-plus")) {
+                      $elem.removeClass("fa-plus");
+                    }
+                    $elem.addClass("fa-minus");
+                  } else {
+                    if ($elem.hasClass("fa-minus")) {
+                      $elem.removeClass("fa-minus");
+                    }
+                    $elem.addClass("fa-plus");
+                  }
+                });
             });
-        </script>
+      </script>
 	</body>
 </html>

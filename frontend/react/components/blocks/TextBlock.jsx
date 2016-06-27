@@ -5,6 +5,7 @@ var NotificationSystem = require('react-notification-system');
 var Modal = require('../widgets/Modal.jsx');
 var Tooltip = require('../widgets/Tooltip.jsx');
 var ContainersList = require('./ContainersList.jsx');
+var Formula = require('../widgets/Formula.jsx');
 
 
 var TextBlock = React.createClass({
@@ -72,7 +73,7 @@ var TextBlock = React.createClass({
         for ( var i in termsList ) {
             var regex = new RegExp("\\b" + termsList[i]["name"] + "\\b", "gi");
             if ( content.match(regex) ) {
-                content = content.replace(regex, '<a href="#" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
+                content = content.replace(regex, '<a href="javascript:;" ref="tests" data="'+termsList[i]["description"]+'">'+termsList[i]["name"]+'</a>');
             }
         }
         return content;
@@ -84,8 +85,6 @@ var TextBlock = React.createClass({
     openTermModalState: function() {
         this.setState({ termModalState: true });
     },
-
-
 
     componentWillUnmount: function() {
         var editor = CKEDITOR.instances["text_block_"+this.props.block.id];
@@ -167,7 +166,10 @@ var TextBlock = React.createClass({
     },
 
     handleFormulaChange: function(event) {
-        this.setState({ formulaString: event.target.value });
+        this.setState({ 
+            formulaString: event.target.value,
+            formulaAreaContent: event.target.value
+        });
     },
 
     saveFormula: function() {
@@ -182,8 +184,6 @@ var TextBlock = React.createClass({
 
         this.saveBlock();
     },
-
-    _notificationSystem: null,
 
     dynamicId: function(id){
         return "text_block_" + id;
@@ -248,6 +248,8 @@ var TextBlock = React.createClass({
         this.props.moveBlock("down");
     },
 
+    _notificationSystem: null,
+
 	render: function() {
 		var block = this.props.block;
 
@@ -281,11 +283,8 @@ var TextBlock = React.createClass({
 
 
                 { this.state.formulaModalState
-                    ? <Modal active={this.handleFormulaModalState} mystyle={""} title={"Ajouter une formule"}>
-                        <div>
-                            <input type="text" value={this.state.formulaString} onChange={this.handleFormulaChange} />
-                            <input type="submit" value="Ok" onClick={this.saveFormula} />
-                        </div>
+                    ? <Modal active={this.handleFormulaModalState} mystyle={"formula"} title={"Ajouter une formule"}>
+                        <Formula />
                     </Modal>
                     : null
                 }
