@@ -1,6 +1,7 @@
 /******** colors ********/
 
 $grey: #f2f2f2;
+$black: rgb(0,0,0);
 $lightGrey: #F5F5F5;
 $textGrey: #333333;
 $bg: #e3f4fc;
@@ -116,6 +117,37 @@ body {
                 margin-bottom: 30px;
                 color: $textGrey;
               }
+              table{
+                box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 10px;
+
+                th,td,tr{
+                  vertical-align: middle;
+                }
+                th{
+                  background: #76838b;
+                  font-weight: bold;
+                  color: white;
+                  text-align: center !important;
+
+                }
+                th,td{
+                  border: 1px solid $black;
+                  padding: 0 15px;
+                  text-align: left;
+                  p{
+                    margin: 10px 0 ;
+                  }
+                }
+              }
+              table tr:nth-child(even) {
+                   background: #e0e3e5;
+              }
+              table tr:nth-child(odd) {
+                  background:$white;
+              }
             }
 
             .block > * {
@@ -125,42 +157,6 @@ body {
             .block.block-note {
               margin: 40px 0 40px 0;
               padding: 30px;
-
-              .block-note-title{
-                display: table;
-                i, h3{
-                  vertical-align: middle;
-                  display: table-cell;
-                }
-                h3 {
-                  margin-top: 0;
-                  margin-bottom: 30px;
-                  color: $textGrey;
-                }
-                i{
-                  font-size: 25px;
-                }
-              }
-            }
-
-            .block-remarque {
-              background: $remarque;
-            }
-
-            .block-important {
-              background: $important;
-              box-shadow: 0 3px 3px rgba(0,0,0,0.40);
-              color: white;
-              h3 {
-                color: white
-            }
-
-            .block-quote {
-              border-left: 8px solid $quote;
-              background: $white;
-              color: $textGrey !important;
-              left: 0;
-              padding: 10px 30px !important;
               box-shadow: 1.5px 3px 3px rgba(0,0,0,0.50);
 
               .block-note-title{
@@ -177,6 +173,32 @@ body {
                 }
                 i{
                   font-size: 50px !important;
+                  color:  $textGrey ;
+                }
+              }
+            }
+
+            .block-remarque {
+              background: $remarque;
+            }
+
+            .block-important {
+              background: $important;
+              color: white;
+              h3 {
+                color: white
+              }
+            }
+
+            .block-quote {
+              border-left: 8px solid $quote;
+              background: $white;
+              color: $textGrey !important;
+              left: 0;
+              padding: 10px 30px !important;
+
+              .block-note-title{
+                i{
                   color:  $quote !important;
                 }
               }
@@ -205,6 +227,9 @@ body {
               padding: 15px;
               background: url('../images/math-bg.png') repeat;
               box-shadow: 0 3px 3px rgba(0,0,0,0.50);
+            }
+            .block.block-media {
+              background: #ffffff;
             }
           }
 				}
