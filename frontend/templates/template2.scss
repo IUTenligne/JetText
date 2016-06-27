@@ -8,7 +8,12 @@ $sidebar: rgba(246,247,146,0.9);
 $sidebarGrey: rgba(51,55,69,0.9);
 $blue: #7dc7ec;
 $IELblue: #5B8AC2;
+$remarque: #62A7D1;
 $important: rgba(234,46,73,0.9);
+$quote:   #cbd0d3;
+$exemple: #cef8e4;
+$defintion: #AF89C8;
+$methode: #F3A342;
 $exemple: #cef8e4;
 $white: rgba(255,255,255,0.92);
 
@@ -120,19 +125,81 @@ body {
             .block.block-note {
               margin: 40px 0 40px 0;
               padding: 30px;
+
+              .block-note-title{
+                display: table;
+                i, h3{
+                  vertical-align: middle;
+                  display: table-cell;
+                }
+                h3 {
+                  margin-top: 0;
+                  margin-bottom: 30px;
+                  color: $textGrey;
+                }
+                i{
+                  font-size: 25px;
+                }
+              }
             }
-            .block.block-note.block-important {
+
+            .block-remarque {
+              background: $remarque;
+            }
+
+            .block-important {
               background: $important;
               box-shadow: 0 3px 3px rgba(0,0,0,0.40);
               color: white;
               h3 {
                 color: white
+            }
+
+            .block-quote {
+              border-left: 8px solid $quote;
+              background: $white;
+              color: $textGrey !important;
+              left: 0;
+              padding: 10px 30px !important;
+              box-shadow: 1.5px 3px 3px rgba(0,0,0,0.50);
+
+              .block-note-title{
+                display: table;
+                margin-bottom: 10px;
+
+                i, h3 {
+                  vertical-align: middle;
+                  display: table-cell;
+                }
+                h3 {
+                  padding-left: 20px;
+                  color: $textGrey;
+                }
+                i{
+                  font-size: 50px !important;
+                  color:  $quote !important;
+                }
               }
             }
-            .block.block-note.block-exemple {
+
+            .block-exemple {
+              background: $exemple;
+              color: $textGrey !important;
+            }
+
+            .block-definition {
+              background: $defintion;
+            }
+
+            .block-methode {
+              background: $methode;
+            }
+
+            .block-exemple {
               background: $exemple;
               box-shadow: 0 3px 3px rgba(0,0,0,0.40);
             }
+
             .block.block-math {
               margin: 30px 0 30px 0;
               padding: 15px;
