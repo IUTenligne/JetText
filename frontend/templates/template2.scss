@@ -3,12 +3,13 @@
 $grey: #f2f2f2;
 $lightGrey: #F5F5F5;
 $textGrey: #333333;
-$bg: #e0eef0;
+$bg: #e3f4fc;
 $sidebar: rgba(246,247,146,0.9);
 $sidebarGrey: rgba(51,55,69,0.9);
-$blue: #69c0ec;
+$blue: #7dc7ec;
 $IELblue: #5B8AC2;
 $important: rgba(234,46,73,0.9);
+$exemple: #cef8e4;
 $white: rgba(255,255,255,0.92);
 
 /******** typos ********/
@@ -81,7 +82,7 @@ body {
 
   #page-content-wrapper {
   	width: 100%;
-    padding: 50px;
+    padding: 40px 50px 50px 50px;
     float: left;
 
     .container-fluid {
@@ -113,18 +114,28 @@ body {
                 color: $textGrey;
               }
             }
-            .block.block-note.block-important {
-              background: $important;
+            .block.block-note {
               margin: 40px 0 40px 0;
               padding: 30px;
+            }
+            .block.block-note.block-important {
+              background: $important;
+              box-shadow: 0 3px 3px rgba(0,0,0,0.50);
               color: white;
               h3 {
                 color: white
               }
             }
+            .block.block-note.block-exemple {
+              background: $exemple;
+              box-shadow: 0 3px 3px rgba(0,0,0,0.30);
+            }
             .block.block-math {
-              margin: 40px 0 40px 0;
-              padding: 30px;
+              margin: 30px 0 30px 0;
+              padding: 15px;
+              background: url('../images/math-bg.png') repeat;
+              border-radius: 4px;
+              box-shadow: 0 3px 3px rgba(0,0,0,0.50);
             }
           }
 				}
@@ -162,7 +173,7 @@ body {
     /********  content menu ********/
     .sidebar-nav {
       position: absolute;
-      top: 100px;
+      top: 80px;
       width: 100%;
       padding: 5%;
       list-style: none;
@@ -174,6 +185,15 @@ body {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+        .logo {
+          margin: 0 15%;
+          a {
+            width: 100%;
+            img {
+              max-width: 100%;
+            }
+          }
+        }
       }
 
       .nav-link {
@@ -182,7 +202,7 @@ body {
         margin-right: auto;
         text-align: center;
         margin-top: 10px;
-        
+
         li {
           display: inline
         }

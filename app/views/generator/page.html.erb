@@ -37,11 +37,11 @@
               <!-- note blocks -->
               <% elsif block.type_id == 3 %>
               <div class="block block-<%= block.classes %> block-note">
-                <% if block.name != "" %>
-                  <h3><%= block.name %></h3>
-                <% end %>
                 <div class="block-note-title block-note-title-<%= block.classes %>">
                   <i class="fa note-icon-<%= block.classes %> fa-fw"}></i>
+                  <% if block.name != "" %>
+                    <h3><%= block.name %></h3>
+                  <% end %>
                 </div>
                 <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
               </div>
