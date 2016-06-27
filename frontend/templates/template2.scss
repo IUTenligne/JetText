@@ -27,7 +27,6 @@ $menuWidth: 330px;
 	content: "\f12a";
   font-family: FontAwesome;
 }
-
 .note-icon-quote:before {
 	content: "\f10d";
   font-family: FontAwesome;
@@ -205,28 +204,37 @@ body {
         margin-right: auto;
         text-align: center;
         margin-top: 10px;
+        padding-left: 0;
 
         li {
           display: inline
         }
       }
 
-      ul {
+      ul#nav-menu {
         padding-left: 0px;
         list-style-type: none;
         li {
           a {
             color: $textGrey;
           }
-          ul {
-            padding-left: 20px;
-            li {
-
-            }
-          }
+        }
+        ul {
+          padding-left: 15px;
+          display: none;
+          list-style-type: none;
+        }
+        ul.active-parent {
+          display: block;
         }
       }
 		}
+  }
+}
+
+span.level-icon {
+  i {
+    width: 20px
   }
 }
 

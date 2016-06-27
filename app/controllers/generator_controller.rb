@@ -2,7 +2,7 @@ class GeneratorController < ApplicationController
 
   before_action :authenticate_user!
   before_filter :require_validation
-  
+
   def container
     # Container overview method
   	@container = Container.find(params[:id])
@@ -27,7 +27,7 @@ class GeneratorController < ApplicationController
     @org_link = "http://www.iutenligne.net/resources.html"
     render :layout => false
   end
-  
+
 
   def page
     # Page overview method
@@ -36,23 +36,23 @@ class GeneratorController < ApplicationController
     @version = Version.where(container_id: @container.id).last
     @glossaries = ContainersGlossary.where(container_id: @container.id)
   	@pages = Page.where(container_id: @page.container_id)
-    
+
     @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
     @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
     @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
     @next_link = "#{@next_page.id}" unless @next_page.nil?
-    
+
     @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
     @mathjax = false
 
   	@blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
-    @blocks.map { |block| 
+    @blocks.map { |block|
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
       @mathjax = true if block.type_id == 4
       if block.type_id != 2
         unless @glossaries.nil?
-          @glossaries.map { |glossary| 
+          @glossaries.map { |glossary|
             @terms = Term.where(glossary_id: glossary.glossary_id)
             @terms.each do |term|
               block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
@@ -65,7 +65,7 @@ class GeneratorController < ApplicationController
     if @blocks.empty? || @blocks.length === 0
       @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
     end
-    
+
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
     @home_link = "/generator/overview/#{@container.id}"
@@ -81,23 +81,23 @@ class GeneratorController < ApplicationController
     @version = Version.where(container_id: @container.id).last
     @glossaries = ContainersGlossary.where(container_id: @container.id)
     @pages = Page.where(container_id: @page.container_id)
-    
+
     @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
     @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
     @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
     @next_link = "#{@next_page.id}" unless @next_page.nil?
-    
+
     @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
     @mathjax = false
 
     @blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
-    @blocks.map { |block| 
+    @blocks.map { |block|
       block.content = add_slash(block.content, @container.user.email) unless block.content.nil?
       @mathjax = true if block.type_id == 4
       if block.type_id != 2
         unless @glossaries.nil?
-          @glossaries.map { |glossary| 
+          @glossaries.map { |glossary|
             @terms = Term.where(glossary_id: glossary.glossary_id)
             @terms.each do |term|
               block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
@@ -127,31 +127,31 @@ class GeneratorController < ApplicationController
     @glossaries = ContainersGlossary.where(container_id: @version.container_id)
 
     @contents = ""
-   
-    @pages.map{ |page| 
+
+    @pages.map{ |page|
       @contents = @contents + "<h2>" + page.name + "</h2>"
 
       @version_blocks = Block.where(version_id: @version.id).where(page_id: page.id)
       @latest_blocks = Block.where(version_id: @latest.id).where(page_id: page.id)
-      
+
       @prev_page = Page.where(container_id: @version.container_id).where("sequence < ?", page.sequence).last unless Page.where(container_id: @version.container_id).where("sequence < ?", page.sequence).last.nil?
       @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
 
       @next_page = Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first unless Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first.nil?
       @next_link = "#{@next_page.id}" unless @next_page.nil?
-      
+
       @menu = recur_page_level(false, @pages, false, 0, "", 0, page)
       @mathjax = false
 
       @v_content = ""
       @l_content = ""
 
-      @version_blocks.map { |block| 
+      @version_blocks.map { |block|
         block.content = add_slash(block.content, @version.container.user.email) unless block.content.nil?
         @mathjax = true if block.type_id == 4
         if block.type_id != 2
           unless @glossaries.nil?
-            @glossaries.map { |glossary| 
+            @glossaries.map { |glossary|
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
                 block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
@@ -162,12 +162,12 @@ class GeneratorController < ApplicationController
         @v_content = @v_content + block.content
       }
 
-      @latest_blocks.map { |block| 
+      @latest_blocks.map { |block|
         block.content = add_slash(block.content, @version.container.user.email) unless block.content.nil?
         @mathjax = true if block.type_id == 4
         if block.type_id != 2
           unless @glossaries.nil?
-            @glossaries.map { |glossary| 
+            @glossaries.map { |glossary|
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
                 block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?
@@ -247,36 +247,36 @@ class GeneratorController < ApplicationController
       if zip == true
         if current_page != nil && pages[i].id == current_page.id
           if pages[i].name
-            content = content + "<li class=\"active\"><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name+ "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li class=\"active\"><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name+ "</a></li>\n"
           else
-            content = content + "<li class=\"active\"><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li class=\"active\"><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{i}\">" + i + "</a></li>\n"
           end
         else
           if pages[i].name
-            content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name + "</a></li>\n"
           else
-            content = content + "<li><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{i}\">" + i + "</a></li>\n"
           end
         end
       else
         if index == true
           if pages[i].name
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"pages/#{pages[i].id}\">" + pages[i].name + "</a></li>\n"
           else
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"pages/#{pages[i].id}\">" + i + "</a></li>\n"
           end
         else
           if current_page != nil && pages[i].id == current_page.id
             if pages[i].name
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li class=\"active\"><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{pages[i].id}\">" + pages[i].name + "</a></li>\n"
             else
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li class=\"active\"><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
             end
           else
             if pages[i].name
-              content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{pages[i].id}\">" + pages[i].name + "</a></li>\n"
             else
-              content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{pages[i].id}\">" + i + "</a></li>\n"
             end
           end
         end
@@ -301,7 +301,7 @@ class GeneratorController < ApplicationController
           i = i + 1
           ul = ul + 3
           content = content + "<ul><ul><ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)      
+          recur_page_level(zip, pages, index, i , content, ul, current_page)
         elsif pages[i+1].level == pages[i].level - 1
           i = i + 1
           ul = ul - 1
@@ -319,7 +319,7 @@ class GeneratorController < ApplicationController
           recur_page_level(zip, pages, index, i , content, ul, current_page)
         end
       else
-        ul.times do 
+        ul.times do
           content = content + "</ul>"
         end
         return content
@@ -397,9 +397,9 @@ class GeneratorController < ApplicationController
       page_name = gsub_name(page.name) if page.name
 
       @blocks = Block.where(page_id: page.id).where(version_id: @version.id)
-      @blocks.map { |block| 
+      @blocks.map { |block|
         block.content = gsub_email(block.content, @container.user.email) unless block.content.nil?
-        
+
         # handle img files contained in text blocks
         files = image_finder(block.content, files)
 
@@ -416,7 +416,7 @@ class GeneratorController < ApplicationController
         # glossaries handling
         if block.type_id != 2
           unless @glossaries.nil?
-            @glossaries.map { |glossary| 
+            @glossaries.map { |glossary|
               @terms = Term.where(glossary_id: glossary.glossary_id)
               @terms.each do |term|
                 block.content.gsub! /#{term.name}\b/, '<button type="button" class="glossary" data-toggle="modal" data-target="#'+term.id.to_s+'-term">'+term.name+'</button>' unless block.content.nil?

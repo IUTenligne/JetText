@@ -218,28 +218,28 @@
       $elem.bind("click", function(){
         $ul.toggle();
         if ($ul.is(":visible")) {
-          if ($elem.hasClass("fa-plus")) {
-            $elem.removeClass("fa-plus");
+          if ($elem.hasClass("fa-chevron-right")) {
+            $elem.removeClass("fa-chevron-right");
           }
-          $elem.addClass("fa-minus");
+          $elem.addClass("fa-chevron-down");
         } else {
-          if ($elem.hasClass("fa-minus")) {
-            $elem.removeClass("fa-minus");
+          if ($elem.hasClass("fa-chevron-down")) {
+            $elem.removeClass("fa-chevron-down");
           }
-          $elem.addClass("fa-plus");
+          $elem.addClass("fa-chevron-right");
         }
       });
 
       if ($ul.is(":visible")) {
-        if ($elem.hasClass("fa-plus")) {
-          $elem.removeClass("fa-plus");
+        if ($elem.hasClass("fa-chevron-right")) {
+          $elem.removeClass("fa-chevron-right");
         }
-        $elem.addClass("fa-minus");
+        $elem.addClass("fa-chevron-down");
       } else {
-        if ($elem.hasClass("fa-minus")) {
-          $elem.removeClass("fa-minus");
+        if ($elem.hasClass("fa-chevron-down")) {
+          $elem.removeClass("fa-chevron-down");
         }
-        $elem.addClass("fa-plus");
+        $elem.addClass("fa-chevron-right");
       }
     });
   });
