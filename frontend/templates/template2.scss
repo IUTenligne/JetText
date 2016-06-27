@@ -3,10 +3,10 @@
 $grey: #f2f2f2;
 $lightGrey: #F5F5F5;
 $textGrey: #333333;
-$bg: #e0eef0;
+$bg: #e3f4fc;
 $sidebar: rgba(246,247,146,0.9);
 $sidebarGrey: rgba(51,55,69,0.9);
-$blue: #69c0ec;
+$blue: #7dc7ec;
 $IELblue: #5B8AC2;
 $remarque: #62A7D1;
 $important: rgba(234,46,73,0.9);
@@ -14,6 +14,7 @@ $quote:   #cbd0d3;
 $exemple: #cef8e4;
 $defintion: #AF89C8;
 $methode: #F3A342;
+$exemple: #cef8e4;
 $white: rgba(255,255,255,0.92);
 
 /******** typos ********/
@@ -86,7 +87,7 @@ body {
 
   #page-content-wrapper {
   	width: 100%;
-    padding: 50px;
+    padding: 40px 50px 50px 50px;
     float: left;
 
     .container-fluid {
@@ -118,47 +119,88 @@ body {
                 color: $textGrey;
               }
             }
-            .block-quote {
-              border-left: 6px solid $quote;
-              background: $white;
-              color: $textGrey !important;
-              left: 0;
-              margin-left: 0 0 0 -100px;
-              padding: 30px 50px 30px 100px;
-              h3 {
-                margin-top: 0;
-                margin-bottom: 30px;
-                color: $textGrey;
-              }
-            }
-
+            
             .block.block-note {
               margin: 40px 0 40px 0;
               padding: 30px;
-              color: white;
-              h3 {
-                color: white
+
+              .block-note-title{
+                display: table;
+                i, h3{
+                  vertical-align: middle;
+                  display: table-cell;
+                }
+                h3 {
+                  margin-top: 0;
+                  margin-bottom: 30px;
+                  color: $textGrey;
+                }
+                i{
+                  font-size: 25px;
+                }
               }
             }
+
             .block-remarque {
               background: $remarque;
             }
+
             .block-important {
               background: $important;
+              box-shadow: 0 3px 3px rgba(0,0,0,0.50);
             }
+
+            .block-quote {
+              border-left: 8px solid $quote;
+              background: $white;
+              color: $textGrey !important;
+              left: 0;
+              padding: 10px 30px !important;
+              box-shadow: 1.5px 3px 3px rgba(0,0,0,0.50);
+              
+              .block-note-title{
+                display: table;
+                margin-bottom: 10px;
+
+                i, h3 {
+                  vertical-align: middle;
+                  display: table-cell;
+                }
+                h3 {
+                  padding-left: 20px;
+                  color: $textGrey;
+                }
+                i{ 
+                  font-size: 50px !important;
+                  color:  $quote !important;
+                }
+              }
+            }
+
             .block-exemple {
               background: $exemple;
               color: $textGrey !important;
             }
+
             .block-definition {
               background: $defintion;
             }
+
             .block-methode {
               background: $methode;
             }
+
+            .block-exemple {
+              background: $exemple;
+              box-shadow: 0 3px 3px rgba(0,0,0,0.30);
+            }
+
             .block.block-math {
-              margin: 40px 0 40px 0;
-              padding: 30px;
+              margin: 30px 0 30px 0;
+              padding: 15px;
+              background: url('../images/math-bg.png') repeat;
+              border-radius: 4px;
+              box-shadow: 0 3px 3px rgba(0,0,0,0.50);
             }
           }
 				}
@@ -196,7 +238,7 @@ body {
     /********  content menu ********/
     .sidebar-nav {
       position: absolute;
-      top: 100px;
+      top: 80px;
       width: 100%;
       padding: 5%;
       list-style: none;
@@ -208,11 +250,11 @@ body {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
-        .logo{
-          margin: 0 15% 0 15%;
-          a{
+        .logo {
+          margin: 0 15%;
+          a {
             width: 100%;
-            img{
+            img {
               max-width: 100%;
             }
           }
@@ -225,7 +267,7 @@ body {
         margin-right: auto;
         text-align: center;
         margin-top: 10px;
-        
+
         li {
           display: inline
         }

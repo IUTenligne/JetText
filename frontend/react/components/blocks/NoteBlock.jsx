@@ -198,10 +198,10 @@ var NoteBlock = React.createClass({
 
     handleBlockName: function(event) {
         this.setState({
-            blockName: event.target.value.trim()
+            blockName: event.target.value
         });
 
-        this.saveDraft(this.props.block.id, event.target.value, this.state.blockContent);
+        this.saveDraft(this.props.block.id, event.target.value, this.state.blockContent, this.state.selectedStyle);
     },
 
     applyStyle: function(style) {
@@ -220,14 +220,14 @@ var NoteBlock = React.createClass({
     },
 
     viewBlockAction: function() {
-        this.setState({ 
+        this.setState({
             tooltipState: !this.state.tooltipState,
             tooltipMovesState: false
         });
     },
 
     viewBlockMoves: function() {
-        this.setState({ 
+        this.setState({
             tooltipState: false,
             tooltipMovesState: !this.state.tooltipMovesState
         });
@@ -329,7 +329,7 @@ var NoteBlock = React.createClass({
                     ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
                             <div className="modal-in note">
                                 <h4>Block Remarque (En cours d'édition)</h4>
-                                Activer le mode édition : 
+                                Activer le mode édition :
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
                                     <li>ou cliquer sur l'icône <i className="fa fa-quote-right"></i> dans l'entête du bloc,</li>
@@ -349,9 +349,9 @@ var NoteBlock = React.createClass({
                         ? <i onClick={this.unlockEditor} title="Editer" className="fa fa-pencil"></i>
                         : <i
                             className="fa fa-check"
-                            title="Enregistrer" 
-                            onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>  
-                        </i> 
+                            title="Enregistrer"
+                            onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent, that.state.selectedStyle)}>
+                        </i>
                     }
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>
