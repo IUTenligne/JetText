@@ -402,8 +402,8 @@ body {
             border: none;
             margin-right: 5px;
           }
-          a:hover,{ 
-            transform: scale(1.1); 
+          a:hover,{
+            transform: scale(1.1);
           }
         }
       }
@@ -430,11 +430,11 @@ body {
         li.active{
 
           font-weight: bold;
-          
+
           a{
             color: $blue;
           }
-          
+
         }
         ul {
           padding-left: 15px;

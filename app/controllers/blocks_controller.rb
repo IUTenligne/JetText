@@ -7,7 +7,7 @@ class BlocksController < ApplicationController
 
   def require_permission
     if current_user != Block.find(params[:id]).user || current_user.nil?
-      raise JetText::NotAllowed.new 
+      raise JetText::NotAllowed.new
     end
   end
 
@@ -27,7 +27,7 @@ class BlocksController < ApplicationController
     if @block.page_id.present?
     	if @block.save
         render json: { id: @block.id, name: @block.name, content: @block.content, type_id: @block.type_id, upload_id: @block.upload_id }
-      end 
+      end
     else
       render json: { status: "error" }
     end
@@ -43,9 +43,11 @@ class BlocksController < ApplicationController
     @block = Block.find(params[:id])
     @export = @block.dup
     @page = Page.find(params[:page_id])
+		@version = Version.select("id").where(:container_id => @page.container_id).last
     if @page.user == current_user
       @export.page_id = params[:page_id]
       @export.sequence = @page.blocks.maximum("sequence")
+			@export.version_id = @version.id
       @export.save
       render json: { block: @export }
     else
