@@ -60,17 +60,20 @@ class GeneratorController < ApplicationController
           }
         end
       end
+
+      # images wrapper for Lightbox
+      if block.type_id != 4
+        fragment = Nokogiri::HTML(block.content)
+        imgs_src = Array.new
+        fragment.css('img').map{ |img|
+          image_tag = "<a href=\"#{img['src']}\" data-lightbox=\"#{img.name}\" data-title=\"#{img.name}\">#{img}</a>"
+          img.replace(fragment.create_text_node(image_tag)).to_html
+        }
+        block.content = fragment.to_s
+      end
     }
 
-    if @blocks.empty? || @blocks.length === 0
-      @toc = Array.new
-      @next_pages = Page.where(container_id: @container.id)
-        .where("sequence > ?", @page.sequence)
-        .map{|p|
-          break if p.level === @page.level
-          @toc.push(p)
-        }
-    end
+    @toc = toc(@container.id, @page) if @blocks.empty? || @blocks.length === 0
 
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
@@ -111,17 +114,39 @@ class GeneratorController < ApplicationController
           }
         end
       end
+
+      # images wrapper for Lightbox
+      if block.type_id != 4
+        fragment = Nokogiri::HTML(block.content)
+        imgs_src = Array.new
+        fragment.css('img').map{ |img|
+          image_tag = "<a href=\"#{img['src']}\" data-lightbox=\"#{img.name}\" data-title=\"#{img.name}\">#{img}</a>"
+          img.replace(fragment.create_text_node(image_tag)).to_html
+        }
+        block.content = fragment.to_s
+      end
     }
 
-    if @blocks.empty? || @blocks.length === 0
-      @toc = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).where("level > ?", @page.level)
-    end
+    @toc = toc(@container.id, @page) if @blocks.empty? || @blocks.length === 0
 
     @assets_prefix = ""
     @home_link = "index.html"
     @libs_prefix = "libs/"
     @org_link = "http://www.iutenligne.net/resources.html"
     render :layout => false
+  end
+
+
+  def toc(container_id, page)
+    toc = Array.new
+    Page.where(container_id: container_id)
+      .where("sequence > ?", page.sequence)
+      .map{|p|
+        break if p.level === page.level
+        toc.push(p)
+      }
+
+    return toc
   end
 
 
@@ -430,11 +455,20 @@ class GeneratorController < ApplicationController
             }
           end
         end
+
+        # images wrapper for Lightbox
+        if block.type_id != 4
+          fragment = Nokogiri::HTML(block.content)
+          imgs_src = Array.new
+          fragment.css('img').map{ |img|
+            image_tag = "<a href=\"#{img['src']}\" data-lightbox=\"#{img.name}\" data-title=\"#{img.name}\">#{img}</a>"
+            img.replace(fragment.create_text_node(image_tag)).to_html
+          }
+          block.content = fragment.to_s
+        end
       }
 
-      if @blocks.empty? || @blocks.length === 0
-        @toc = Page.where(container_id: params[:id]).where("sequence > ?", @pages[index].sequence)
-      end
+      @toc = toc(@container.id, @page) if @blocks.empty? || @blocks.length === 0
 
       unless index == 0
         @prev_link = "#{index-1}-#{gsub_name(@pages[index-1].name)}.html" unless @pages[index-1].nil?

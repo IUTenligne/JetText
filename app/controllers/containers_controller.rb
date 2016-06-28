@@ -7,12 +7,13 @@ class ContainersController < ApplicationController
 
   def require_permission
     if current_user != Container.find(params[:id]).user || current_user.nil?
-      raise JetText::NotAllowed.new 
+      raise JetText::NotAllowed.new
     end
   end
 
   def index
-    @containers = Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1)
+    @containers = Container.select("id, name, content, created_at, status")
+      .where(:user_id => current_user.id).where(:visible => 1)
     render json: { containers: @containers }
   end
 
@@ -74,7 +75,7 @@ class ContainersController < ApplicationController
 
     # Send update email
     UserMailer.container_update_message(@container).deliver
-    
+
     render json: { containers: Container.select("id, name, content, status").all.where(:user_id => current_user.id).where(:visible => 1) }
   end
 
@@ -86,7 +87,7 @@ class ContainersController < ApplicationController
     if @container.save
       @version = Version.new(container_id: @container.id)
       @version.save
-      render json: {content: "", id: @container.id, name: @container.name}
+      render json: {id: @container.id, name: @container.name, content: "", created_at: @container.created_at}
     end
   end
 
@@ -109,7 +110,7 @@ class ContainersController < ApplicationController
     def container_params
       params.require(:container).permit(:name, :content, :url, :visible, :status)
     end
- 
+
 end
 
 # == Schema Information

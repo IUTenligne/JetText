@@ -31,7 +31,7 @@ var Result = React.createClass({
             position: 'tr',
             timeout: '20000',
             action: {
-                label: 'yes',
+                label: 'Oui',
                 callback: function() {
                     $.ajax({
                         type: "PUT",
@@ -125,93 +125,70 @@ var Result = React.createClass({
         var result = this.props.item;
 
         return(
-            <li className="container">
-                <figure className='book'>
-                    <ul className='hardcover_front'>
-                        <li>
-                            <div className="coverDesign capitalize" style={this.state.coverBackground} >
-                                <span className="ribbon">{JSON.parse(currentUser).firstname}</span>
-                                <p>{result.name}</p>
-                            </div>
-                        </li>
-                        <li></li>
-                    </ul>
+            <tr className="container">
+              <td>
+                <a href={"/#/containers/"+result.id}>{result.name}</a>
+              </td>
+              <td>
+                {result.created_at.split("T")[0].split("-").reverse().join("/")}
+              </td>
+              <td>
+                <a href={"/#/containers/"+result.id} title="Editer">
+                    <span className="fa-stack fa-lg">
+                        <i className="fa fa-square fa-stack-2x"></i>
+                        <i className="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
 
-                    <ul className='sheet'>
-                        <li></li>
-                        <li className="option">
-                            <a className="btn list-group-item" href={"/#/containers/"+result.id}>
-                                <span className="fa-stack fa-lg">
-                                    <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                </span>
-                                Editer
-                            </a>
+                { result.status
+                    ? <a onClick={this.updateContainer} title="Actualiser">
+                            <span className="fa-stack fa-lg">
+                                <i className="fa fa-square fa-stack-2x"></i>
+                                <i className="fa fa-check fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    : <a onClick={this.validateContainer} title="Marquer comme terminé">
+                            <span className="fa-stack fa-lg">
+                                <i className="fa fa-square fa-stack-2x"></i>
+                                <i className="fa fa-check fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                }
 
-                            <a className="btn list-group-item" onClick={this.handleModalState}>
-                                <span className="fa-stack fa-lg">
-                                    <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-eye fa-stack-1x fa-inverse"></i>
-                                </span>
-                                Aperçu
-                            </a>
+                <a onClick={this.handleModalState} title="Aperçu">
+                    <span className="fa-stack fa-lg">
+                        <i className="fa fa-square fa-stack-2x"></i>
+                        <i className="fa fa-eye fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
 
-                            { result.status
-                                ? <a className="btn list-group-item" onClick={this.updateContainer}>
-                                        <span className="fa-stack fa-lg">
-                                            <i className="fa fa-square fa-stack-2x"></i>
-                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        Actualiser
-                                    </a>
-                                : <a className="btn list-group-item" onClick={this.validateContainer}>
-                                        <span className="fa-stack fa-lg">
-                                            <i className="fa fa-square fa-stack-2x"></i>
-                                            <i className="fa fa-check fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        Valider
-                                    </a>
-                            }
+                <a onClick={this.generateContainer} title="Télécharger">
+                    <span className="fa-stack fa-lg">
+                        <i className="fa fa-square fa-stack-2x"></i>
+                        <i className="fa fa-download fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
 
-                            <a className="btn list-group-item" onClick={this.generateContainer}>
-                                <span className="fa-stack fa-lg">
-                                    <i className="fa fa-square fa-stack-2x"></i>
-                                    <i className="fa fa-download fa-stack-1x fa-inverse"></i>
-                                </span>
-                                Telecharger
-                            </a>
-
-                            { result.status
-                                ? null
-                                : <a className="btn list-group-item" onClick={this.deleteContainer}>
-                                        <span className="fa-stack fa-lg">
-                                            <i className="fa fa-trash-o fa-stack-1x "></i>
-                                            <i className="fa fa-ban fa-stack-2x"></i>
-                                        </span>
-                                        Supprimer
-                                    </a>
-                            }
-                        </li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-
-                    <ul className='hardcover_back'>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </figure>
-
+                { result.status
+                    ? null
+                    : <a onClick={this.deleteContainer} title="Supprimer">
+                            <span className="fa-stack fa-lg">
+                                <i className="fa fa-trash-o fa-stack-1x "></i>
+                                <i className="fa fa-ban fa-stack-2x"></i>
+                            </span>
+                        </a>
+                }
+              </td>
+              <td>
                 { this.state.overview
                     ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
                         <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
                     </Modal>
                     : null
                 }
-
                 <NotificationSystem ref="notificationSystem" />
-            </li>
+              </td>
+            </tr>
         );
     }
 });
@@ -255,7 +232,7 @@ var Containers = React.createClass({
     },
 
     viewCreateContainers: function(){
-        this.setState({viewCreate: true });
+        this.setState({ viewCreate: true });
     },
 
     createContainer: function(){
@@ -281,7 +258,7 @@ var Containers = React.createClass({
     },
 
     handleModalState: function(st) {
-        this.setState({viewCreate: false });
+        this.setState({ viewCreate: false });
     },
 
     handleChange: function(myparam, event) {
@@ -308,55 +285,36 @@ var Containers = React.createClass({
         return (
             <article id="containers">
                 <div className="containers">
-                    <h1 className="page-header">Mes ressources en cours de création :</h1>
-
                     <ul className="align">
-                        { this.state.loading
-                            ? <Loader />
-                            : null
-                        }
-
-                        { results.map(function(result){
-                          if(result.status == "0"){
-                            return (
-                                <Result
-                                    item={result}
-                                    key={result.id}
-                                    removeContainer={that.handleContainerDeletion}
-                                    validateContainer={that.handleContainerValidation}
-                                />
-                            );
-                          }
-                        })}
-
-                        <li id="addContainer" onClick={this.viewCreateContainers}>
-                            <i className="fa fa-plus fa-fw "></i>
+                        <li id="add-container" onClick={this.viewCreateContainers}>
+                            <button className="btn btn-success"><i className="fa fa-plus fa-fw "></i> Créer une ressource</button>
                         </li>
                     </ul>
-                </div>
-                
-                <div className="containers">
-                    <h1 className="page-header">Mes ressources validées :</h1>
 
-                    <ul className="align">
-                        { this.state.loading
-                            ? <Loader />
-                            : null
-                        }
-
-                        { results.map(function(result){
-                          if(result.status == "1"){
-                            return (
-                                <Result
-                                    item={result}
-                                    key={result.id}
-                                    removeContainer={that.handleContainerDeletion}
-                                    validateContainer={that.handleContainerValidation}
-                                />
-                            );
-                          }
-                        })}
-                    </ul>
+                    { this.state.loading
+                      ? <Loader />
+                      : <table className="containers-table">
+                          <thead>
+                            <tr>
+                              <th>Titre</th>
+                              <th>Date</th>
+                              <th colspan="2">Options</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              { results.map(function(result){
+                                  return (
+                                      <Result
+                                          item={result}
+                                          key={result.id}
+                                          removeContainer={that.handleContainerDeletion}
+                                          validateContainer={that.handleContainerValidation}
+                                      />
+                                  );
+                              })}
+                          </tbody>
+                        </table>
+                    }
 
                     { this.state.viewCreate
                         ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
@@ -377,11 +335,11 @@ var Containers = React.createClass({
                                 />
                                 <br/>
                                 { this.state.inputCreate
-                                    ?<input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
                                     : null
                                 }
                             </div>
-                        </Modal>
+                          </Modal>
                         : null
                     }
                 </div>

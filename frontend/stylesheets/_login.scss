@@ -3,7 +3,7 @@
 	text-align: right;
 	margin: 0 auto;
 	border-radius: 4px;
-	padding-top: 20%; 
+	padding-top: 20%;
 
 	.login-panel{
 		.panel-heading {
@@ -33,6 +33,7 @@
 				width: 100%;
 				margin-bottom: 0;
 				float: left;
+				box-sizing: border-box;
 
 				.input-addon{
 					padding: 6px;
@@ -49,6 +50,7 @@
 					vertical-align: middle;
 					float: left;
 					height: 34px;
+					box-sizing: border-box;
 				}
 				.form-control{
 					display: table-cell;
@@ -62,7 +64,7 @@
 					background-image: none;
 					border: 1px solid #ccc;
 					border-radius:0 4px 4px 0;
-					border-left: none; 
+					border-left: none;
 					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 					box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 					-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -72,13 +74,14 @@
 					z-index: 2;
 					float: left;
 					margin-bottom: 0;
+					box-sizing: border-box;
 				}
-				
+
 			}
 			.field{
 				text-align: left;
 			}
-			
+
 			.actions {
 				width: 80%;
 				margin: 0 auto;
@@ -117,7 +120,7 @@
 				width: 100%;
 				border-radius: 4px;
 				height: 40px;
-				padding: 0 0 0 15px;				
+				padding: 0 0 0 15px;
 				.provider-logo {
 					width: 16px;
 					height: 40px;
@@ -160,4 +163,3 @@
 		}
 	}
 }
-

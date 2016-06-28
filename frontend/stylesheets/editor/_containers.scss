@@ -18,76 +18,90 @@ article#containers {
 			width: 100%;
 			margin: 0;
 			padding: 0;
+			list-style-type: none;
 
-			li.container {
-				list-style-type: none;
+			li#add-container{
+				button {
+					height: 40px;
+				}
+			}
+		}
 
-				figure.book{
-					ul.hardcover_front {
-						list-style-type: none;
-
-						div.coverDesign {
-							padding: 60px 3px 0 3px;
-							background: $lightGrey;
-							overflow: hidden;
-							z-index: 0;
-
-							p {
-								text-align: left;
-								color: $white;
-								background: $lightBlue;
-								padding: 5px 3px;
-					      overflow: hidden;
-					      max-height: 140px;
-					      z-index: 10;
-							}
-						}
-					}
-
-					ul.sheet{
-						list-style-type: none;
-
-						li.option {
-							list-style-type: none;
-
-							a {
-				            	width: 100%;
-				            	display: block;
-				            	padding: 0;
-				            	text-align: left;
-				            	margin: 12px 0 5px 12px;
-				            	cursor: pointer;
-				            	color: $bookGrey;
-	        				}
-
-	        				.list-group-item {
-			        			span, .fa {
-			        				font-size: 14px;
-			          			}
-			        		}
-
-					        a:hover{
-					          	color: $lightBlue;
-					        }
-						}
+		.containers-table {
+			margin-top: 40px;
+			width: 100%;
+			thead {
+				tr {
+					line-height: 30px;
+					th {
+						text-align: left;
+						padding: 0 5px;
+						color: #8e8e8e;
 					}
 				}
 			}
-			
-			li#addContainer{
-				border: 2px dashed $lightBlue;
-				min-height: 180px !important;
-				width: 180px !important;
-				margin: 0 auto;
-				margin: 0;
-				padding: 0;
-				margin-top: 50px;
-				cursor: pointer;
-				background: rgba($lightGrey,0.4);
-				i{
-					color: black;
-					font-size: 40px;
-					margin-top: 70px;
+			tbody {
+				tr {
+					line-height: 30px;
+					border-top: 1px solid #c3c3c3;
+					td {
+						text-align: left;
+						line-height: 30px;
+						color: #222;
+						text-overflow: ellipsis;
+						padding: 0 5px;
+						a {
+							font-weight: normal;
+							color: #222;
+							text-overflow: ellipsis;
+							font-size: 0.857em;
+							font-weight: bold;
+							white-space: nowrap;
+							padding: 0 3px 0 3px;
+							span.fa-stack {
+								font-size: 13px
+							}
+						}
+						a:hover {
+							cursor: pointer;
+							color: $lightBlue;
+						}
+						a:nth-child(1) {
+							span {
+								color: $lightBlue;
+							}
+						}
+						a:nth-child(2) {
+							span {
+								color: #55b78a;
+							}
+						}
+						a:nth-child(3) {
+							span {
+								color: #f09c09;
+							}
+						}
+						a:nth-child(4) {
+							span {
+								color: #8e5598;
+							}
+						}
+						a:nth-child(5) {
+							span {
+								color: #E34B30;
+							}
+						}
+					}
+					td:first-child {
+						width: 90%;
+						padding: 0 5px;
+					}
+					td:last-child {
+						padding: 0;
+					}
+				}
+				tr:nth-child(odd) {
+					background: #f4f3ef;
 				}
 			}
 		}

@@ -276,7 +276,7 @@ var NoteBlock = React.createClass({
             <div className="block-inner">
                 <div className="block-inner-content" key={block.id}>
                     <div className="block-title">
-                        <i className="fa fa-quote-right" onClick={this.unlockEditor}></i>
+                        <i className="fa fa-quote-left" onClick={this.unlockEditor}></i>
                         <h3>
                             <input ref="noteblockname" type="text" value={this.state.blockName ? this.state.blockName : ''} placeholder="Titre..." onChange={this.handleBlockName}/>
                         </h3>
