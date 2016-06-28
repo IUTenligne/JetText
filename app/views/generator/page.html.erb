@@ -32,7 +32,7 @@
                   <% if block.name != "" %>
                     <h3><%= block.name %></h3>
                   <% end %>
-                  <%= raw(block.content) if block.content %>
+                  <%= raw(CGI.unescapeHTML(block.content)) if block.content %>
                 </div>
               <!-- note blocks -->
               <% elsif block.type_id == 3 %>

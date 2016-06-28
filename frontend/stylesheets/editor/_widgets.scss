@@ -79,6 +79,7 @@
 					float: left;
 					height: 34px;
 					width: 10%;
+					box-sizing: border-box;
 				}
 				input {
 					display: table-cell;
@@ -102,6 +103,7 @@
 					float: left;
 					margin-bottom: 15px;
 					width:90%;
+					box-sizing: border-box;
 				}
 				.btn-success{
 					width: 150px;
@@ -808,7 +810,7 @@
 	.notification{
 		background: white !important;
 		width: 40% !important;
-		max-height: 100px !important;
+		max-height: 200px !important;
 		margin: 30% 30% 40% 30% !important;
 		border-color: $lightBlue !important;
 		border-left: 1px solid $lightBlue !important;

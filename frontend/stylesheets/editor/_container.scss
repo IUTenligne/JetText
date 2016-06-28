@@ -53,6 +53,7 @@
 				float: left;
 				height: 34px;
 				width: 10%;
+				box-sizing: border-box;
 			}
 
 			input {
@@ -77,6 +78,7 @@
 				float: left;
 				margin-bottom: 15px;
 				width: 90%;
+				box-sizing: border-box;
 			}
 
 			.btn-success{

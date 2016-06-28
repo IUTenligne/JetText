@@ -4,17 +4,17 @@ div.sidebar.menu {
 	border-radius: 0;
 	max-height: 100%;
 	width: 100%;
-	
+
 	h2.zone-header {
 		text-transform: uppercase;
 		color: white;
 		font-size: 15px;
 		padding: 10px 15px;
-	} 
+	}
 
 	ul.side-menu {
 		background: $uiGrey;
-		
+
 		width: 100%;
 
 		li {
@@ -60,7 +60,7 @@ div.sidebar.menu {
 				min-height: 30px;
 				overflow: hidden;
 				background-position: 2% 0%;
-				
+
 				.page-link-menu {
 					color: white;
 					margin: 0;
@@ -73,9 +73,9 @@ div.sidebar.menu {
 					height: 30px;
 					overflow:hidden;
 					line-height: 2;
-					padding-left: 5px; 
-				}	
-			
+					padding-left: 5px;
+				}
+
 				div.option-page {
 					min-width: 0px;
 					max-width: 0px;
@@ -114,18 +114,18 @@ div.sidebar.menu {
 					}
 				}
 			}
-			
+
 			.menu-content:hover .option-page {
 				min-width: 110px;
 				max-width: 110px;
 			}
 		}
-	
+
 		li.active,
 		li.active .page-link {
 			background: $lightBlue;
 			color: $uiGrey;
-			
+
 			.menu-actions.hidden{
 				display: none;
 			}
@@ -161,7 +161,7 @@ div.sidebar.menu {
 			width: 16px;
 			height: 30px;
 			.page-link-menu {
-				padding-left: 16px; 
+				padding-left: 16px;
 			}
 		}
 
@@ -170,16 +170,16 @@ div.sidebar.menu {
 			width: 32px;
 			height: 30px;
 			.page-link-menu {
-				padding-left: 30px; 
+				padding-left: 30px;
 			}
 		}
-		
+
 		.level-3 .menu-content {
 			background: url("menu-tree-l3.png") no-repeat 2% 0%;
 			width: 48px;
 			height: 30px;
 			.page-link-menu {
-				padding-left: 46px; 
+				padding-left: 46px;
 			}
 		}
 
@@ -189,11 +189,11 @@ div.sidebar.menu {
 		.level-4,
 		.level-5 {
 			background: #383634;
-		} 
+		}
 	}
 
 	#add_new_page {
-		width: 300px;
+		width: 280px;
 		padding: 10px;
 
 		span {
@@ -211,8 +211,9 @@ div.sidebar.menu {
 			float: left;
 			height: 34px;
 			cursor: pointer;
+			box-sizing: border-box;
 		}
-		
+
 		input {
 			display: table-cell;
 			width: 90%;
@@ -225,7 +226,7 @@ div.sidebar.menu {
 			background-image: none;
 			border: 1px solid #ccc;
 			border-radius:0 4px 4px 0;
-			border-left: none; 
+			border-left: none;
 			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 			box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
 			-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -235,6 +236,7 @@ div.sidebar.menu {
 			z-index: 2;
 			float: left;
 			margin-bottom: 0;
+			box-sizing: border-box;
 		}
 	}
 	.btn-success{

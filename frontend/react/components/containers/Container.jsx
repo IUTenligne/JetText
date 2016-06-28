@@ -78,7 +78,7 @@ var Container = React.createClass({
             position: 'tc',
             timeout: '10000',
             action: {
-                label: 'yes',
+                label: 'Oui',
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
@@ -217,11 +217,11 @@ var Container = React.createClass({
 
                                 { !this.props.routeParams.pageId && !this.state.activePage
                                     ? <div id="create_new_page">
-                                      <h4> Pour ajouter du contenu à votre ressource créer une première page:</h4>
+                                      <h4>Pour ajouter du contenu à votre ressource, créez une première page :</h4>
                                         <span className="input-group-addon" onClick={this.createPage}>
                                             <i className="fa fa-plus fa-fw"></i>
                                         </span>
-                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la première page..." onChange={this.handlePageName} onKeyPress={this._handleKeyPress}/><br/>
+                                        <input type="text" value={this.state.newPageValue} placeholder="Titre de la page..." onChange={this.handlePageName} onKeyPress={this._handleKeyPress}/><br/>
                                             { this.state.newPageValue ? <button onClick={this.createPage} className="btn-success"><i className="fa fa-check"></i></button> : null }
                                     </div>
                                     : null
