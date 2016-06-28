@@ -9,13 +9,17 @@ $sidebar: rgba(246,247,146,0.9);
 $sidebarGrey: rgba(51,55,69,0.9);
 $blue: #7dc7ec;
 $IELblue: #5B8AC2;
-$remarque: #62A7D1;
+$remarque: #caeaff;
+$remarqueI: #7ccbff;
 $important: rgba(234,46,73,0.9);
+$importantI: #ffc6c3;
 $quote:   #cbd0d3;
 $exemple: #cef8e4;
+$exempleI: #1ed07b;
 $defintion: #AF89C8;
+$defintionI: #d3bfe1;
 $methode: #F3A342;
-$exemple: #cef8e4;
+$methodeI: #fbe2c3;
 $white: rgba(255,255,255,0.92);
 
 /******** typos ********/
@@ -148,6 +152,14 @@ body {
               table tr:nth-child(odd) {
                   background:$white;
               }
+              .glossary{
+                color: $blue;
+                cursor: help;
+                border: none;
+                background: none;
+                padding: 0;
+              }
+
             }
 
             .block > * {
@@ -156,14 +168,14 @@ body {
 
             .block.block-note {
               margin: 40px 0 40px 0;
-              padding: 30px;
-              box-shadow: 1.5px 3px 3px rgba(0,0,0,0.50);
+              padding: 10px 20px 20px 20px;
+              box-shadow: 5px 5px 5px rgba(0,0,0,0.50);
 
               .block-note-title{
                 display: table;
                 margin-bottom: 10px;
 
-                i, h3 {
+                i, h3, i:after, i:before{
                   vertical-align: middle;
                   display: table-cell;
                 }
@@ -172,14 +184,21 @@ body {
                   color: $textGrey;
                 }
                 i{
-                  font-size: 50px !important;
+                  font-size: 40px !important;
                   color:  $textGrey ;
                 }
+
               }
             }
+            
 
             .block-remarque {
               background: $remarque;
+              .block-note-title{
+                i{
+                  color:  $remarqueI !important;
+                }
+              }
             }
 
             .block-important {
@@ -187,6 +206,11 @@ body {
               color: white;
               h3 {
                 color: white
+              }
+              .block-note-title{
+                i{
+                  color:  $importantI !important;
+                }
               }
             }
 
@@ -196,6 +220,7 @@ body {
               color: $textGrey !important;
               left: 0;
               padding: 10px 30px !important;
+              font-style: italic;
 
               .block-note-title{
                 i{
@@ -207,19 +232,39 @@ body {
             .block-exemple {
               background: $exemple;
               color: $textGrey !important;
+              .block-note-title{
+                i{
+                  color:  $exempleI !important;
+                }
+              }
             }
 
             .block-definition {
               background: $defintion;
+              .block-note-title{
+                i{
+                  color:  $defintionI !important;
+                }
+              }
             }
 
             .block-methode {
               background: $methode;
+              .block-note-title{
+                i{
+                  color:  $methodeI !important;
+                }
+              }
             }
 
             .block-exemple {
               background: $exemple;
               box-shadow: 0 3px 3px rgba(0,0,0,0.40);
+              .block-note-title{
+                i{
+                  color:  $exempleI !important;
+                }
+              }
             }
 
             .block.block-math {
@@ -227,13 +272,63 @@ body {
               padding: 15px;
               background: url('../images/math-bg.png') repeat;
               box-shadow: 0 3px 3px rgba(0,0,0,0.50);
+
+              h3{
+                margin-bottom: 10px;
+              }
             }
             .block.block-media {
-              background: #ffffff;
+              text-align: center;
+              img{
+                box-shadow: 1.5px 3px 3px rgba(0,0,0,0.50);
+                max-width: 1000px;
+              }
             }
           }
 				}
 			}
+      .row.btn{
+        width: 100%;
+        .btn-next,.btn-after{
+          
+          a{
+            width: 120px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 15px;
+            text-align: center;
+            color: $white;
+            cursor: pointer;
+            box-shadow: 0px 5px rgba(51,55,69,0.4), 0 3px 5px rgba(0,0,0,.3);
+            transition: all .2s ease-in-out;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color .25s;
+            padding: 7px;
+            background: rgba(51,55,69,0.4);
+            display: inline-block;
+            outline: 0;
+            i{
+              font-size: 20px;
+            }
+          }
+          a:hover,{ 
+            transform: scale(1.1); 
+          }
+          a:active{
+            box-shadow: none; 
+            box-shadow: 3px 2px 2px rgba(0,0,0,0.2) inset, 0 2px 2px rgba(0,0,0,0.3) inset;
+          }
+
+        }
+        .btn-next{
+          text-align: right;
+        }
+      }
+      .btn:active{
+        border: none;
+        box-shadow: none;
+      }
 	  }
 
 	  img {
@@ -307,6 +402,7 @@ body {
         padding-left: 0px;
         list-style-type: none;
         li {
+          padding-top: 10px;
           a {
             color: $textGrey;
           }
@@ -315,6 +411,10 @@ body {
           padding-left: 15px;
           display: none;
           list-style-type: none;
+          border-left: 3px solid rgb(218,220,16);
+          li{
+            padding: 0;
+          }
         }
         ul.active-parent {
           display: block;
