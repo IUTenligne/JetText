@@ -390,11 +390,23 @@ body {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 15px;
+        margin-bottom: 25px;
         padding-left: 0;
 
+
         li {
-          display: inline
+          display: inline;
+          a{
+            box-shadow: 0px 5px rgba(#ebebeb,0.93), 0 3px 5px rgba(0,0,0,.6);
+            background: #f5f5f5;
+            transition: all .2s ease-in-out;
+            border: none;
+            margin-right: 5px;
+          }
+          a:hover,{ 
+            transform: scale(1.1); 
+          }
         }
       }
 
@@ -405,7 +417,26 @@ body {
           padding-top: 10px;
           a {
             color: $textGrey;
+            text-decoration: none;
+            width: 90%;
           }
+          a:hover{
+            font-weight: bold;
+          }
+          span{
+            width: 10%;
+            float: right;
+            text-align: center;
+          }
+        }
+        li.active{
+
+          font-weight: bold;
+          
+          a{
+            color: $blue;
+          }
+          
         }
         ul {
           padding-left: 15px;
