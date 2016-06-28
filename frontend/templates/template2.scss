@@ -15,11 +15,11 @@ $important: rgba(234,46,73,0.9);
 $importantI: #ffc6c3;
 $quote:   #cbd0d3;
 $exemple: #cef8e4;
-$exempleI: #1ed07b;
-$defintion: #AF89C8;
-$defintionI: #d3bfe1;
-$methode: #F3A342;
-$methodeI: #fbe2c3;
+$exempleI: #1ed0ac;
+$defintion: #d3bfe1;
+$defintionI: #AF89C8;
+$methode: #fbe2c3;
+$methodeI: #F3A342;
 $white: rgba(255,255,255,0.92);
 
 /******** typos ********/
@@ -115,6 +115,7 @@ body {
               left: 0;
               margin-left: -100px;
               padding: 30px 50px 30px 100px;
+              font-size: 15px;
 
               h3 {
                 margin-top: 0;
@@ -190,7 +191,6 @@ body {
 
               }
             }
-            
 
             .block-remarque {
               background: $remarque;
@@ -204,22 +204,20 @@ body {
             .block-important {
               background: $important;
               color: white;
-              h3 {
-                color: white;
-              }
               .block-note-title{
-                i{
+                i {
                   color:  $importantI !important;
+                }
+                h3 {
+                  color: white !important;
                 }
               }
             }
 
             .block-quote {
-              border-left: 8px solid $quote;
               background: $white;
               color: $textGrey !important;
               left: 0;
-              padding: 10px 30px !important;
               font-style: italic;
 
               .block-note-title{
@@ -290,7 +288,7 @@ body {
       .row.btn{
         width: 100%;
         .btn-next,.btn-after{
-          
+
           a{
             width: 120px;
             text-decoration: none;
@@ -312,11 +310,11 @@ body {
               font-size: 20px;
             }
           }
-          a:hover,{ 
-            transform: scale(1.1); 
+          a:hover,{
+            transform: scale(1.1);
           }
           a:active{
-            box-shadow: none; 
+            box-shadow: none;
             box-shadow: 3px 2px 2px rgba(0,0,0,0.2) inset, 0 2px 2px rgba(0,0,0,0.3) inset;
           }
 

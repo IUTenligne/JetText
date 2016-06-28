@@ -278,12 +278,14 @@ class GeneratorController < ApplicationController
       if zip == true
         if current_page != nil && pages[i].id == current_page.id
           if pages[i].name
+            pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
             content = content + "<li class=\"active\"><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name+ "</a></li>\n"
           else
             content = content + "<li class=\"active\"><span class=\"level-icon\"><i class=\"fa\"></i></span><a href=\"#{i}\">" + i + "</a></li>\n"
           end
         else
           if pages[i].name
+            pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
             content = content + "<li><a href=\"#{i}-#{gsub_name(pages[i].name)}.html\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           else
             content = content + "<li><a href=\"#{i}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
@@ -292,6 +294,7 @@ class GeneratorController < ApplicationController
       else
         if index == true
           if pages[i].name
+            pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
             content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           else
             content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
@@ -299,12 +302,14 @@ class GeneratorController < ApplicationController
         else
           if current_page != nil && pages[i].id == current_page.id
             if pages[i].name
+              pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
               content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             else
               content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           else
             if pages[i].name
+              pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
               content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             else
               content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
