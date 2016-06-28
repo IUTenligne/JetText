@@ -89,7 +89,7 @@ var GlossaryItem = React.createClass({
           }
         </div>
         <div className="name">
-          <p>{glossary.name}</p>
+          <p onClick={this.showTerms}>{glossary.name}</p>
           <i className="fa fa-chevron-down" aria-hidden="true" onClick={this.showTerms}></i>
         </div>
         <a href="#" onClick={this.deleteGlossary.bind(this, glossary.id)} className="delete">

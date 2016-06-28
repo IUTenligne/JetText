@@ -170,7 +170,7 @@ body {
             .block.block-note {
               margin: 40px 0 40px 0;
               padding: 10px 20px 20px 20px;
-              box-shadow: 5px 5px 5px rgba(0,0,0,0.50);
+              box-shadow: 2px 2px 8px rgba(0,0,0,0.50);
 
               .block-note-title{
                 display: table;
@@ -285,6 +285,68 @@ body {
           }
 				}
 			}
+      .row.index{
+        margin:0;
+				padding: 0;
+				width: 100%;
+        text-align: justify;
+        margin-bottom: 0px;
+
+				.col-lg-12{
+					padding: 0;
+
+          .content{
+            background: $white;
+            left: 0;
+            margin-left: -100px;
+            padding: 30px 50px 30px 100px;
+            font-size: 15px;
+            box-shadow: 3px 2px 8px rgba(0,0,0,0.5);
+            li{
+              list-style: none;
+              border-bottom: 1px solid $blue;
+              margin-bottom: 15px;
+            }
+            li:last-child{
+              margin-bottom: 10px;
+            }
+            ul{
+              border-left: none;
+              padding-left: 25px;
+              li:before{
+                content: "\f054";
+                font-family: FontAwesome;
+                margin-right: 5px;
+                color: $blue;
+                font-size: 20px;
+              }
+              li{
+                border: none;
+                margin-bottom: 0;
+                margin-top: 0;
+              }
+              ul{
+                padding-left: 40px;
+                li:before{
+                  content: "";
+                }
+                li{
+                  list-style-type: square;
+                  color: $blue;
+                }
+                ul{
+                  li{
+                    list-style: none;
+                  }
+                  li:last-child{
+                    margin-bottom: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       .row.btn{
         width: 100%;
         .btn-next,.btn-after{

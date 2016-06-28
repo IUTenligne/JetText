@@ -142,7 +142,7 @@ class GeneratorController < ApplicationController
     Page.where(container_id: container_id)
       .where("sequence > ?", page.sequence)
       .map{|p|
-        break if p.level === page.level
+        break if p.level <= page.level
         toc.push(p)
       }
 

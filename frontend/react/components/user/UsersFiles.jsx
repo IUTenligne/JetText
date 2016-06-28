@@ -14,7 +14,7 @@ var FileInfo = React.createClass({
             errorMessage: ''
         };
     },
-    
+
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
     },
@@ -69,8 +69,8 @@ var FileInfo = React.createClass({
                     this.showPreview(false);
                     this.props.delete(this.props.file.id)
                 } else {
-                    this.setState({ 
-                        errors: true, 
+                    this.setState({
+                        errors: true,
                         errorMessage: "Ce fichier est employé dans des blocs de contenu."
                     });
                 }
@@ -78,7 +78,7 @@ var FileInfo = React.createClass({
         })
     },
 
-    _notificationSystem: null, 
+    _notificationSystem: null,
 
     render: function() {
         var file = this.props.file;
@@ -86,7 +86,7 @@ var FileInfo = React.createClass({
         return(
             <tr className="file">
                 <td className="file-overview">
-                    <div dangerouslySetInnerHTML={this.handleFileWrapper()} /> 
+                    <div dangerouslySetInnerHTML={this.handleFileWrapper()} />
                 </td>
                 <td className="file-name" onClick={this.showPreview.bind(this, true)} >
                     {file.file_file_name}
@@ -100,7 +100,7 @@ var FileInfo = React.createClass({
                 <td>
                     <NotificationSystem ref="notificationSystem"/>
                     { this.state.modalPreview
-                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu " + file.file_file_name}>
+                        ? <Modal active={this.showPreview} mystyle={"media"} title={"Aperçu " + file.file_file_name}>
                                 <div className="modal-in">
                                     <center>
                                         <div dangerouslySetInnerHTML={this.handleFilePreview()} />
@@ -109,7 +109,7 @@ var FileInfo = React.createClass({
                                     <button onClick={this.deleteFile}><i className="fa fa-trash"></i> Supprimer</button>
 
                                     { this.state.errors
-                                        ? <div className="error-msg">{ this.state.errorMessage }</div> 
+                                        ? <div className="error-msg">{ this.state.errorMessage }</div>
                                         : null
                                     }
                                 </div>
@@ -117,7 +117,7 @@ var FileInfo = React.createClass({
                         : null
                     }
                 </td>
-            </tr> 
+            </tr>
         );
     }
 });
@@ -174,7 +174,7 @@ var UsersFiles = React.createClass({
             data: formData,
             context: this,
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     files: this.state.files.concat([data]),
                     filter: false,
                     loading: false
@@ -227,7 +227,7 @@ var UsersFiles = React.createClass({
             /* case when the user selects the already active type filter */
             if (this.state.filterSearch === true) {
                 /* if any searchedString is on */
-                this.setState({ 
+                this.setState({
                     filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 ),
                     loading: false,
                     filterSearch: true,
@@ -236,7 +236,7 @@ var UsersFiles = React.createClass({
             } else {
                 /* if not, consider the user removes the type filter - set the files[] to the default state */
                 this.setState({
-                    filteredFiles: this.state.files, 
+                    filteredFiles: this.state.files,
                     loading: false,
                     filter: false,
                     filterSearch: false,
@@ -292,7 +292,7 @@ var UsersFiles = React.createClass({
     },
 
     deleteFile: function(file_id) {
-        this.setState({ 
+        this.setState({
             files: this.state.files.filter((i,_) => i["id"] != file_id),
             filteredFiles: this.state.filteredFiles.filter((i,_) => i["id"] != file_id)
         })
@@ -313,7 +313,7 @@ var UsersFiles = React.createClass({
                             <br/>
                             Déposer un fichier
                          </div>
-                    </div>   
+                    </div>
                     <div className="zoneDropzone">
                         <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
                     </div>
@@ -325,16 +325,16 @@ var UsersFiles = React.createClass({
                     <div className="filters-bar">
                         <input type="text" placeholder="Rechercher..." onChange={this.searchByString} />
                         { this.state.types.map(function(type, index){
-                            return( 
-                                that.state.activeFilter === type.filetype 
+                            return(
+                                that.state.activeFilter === type.filetype
                                 ? <span key={index} className="active-filter">
                                     <button key={index} className={"active-filter filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
                                         <i className={"file-" + type.filetype}></i>
-                                    </button> 
+                                    </button>
                                 </span>
                                 : <button key={index} className={"filter-file filter-" + type.filetype} onClick={that.filterByType.bind(that, type.filetype)}>
                                     <i className={"file-" + type.filetype}></i>
-                                </button> 
+                                </button>
                             );
                         })}
                     </div>
@@ -360,7 +360,7 @@ var UsersFiles = React.createClass({
                                 { this.state.filter || this.state.filterSearch
                                     ? this.state.filteredFiles.map(function(result){
                                         return (
-                                            <FileInfo 
+                                            <FileInfo
                                                 key={result.id}
                                                 file={result}
                                                 delete={that.deleteFile}
@@ -369,7 +369,7 @@ var UsersFiles = React.createClass({
                                     })
                                     : this.state.files.map(function(result){
                                         return (
-                                            <FileInfo 
+                                            <FileInfo
                                                 key={result.id}
                                                 file={result}
                                                 delete={that.deleteFile}

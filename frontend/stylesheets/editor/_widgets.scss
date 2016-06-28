@@ -36,24 +36,31 @@
 				width: 100%;
 				height: 40px;
 				text-align: left;
-				display:table;
+				line-height: 35px;
+				display: block;
 
 				h3 {
-					width: 95%;
-					display: table-cell;
+					width: 90%;
+					display: inline-block;
 					font-weight: bold;
 					vertical-align: middle;
 					font-size: 20px;
 					padding: 0 10px;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 
 				.close {
-					width: 5%;
-					display: table-cell;
-					text-align: center;
+					width: 3%;
+					display: inline-block;
+					text-align: right;
 					font-size: 20px;
 					vertical-align: middle;
-					color: black
+					color: $iGrey;
+					i{
+						color: $iGrey;
+					}
 				}
 
 				.close:hover {
@@ -69,7 +76,7 @@
 				span.input-group-addon{
 					font-size: 14px;
 					font-weight: normal;
-					line-height: 2.4;
+					line-height: 2;
 					text-align: center;
 					background-color: #eee;
 					border: 1px solid #ccc;
@@ -78,8 +85,8 @@
 					vertical-align: middle;
 					float: left;
 					height: 28px;
-					width: 9%;
-					padding: 6px 12px;
+					width: 10%;
+					box-sizing: border-box;
 				}
 				input {
 					display: table-cell;
@@ -102,8 +109,8 @@
 					z-index: 2;
 					float: left;
 					margin-bottom: 15px;
-					width:80%;
-
+					width:90%;
+					box-sizing: border-box;
 				}
 				.btn-success{
 					width: 150px;
@@ -217,7 +224,7 @@
 									input.cmn-toggle-round-flat, label {
 									  padding: 2px;
 									  width: 50px;
-									  height: 25px;
+									  height: 22px;
 									  background-color: #dddddd;
 									  border-radius: 60px;
 									  transition: background 0.4s;
@@ -250,7 +257,7 @@
 									  background-color: $lightGreen;
 									}
 									input.cmn-toggle-round-flat:checked, label.check:after {
-									  margin-left: 22px;
+									  margin-left: 28px;
 									  background-color: $lightGreen;
 									}
 								}
@@ -263,11 +270,13 @@
 										vertical-align: middle;
 										width: 90%;
 										padding-left: 10px;
+										cursor: pointer;
 									}
 									i{
 										display: inline-block;
 										vertical-align: middle;
-										width: 10%;
+										width: 8%;
+										cursor: pointer;
 									}
 								}
 								a.delete {
@@ -287,7 +296,7 @@
 								margin-left: 17px;
 
 								div#border{
-									width: 100%;
+									width: 95%;
 									border-left: 7px solid rgba($grey,0.8);
 									padding-left: 10px;
 									height: 100%;
@@ -328,7 +337,8 @@
 										div#add-term{
 											width: 100%;
 											height: 100%;
-	
+											padding-right: 20px;
+
 											.btn-success{
 												width: 150px;
 												float: right;
@@ -360,10 +370,13 @@
 
 			#modal-header {
 				border-color: rgba($lightOrange,0.3);
-
+				h3{
+					width: 92.5%;
+				}
 				.close {
+					width: 5%;
 					i{
-						color: black;
+						color: $iGrey;
 					}
 				}
 				.close:hover {
@@ -439,15 +452,6 @@
 						overflow: hidden !important;
 						margin: 0 10% 0 10%;
 						margin-top: 5px;
-						span{
-							min-width: 9%;
-							height: 30px;
-							padding: 6px 12px;
-						}
-						input{
-							width: 81%;
-							height: 30px;
-						}
 					}
 					.filter-file {
 						width: 60px;
@@ -524,7 +528,7 @@
 						display: table;
 						width: 100%;
 						div#media-table{
-							width: 65%;
+							width: 60%;
 							float: left;
 							display: table-cell;
 							table#media-files{
@@ -573,11 +577,13 @@
 						}
 
 						div#media-files-preview {
-							right: 8%;
-							width: 35%;
+							right: 6%;
+							width: 30%;
 							display: table-cell;
 							vertical-align: top;
 							max-height: 50%;
+							position: fixed;
+							overflow: hidden;
 
 							#previewed-file {
 								display: block;
@@ -590,10 +596,12 @@
 								background: #f7f7f7;
 
 							}
+
 							#previewed-file * {
 								width: auto;
 								min-width: auto !important;
 							}
+
 							#previewed-btn {
 								max-width: inherit;
 								float: right;
@@ -627,6 +635,7 @@
 			#modal-body {
 				ul{
 					margin: 10px 0 10px 10px;
+					list-style-type: none;
 					li {
 						margin-bottom: 10px;
 						font-size: 16px;
@@ -660,8 +669,8 @@
 		/* modal for create */
 		.modal-content.create{
 			border-color: $lighTbGrey;
-			margin-top:41% !important;
-			margin-bottom: 41% !important;
+			margin-top:40% !important;
+			margin-bottom: 40% !important;
 			#modal-header {
 				border-color: rgba($lighTbGrey,0.3);
 
@@ -712,7 +721,12 @@
 			border-color: $lightRed;
 			#modal-header {
 				border-color: rgba($lightRed,0.3);
-
+				h3{
+					width: 92.5%;
+				}
+				.close{
+					width: 5%;
+				}
 				.close:hover {
 					i{
 						color: $lightRed;
@@ -722,6 +736,9 @@
 			#modal-body{
 				width: 100%;
 				height: 100%;
+				ul,li{
+					list-style-type: none;
+				}
 			}
 		}
 
@@ -732,7 +749,12 @@
 			border-color: #32373D;
 			#modal-header {
 				border-color: rgba(#32373D,0.3);
-
+				h3{
+					width: 92.5%;
+				}
+				.close{
+					width: 5%;
+				}
 				.close:hover {
 					i{
 						color: #32373D;
