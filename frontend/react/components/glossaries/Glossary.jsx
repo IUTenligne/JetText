@@ -48,7 +48,7 @@ var Glossary = React.createClass({
     },
 
     editTerm: function(name, description) {
-        this.setState({ 
+        this.setState({
             editTerm: true,
             termName: name,
             termDescription: description
@@ -95,7 +95,7 @@ var Glossary = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le terme "' + term_name + '" ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'yes',
@@ -121,7 +121,7 @@ var Glossary = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer ce glossaire ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'yes',
@@ -139,16 +139,16 @@ var Glossary = React.createClass({
     },
 
     closeModal: function(st) {
-        this.setState({ 
+        this.setState({
             modal: st,
-            editTerm: st 
+            editTerm: st
         });
     },
 
     viewCreateTerm: function(){
         this.setState({ viewCreate: true });
     },
-    
+
     handleModalState: function(st) {
         this.setState({ viewCreate: false });
     },
@@ -176,10 +176,10 @@ var Glossary = React.createClass({
                                                 </span>
                                                 <input type="text" onChange={that.changeName} value={that.state.termName} />
                                             </p>
-                                            <p> 
+                                            <p>
                                                 <span className="input-group-addon">
                                                     <i className="fa fa-pencil fa-fw"></i>
-                                                </span>   
+                                                </span>
                                                 <input type="text" onChange={that.changeDescription} value={that.state.termDescription} />
                                             </p>
                                             <p>
@@ -212,7 +212,7 @@ var Glossary = React.createClass({
                         <i className="fa fa-plus fa-fw" title="Ajouter un term" aria-hidden="true"></i>
                         <span className="sr-only">Ajouter un term</span><br/>
                         Ajouter<br/> un term
-                    </div> 
+                    </div>
 
                     <div onClick={this.deleteGlossary} className="btn-term sup">
                         <i className="fa fa-trash fa-fw" title="Supprimer le glossaire" aria-hidden="true"></i>

@@ -398,11 +398,15 @@ body {
 	  h1, h2, h3, h4 {
 	  	font-weight: 300;
 	  	color: $blue;
+      text-align: left;
 	  }
 
 	  h1 {
 	  	color: white;
 	  	font-size: 4em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 	  }
   }
 

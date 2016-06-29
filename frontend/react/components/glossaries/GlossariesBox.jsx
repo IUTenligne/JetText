@@ -32,7 +32,7 @@ var GlossaryItem = React.createClass({
       title: 'Confirm delete',
       message: 'Confirmer la suppression du glossaire ?',
       level: 'success',
-      position: 'tr',
+      position: 'tc',
       timeout: '20000',
       action: {
         label: 'Oui',

@@ -826,16 +826,18 @@
 
 /* pop de notification pour supression/ajout*/
 .notifications-wrapper{
-	.notifications-tr{
+	height: 100% !important;
+	width: 100% !important;
+	.notifications-tc{
 		height: 100% !important;
 		width: 100% !important;
+
+		right: 0 !important;
 		background: rgba(0,0,0,0.8) !important;
 	}
 	.notification{
 		background: white !important;
-		width: 40% !important;
-		max-height: 100px !important;
-		margin: 30% 30% 40% 30% !important;
+
 		border-color: $lightBlue !important;
 		border-left: 1px solid $lightBlue !important;
 		border-right: 1px solid $lightBlue !important;

@@ -41,7 +41,7 @@ var Block = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le bloc ?',
             level: 'success',
-            position: 'tr',
+            position: 'top',
             timeout: '10000',
             action: {
                 label: 'yes',
@@ -74,7 +74,7 @@ var Block = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le bloc ' +block.name+ '?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '10000',
             action: {
                 label: 'yes',
@@ -106,14 +106,14 @@ var Block = React.createClass({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { 
+            data: {
                 id: block.id,
                 name: block.name,
                 content: block.content,
                 classes: block.classes
             },
             success: function(data) {
-                
+
             }
         });
     },
