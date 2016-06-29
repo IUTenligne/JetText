@@ -103,7 +103,7 @@ var FileInfo = React.createClass({
                 <td>
                     <NotificationSystem ref="notificationSystem"/>
                     { this.state.modalPreview
-                        ? <Modal active={this.showPreview} mystyle={""} title={"Aperçu " + file.file_file_name}>
+                        ? <Modal active={this.showPreview} mystyle={"media"} title={"Aperçu " + file.file_file_name}>
                                 <div className="modal-in">
                                     <center>
                                         <div dangerouslySetInnerHTML={this.handleFilePreview()} />

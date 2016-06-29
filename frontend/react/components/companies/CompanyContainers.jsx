@@ -14,7 +14,7 @@ var Result = React.createClass({
             infos: false
         };
     },
-    
+
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
     },
@@ -27,7 +27,7 @@ var Result = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer la ressource ' + this.props.item.name + ' ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'yes',
@@ -62,7 +62,7 @@ var Result = React.createClass({
         this._notificationSystem.addNotification({
             title: 'Ressource générée !',
             level: 'success'
-        });   
+        });
     },
 
     optionContainer: function (){
@@ -79,7 +79,7 @@ var Result = React.createClass({
         this.setState({ infos: st });
     },
 
-    _notificationSystem: null, 
+    _notificationSystem: null,
 
     render: function() {
         var result = this.props.item;
@@ -111,23 +111,23 @@ var Result = React.createClass({
                     <a href={"/generator/overview/"+result.id} target="_blank"><i className="fa fa-expand"></i></a>
                 </td>
                 <td>
-                    { this.state.infos 
-                        ? <Modal active={this.handleInfosModalState} mystyle={"compagnie"} title={"Informations"}> 
+                    { this.state.infos
+                        ? <Modal active={this.handleInfosModalState} mystyle={"compagnie"} title={"Informations"}>
                             <div className="modal-in">
                                 <ContainerPanel container={this.props.item} author={this.props.user} />
                             </div>
-                        </Modal> 
+                        </Modal>
                         : null
                     }
-                    { this.state.overview 
-                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
+                    { this.state.overview
+                        ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
                             <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
-                        </Modal> 
+                        </Modal>
                         : null
                     }
                     <NotificationSystem ref="notificationSystem"/>
                 </td>
-            </tr> 
+            </tr>
         );
     }
 });
@@ -198,7 +198,7 @@ var Containers = React.createClass({
                     { this.state.loading
                         ? <Loader />
                         : null
-                    }  
+                    }
 
                     <h2>Ressources validées :</h2>
 
@@ -228,10 +228,10 @@ var Containers = React.createClass({
                         <tbody>
                             { this.state.validatedContainersList.map(function(result, index){
                                 return (
-                                    <Result 
+                                    <Result
                                         item={result}
-                                        user={that.state.validatedUsersList[index]} 
-                                        key={result.id} 
+                                        user={that.state.validatedUsersList[index]}
+                                        key={result.id}
                                     />
                                 );
                             })}
@@ -266,10 +266,10 @@ var Containers = React.createClass({
                         <tbody>
                             { this.state.incContainersList.map(function(result, index){
                                 return (
-                                    <Result 
+                                    <Result
                                         item={result}
-                                        user={that.state.incUsersList[index]} 
-                                        key={result.id} 
+                                        user={that.state.incUsersList[index]}
+                                        key={result.id}
                                     />
                                 );
                             })}
@@ -304,10 +304,10 @@ var Containers = React.createClass({
                         <tbody>
                             { this.state.deletedContainersList.map(function(result, index){
                                 return (
-                                    <Result 
+                                    <Result
                                         item={result}
-                                        user={that.state.deletedUsersList[index]} 
-                                        key={result.id} 
+                                        user={that.state.deletedUsersList[index]}
+                                        key={result.id}
                                     />
                                 );
                             })}

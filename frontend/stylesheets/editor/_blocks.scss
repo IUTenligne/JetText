@@ -67,9 +67,10 @@ span.bold{
 					color: #3b4045;
 					font-weight: bold;
 					float: left;
+          display: inline-block;
 					padding: 0 15px;
 					margin: 0;
-					min-width: 90%;
+					min-width: 80%;
 
 					input {
 						min-width: 100%;
@@ -377,8 +378,6 @@ span.bold{
 			}
 		}
 		div.block-content {
-			width: 100%;
-
 			#output{
 				width: 100%;
 				border: 1px dashed #dedede;
@@ -393,6 +392,8 @@ span.bold{
 				border-radius: 4px;
 				padding: 5px;
 				max-width: 100%;
+        min-width: 100%;
+        min-height: 45px;
 			}
 			#block-math:-webkit-input-placeholder {
 			  font-style: italic;

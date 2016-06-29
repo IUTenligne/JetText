@@ -44,7 +44,7 @@ var GlossaryBox = React.createClass({
     },
 
     editTerm: function(name, description) {
-        this.setState({ 
+        this.setState({
             editTerm: true,
             termName: name,
             termDescription: description
@@ -91,7 +91,7 @@ var GlossaryBox = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le terme "' + term_name + '" ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'yes',
@@ -158,7 +158,7 @@ var GlossaryBox = React.createClass({
         			</div>
                 </div>
     		</div>
-            
+
     	);
     }
 });

@@ -28,7 +28,7 @@ var Result = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer la ressource ' + this.props.item.name + ' ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'Oui',
@@ -72,7 +72,7 @@ var Result = React.createClass({
             title: 'Confirmer la validation',
             message: 'Voulez-vous envoyer la ressource ' + this.props.item.name + ' pour évaluation ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'yes',
@@ -186,8 +186,9 @@ var Result = React.createClass({
                     </Modal>
                     : null
                 }
-                <NotificationSystem ref="notificationSystem" />
+
               </td>
+              <NotificationSystem ref="notificationSystem" />
             </tr>
         );
     }

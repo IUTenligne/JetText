@@ -63,7 +63,7 @@ var Glossaries = React.createClass({
             title: 'Confirmer la suppression',
             message: 'Voulez-vous supprimer le glossaire ' + glossary.name + ' ?',
             level: 'success',
-            position: 'tr',
+            position: 'tc',
             timeout: '20000',
             action: {
                 label: 'yes',
@@ -97,7 +97,7 @@ var Glossaries = React.createClass({
                 newGlossaryValue: event.target.value,
                 inputCreate: true
             })
-        }    
+        }
     },
 
     _notificationSystem: null,
@@ -127,7 +127,7 @@ var Glossaries = React.createClass({
                         <i className="fa fa-plus fa-fw "></i>
                     </li>
                 </ul>
-                
+
                 { this.state.viewCreate
                     ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
                         <div className="add_new">
@@ -136,17 +136,17 @@ var Glossaries = React.createClass({
                                     <i className="fa fa-plus fa-fw"></i>
                                 </span>
 
-                                <input 
-                                    type="text" 
-                                    id="new_glossary" 
-                                    className="form-control" 
-                                    value={this.state.newGlossaryValue} 
-                                    onChange={this.handleChange.bind(this, "newGlossaryValue")} 
-                                    onKeyPress={this._handleKeyPress} 
-                                    autoComplet="off" 
+                                <input
+                                    type="text"
+                                    id="new_glossary"
+                                    className="form-control"
+                                    value={this.state.newGlossaryValue}
+                                    onChange={this.handleChange.bind(this, "newGlossaryValue")}
+                                    onKeyPress={this._handleKeyPress}
+                                    autoComplet="off"
                                     placeholder="Créer un nouveau glossaire..." />
-                                    
-                                { this.state.inputCreate 
+
+                                { this.state.inputCreate
                                     ? <input type="submit" value='Créer' className="btn-success" onClick={this.createGlossary}/>
                                     : null
                                 }
