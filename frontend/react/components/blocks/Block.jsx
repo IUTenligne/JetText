@@ -77,7 +77,7 @@ var Block = React.createClass({
             position: 'tc',
             timeout: '10000',
             action: {
-                label: 'yes',
+                label: 'Oui',
                 callback: function() {
                     $.ajax({
                         type: "DELETE",

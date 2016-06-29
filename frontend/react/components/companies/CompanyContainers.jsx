@@ -30,7 +30,7 @@ var Result = React.createClass({
             position: 'tc',
             timeout: '20000',
             action: {
-                label: 'yes',
+                label: 'Oui',
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
