@@ -11,7 +11,6 @@
 
 
 	.modal-inner{
-		display: flex;
 		z-index: 9999 !important;
 		vertical-align: center;
 		position: fixed;
@@ -828,16 +827,19 @@
 .notifications-wrapper{
 	height: 100% !important;
 	width: 100% !important;
+
 	.notifications-tc{
 		height: 100% !important;
 		width: 100% !important;
-
-		right: 0 !important;
 		background: rgba(0,0,0,0.8) !important;
+		right: 0 !important;
+		left: 0 !important;
 	}
 	.notification{
 		background: white !important;
-
+		margin-left: 30% !important;
+		margin-right: 30% !important;
+		width: 40% !important;
 		border-color: $lightBlue !important;
 		border-left: 1px solid $lightBlue !important;
 		border-right: 1px solid $lightBlue !important;
