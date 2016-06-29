@@ -18,9 +18,11 @@
 		width: 100%;
 		top: 0;
 		left: 0;
+		display: flex;
 
 		.modal-content {
 			width: 50%;
+			height: 40%;
 			z-index: 9999 !important;
 			margin-top:30% !important;
 			margin-bottom: 30% !important;
@@ -171,6 +173,7 @@
 			border-color: $lightGreen;
 			margin-top:20% !important;
 			margin-bottom: 20% !important;
+			height: 60%;
 
 			#modal-header {
 				border-color: rgba($lightGreen,0.3);
@@ -670,6 +673,7 @@
 			border-color: $lighTbGrey;
 			margin-top:40% !important;
 			margin-bottom: 40% !important;
+			height: 20%;
 			#modal-header {
 				border-color: rgba($lighTbGrey,0.3);
 
@@ -692,6 +696,7 @@
 			border-color: $lighTbGrey;
 			margin-top: 40% !important;
 			margin-bottom: 40% !important;
+			height: 20%;
 			#modal-header {
 				border-color: rgba($lighTbGrey,0.3);
 
@@ -825,8 +830,6 @@
 
 /* pop de notification pour supression/ajout*/
 .notifications-wrapper{
-	height: 100% !important;
-	width: 100% !important;
 
 	.notifications-tc{
 		height: 100% !important;
