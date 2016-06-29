@@ -34,4 +34,8 @@ class UsersController < ApplicationController
     render json: { usersdata: { users: @users, validated_users: @validated_users, pending_users: @pending_users } }
   end
 
+  def my
+
+  end
+
 end

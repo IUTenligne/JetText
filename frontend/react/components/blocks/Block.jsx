@@ -44,7 +44,7 @@ var Block = React.createClass({
             position: 'tr',
             timeout: '10000',
             action: {
-                label: 'yes',
+                label: 'Oui',
                 callback: function() {
                     $.ajax({
                         type: "DELETE",
@@ -106,14 +106,14 @@ var Block = React.createClass({
             type: "PUT",
             url: '/blocks/'+block.id,
             context: this,
-            data: { 
+            data: {
                 id: block.id,
                 name: block.name,
                 content: block.content,
                 classes: block.classes
             },
             success: function(data) {
-                
+
             }
         });
     },

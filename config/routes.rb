@@ -2,9 +2,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  devise_for :users, :controllers => { 
+  devise_for :users, :controllers => {
     :registrations => "registrations",
-    :omniauth_callbacks => "users/omniauth_callbacks" 
+    :omniauth_callbacks => "users/omniauth_callbacks"
   }
 
   authenticate :user do
@@ -59,6 +59,8 @@ Rails.application.routes.draw do
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
     get "/generator/diffs/:id" => "generator#diffs"
+
+    get "/users/my" => "users#my"
   end
 
   # Admin zone access

@@ -432,7 +432,7 @@
 				}
 
 				div.filters-bar{
-					width: 100% - 10%;
+					width: auto;
 					height: 150px;
 					position: fixed;
 					background: $white;
@@ -572,7 +572,7 @@
 						}
 
 						div#media-files-preview {
-							right: 8%;
+							right: 10%;
 							width: 28%;
 							display: table-cell;
 							vertical-align: top;

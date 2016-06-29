@@ -11,7 +11,7 @@ class UploadsController < ApplicationController
     if current_user != Block.find(params[:block_id]).user || current_user.nil?
       respond_to do |format|
         format.json { render json: { status: "error" } }
-      end 
+      end
     end
   end
 
@@ -19,7 +19,7 @@ class UploadsController < ApplicationController
     if current_user != Upload.find(params[:id]).user || current_user.nil?
       respond_to do |format|
         format.json { render json: { status: "error" } }
-      end 
+      end
     end
   end
 
@@ -39,25 +39,19 @@ class UploadsController < ApplicationController
 	end
 
   def filter_types
-    render json: { 
-      uploads: Upload.get_all_by_type(current_user, params[:type]), 
+    render json: {
+      uploads: Upload.get_all_by_type(current_user, params[:type]),
     }
   end
-	
+
 	def create
 		@upload = Upload.new(name: params[:original_filename], file: params[:tempfile], alt: params[:alt], width: params[:width])
 		@upload.user_id = current_user.id
 		@upload.url = @upload.file.url
 		if @upload.save
-      respond_to do |format|
-			  format.json { render json: @upload }
-			  format.html { head :no_content }
-			end
+      render json: { upload: @upload, types: Upload.get_all_types(current_user) }
 		else
-			respond_to do |format|
-			  format.json { render json: "error" }
-			  format.html { head :no_content }
-			end
+			render json: "error"
 		end
 	end
 
@@ -71,7 +65,7 @@ class UploadsController < ApplicationController
     used = Upload.is_used?(current_user, params[:id])
     unless used === true
 		  Upload.find(params[:id]).destroy
-      render json: { status: "success" }
+      render json: { status: "success", types: Upload.get_all_types(current_user) }
     else
       render json: { status: "error" }
     end
@@ -90,8 +84,8 @@ class UploadsController < ApplicationController
 		def upload_params
 			params.require(:upload).permit(:name, :file, :url, :alt, :width)
 		end
-    
-end	
+
+end
 
 # == Schema Information
 #
