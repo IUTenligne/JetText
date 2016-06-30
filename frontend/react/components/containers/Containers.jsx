@@ -198,42 +198,50 @@ var Result = React.createClass({
 var Containers = React.createClass({
     getInitialState: function() {
         return {
-            containersList: [],
-            loading: true,
-            viewCreate: false,
-            newContainerValue: '',
-            inputCreate: false
+          containersList: [],
+          categories: [],
+          selectedCategories: [],
+          loading: true,
+          viewCreate: false,
+          newContainerValue: '',
+          inputCreate: false
         };
     },
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers.json", function(result) {
-            this.setState({
-                containersList: result.containers,
-                loading: false
-            });
+          this.setState({
+            containersList: result.containers
+          });
+        }.bind(this));
+
+        this.serverRequest = $.get("/categories.json", function(result) {
+          this.setState({
+            categories: result,
+            loading: false
+          });
         }.bind(this));
     },
 
     componentWillUnmount: function() {
-        this.serverRequest.abort();
+      this.serverRequest.abort();
     },
 
     handleContainerDeletion: function(containerId) {
-        /* updates the containers list with the containerId returned by the prop this.props.deleteContainer of the child <Result /> */
-        this.setState({
-            containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
-        });
+      /* updates the containers list with the containerId returned by the prop this.props.deleteContainer of the child <Result /> */
+      this.setState({
+        containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
+      });
     },
 
     handleContainerValidation: function(containersList) {
-        this.setState({
-            containersList: containersList
-        });
+      this.setState({
+        containersList: containersList
+      });
     },
 
     viewCreateContainers: function(){
-        this.setState({ viewCreate: true });
+      this.setState({ viewCreate: true });
     },
 
     createContainer: function(){
@@ -271,6 +279,10 @@ var Containers = React.createClass({
         }
     },
 
+    selectCategory: function(event) {
+      this.setState({ selectedCategories: this.state.selectedCategories.concat([event.target.value]) })
+    },
+
     _handleKeyPress: function(event) {
         if (event.key === 'Enter') {
             this.createContainer(event);
@@ -281,8 +293,8 @@ var Containers = React.createClass({
 
     render: function() {
         var results = this.state.containersList;
-
         var that = this;
+
         return (
             <article id="containers">
                 <div className="containers">
@@ -321,7 +333,7 @@ var Containers = React.createClass({
                         ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
                             <div className="add_new">
                                 <span className="input-group-addon" onClick={this.createContainer}>
-                                    <i className="fa fa-plus fa-fw"></i>
+                                  <i className="fa fa-plus fa-fw"></i>
                                 </span>
                                 <input
                                     type="text"
@@ -335,9 +347,18 @@ var Containers = React.createClass({
                                     placeholder="Titre de la ressource..."
                                 />
                                 <br/>
+                                { this.state.categories.map(function(category) {
+                                  return(
+                                    <label>
+                                      <input key={category.id} value={category.id} name={category.name} type="checkbox" onChange={that.selectCategory}/>
+                                      {category.name}
+                                    </label>
+                                  );
+                                })}
+                                <br/>
                                 { this.state.inputCreate
-                                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
-                                    : null
+                                  ? <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                  : null
                                 }
                             </div>
                           </Modal>

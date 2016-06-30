@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :authenticate_user!
-  before_filter :require_admin
+  before_filter :require_admin, only: [:index, :validate, :update_role]
   respond_to :html, :json
 
   def index

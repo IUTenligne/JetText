@@ -1,16 +1,16 @@
-
-Type.create!([ 
+=begin
+Type.create!([
   {name: "Texte", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
   {name: "Media", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
   {name: "Remarque", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
   {name: "Maths", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"}
 ])
 
-Company.create!([ 
+Company.create!([
 	{name: "IUTenLigne"}
 ])
 
-Role.create!([ 
+Role.create!([
 	{role: "Pending"},
 	{role: "Author"},
 	{role: "Expert"},
@@ -18,12 +18,11 @@ Role.create!([
 	{role: "Admin"}
 ])
 
-=begin
 500.times do |i|
-  r = Random.new      
+  r = Random.new
 
   Upload.create!([
-  	name: "Upload #{i}", 
+  	name: "Upload #{i}",
     file_file_name: "bird.png",
     file_content_type: "image/png",
     file_file_size: 1354804,
@@ -35,4 +34,12 @@ Role.create!([
     user_id: 1
   ])
 end
+
+
+Category.create!([
+	{name: "mathématiques"},
+  {name: "économie"},
+  {name: "droit"},
+  {name: "gestion"}
+])
 =end

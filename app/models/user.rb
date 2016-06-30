@@ -5,10 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
-  has_many :containers, dependent: :destroy   
-  belongs_to :role    
+  has_many :containers, dependent: :destroy
+  belongs_to :role
 
   before_create :default_values
+  before_create :create_user_dir
   after_create :welcome_message
 
   def is_admin?
@@ -55,16 +56,19 @@ class User < ActiveRecord::Base
       self.role_id ||= 1
     end
 
+    def create_user_dir
+      FileUtils.mkdir_p "#{Rails.root}/public/#{self.email}"
+    end
+
     def self.users_list
       return User.all
         .select("
-          users.id, 
-          users.firstname, 
-          users.lastname, 
-          users.email, 
-          users.created_at, 
-          users.role_id
-          ")
+          users.id,
+          users.firstname,
+          users.lastname,
+          users.email,
+          users.created_at,
+          users.role_id")
         .joins(:role)
         .select("roles.role")
         .where("role NOT LIKE 'admin'")
