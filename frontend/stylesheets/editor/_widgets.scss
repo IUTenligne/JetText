@@ -365,7 +365,9 @@
 			border-color: $lightOrange;
 			width: 90%;
 			height: 80%;
-			margin: 10% 5% 10% 5% !important;
+			top: 10%;
+			margin-left: 5%;
+			margin-right: 5%;
 
 			#modal-header {
 				border-color: rgba($lightOrange,0.3);
@@ -526,50 +528,73 @@
 						height: calc(100% - 10%);
 						display: table;
 						width: 100%;
+
 						div#media-table{
 							width: 60%;
 							float: left;
 							display: table-cell;
+
 							table#media-files{
 								display: block;
 								padding: 5px;
 								box-shadow: none;
 								width: 100%;
-								tr {
-									background: none;
-									border-top: 0px;
-									border-bottom: 1px solid #E9E9E9;
-									border-left: 0px;
-									border-right: 0px;
-									vertical-align: middle;
-									th:hover {
-										cursor: pointer;
-									}
-									th, td {
+								overflow: inherit;
+
+								thead,tbody{
+									overflow: inherit;
+									width: inherit;
+									display: block;
+
+									tr {
 										background: none;
-										border: 0px;
-										text-align: left !important;
-										line-height: 26px;
-										height: 26px;
+										border-top: 0px;
+										border-bottom: 1px solid #E9E9E9;
+										border-left: 0px;
+										border-right: 0px;
 										vertical-align: middle;
-									}
-									th, td:nth-child(1) {
-										color: #a1a1a1;
-										width: 3%;
-									}
-									th, td:nth-child(2) {
+										width: inherit;
+										display: block;
 										white-space: nowrap;
-   									text-overflow: ellipsis;
-   									overflow: hidden;
-   									width: 62%;
-									}
-									th, td:nth-child(3) {
-										width: 15%;
-									}
-									th, td:last-child {
-										text-align: right;
-										color: #a1a1a1;
-										width: 15%;
+										text-overflow: ellipsis;
+										overflow: hidden;
+
+
+										th:hover {
+											cursor: pointer;
+										}
+
+										th, td {
+											background: none;
+											border: 0px;
+											text-align: left !important;
+											line-height: 26px;
+											height: 26px;
+											vertical-align: middle;
+											white-space: nowrap;
+											text-overflow: ellipsis;
+											overflow: hidden;
+										}
+
+										th, td:nth-child(1) {
+											color: #a1a1a1;
+											width: 3%;
+										}
+
+										th, td:nth-child(2) {
+											width: 62%;
+											max-width: 62%;
+										}
+
+										th, td:nth-child(3) {
+											width: 15%;
+										}
+
+										th, td:last-child {
+											text-align: right;
+											color: #a1a1a1;
+											width: 15%;
+										}
 									}
 								}
 							}
