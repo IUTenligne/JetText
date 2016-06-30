@@ -251,7 +251,6 @@ span.bold{
 	/* option block (delete/ drag/ save / edite)*/
 	.action {
 		text-align: right;
-		width: 100%;
 		color: $iGrey;
 		font-size: 20px;
 		margin-top: 0;
@@ -515,6 +514,16 @@ span.bold{
 			}
 
 			div.block-content{
+        textarea {
+          margin-top: 20px;
+          border: 1px solid #dedede;
+          box-sizing: border-box;
+          border-radius: 4px;
+          padding: 5px;
+          max-width: 80%;
+          min-width: 80%;
+          min-height: 40px;
+        }
 				.block-media-actions {
 					border: 2px dashed $lightOrange;
 					width: 95%;

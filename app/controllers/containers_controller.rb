@@ -12,9 +12,14 @@ class ContainersController < ApplicationController
   end
 
   def index
-    @containers = Container.select("id, name, content, created_at, status")
+    @containers = Container.select("id, name, created_at, status")
       .where(:user_id => current_user.id).where(:visible => 1)
-    render json: { containers: @containers }
+    results = Array.new
+    @containers.each do |container|
+      container.set_categories(container.id)
+    end
+    # methods allows the json rendering of the attr_accessor's field "categories"
+    render json: @containers, methods: [:categories]
   end
 
   def show
@@ -85,9 +90,15 @@ class ContainersController < ApplicationController
     @container.url = current_user.email
     @container.companies = Company.where(id: 1)
     if @container.save
+      unless params[:container]["categories"].empty? || params[:container]["categories"].nil?
+        categories = Category.where(:id => params[:container]["categories"])
+        categories.each do |c|
+          @container.categories << c
+        end
+      end
       @version = Version.new(container_id: @container.id)
       @version.save
-      render json: {id: @container.id, name: @container.name, content: "", created_at: @container.created_at}
+      render json: {id: @container.id, name: @container.name, content: "", created_at: @container.created_at, categories: @container.categories}
     end
   end
 
@@ -108,7 +119,7 @@ class ContainersController < ApplicationController
 
   private
     def container_params
-      params.require(:container).permit(:name, :content, :url, :visible, :status)
+      params.require(:container).permit(:name, :content, :url, :visible, :status, :categories)
     end
 
 end

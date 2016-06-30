@@ -52,6 +52,8 @@ Rails.application.routes.draw do
     get "/containers_glossaries/:container_id" => "containers_glossaries#show"
     post "/containers_glossaries" => "containers_glossaries#check"
 
+    post "/categories_containers" => "categories_containers#create"
+
     resources :formulas
     get "/search_variables" => "formulas#find"
 

@@ -17,7 +17,6 @@ var Result = React.createClass({
 
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
-        this.generateGradient();
     },
 
     deleteContainer: function(event){
@@ -108,26 +107,19 @@ var Result = React.createClass({
         this.setState({ overview: st });
     },
 
-    generateGradient: function() {
-        var i = Math.floor(Math.random() * (3 - 1 + 1) + 1);
-        var bg = {
-            background: Constants.gradient+i[0],
-            background: "-webkit-linear-gradient(to left, "+Constants.gradient+i[0]+" , "+Constants.gradient+i[1]+")",
-            background: "linear-gradient(to left, "+Constants.gradient+i[0]+" , "+Constants.gradient+i[1]+")"
-        };
-
-        this.setState({ coverBackground: bg });
-    },
-
     _notificationSystem: null,
 
     render: function() {
         var result = this.props.item;
-
         return(
             <tr className="container">
               <td>
                 <a href={"/#/containers/"+result.id}>{result.name}</a>
+              </td>
+              <td>
+                {result.categories.map(function(category) {
+                  return( <li key={category.id} className="category">{category.name}</li> );
+                })}
               </td>
               <td>
                 {result.created_at.split("T")[0].split("-").reverse().join("/")}
@@ -186,9 +178,8 @@ var Result = React.createClass({
                     </Modal>
                     : null
                 }
-
+                <NotificationSystem ref="notificationSystem" />
               </td>
-              <NotificationSystem ref="notificationSystem" />
             </tr>
         );
     }
@@ -211,7 +202,7 @@ var Containers = React.createClass({
     componentDidMount: function() {
         this.serverRequest = $.get("/containers.json", function(result) {
           this.setState({
-            containersList: result.containers
+            containersList: result
           });
         }.bind(this));
 
@@ -253,7 +244,8 @@ var Containers = React.createClass({
                 container: {
                     name: this.state.newContainerValue,
                     content: "",
-                    url: JSON.parse(currentUser).email
+                    url: JSON.parse(currentUser).email,
+                    categories: this.state.selectedCategories
                 }
             },
             success: function(data){
@@ -261,6 +253,7 @@ var Containers = React.createClass({
                     viewCreate: false,
                     containersList: this.state.containersList.concat([data]),
                 });
+
                 window.location = "/#/containers/" + data.id;
             }
         });
@@ -280,7 +273,12 @@ var Containers = React.createClass({
     },
 
     selectCategory: function(event) {
-      this.setState({ selectedCategories: this.state.selectedCategories.concat([event.target.value]) })
+      var i = this.state.selectedCategories.indexOf(parseInt(event.target.value));
+      if (i != -1) {
+        this.setState({ selectedCategories: this.state.selectedCategories.splice(i, 1) });
+      } else {
+        this.setState({ selectedCategories: this.state.selectedCategories.concat([parseInt(event.target.value)]) });
+      }
     },
 
     _handleKeyPress: function(event) {
@@ -310,6 +308,7 @@ var Containers = React.createClass({
                           <thead>
                             <tr>
                               <th>Titre</th>
+                              <th>Catégories</th>
                               <th>Date</th>
                               <th colspan="2">Options</th>
                             </tr>
@@ -319,6 +318,7 @@ var Containers = React.createClass({
                                   return (
                                       <Result
                                           item={result}
+                                          categories={that.state.categories}
                                           key={result.id}
                                           removeContainer={that.handleContainerDeletion}
                                           validateContainer={that.handleContainerValidation}
@@ -347,14 +347,16 @@ var Containers = React.createClass({
                                     placeholder="Titre de la ressource..."
                                 />
                                 <br/>
-                                { this.state.categories.map(function(category) {
-                                  return(
-                                    <label>
-                                      <input key={category.id} value={category.id} name={category.name} type="checkbox" onChange={that.selectCategory}/>
-                                      {category.name}
-                                    </label>
-                                  );
-                                })}
+                                <ul>
+                                  { this.state.categories.map(function(category) {
+                                    return(
+                                      <li key={category.id} className="category">
+                                        <input value={category.id} name={category.name} type="checkbox" onChange={that.selectCategory}/>
+                                        {category.name}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
                                 <br/>
                                 { this.state.inputCreate
                                   ? <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>

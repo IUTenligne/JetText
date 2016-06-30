@@ -4,16 +4,19 @@ login: &login
   password: root
   host: localhost
   encoding: utf8
-  socket: /Applications/MAMP/tmp/mysql/mysql.sock  
+  socket: /Applications/MAMP/tmp/mysql/mysql.sock
 
 development:
   <<: *login
   database: jettext_dev
+  #database: db/development.sqlite3
 
 test:
   <<: *login
   database: jettext_test
+  #database: db/test.sqlite3
 
 production:
   <<: *login
   database: jettext_prod
+  #database: db/production.sqlite3

@@ -3,15 +3,23 @@ class Container < ActiveRecord::Base
   has_many :pages, :dependent => :destroy
   has_many :uploads
   has_many :glossaries, :through => :containers_glossary
+  has_many :categories
   has_many :versions
   has_and_belongs_to_many :companies, :through => :companies_container
+  has_and_belongs_to_many :categories, :through => :categories_container
 
   validates :name,		  :presence => true, length: { maximum: 250 }
   validates :content, 	:presence => false
   validates :user_id, 	:presence => true
 
   before_create :default_values
-  
+
+  attr_accessor :cats
+
+  def set_categories(id)
+    self.categories = Category.select("id, name").where(:id => CategoriesContainer.select("category_id").where(:container_id => id))
+  end
+
   private
 	  def create_folder
 	    return nil unless current_user.present?

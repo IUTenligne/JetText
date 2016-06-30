@@ -1,5 +1,0 @@
-class ContainersGlossariesController < ApplicationController
-
-
-
-end

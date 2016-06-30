@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20160629165112) do
   end
 
   create_table "categories_containers", id: false, force: :cascade do |t|
-    t.integer "container_id", limit: 4, null: false
     t.integer "category_id",  limit: 4, null: false
+    t.integer "container_id", limit: 4, null: false
   end
 
   add_index "categories_containers", ["category_id", "container_id"], name: "index_categories_containers_on_category_id_and_container_id", using: :btree
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 20160629165112) do
     t.datetime "file_updated_at"
     t.string   "filetype",          limit: 255
     t.string   "url",               limit: 255
-    t.string   "alt",               limit: 255
+    t.text     "alt",               limit: 65535
     t.string   "width",             limit: 255
     t.integer  "user_id",           limit: 4
   end

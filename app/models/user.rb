@@ -18,8 +18,11 @@ class User < ActiveRecord::Base
   end
 
   def is_validated?
-    return true if self.validated == true
-    return false
+    if self.validated == true || self.validated == 1
+      return true
+    else
+      return false
+    end
   end
 
   def is_expert?

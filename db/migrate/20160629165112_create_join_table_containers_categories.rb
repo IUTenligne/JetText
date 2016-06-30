@@ -1,8 +1,8 @@
 class CreateJoinTableContainersCategories < ActiveRecord::Migration
   def change
-    create_join_table :containers, :categories do |t|
-      t.index [:container_id, :category_id]
+    create_join_table :categories, :containers do |t|
       t.index [:category_id, :container_id]
+      t.index [:container_id, :category_id]
     end
   end
 end
