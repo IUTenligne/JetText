@@ -1,4 +1,5 @@
 var React = require('react');
+var Containers = require('./containers/Containers.jsx');
 import { Link } from 'react-router';
 
 var App = React.createClass({
@@ -6,12 +7,7 @@ var App = React.createClass({
 	    return (
 	    	<div className="home">
 
-          <h1>Bonjour <span className="capitalize">{JSON.parse(currentUser).firstname}</span> !</h1>
-
-		    	<div id="homeBtn">
-		    		<a id="btntest" ref="btntest" href={"/#/containers/"} className="btn-success">Mes ressources</a>
-		    		<a href={"/#/glossaries/"} className="btn-success">Mes glossaires</a>
-          </div>
+          <Containers />
 
 		    </div>
 	    );
