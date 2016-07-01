@@ -29,7 +29,7 @@ var NoteBlock = React.createClass({
             editBlock: true,
             tooltipState: false,
             tooltipMovesState: false,
-            noteStyles: ["remarque", "important", "quote", "exemple", "definition", "methode"]
+            noteStyles: ["remarque", "important", "quote", "exemple", "definition", "methode", "complement", "divers"]
         };
     },
 

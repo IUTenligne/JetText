@@ -122,7 +122,7 @@ var Result = React.createClass({
                 })}
               </td>
               <td>
-                {result.created_at.split("T")[0].split("-").reverse().join("/")}
+                <span>{result.created_at.split("T")[0].split("-").reverse().join("/")}</span>
               </td>
               <td>
                 <a href={"/#/containers/"+result.id} title="Editer">
@@ -332,22 +332,24 @@ var Containers = React.createClass({
                     { this.state.viewCreate
                         ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
                             <div className="add_new">
-                                <span className="input-group-addon" onClick={this.createContainer}>
-                                  <i className="fa fa-plus fa-fw"></i>
-                                </span>
-                                <input
-                                    type="text"
-                                    ref="new_container"
-                                    id="new_container"
-                                    className="form-control"
-                                    autoComplet="off"
-                                    onKeyPress={this._handleKeyPress}
-                                    onChange={this.handleChange.bind(this, "newContainerValue")}
-                                    value={this.state.newContainerValue}
-                                    placeholder="Titre de la ressource..."
-                                />
-                                <br/>
-                                <ul>
+                                <div id="inputs">
+                                  <span className="input-group-addon" onClick={this.createContainer}>
+                                    <i className="fa fa-plus fa-fw"></i>
+                                  </span>
+                                  <input
+                                      type="text"
+                                      ref="new_container"
+                                      id="new_container"
+                                      className="form-control"
+                                      autoComplet="off"
+                                      onKeyPress={this._handleKeyPress}
+                                      onChange={this.handleChange.bind(this, "newContainerValue")}
+                                      value={this.state.newContainerValue}
+                                      placeholder="Titre de la ressource..."
+                                  />
+                                </div>
+                                <ul id="categories-list">
+                                  <h4>Catégories de la ressource :</h4>
                                   { this.state.categories.map(function(category) {
                                     return(
                                       <li key={category.id} className="category">
@@ -359,7 +361,9 @@ var Containers = React.createClass({
                                 </ul>
                                 <br/>
                                 { this.state.inputCreate
-                                  ? <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                  ? <div id="submit">
+                                      <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                    </div>
                                   : null
                                 }
                             </div>

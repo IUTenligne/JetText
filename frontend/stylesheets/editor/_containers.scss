@@ -51,14 +51,14 @@ article#containers {
 						text-overflow: ellipsis;
 						padding: 0 5px;
 						vertical-align: middle;
-						a, li.category {
+						a, li.category, span {
 							font-weight: normal;
 							color: #222;
 							text-overflow: ellipsis;
 							font-size: 0.857em;
 							font-weight: bold;
 							white-space: nowrap;
-							padding: 0 3px;
+							padding: 0 2px;
 							span.fa-stack {
 								font-size: 13px
 							}
@@ -68,6 +68,9 @@ article#containers {
 							list-style: none;
 							float: left;
 							padding: 0 7px 0 0;
+						}
+						span {
+							font-weight: normal;
 						}
 						li.category:before {
 							content: "■";

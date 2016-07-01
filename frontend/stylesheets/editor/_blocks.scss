@@ -690,6 +690,14 @@ span.bold{
 					color: $lighTbBlue;
 				}
 
+        .complement i {
+					color: #b3aebf;
+				}
+
+        .divers i {
+					color: #c5c5c5;
+				}
+
 				.block-note {
 					border: 2px solid;
 					padding: 5px 10px 0px 10px;
@@ -697,7 +705,7 @@ span.bold{
 					.block-note-title {
 						background: $white;
 						margin: -25px 0 0 0;
-						width: 130px;
+						width: 150px;
 						padding: 0 0 10px 8px;
 						font-size: 20px;
 
@@ -784,6 +792,32 @@ span.bold{
 						color: $lighTbBlue;
 					}
 				}
+
+        .block-content-complement {
+					border-color: #b3aebf;
+					.block-note-title-complement i{
+						color: #b3aebf;
+					}
+					.block-note-title-complement:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Complément";
+						color: #b3aebf;
+					}
+				}
+
+        .block-content-divers {
+					border-color: #c5c5c5;
+					.block-note-title-divers i{
+						color: #c5c5c5;
+					}
+					.block-note-title-divers:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Divers";
+						color: #c5c5c5;
+					}
+				}
 			}
 		}
 	}
@@ -812,6 +846,14 @@ span.bold{
 }
 .note-icon-remarque:before {
 	content: "\f075";
+  font-family: FontAwesome;
+}
+.note-icon-complement:before {
+	content: "\f00e";
+  font-family: FontAwesome;
+}
+.note-icon-divers:before {
+	content: "\f12e";
   font-family: FontAwesome;
 }
 

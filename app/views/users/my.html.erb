@@ -1,5 +1,9 @@
-<% if user_signed_in? %>
-  <div>
-		<li><%= link_to(raw('<i class="fa fa-sign-out"></i> Déconnexion'), destroy_user_session_path, :method => :delete) %></li>
-	</div>
-<% end %>
+<div id="users">
+  <% if user_signed_in? %>
+    <h1><span class="capitalize"><%= current_user.firstname if current_user.firstname %> <%= current_user.lastname if current_user.lastname %></span></h1>
+
+    <div>
+  		<div class="logout"><%= link_to(raw('<i class="fa fa-sign-out"></i> Déconnexion'), destroy_user_session_path, :method => :delete) %></div>
+  	</div>
+  <% end %>
+</div>

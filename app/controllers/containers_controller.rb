@@ -16,7 +16,7 @@ class ContainersController < ApplicationController
       .where(:user_id => current_user.id).where(:visible => 1)
     results = Array.new
     @containers.each do |container|
-      container.set_categories(container.id)
+      container.categories
     end
     # methods allows the json rendering of the attr_accessor's field "categories"
     render json: @containers, methods: [:categories]
@@ -90,7 +90,7 @@ class ContainersController < ApplicationController
     @container.url = current_user.email
     @container.companies = Company.where(id: 1)
     if @container.save
-      unless params[:container]["categories"].empty? || params[:container]["categories"].nil?
+      if params[:container]["categories"].present?
         categories = Category.where(:id => params[:container]["categories"])
         categories.each do |c|
           @container.categories << c
@@ -98,7 +98,7 @@ class ContainersController < ApplicationController
       end
       @version = Version.new(container_id: @container.id)
       @version.save
-      render json: {id: @container.id, name: @container.name, content: "", created_at: @container.created_at, categories: @container.categories}
+      render json: { id: @container.id, name: @container.name, content: "", created_at: @container.created_at, categories: @container.categories }
     end
   end
 
@@ -119,20 +119,7 @@ class ContainersController < ApplicationController
 
   private
     def container_params
-      params.require(:container).permit(:name, :content, :url, :visible, :status, :categories)
+      params.require(:container).permit(:name, :content, :url, :visible, :status)
     end
 
 end
-
-# == Schema Information
-#
-# Table name: containers
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  content    :binary(16777215)
-#  url        :string(255)
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#

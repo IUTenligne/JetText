@@ -1,10 +1,12 @@
 class Container < ActiveRecord::Base
   belongs_to :user
+
   has_many :pages, :dependent => :destroy
   has_many :uploads
   has_many :glossaries, :through => :containers_glossary
   has_many :categories
   has_many :versions
+
   has_and_belongs_to_many :companies, :through => :companies_container
   has_and_belongs_to_many :categories, :through => :categories_container
 
@@ -14,10 +16,10 @@ class Container < ActiveRecord::Base
 
   before_create :default_values
 
-  attr_accessor :cats
-
-  def set_categories(id)
-    self.categories = Category.select("id, name").where(:id => CategoriesContainer.select("category_id").where(:container_id => id))
+  def set_categories
+    self.categories = Category.select("id, name")
+                        .where(:id => CategoriesContainer.select("category_id")
+                                        .where(:container_id => self.id))
   end
 
   private
@@ -33,16 +35,3 @@ class Container < ActiveRecord::Base
       self.status ||= 0
     end
 end
-
-# == Schema Information
-#
-# Table name: containers
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  content    :binary(16777215)
-#  url        :string(255)
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#

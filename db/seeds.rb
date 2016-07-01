@@ -1,4 +1,4 @@
-
+=begin
 Type.create!([
   {name: "Texte", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
   {name: "Media", created_at: "2016-19-04 09:00:00.972419", updated_at: "2016-19-04 09:00:00.972419"},
@@ -21,12 +21,38 @@ Role.create!([
 User.create!([
 	{ firstname: "Admin", lastname: "Account", email: "root@jettext.com", password: "00000000", :password_confirmation => '00000000', validated: 1, role_id: 5 }
 ])
-
+=end
 Category.create!([
-	{name: "mathématiques"},
   {name: "économie"},
+  {name: "gestion"},
+  {name: "fiscalité"},
+  {name: "comptabilité"},
+  {name: "marketing"},
   {name: "droit"},
-  {name: "gestion"}
+  {name: "mathématiques"},
+  {name: "informatique"},
+  {name: "électronique"},
+  {name: "automatique"},
+  {name: "mécanique"},
+  {name: "optique"},
+  {name: "réseaux"},
+  {name: "télécommunications"},
+  {name: "chimie"},
+  {name: "électricité"},
+  {name: "électrotechnique"},
+  {name: "génie civil"},
+  {name: "physique"},
+  {name: "communication"},
+  {name: "sciences du vivant"},
+  {name: "histoire"},
+  {name: "langues vivantes"},
+  {name: "sciences politiques"},
+  {name: "arts"},
+  {name: "sciences du langage"},
+  {name: "littérature"},
+  {name: "médecine"},
+  {name: "sciences de la santé"},
+  {name: "pharmacie, pharmacologie"}
 ])
 
 =begin

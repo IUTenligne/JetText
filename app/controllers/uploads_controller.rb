@@ -49,7 +49,7 @@ class UploadsController < ApplicationController
 		@upload.user_id = current_user.id
 		@upload.url = @upload.file.url
 		if @upload.save
-      render json: { upload: @upload, types: Upload.get_all_types(current_user) }
+      render json: @upload
 		else
 			render json: "error"
 		end

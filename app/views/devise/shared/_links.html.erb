@@ -28,12 +28,14 @@
 	  		<% name = provider %>
 	  	<% end %>
 	    <div class="login-provider">
-	    	<div class="<%= "provider-btn #{name}" %>">
-	    		<div class="provider-logo"></div>
-	    		<div class="provider-link">
-	    			<%= link_to "#{OmniAuth::Utils.camelize(name)}", omniauth_authorize_path(resource_name, provider) %>
-	    		</div>
-	    	</div>
+        <%= link_to(omniauth_authorize_path(resource_name, provider)) do %>
+  	    	<div class="<%= "provider-btn #{name}" %>">
+  	    		<div class="provider-logo"></div>
+  	    		<div class="provider-link">
+  	    			<%= "#{OmniAuth::Utils.camelize(name)}" %>
+  	    		</div>
+  	    	</div>
+        <% end %>
 	    </div>
 	  <% end -%>
 	</div>
