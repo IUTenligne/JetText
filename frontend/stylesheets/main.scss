@@ -39,6 +39,7 @@ html, body {
 			min-height: 100%;
 			@import "login";
 			@import "users";
+			@import "static";
 
 			.home {
 				padding: 30px;
