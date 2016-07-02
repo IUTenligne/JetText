@@ -108,7 +108,7 @@ var Result = React.createClass({
                     <a href="javascript:;" onClick={this.handleModalState}><i className="fa fa-eye"></i></a>
                 </td>
                 <td>
-                    <a href={"/generator/overview/"+result.id} target="_blank"><i className="fa fa-expand"></i></a>
+                    <a href={"/overview/"+result.url} target="_blank"><i className="fa fa-expand"></i></a>
                 </td>
                 <td>
                     { this.state.infos
@@ -121,7 +121,7 @@ var Result = React.createClass({
                     }
                     { this.state.overview
                         ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
-                            <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+                            <iframe src={"/overview/"+this.props.item.url} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
                         </Modal>
                         : null
                     }

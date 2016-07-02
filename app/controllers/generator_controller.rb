@@ -5,10 +5,10 @@ class GeneratorController < ApplicationController
 
   def container
     # Container overview method
-  	@container = Container.find(params[:id])
-  	@pages = Page.where(container_id: params[:id])
+  	@container = Container.where(:url => params[:url]).take
+  	@pages = @container.pages
     @next_link = "pages/#{@pages.first.id}" unless @pages.first.nil?
-    @menu = recur_page_level(false, @pages, true, 0, "", 0, nil)
+    @menu = recur_page_level(false, @container.url, @pages, true, 0, "", 0, nil)
     @assets_prefix = "/templates/iutenligne/"
     @home_link = "/generator/overview/#{params[:id]}"
     @org_link = "#"
@@ -18,10 +18,10 @@ class GeneratorController < ApplicationController
 
   def container_generation
     # Container generation method
-    @container = Container.find(params[:id])
-    @pages = Page.where(container_id: params[:id])
+    @container = Container.where(:url => params[:url]).take
+    @pages = @container.pages
     @next_link = "pages/#{@pages.first.id}.html" unless @pages.first.nil?
-    @menu = recur_page_level(true, @pages, false, 0, "", 0, nil)
+    @menu = recur_page_level(true, @container.url, @pages, false, 0, "", 0, nil)
     @assets_prefix = ""
     @home_link = "#"
     @org_link = "http://www.iutenligne.net/resources.html"
@@ -43,7 +43,7 @@ class GeneratorController < ApplicationController
     @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
     @next_link = "#{@next_page.id}" unless @next_page.nil?
 
-    @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
+    @menu = recur_page_level(false, @container.url, @pages, false, 0, "", 0, @page)
     @mathjax = false
 
   	@blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
@@ -97,7 +97,7 @@ class GeneratorController < ApplicationController
     @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
     @next_link = "#{@next_page.id}" unless @next_page.nil?
 
-    @menu = recur_page_level(false, @pages, false, 0, "", 0, @page)
+    @menu = recur_page_level(false, @container.url, @pages, false, 0, "", 0, @page)
     @mathjax = false
 
     @blocks = Block.where(page_id: params[:id]).where(version_id: @version.id)
@@ -170,7 +170,7 @@ class GeneratorController < ApplicationController
       @next_page = Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first unless Page.where(container_id: @version.container_id).where("sequence > ?", page.sequence).first.nil?
       @next_link = "#{@next_page.id}" unless @next_page.nil?
 
-      @menu = recur_page_level(false, @pages, false, 0, "", 0, page)
+      @menu = recur_page_level(false, @container.url, @pages, false, 0, "", 0, page)
       @mathjax = false
 
       @v_content = ""
@@ -270,7 +270,7 @@ class GeneratorController < ApplicationController
   end
 
 
-  def recur_page_level(zip, pages, index, i, content, ul, current_page)
+  def recur_page_level(zip, container_url, pages, index, i, content, ul, current_page)
     if pages.empty?
       return content
     else
@@ -294,24 +294,24 @@ class GeneratorController < ApplicationController
         if index == true
           if pages[i].name
             pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li><a href=\"/overview/#{container_url}/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           else
-            content = content + "<li><a href=\"pages/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+            content = content + "<li><a href=\"/overview/#{container_url}/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
           end
         else
           if current_page != nil && pages[i].id == current_page.id
             if pages[i].name
               pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li class=\"active\"><a href=\"/overview/#{container_url}/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             else
-              content = content + "<li class=\"active\"><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li class=\"active\"><a href=\"/overview/#{container_url}/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           else
             if pages[i].name
               pages[i].name = pages[i].name.slice(0,1).capitalize + pages[i].name.slice(1..-1)
-              content = content + "<li><a href=\"#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li><a href=\"/overview/#{container_url}/#{pages[i].id}\">" + pages[i].name + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             else
-              content = content + "<li><a href=\"#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
+              content = content + "<li><a href=\"/overview/#{container_url}/#{pages[i].id}\">" + i + "</a><span class=\"level-icon\"><i class=\"fa\"></i></span></li>\n"
             end
           end
         end
@@ -321,37 +321,37 @@ class GeneratorController < ApplicationController
         if pages[i].level == pages[i+1].level
           i = i + 1
           ul = ul
-          recur_page_level(zip, pages, index, i, content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i, content, ul, current_page)
         elsif pages[i+1].level == pages[i].level + 1
           i = i + 1
           ul = ul + 1
           content = content + "<ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i , content, ul, current_page)
         elsif pages[i+1].level == pages[i].level + 2
           i = i + 1
           ul = ul + 2
           content = content + "<ul><ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i , content, ul, current_page)
         elsif pages[i+1].level == pages[i].level + 3
           i = i + 1
           ul = ul + 3
           content = content + "<ul><ul><ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i , content, ul, current_page)
         elsif pages[i+1].level == pages[i].level - 1
           i = i + 1
           ul = ul - 1
           content = content + "</ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i , content, ul, current_page)
         elsif pages[i+1].level == pages[i].level - 2
           i = i + 1
           ul = ul - 2
           content = content + "</ul></ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i , content, ul, current_page)
         elsif pages[i+1].level == pages[i].level - 3
           i = i + 1
           ul = ul - 3
           content = content + "</ul></ul></ul>"
-          recur_page_level(zip, pages, index, i , content, ul, current_page)
+          recur_page_level(zip, container_url, pages, index, i , content, ul, current_page)
         end
       else
         ul.times do
@@ -363,11 +363,11 @@ class GeneratorController < ApplicationController
   end
 
 
-  def motherfucking_zipper(path, container_name, username, pages, files, mathjax)
+  def motherfucking_zipper(path, container_name, pages, files, mathjax)
     require 'rubygems'
     require 'zip'
 
-    username = username.split("@")[0].gsub!(".", "_")
+    username = path.split("@")[0].gsub!(".", "_")
     container = container_name.gsub(/[^a-zA-Z1-9_-]/, "_").to_s.downcase
     zippath = "#{Rails.public_path}/#{path}/tmp/#{Time.now.to_i.to_s}_#{container}.zip"
     relpath = "#{Rails.public_path}/#{path}"
@@ -413,11 +413,11 @@ class GeneratorController < ApplicationController
     @home_link = "#"
     @libs_prefix = "assets/libs/"
     @org_link = "http://www.iutenligne.net/resources.html"
-    @menu = recur_page_level(true, @pages, true, 0, "", 0, nil)
+    @menu = recur_page_level(true, @container.url, @pages, true, 0, "", 0, nil)
 
     data = render_to_string(:action => :container_generation, :id => params[:id], :layout => false, :template => "generator/container.html.erb")
-    Dir.mkdir("#{Rails.public_path}/#{@container.url}/tmp") unless File.exists?("#{Rails.public_path}/#{@container.url}/tmp")
-    File.open("#{Rails.public_path}/#{@container.url}/tmp/index.html", "w") { |f| f << data }
+    Dir.mkdir("#{Rails.public_path}/#{@container.user.email}/tmp") unless File.exists?("#{Rails.public_path}/#{@container.user.email}/tmp")
+    File.open("#{Rails.public_path}/#{@container.user.email}/tmp/index.html", "w") { |f| f << data }
 
     pages = Array.new()
     pages.push("index.html")
@@ -428,7 +428,7 @@ class GeneratorController < ApplicationController
 
     @pages.each_with_index do |page, index|
       @page = page
-      @menu = recur_page_level(true, @pages, false, 0, "", 0, @page)
+      @menu = recur_page_level(true, @container.url, @pages, false, 0, "", 0, @page)
       page_name = gsub_name(page.name) if page.name
 
       @blocks = Block.where(page_id: page.id).where(version_id: @version.id)
@@ -483,12 +483,12 @@ class GeneratorController < ApplicationController
 
       filename = index.to_s + "-" + page_name + ".html"
       data = render_to_string(:action => :page_generation, :id => params[:id], :layout => false, :template => "generator/page.html.erb")
-      File.open("#{Rails.public_path}/#{@container.url}/tmp/" + filename, "w") { |f| f << data }
+      File.open("#{Rails.public_path}/#{@container.user.email}/tmp/" + filename, "w") { |f| f << data }
 
       pages.push(filename)
     end
 
-    url = motherfucking_zipper(@container.url, @container.name, @container.user.email, pages, files, @mathjax)
+    url = motherfucking_zipper(@container.user.email, @container.name, pages, files, @mathjax)
 
     # url is used by Containers.jsx to allow the zip file to be downloaded
     render json: { :url => url }

@@ -33,5 +33,6 @@ class Container < ActiveRecord::Base
     def default_values
       self.visible ||= 1
       self.status ||= 0
+      self.url ||= SecureRandom.urlsafe_base64
     end
 end

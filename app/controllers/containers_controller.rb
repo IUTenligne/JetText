@@ -24,9 +24,7 @@ class ContainersController < ApplicationController
 
   def show
     @container = Container.select("id, name").find(params[:id])
-    @pages = Page.select("id, name, sequence, level").where(container_id: params[:id])
-    #sleep 3 #simulation long loading query
-    render json: { status: { state: 0 }, container: @container, pages: @pages }
+    render json: { status: { state: 0 }, container: @container, pages: @container.pages }
   end
 
   def update
@@ -44,8 +42,7 @@ class ContainersController < ApplicationController
     @version = Version.new(container_id: @container.id)
     @version.save
 
-    @pages = Page.where(:container_id => @container.id)
-    @pages.each do |page|
+    @container.pages.each do |page|
       @blocks = Block.where(:page_id => page.id).where(:version_id => @prev_version.id)
       @blocks.each do |block|
         @new_block = block.dup
@@ -68,8 +65,7 @@ class ContainersController < ApplicationController
     @version = Version.new(container_id: @container.id)
     @version.save
 
-    @pages = Page.where(:container_id => @container.id)
-    @pages.each do |page|
+    @container.pages.each do |page|
       @blocks = Block.where(:page_id => page.id).where(:version_id => @prev_version.id)
       @blocks.each do |block|
         @new_block = block.dup
@@ -87,7 +83,6 @@ class ContainersController < ApplicationController
   def create
     @container = Container.new(container_params)
     @container.user_id = current_user.id
-    @container.url = current_user.email
     @container.companies = Company.where(id: 1)
     if @container.save
       if params[:container]["categories"].present?
@@ -119,7 +114,7 @@ class ContainersController < ApplicationController
 
   private
     def container_params
-      params.require(:container).permit(:name, :content, :url, :visible, :status)
+      params.require(:container).permit(:name, :content, :visible, :status)
     end
 
 end

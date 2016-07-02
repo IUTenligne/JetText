@@ -61,8 +61,8 @@ Rails.application.routes.draw do
     get "/search_variables" => "formulas#find"
 
     resources :generator
-    get "/generator/overview/:id" => "generator#container"
-    get "/generator/overview/pages/:id" => "generator#page"
+    get "/overview/:url" => "generator#container"
+    get "/overview/:url/:id" => "generator#page"
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
     get "/generator/diffs/:id" => "generator#diffs"

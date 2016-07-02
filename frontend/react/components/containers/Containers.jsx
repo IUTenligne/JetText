@@ -174,7 +174,7 @@ var Result = React.createClass({
               <td>
                 { this.state.overview
                     ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
-                        <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+                        <iframe src={"/overview/"+this.props.item.url} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
                     </Modal>
                     : null
                 }
