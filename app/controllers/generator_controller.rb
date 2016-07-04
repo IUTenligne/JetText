@@ -7,10 +7,10 @@ class GeneratorController < ApplicationController
     # Container overview method
   	@container = Container.where(:url => params[:url]).take
   	@pages = @container.pages
-    @next_link = "pages/#{@pages.first.id}" unless @pages.first.nil?
+    @next_link = "#{@container.url}/#{@pages.first.id}" unless @pages.first.nil?
     @menu = recur_page_level(false, @container.url, @pages, true, 0, "", 0, nil)
     @assets_prefix = "/templates/iutenligne/"
-    @home_link = "/generator/overview/#{params[:id]}"
+    @home_link = "/overview/#{@container.url}"
     @org_link = "#"
     render :layout => false
   end
@@ -38,10 +38,10 @@ class GeneratorController < ApplicationController
   	@pages = Page.where(container_id: @page.container_id)
 
     @prev_page = Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last unless Page.where(container_id: @container.id).where("sequence < ?", @page.sequence).last.nil?
-    @prev_link = "#{@prev_page.id}" unless @prev_page.nil?
+    @prev_link = "/overview/#{@container.url}/#{@prev_page.id}" unless @prev_page.nil?
 
     @next_page = Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first unless Page.where(container_id: @container.id).where("sequence > ?", @page.sequence).first.nil?
-    @next_link = "#{@next_page.id}" unless @next_page.nil?
+    @next_link = "/overview/#{@container.url}/#{@next_page.id}" unless @next_page.nil?
 
     @menu = recur_page_level(false, @container.url, @pages, false, 0, "", 0, @page)
     @mathjax = false
@@ -77,7 +77,7 @@ class GeneratorController < ApplicationController
 
     @assets_prefix = "/templates/iutenligne/"
     @libs_prefix = "/assets/"
-    @home_link = "/generator/overview/#{@container.id}"
+    @home_link = "/overview/#{@container.url}"
     @org_link = "#"
     render :layout => false
   end

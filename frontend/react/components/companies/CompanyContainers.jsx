@@ -100,17 +100,13 @@ var Result = React.createClass({
                 </td>
                 <td>
                     <a href="javascript:;" onClick={this.handleInfosModalState}><i className="fa fa-line-chart"></i></a>
-                </td>
-                <td>
+
                     <a href="javascript:;" onClick={this.generateContainer}><i className="fa fa-download"></i></a>
-                </td>
-                <td>
+
                     <a href="javascript:;" onClick={this.handleModalState}><i className="fa fa-eye"></i></a>
-                </td>
-                <td>
+
                     <a href={"/overview/"+result.url} target="_blank"><i className="fa fa-expand"></i></a>
-                </td>
-                <td>
+
                     { this.state.infos
                         ? <Modal active={this.handleInfosModalState} mystyle={"compagnie"} title={"Informations"}>
                             <div className="modal-in">
@@ -218,9 +214,6 @@ var Containers = React.createClass({
                                     Mise à jour {this.state.sorter === "update" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                                 <th>
-                                    Infos
-                                </th>
-                                <th colspan="3">
                                     Actions
                                 </th>
                             </tr>
@@ -256,9 +249,6 @@ var Containers = React.createClass({
                                     Mise à jour {this.state.sorter === "incupdate" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                                 <th>
-                                    Infos
-                                </th>
-                                <th colspan="3">
                                     Actions
                                 </th>
                             </tr>
@@ -294,9 +284,6 @@ var Containers = React.createClass({
                                     Mise à jour {this.state.sorter === "deletedupdate" ? <i className={"fa fa-sort-"+this.state.icon}></i> : null}
                                 </th>
                                 <th>
-                                    Infos
-                                </th>
-                                <th colspan="3">
                                     Actions
                                 </th>
                             </tr>

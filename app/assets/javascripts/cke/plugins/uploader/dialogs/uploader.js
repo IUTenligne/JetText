@@ -25,9 +25,7 @@ CKEDITOR.dialog.add('uploaderDialog', function(editor) {
             formData.append("tempfile", file);
             formData.append("block_id", block_id);
 
-            console.log(type);
-
-            if ((type === "png") || (type === "jpg") || (type === "gif") || (type === "jpeg")) {
+            if ((type === "png") || (type === "jpg") || (type === "gif") || (type === "jpeg") || (type === "svg")) {
                 $.ajax({
                     url: "/uploads",
                     type: "POST",
@@ -43,7 +41,7 @@ CKEDITOR.dialog.add('uploaderDialog', function(editor) {
                 });
                 return;
             } else {
-                editor.showNotification( 'Uploading...', 'progress', 0.25 );
+                editor.showNotification('Erreur : format de fichier non pris en charge');
                 return;
             }
         }

@@ -323,7 +323,8 @@ span.bold{
 		position: absolute;
 		right: 61px;
 		margin-top: -9px;
-		top:0;
+		top: 0;
+    z-index: 10;
 		border-top: 0;
 		border-left: 9px solid transparent;
 		border-right: 9px solid transparent;
@@ -794,9 +795,9 @@ span.bold{
 				}
 
         .block-content-complement {
-					border-color: #b3aebf;
+					border-color: $complement;
 					.block-note-title-complement i{
-						color: #b3aebf;
+						color: $complementI;
 					}
 					.block-note-title-complement:after{
 						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
@@ -807,9 +808,9 @@ span.bold{
 				}
 
         .block-content-divers {
-					border-color: #c5c5c5;
+					border-color: $divers;
 					.block-note-title-divers i{
-						color: #c5c5c5;
+						color: $diversI;
 					}
 					.block-note-title-divers:after{
 						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;

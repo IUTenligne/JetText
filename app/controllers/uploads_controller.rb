@@ -49,6 +49,8 @@ class UploadsController < ApplicationController
 		@upload.user_id = current_user.id
 		@upload.url = @upload.file.url
 		if @upload.save
+      @block = Block.find(params[:block_id])
+      @block.uploads << @upload
       render json: @upload
 		else
 			render json: "error"

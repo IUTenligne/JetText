@@ -40,6 +40,10 @@
 
 			td {
 				padding: 8px 10px;
+				font-weight: normal;
+				color: #222;
+				text-overflow: ellipsis;
+				font-size: 0.857em;
 
 				a {
 					color: $lightBlue;
@@ -52,6 +56,20 @@
 
 				select {
 					margin-left: 10px;
+				}
+			}
+
+			td:first-child {
+				width: 50%;
+			}
+
+			td:nth-child(2) {
+				width: 15%;
+			}
+
+			td:last-child {
+				a {
+					padding: 0 5px;
 				}
 			}
 		}

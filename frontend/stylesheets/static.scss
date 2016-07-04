@@ -46,6 +46,13 @@
     img {
       border-radius: 50px;
       float: left;
+      width: 44px;
+    }
+    span {
+      float: left;
+      i.fa-circle {
+        color: $lightGrey;
+      }
     }
     p {
       margin: 0;
@@ -57,5 +64,6 @@
   .specs {
     color: $lightBlue;
     margin-bottom: 0;
+    font-weight: normal !important;
   }
 }
