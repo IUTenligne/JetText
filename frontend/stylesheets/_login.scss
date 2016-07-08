@@ -1,5 +1,5 @@
 .middle {
-	width: 400px;
+	width: 480px;
 	text-align: right;
 	margin: 0 auto;
 	border-radius: 4px;
@@ -107,6 +107,7 @@
 	#login-providers {
 		width: 100%;
 		margin-top: 30px;
+		height: auto;
 		h3 {
 			text-align: left;
 			margin-bottom: 10px;
@@ -116,50 +117,47 @@
 		.login-provider {
 			margin: 0;
 			width: 180px;
-			.provider-btn {
-				width: 100%;
-				border-radius: 4px;
-				height: 40px;
-				padding: 0 0 0 15px;
-				.provider-logo {
-					width: 16px;
+			margin-bottom: 15px;
+			a {
+				color: white;
+				.provider-btn {
+					width: 100%;
+					border-radius: 4px;
 					height: 40px;
-					float: left;
-					background-image: url("login-providers.svg");
-					background-repeat: no-repeat;
+					padding: 0 0 0 15px;
+					.provider-logo {
+						width: 16px;
+						height: 40px;
+						float: left;
+						background-image: url("login-providers.svg");
+						background-repeat: no-repeat;
+					}
+					.provider-link {
+						width: 135px;
+						float: right;
+						border-left: 1px solid rgba(0,0,0,0.2);
+						padding: 12px 10px;
+						a {
+							color: white;
+							font-weight: bold;
+						}
+					}
 				}
-				.provider-link {
-					width: 135px;
-					height: 40px;
-					float: right;
-					border-left: 1px solid rgba(0,0,0,0.2);
-					padding: 12px 10px;
-					a {
-						color: white;
-						font-weight: bold;
+				.facebook {
+					background-color: #3b5998;
+					box-shadow: inset 0 0px #2a447c,0px 5px #2a447c,0 2px 3px rgba(0,0,0,0.3);
+					.provider-logo {
+						background-position: -16px 13px;
+					}
+				}
+				.google {
+					background-color: #D73D32;
+					box-shadow: inset 0 0px #932D14,0px 5px #932D14,0 2px 3px rgba(0,0,0,0.3);
+					.provider-logo {
+						background-position: 0 13px;
 					}
 				}
 			}
-			.facebook {
-				background-color: #3b5998;
-				box-shadow: inset 0 0px #2a447c,0px 5px #2a447c,0 2px 3px rgba(0,0,0,0.3);
-				.provider-logo {
-					background-position: -16px 13px;
-				}
-			}
-			.google {
-				background-color: #D73D32;
-				box-shadow: inset 0 0px #932D14,0px 5px #932D14,0 2px 3px rgba(0,0,0,0.3);
-				.provider-logo {
-					background-position: 0 13px;
-				}
-			}
-		}
-		.login-provider:nth-child(odd) {
-			float: left;
-		}
-		.login-provider:nth-child(even) {
-			float: right;
 		}
 	}
 }

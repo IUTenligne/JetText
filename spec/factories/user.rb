@@ -6,7 +6,7 @@ FactoryGirl.define do
     email "john.doe@example.test"
     password "TestPw8char"
     validated true
-    role_id Role.find(1)
+    role_id 1
   end
 
 end

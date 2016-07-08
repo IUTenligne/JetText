@@ -2,11 +2,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(sign_up_params)
-
-    dest = "#{Rails.root}/public/#{params[:user][:email]}"
-    FileUtils.mkdir_p dest
-    
     resource.save
+
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?

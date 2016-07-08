@@ -1,7 +1,6 @@
 class Upload < ActiveRecord::Base
-
   belongs_to :user
-  has_many :blocks
+  has_many :blocks, through: :blocks_uploads
 
   before_create :reencode_filename
   before_create :set_type
@@ -37,7 +36,7 @@ class Upload < ActiveRecord::Base
   	:path => ":rails_root/public/:user/files/:file_type/:month/:timestamp_:valid_name:valid_ext",
     :use_timestamp => false
 
-  validates_attachment_content_type :file, 
+  validates_attachment_content_type :file,
 		:content_type => [
 			"video/mp4",
 			"application/pdf",
@@ -142,7 +141,8 @@ class Upload < ActiveRecord::Base
       # prevents removing any useful file
       return nil unless current_user.present?
       blocks = Block.select("id").where('blocks.upload_id' => upload_id).where(user_id: current_user.id)
-      return false if blocks.empty?
+      blocks_uploads = BlocksUpload.select("block_id").where('upload_id' => upload_id)
+      return false if blocks.empty? && blocks_uploads.empty?
       return true
     end
 end

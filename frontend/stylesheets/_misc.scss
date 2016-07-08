@@ -15,6 +15,13 @@
 }
 
 @font-face {
+  font-family: 'OpenSans';
+  src:url('OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Boogaloo-Regular';
   src:url('Boogaloo-Regular.otf') format('truetype');
   font-weight: normal;
@@ -104,7 +111,7 @@
   opacity: 0.8;
   color: $white !important;
   background: #94E2FF !important;
-} 
+}
 /* */
 
 .mce-edit-area, .mce-statusbar {
@@ -280,4 +287,8 @@ li.container figure.book ul.hardcover_front div.coverDesign {
 .ins {
   background-color: #EAFFEA;
   padding: 3px;
+}
+
+.jettext {
+  font-weight: normal;
 }

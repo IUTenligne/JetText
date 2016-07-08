@@ -17,7 +17,12 @@ nav.navbar {
 				text-decoration: none;
 			}
 		}
-	} 
+	}
+
+	#logo-footer {
+		position: absolute;
+    bottom: 2px;
+	}
 
 	div#user-menu,
 	div#top-menu {

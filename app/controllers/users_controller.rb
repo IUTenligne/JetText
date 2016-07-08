@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :authenticate_user!
-  before_filter :require_admin
+  before_filter :require_admin, only: [:index, :validate, :update_role]
   respond_to :html, :json
 
   def index
@@ -32,6 +32,10 @@ class UsersController < ApplicationController
     @validated_users = @users.where(validated: true)
     @pending_users = @users.where(validated: false)
     render json: { usersdata: { users: @users, validated_users: @validated_users, pending_users: @pending_users } }
+  end
+
+  def my
+
   end
 
 end

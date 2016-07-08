@@ -7,7 +7,6 @@
 
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 
 //= require cke/cke_fix.js
 //= require ckeditor/ckeditor.js

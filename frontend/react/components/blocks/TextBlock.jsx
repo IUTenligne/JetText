@@ -25,12 +25,12 @@ var TextBlock = React.createClass({
             editBlock: true,
             tooltipState: false,
             tooltipMovesState: false,
-            termModalState: false 
+            termModalState: false
         };
     },
 
     componentDidMount: function() {
-        this.setState({ 
+        this.setState({
             blockName: this.props.block.name,
             blockContent: this.props.block.content
         });
@@ -166,7 +166,7 @@ var TextBlock = React.createClass({
     },
 
     handleFormulaChange: function(event) {
-        this.setState({ 
+        this.setState({
             formulaString: event.target.value,
             formulaAreaContent: event.target.value
         });
@@ -207,14 +207,14 @@ var TextBlock = React.createClass({
     },
 
     viewBlockAction: function() {
-        this.setState({ 
+        this.setState({
             tooltipState: !this.state.tooltipState,
             tooltipMovesState: false
         });
     },
 
     viewBlockMoves: function() {
-        this.setState({ 
+        this.setState({
             tooltipState: false,
             tooltipMovesState: !this.state.tooltipMovesState
         });
@@ -293,7 +293,7 @@ var TextBlock = React.createClass({
                     ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
                             <div className="modal-in text">
                                 <h4>Block Text (En cours d'édition)</h4>
-                                Activer le mode édition : 
+                                Activer le mode édition :
                                 <ul>
                                     <li>double cliquer sur le contenu du bloc,</li>
                                     <li>ou cliquer sur l'icône <i className="fa fa-pencil"></i> dans l'entête du bloc,</li>
@@ -301,7 +301,7 @@ var TextBlock = React.createClass({
                                 </ul>
                                 Enregistrer le block :
                                 <ul>
-                                    <li>cliquez sur l'icône <i className="fa fa-check"></i>.</li>
+                                    <li>cliquer sur l'icône <i className="fa fa-check"></i>.</li>
                                 </ul>
                             </div>
                         </Modal>
@@ -320,12 +320,11 @@ var TextBlock = React.createClass({
                 <div className="action">
                     { this.state.editBlock
                         ? <i onClick={this.unlockEditor} title="Editer" className="fa fa-pencil"></i>
-                        :<i 
+                        : <i
                             className="fa fa-check"
                             onClick={this.saveBlock.bind(this, this.props.block.id, this.state.blockName, this.state.blockContent)}
                             title="Enregistrer"
-                            >
-                        </i>
+													></i>
                     }
                     <i className="fa fa-cog" title="Paramètre" onClick={this.viewBlockAction} ></i>
                     <i className="fa fa-question-circle" title="Aide" onClick={this.handleHelpModalState} ></i>

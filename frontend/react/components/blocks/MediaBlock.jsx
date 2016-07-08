@@ -37,7 +37,7 @@ var MediaBlock = React.createClass({
             }.bind(this));
         }
 
-        this.setState({ 
+        this.setState({
             blockName: this.props.block.name,
         });
     },
@@ -51,7 +51,7 @@ var MediaBlock = React.createClass({
                 name: this.state.blockName,
                 content: this.state.blockContent
             }
-        });  
+        });
     },
 
     submitMedia: function(event) {
@@ -82,16 +82,16 @@ var MediaBlock = React.createClass({
                 $.ajax({
                     url: "/blocks/set_content/" + this.props.block.id,
                     type: "PUT",
-                    data: { 
+                    data: {
                         content: content,
                         upload_id: data.id
                     }
                 });
 
-                this.setState({ 
-                    blockContent: content, 
+                this.setState({
+                    blockContent: content,
                     upload: data,
-                    showActions: false 
+                    showActions: false
                 });
             }
         });
@@ -137,10 +137,10 @@ var MediaBlock = React.createClass({
                 upload_id: data.id,
             },
             success: function(data) {
-                this.setState({ 
+                this.setState({
                     blockContent: content,
-                    upload: upload, 
-                    showActions: false 
+                    upload: upload,
+                    showActions: false
                 });
             }
         });
@@ -149,7 +149,7 @@ var MediaBlock = React.createClass({
     handleBlockName: function(event) {
         this.setState({
             blockName: event.target.value,
-            
+
         });
     },
 
@@ -202,7 +202,7 @@ var MediaBlock = React.createClass({
                         name: this.state.blockName,
                         content: content
                     }
-                });  
+                });
             }
         });
     },
@@ -220,14 +220,14 @@ var MediaBlock = React.createClass({
     },
 
     viewBlockAction: function() {
-        this.setState({ 
+        this.setState({
             tooltipState: !this.state.tooltipState,
             tooltipMovesState: false
         });
     },
 
     viewBlockMoves: function() {
-        this.setState({ 
+        this.setState({
             tooltipState: false,
             tooltipMovesState: !this.state.tooltipMovesState
         });
@@ -281,47 +281,48 @@ var MediaBlock = React.createClass({
                     <div className="block-content">
                         <div className="block-content border" id={this.dynamicId(block.id)} dangerouslySetInnerHTML={this.createMarkup(this.state.blockContent)} />
 
-                        { this.state.blockContent != '' 
+                        { this.state.blockContent != ''
                             ? <div>
-                                <input type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
+                                <textarea type="text" value={this.state.mediaAlt ? this.state.mediaAlt : ''} placeholder="Texte descriptif..." onChange={this.handleMediaAlt} />
+                                <br />
                                 {  this.state.upload.filetype != null && this.state.upload.filetype === "image"
-                                    ? <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} />
+                                    ? <label>Largeur (px) : <input type="text" value={this.state.mediaWidth ? this.state.mediaWidth : ''} placeholder="Largeur (optionnel)" onChange={this.handleMediaWidth} /></label>
                                     : null
                                 }
                             </div>
                             : null
                         }
 
-                        { this.state.showActions 
+                        { this.state.showActions
                             ? <div className="block-media-actions">
                                     <div className="dropzone" id="new_upload" ref="mediaForm" encType="multipart/form-data" onChange={this.submitMedia} action="/uploads" method="post">
-                                        <div className="viewDropzone"></div> 
+                                        <div className="viewDropzone"></div>
                                         <div className="viewDropzonebis">
                                            <div className="textDropzone">
                                                 <i className="fa fa-file-text"></i>
                                                 <br/>
                                                 Déposer un fichier
                                              </div>
-                                        </div>   
+                                        </div>
                                         <div className="zoneDropzone">
                                             <input className="uploader" name="upload[file]" ref="mediaFile" id="upload_file" type="file" ></input>
                                         </div>
                                     </div>
-                                
+
                                     <div className="browse-files" onClick={this.handleBrowseFiles}>
                                         <i className="fa fa-folder-open"></i><br/>
                                         Parcourir mes fichiers
                                     </div>
 
-                                    { this.state.modalState 
-                                        ? <MediaFiles active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} /> 
-                                        : null 
+                                    { this.state.modalState
+                                        ? <MediaFiles active={this.handleModalState} block={block.id} updateBlock={this.handleBlockChange} />
+                                        : null
                                     }
                                 </div>
                             : null
                         }
                     </div>
-                        
+
                     { this.state.helpModalState
                         ? <Modal active={this.handleHelpModalState} mystyle={"help"} title={"Aide"}>
                                 <div className="modal-in media">
@@ -353,7 +354,7 @@ var MediaBlock = React.createClass({
                     <div className="action">
                         { this.state.showActions
                             ? <i onClick={this.toggleActions} title="Enregistrer " className="fa fa-check"></i>
-                            :<i 
+                            :<i
                                 className=" fa fa-pencil"
                                 onClick={this.toggleActions}
                                 title="Editer"

@@ -17,7 +17,7 @@ var Toolbar = React.createClass({
   componentDidMount: function() {
     this.setState({
       containersName: this.props.container.name
-    });  	
+    });
   },
 
   toggleMenu: function() {
@@ -40,7 +40,7 @@ var Toolbar = React.createClass({
       type: "PUT",
       url: '/containers/'+this.props.container.id,
       context: this,
-      data: { 
+      data: {
         name: this.state.containersName
       },
       success: function(data) {
@@ -52,7 +52,7 @@ var Toolbar = React.createClass({
   },
 
 	handleModalState: function(st) {
-    this.setState({ 
+    this.setState({
       overview: st
     });
   },
@@ -78,11 +78,11 @@ var Toolbar = React.createClass({
             </ul>
           </div>
         </div>
-        { this.state.overview 
-	          ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}> 
-	            <iframe src={"/generator/overview/pages/"+this.props.page.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
-	          </Modal> 
-	          : null 
+        { this.state.overview
+	          ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
+	            <iframe src={"/overview/"+this.props.container.url+"/"+this.props.page.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+	          </Modal>
+	          : null
           }
 				{ this.props.children }
 			</div>

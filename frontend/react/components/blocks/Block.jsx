@@ -131,7 +131,7 @@ var Block = React.createClass({
     getContainers: function() {
         this.serverRequest = $.get("/containers.json", function(result) {
             this.setState({
-                containersList: result.containers,
+                containersList: result,
                 loading: false
             });
         }.bind(this));

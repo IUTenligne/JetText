@@ -251,7 +251,6 @@ span.bold{
 	/* option block (delete/ drag/ save / edite)*/
 	.action {
 		text-align: right;
-		width: 100%;
 		color: $iGrey;
 		font-size: 20px;
 		margin-top: 0;
@@ -324,7 +323,8 @@ span.bold{
 		position: absolute;
 		right: 61px;
 		margin-top: -9px;
-		top:0;
+		top: 0;
+    z-index: 10;
 		border-top: 0;
 		border-left: 9px solid transparent;
 		border-right: 9px solid transparent;
@@ -515,6 +515,16 @@ span.bold{
 			}
 
 			div.block-content{
+        textarea {
+          margin-top: 20px;
+          border: 1px solid #dedede;
+          box-sizing: border-box;
+          border-radius: 4px;
+          padding: 5px;
+          max-width: 80%;
+          min-width: 80%;
+          min-height: 40px;
+        }
 				.block-media-actions {
 					border: 2px dashed $lightOrange;
 					width: 95%;
@@ -681,6 +691,14 @@ span.bold{
 					color: $lighTbBlue;
 				}
 
+        .complement i {
+					color: #b3aebf;
+				}
+
+        .divers i {
+					color: #c5c5c5;
+				}
+
 				.block-note {
 					border: 2px solid;
 					padding: 5px 10px 0px 10px;
@@ -688,7 +706,7 @@ span.bold{
 					.block-note-title {
 						background: $white;
 						margin: -25px 0 0 0;
-						width: 130px;
+						width: 150px;
 						padding: 0 0 10px 8px;
 						font-size: 20px;
 
@@ -775,6 +793,32 @@ span.bold{
 						color: $lighTbBlue;
 					}
 				}
+
+        .block-content-complement {
+					border-color: $complement;
+					.block-note-title-complement i{
+						color: $complementI;
+					}
+					.block-note-title-complement:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Complément";
+						color: #b3aebf;
+					}
+				}
+
+        .block-content-divers {
+					border-color: $divers;
+					.block-note-title-divers i{
+						color: $diversI;
+					}
+					.block-note-title-divers:after{
+						font-family: "Boogaloo-Regular",Helvetica,Arial,sans-serif;
+						font-size: 24px;
+						content: "Divers";
+						color: #c5c5c5;
+					}
+				}
 			}
 		}
 	}
@@ -803,6 +847,14 @@ span.bold{
 }
 .note-icon-remarque:before {
 	content: "\f075";
+  font-family: FontAwesome;
+}
+.note-icon-complement:before {
+	content: "\f00e";
+  font-family: FontAwesome;
+}
+.note-icon-divers:before {
+	content: "\f12e";
   font-family: FontAwesome;
 }
 

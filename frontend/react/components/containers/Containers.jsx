@@ -17,7 +17,6 @@ var Result = React.createClass({
 
     componentDidMount: function() {
         this._notificationSystem = this.refs.notificationSystem;
-        this.generateGradient();
     },
 
     deleteContainer: function(event){
@@ -108,29 +107,22 @@ var Result = React.createClass({
         this.setState({ overview: st });
     },
 
-    generateGradient: function() {
-        var i = Math.floor(Math.random() * (3 - 1 + 1) + 1);
-        var bg = {
-            background: Constants.gradient+i[0],
-            background: "-webkit-linear-gradient(to left, "+Constants.gradient+i[0]+" , "+Constants.gradient+i[1]+")",
-            background: "linear-gradient(to left, "+Constants.gradient+i[0]+" , "+Constants.gradient+i[1]+")"
-        };
-
-        this.setState({ coverBackground: bg });
-    },
-
     _notificationSystem: null,
 
     render: function() {
         var result = this.props.item;
-
         return(
             <tr className="container">
               <td>
                 <a href={"/#/containers/"+result.id}>{result.name}</a>
               </td>
               <td>
-                {result.created_at.split("T")[0].split("-").reverse().join("/")}
+                {result.categories.map(function(category) {
+                  return( <li key={category.id} className="category">{category.name}</li> );
+                })}
+              </td>
+              <td>
+                <span>{result.created_at.split("T")[0].split("-").reverse().join("/")}</span>
               </td>
               <td>
                 <a href={"/#/containers/"+result.id} title="Editer">
@@ -182,13 +174,12 @@ var Result = React.createClass({
               <td>
                 { this.state.overview
                     ? <Modal active={this.handleModalState} mystyle={"view"} title={"Aperçu"}>
-                        <iframe src={"/generator/overview/"+this.props.item.id} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
+                        <iframe src={"/overview/"+this.props.item.url} width="100%" height="100%" scrolling="auto" frameborder="0"></iframe>
                     </Modal>
                     : null
                 }
-
+                <NotificationSystem ref="notificationSystem" />
               </td>
-              <NotificationSystem ref="notificationSystem" />
             </tr>
         );
     }
@@ -198,42 +189,50 @@ var Result = React.createClass({
 var Containers = React.createClass({
     getInitialState: function() {
         return {
-            containersList: [],
-            loading: true,
-            viewCreate: false,
-            newContainerValue: '',
-            inputCreate: false
+          containersList: [],
+          categories: [],
+          selectedCategories: [],
+          loading: true,
+          viewCreate: false,
+          newContainerValue: '',
+          inputCreate: false
         };
     },
 
     componentDidMount: function() {
         this.serverRequest = $.get("/containers.json", function(result) {
-            this.setState({
-                containersList: result.containers,
-                loading: false
-            });
+          this.setState({
+            containersList: result
+          });
+        }.bind(this));
+
+        this.serverRequest = $.get("/categories.json", function(result) {
+          this.setState({
+            categories: result,
+            loading: false
+          });
         }.bind(this));
     },
 
     componentWillUnmount: function() {
-        this.serverRequest.abort();
+      this.serverRequest.abort();
     },
 
     handleContainerDeletion: function(containerId) {
-        /* updates the containers list with the containerId returned by the prop this.props.deleteContainer of the child <Result /> */
-        this.setState({
-            containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
-        });
+      /* updates the containers list with the containerId returned by the prop this.props.deleteContainer of the child <Result /> */
+      this.setState({
+        containersList: this.state.containersList.filter((i, _) => i["id"] !== containerId)
+      });
     },
 
     handleContainerValidation: function(containersList) {
-        this.setState({
-            containersList: containersList
-        });
+      this.setState({
+        containersList: containersList
+      });
     },
 
     viewCreateContainers: function(){
-        this.setState({ viewCreate: true });
+      this.setState({ viewCreate: true });
     },
 
     createContainer: function(){
@@ -245,7 +244,8 @@ var Containers = React.createClass({
                 container: {
                     name: this.state.newContainerValue,
                     content: "",
-                    url: JSON.parse(currentUser).email
+                    url: JSON.parse(currentUser).email,
+                    categories: this.state.selectedCategories
                 }
             },
             success: function(data){
@@ -253,6 +253,7 @@ var Containers = React.createClass({
                     viewCreate: false,
                     containersList: this.state.containersList.concat([data]),
                 });
+
                 window.location = "/#/containers/" + data.id;
             }
         });
@@ -271,6 +272,15 @@ var Containers = React.createClass({
         }
     },
 
+    selectCategory: function(event) {
+      var i = this.state.selectedCategories.indexOf(parseInt(event.target.value));
+      if (i != -1) {
+        this.setState({ selectedCategories: this.state.selectedCategories.splice(i, 1) });
+      } else {
+        this.setState({ selectedCategories: this.state.selectedCategories.concat([parseInt(event.target.value)]) });
+      }
+    },
+
     _handleKeyPress: function(event) {
         if (event.key === 'Enter') {
             this.createContainer(event);
@@ -281,8 +291,8 @@ var Containers = React.createClass({
 
     render: function() {
         var results = this.state.containersList;
-
         var that = this;
+
         return (
             <article id="containers">
                 <div className="containers">
@@ -298,6 +308,7 @@ var Containers = React.createClass({
                           <thead>
                             <tr>
                               <th>Titre</th>
+                              <th>Catégories</th>
                               <th>Date</th>
                               <th colspan="2">Options</th>
                             </tr>
@@ -307,6 +318,7 @@ var Containers = React.createClass({
                                   return (
                                       <Result
                                           item={result}
+                                          categories={that.state.categories}
                                           key={result.id}
                                           removeContainer={that.handleContainerDeletion}
                                           validateContainer={that.handleContainerValidation}
@@ -320,24 +332,39 @@ var Containers = React.createClass({
                     { this.state.viewCreate
                         ? <Modal active={this.handleModalState} mystyle={"create"} title={"Créer une nouvelle ressource"}>
                             <div className="add_new">
-                                <span className="input-group-addon" onClick={this.createContainer}>
+                                <div id="inputs">
+                                  <span className="input-group-addon" onClick={this.createContainer}>
                                     <i className="fa fa-plus fa-fw"></i>
-                                </span>
-                                <input
-                                    type="text"
-                                    ref="new_container"
-                                    id="new_container"
-                                    className="form-control"
-                                    autoComplet="off"
-                                    onKeyPress={this._handleKeyPress}
-                                    onChange={this.handleChange.bind(this, "newContainerValue")}
-                                    value={this.state.newContainerValue}
-                                    placeholder="Titre de la ressource..."
-                                />
+                                  </span>
+                                  <input
+                                      type="text"
+                                      ref="new_container"
+                                      id="new_container"
+                                      className="form-control"
+                                      autoComplet="off"
+                                      onKeyPress={this._handleKeyPress}
+                                      onChange={this.handleChange.bind(this, "newContainerValue")}
+                                      value={this.state.newContainerValue}
+                                      placeholder="Titre de la ressource..."
+                                  />
+                                </div>
+                                <ul id="categories-list">
+                                  <h4>Catégories de la ressource :</h4>
+                                  { this.state.categories.map(function(category) {
+                                    return(
+                                      <li key={category.id} className="category">
+                                        <input value={category.id} name={category.name} type="checkbox" onChange={that.selectCategory}/>
+                                        {category.name}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
                                 <br/>
                                 { this.state.inputCreate
-                                    ? <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
-                                    : null
+                                  ? <div id="submit">
+                                      <input type="submit" value='Créer' className="btn-success" onClick={this.createContainer}/>
+                                    </div>
+                                  : null
                                 }
                             </div>
                           </Modal>

@@ -1,5 +1,5 @@
 <nav class="navbar">
-	<div id="logo" data-no-turbolink>
+	<div id="logo">
 		<h1><%= link_to(raw('<i class="fa fa-plane"></i>'), "/#/", data: { no_turbolink: true }) %></h1>
 	</div>
 
@@ -8,17 +8,21 @@
 			<% if user_signed_in? %>
 				<li><%= link_to raw('<i class="fa fa-folder-open fa-fw "></i>'), "/#/containers/", data: { no_turbolink: true }, title: "Mes ressources" %></li>
 				<li><%= link_to raw('<i class="fa fa-book fa-fw "></i>'), "/#/glossaries/", data: { no_turbolink: true }, title: "Mes glossaires" %></li>
-				<li><%= link_to raw('<i class="fa fa-user fa-fw "></i>'), '/#/' %></li>
-				<li><%= link_to raw('<i class="fa fa-files-o fa-fw "></i>'), '/#/files' %></li>
-				<li><%= link_to(raw('<i class="fa fa-sign-out"></i>'), destroy_user_session_path, :method => :delete) %></li>
+				<li><%= link_to raw('<i class="fa fa-files-o fa-fw "></i>'), '/#/files/', data: { no_turbolink: true }, title: "Mes fichiers" %></li>
+				<li><%= link_to raw('<i class="fa fa-user fa-fw "></i>'), '/users/my' %></li>
+				<li><%= link_to raw('<i class="fa fa-info-circle fa-fw "></i>'), '/about' %></li>
 				<% if current_user.is_admin? %>
-					<li class="admin-links"><%= link_to raw('<i class="fa fa-university fa-fw admin-links"></i>'), '/#/company', title: "Admin équipe" %></li>
-					<li class="admin-links"><%= link_to raw('<i class="fa fa-shield fa-fw admin-links"></i>'), '/#/admin', title: "Admin" %></li>
+					<li class="admin-links"><%= link_to raw('<i class="fa fa-university fa-fw admin-links"></i>'), '/#/company/', data: { no_turbolink: true }, title: "Admin équipe" %></li>
+					<li class="admin-links"><%= link_to raw('<i class="fa fa-shield fa-fw admin-links"></i>'), '/#/admin/', data: { no_turbolink: true }, title: "Admin" %></li>
 				<% end %>
 				<% if current_user.is_expert? %>
-					<li class="admin-links"><%= link_to raw('<i class="fa fa-university fa-fw admin-links"></i>'), '/#/company', title: "Equipe" %></li>
+					<li class="admin-links"><%= link_to raw('<i class="fa fa-university fa-fw admin-links"></i>'), '/#/company/', data: { no_turbolink: true }, title: "Equipe" %></li>
 				<% end %>
 			<% end %>
 		</ul>
+	</div>
+
+	<div id="logo-footer">
+		<%= image_tag("iutenligne.png") %>
 	</div>
 </nav>

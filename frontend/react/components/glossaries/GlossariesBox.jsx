@@ -82,12 +82,13 @@ var GlossaryItem = React.createClass({
               checked={this.state.isChecked}
               onChange={this.onChange}
               id="IdCheckBox"
-              className="cmn-toggle cmn-toggle-round-flat"/>
-            { this.state.isChecked ?
-              <label className="check" for="IdCheckBox"/>
+              className="cmn-toggle cmn-toggle-round-flat"
+            />
+            { this.state.isChecked
+              ? <label className="check" for="IdCheckBox"/>
               : <label for="IdCheckBox"/>
-          }
-        </div>
+            }
+          </div>
         <div className="name">
           <p onClick={this.showTerms}>{glossary.name}</p>
           <i className="fa fa-chevron-down" aria-hidden="true" onClick={this.showTerms}></i>

@@ -2,9 +2,9 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  devise_for :users, :controllers => { 
+  devise_for :users, :controllers => {
     :registrations => "registrations",
-    :omniauth_callbacks => "users/omniauth_callbacks" 
+    :omniauth_callbacks => "users/omniauth_callbacks"
   }
 
   authenticate :user do
@@ -32,7 +32,12 @@ Rails.application.routes.draw do
 
     resources :types
 
+    resources :categories
+
     resources :variables
+
+    #static
+    get "/about" => "static#about"
 
     resources :uploads do
       delete "/clear/:block_id" => "uploads#clear", on: :collection
@@ -50,15 +55,19 @@ Rails.application.routes.draw do
     get "/containers_glossaries/:container_id" => "containers_glossaries#show"
     post "/containers_glossaries" => "containers_glossaries#check"
 
+    post "/categories_containers" => "categories_containers#create"
+
     resources :formulas
     get "/search_variables" => "formulas#find"
 
     resources :generator
-    get "/generator/overview/:id" => "generator#container"
-    get "/generator/overview/pages/:id" => "generator#page"
+    get "/overview/:url" => "generator#container"
+    get "/overview/:url/:id" => "generator#page"
     get "/generator/pages/:id" => "generator#page_generation"
     get "/generator/save/:id" => "generator#save"
     get "/generator/diffs/:id" => "generator#diffs"
+
+    get "/users/my" => "users#my"
   end
 
   # Admin zone access

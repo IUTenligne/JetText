@@ -5,8 +5,8 @@ $black: rgb(0,0,0);
 $lightGrey: #F5F5F5;
 $textGrey: #333333;
 $bg: #e3f4fc;
-$sidebar: rgba(246,247,146,0.9);
-$sidebarGrey: rgba(51,55,69,0.9);
+$sidebar: rgba(246,247,146,0.96);
+$sidebarGrey: rgba(51,55,69,1);
 $blue: #7dc7ec;
 $IELblue: #5B8AC2;
 $remarque: #caeaff;
@@ -98,6 +98,7 @@ body {
       background: $blue;
       padding: 30px 50px 50px 50px;
       padding-right: 30%;
+      border-radius: 4px;
 
 			.row{
 				margin:0;
@@ -116,6 +117,7 @@ body {
               margin-left: -100px;
               padding: 30px 50px 30px 100px;
               font-size: 15px;
+              border-radius: 4px;
 
               h3 {
                 margin-top: 0;
@@ -425,6 +427,7 @@ body {
 
     /********  content menu ********/
     .sidebar-nav {
+      border-radius: 4px;
       position: absolute;
       top: 80px;
       width: 100%;

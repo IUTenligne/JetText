@@ -65,7 +65,10 @@ var FileInfo = React.createClass({
             context: this,
             success: function(data) {
                 if (data.status === "success") {
-                    this.setState({ modalPreview: false });
+                    this.setState({
+                      modalPreview: false,
+                      types: data.types
+                    });
                     this.showPreview(false);
                     this.props.delete(this.props.file.id)
                 } else {
@@ -155,111 +158,115 @@ var UsersFiles = React.createClass({
     },
 
     submitMedia: function(event) {
-        event.preventDefault();
-        this.setState({ loading: true });
+      event.preventDefault();
+      this.setState({ loading: true });
 
-        var fileName = $(this.refs.mediaFile.files[0])[0].name;
-        /* lowercase the ext to stick to the upload backend model */
-        var fileExt = fileName.split(".").slice(-1)[0].toLowerCase();
-        var formData = new FormData();
-        formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
+      var fileName = $(this.refs.mediaFile.files[0])[0].name;
+      /* lowercase the ext to stick to the upload backend model */
+      var fileExt = fileName.split(".").slice(-1)[0].toLowerCase();
+      var formData = new FormData();
+      formData.append("tempfile", $(this.refs.mediaFile.files[0])[0]);
 
-        /* Ajax file upload handled by uploads_controller.rb & model upload.rb */
-        $.ajax({
-            url: "/uploads",
-            type: "POST",
-            contentType: false,
-            cache: false,
-            processData: false,
-            data: formData,
-            context: this,
-            success: function(data) {
-                this.setState({
-                    files: this.state.files.concat([data]),
-                    filter: false,
-                    loading: false
-                });
-            }
-        });
+      /* Ajax file upload handled by uploads_controller.rb & model upload.rb */
+      $.ajax({
+          url: "/uploads",
+          type: "POST",
+          contentType: false,
+          cache: false,
+          processData: false,
+          data: formData,
+          context: this,
+          success: function(data) {
+              this.setState({
+                  files: this.state.files.concat([data.upload]),
+                  types: data.types,
+                  filter: false,
+                  filterSearch: false,
+                  filteredFiles: [],
+                  activeFilter: '',
+                  loading: false
+              });
+          }
+      });
     },
 
     sort: function(attribute) {
-        this.setState({ sorter: attribute });
+      this.setState({ sorter: attribute });
 
-        if (this.state.filter === false)
-            var fileList = this.state.files;
-        else
-            var fileList = this.state.filteredFiles;
+      if (this.state.filter === false)
+          var fileList = this.state.files;
+      else
+          var fileList = this.state.filteredFiles;
 
-        if ((this.state.icon === "desc") || (this.state.icon === "")) {
-            this.setState({ icon: "asc" });
-            var files = fileList.sort(function(a, b) {
-                if (attribute === "file_file_name")
-                    return a.file_file_name < b.file_file_name;
-                if (attribute === "filetype")
-                    return a.filetype < b.filetype;
-                if (attribute === "file_updated_at")
-                    return a.file_updated_at < b.file_updated_at;
-            });
-        } else {
-            this.setState({ icon: "desc" });
-            var files = fileList.sort(function(a, b) {
-                if (attribute === "file_file_name")
-                    return a.file_file_name > b.file_file_name;
-                if (attribute === "filetype")
-                    return a.filetype > b.filetype;
-                if (attribute === "file_updated_at") {
-                    return a.file_updated_at > b.file_updated_at;
-                }
-            });
-        }
+      if ((this.state.icon === "desc") || (this.state.icon === "")) {
+          this.setState({ icon: "asc" });
+          var files = fileList.sort(function(a, b) {
+              if (attribute === "file_file_name")
+                  return a.file_file_name < b.file_file_name;
+              if (attribute === "filetype")
+                  return a.filetype < b.filetype;
+              if (attribute === "file_updated_at")
+                  return a.file_updated_at < b.file_updated_at;
+          });
+      } else {
+          this.setState({ icon: "desc" });
+          var files = fileList.sort(function(a, b) {
+              if (attribute === "file_file_name")
+                  return a.file_file_name > b.file_file_name;
+              if (attribute === "filetype")
+                  return a.filetype > b.filetype;
+              if (attribute === "file_updated_at") {
+                  return a.file_updated_at > b.file_updated_at;
+              }
+          });
+      }
 
-        if (this.state.filter === false)
-            this.setState({ files: files, loading: false });
-        else
-            this.setState({ filteredFiles: files, loading: false });
+      if (this.state.filter === false)
+          this.setState({ files: files, loading: false });
+      else
+          this.setState({ filteredFiles: files, loading: false });
     },
 
     filterByType: function(type) {
-        this.setState({ loading: true });
+      this.setState({ loading: true });
 
-        if (this.state.activeFilter === type) {
-            /* case when the user selects the already active type filter */
-            if (this.state.filterSearch === true) {
-                /* if any searchedString is on */
-                this.setState({
-                    filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 ),
-                    loading: false,
-                    filterSearch: true,
-                    activeFilter: ''
-                });
-            } else {
-                /* if not, consider the user removes the type filter - set the files[] to the default state */
-                this.setState({
-                    filteredFiles: this.state.files,
-                    loading: false,
-                    filter: false,
-                    filterSearch: false,
-                    activeFilter: ''
-                });
-            }
-        } else {
-            /* case when the user selects a new type filter */
-            if (this.state.filterSearch === true) {
-                /* if any searchedString is on */
-                var files = this.state.files.filter( i => (i["filetype"] === type) && (i["file_file_name"].indexOf(this.state.searchedString) > -1) );
-            } else {
-                /* otherwise */
-                var files = this.state.files.filter( i => i["filetype"] === type );
-            }
+      if (this.state.activeFilter === type) {
+          /* case when the user selects the already active type filter */
+          if (this.state.filterSearch === true) {
+              /* if any searchedString is on */
+              this.setState({
+                  filteredFiles: this.state.files.filter( i => i["file_file_name"].indexOf(this.state.searchedString) > -1 ),
+                  loading: false,
+                  filterSearch: true,
+                  activeFilter: ''
+              });
+          } else {
+              /* if not, consider the user removes the type filter - set the files[] to the default state */
+              this.setState({
+                  filteredFiles: this.state.files,
+                  loading: false,
+                  filter: false,
+                  filterSearch: false,
+                  activeFilter: ''
+              });
+          }
+      } else {
+          /* case when the user selects a new type filter */
+          if (this.state.filterSearch === true) {
+              /* if any searchedString is on */
+              var files = this.state.files.filter( i => (i["filetype"] === type) && (i["file_file_name"].indexOf(this.state.searchedString) > -1) );
+          } else {
+              /* otherwise */
+              var files = this.state.files.filter( i => i["filetype"] === type );
+          }
 
-            this.setState({
-                filteredFiles: files,
-                activeFilter: type,
-                loading: false,
-                filter: true
-            });
-        }
+          this.setState({
+              filteredFiles: files,
+              activeFilter: type,
+              loading: false,
+              filter: true
+          });
+      }
     },
 
     searchByString: function(event) {

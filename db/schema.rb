@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530093248) do
+ActiveRecord::Schema.define(version: 20160704092406) do
 
   create_table "blocks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -32,6 +32,28 @@ ActiveRecord::Schema.define(version: 20160530093248) do
   add_index "blocks", ["upload_id"], name: "index_blocks_on_upload_id", using: :btree
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id", using: :btree
   add_index "blocks", ["version_id"], name: "index_blocks_on_version_id", using: :btree
+
+  create_table "blocks_uploads", id: false, force: :cascade do |t|
+    t.integer "block_id",  limit: 4, null: false
+    t.integer "upload_id", limit: 4, null: false
+  end
+
+  add_index "blocks_uploads", ["block_id", "upload_id"], name: "index_blocks_uploads_on_block_id_and_upload_id", using: :btree
+  add_index "blocks_uploads", ["upload_id", "block_id"], name: "index_blocks_uploads_on_upload_id_and_block_id", using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "categories_containers", id: false, force: :cascade do |t|
+    t.integer "category_id",  limit: 4, null: false
+    t.integer "container_id", limit: 4, null: false
+  end
+
+  add_index "categories_containers", ["category_id", "container_id"], name: "index_categories_containers_on_category_id_and_container_id", using: :btree
+  add_index "categories_containers", ["container_id", "category_id"], name: "index_categories_containers_on_container_id_and_category_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string "name", limit: 255

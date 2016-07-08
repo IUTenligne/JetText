@@ -51,9 +51,14 @@ var Page = React.createClass({
     },
 
     createBlock: function(typeId, event) {
+        var that = this;
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy(true);
         }
+
+        this.state.blocks.map(function(block) {
+          that.closeBlock();
+        });
 
         $.ajax({
             type: "POST",
@@ -76,6 +81,10 @@ var Page = React.createClass({
         });
 
         event.target.value = 1;
+    },
+
+    closeBlock: function() {
+      return true;
     },
 
     handleBlockDeletion: function(block_id) {
